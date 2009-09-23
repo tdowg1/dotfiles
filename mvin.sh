@@ -20,12 +20,12 @@ fi
 
 WORKING_DIR='tmp.mvin'
 #REMOTE_HOST='http://bdavies522276/mvin'
-REMOTE_HOST='http://svn/muzik-work/mvin/mvin'
+REMOTE_HOST='http://svn/muzik-work/mvin/dotfiles'
 
 #
 # all the dot files / custom configurations to work with
 dot_files='myaliases myvariables myfunctions'
-dot_files='inputrc zshrc'
+dot_files='inputrc mvinrc zshrc'
 
 
 #
@@ -47,7 +47,9 @@ if [ $? != 0 ] ; then
 	fi
 
 	rm -rf ~/"$WORKING_DIR"
+	mkdir $WORKING_DIR
 fi
+
 
 cd $WORKING_DIR
 
@@ -63,22 +65,30 @@ fi
 
 
 
-
+#
+# PROFILE SOURCING
+#
+# the calling parent profile (i.e. .bashrc should source .mvinrc)
+PARENT_PROFILE=~/.bashrc
+MVIN_PROFILE_MVINRC='~/.mvinrc'
 
 #
-# Im not sure what this should be
-PARENT_PROFILE=~/.bashrc
-
 # check if calling parent profile needs to be "patched" (really updated) so that
-# it'll source custom profiles upon login
+# it'll source .mvinrc (which in turn will source custom profiles)
+grep -n ". $MVIN_PROFILE_MVINRC" "$PARENT_PROFILE"
 
-
-
-fPROMPT_USER_stub "Update $PARENT_PROFILE to source custom profiles? [y]"
 if [ $? = 0 ] ; then
-	# patch profile
-fi
+	echo $PARENT_PROFILE is patched; nothing to do
 
+else
+	echo "Updating $PARENT_PROFILE to source custom profiles"
+
+	tmpSourcingProfile="[[ -f $MVIN_PROFILE_MVINRC ]] && . $MVIN_PROFILE_MVINRC"
+
+	echo "" >> $PARENT_PROFILE
+	echo "# mvin.sh adds sourcing code" >> $PARENT_PROFILE
+	echo "$tmpSourcingProfile" >> $PARENT_PROFILE
+fi
 
 
 
@@ -91,5 +101,3 @@ for dotfile in $dot_files ; do
 		cp -v $dotfile ~/.${dotfile}
 	fi
 done
-
-
