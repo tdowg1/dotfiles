@@ -69,8 +69,8 @@ fi
 # Im not sure what this should be
 PARENT_PROFILE=~/.bashrc
 
-# check if calling parent profile needs to be patched so that it'll sources
-# custom profiles
+# check if calling parent profile needs to be "patched" (really updated) so that
+# it'll source custom profiles upon login
 
 
 
