@@ -59,7 +59,7 @@ cd $WORKING_DIR
 fPROMPT_USER_stub "Retrieve dot files from remote host? [y]"
 if [ $? = 0 ] ; then
 	for dotfile in $dot_files ; do
-		wget $REMOTE_HOST/$dotfile
+		wget --no-verbose $REMOTE_HOST/$dotfile
 	done
 fi
 
