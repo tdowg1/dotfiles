@@ -21,6 +21,7 @@ fi
 WORKING_DIR='tmp.mvin'
 #REMOTE_HOST='http://bdavies522276/mvin'
 REMOTE_HOST='http://svn/muzik-work/mvin/dotfiles'
+REMOTE_HOST='http://svn/intel_duo/mvin/dotfiles'
 
 #
 # all the dot files / custom configurations to work with
