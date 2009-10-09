@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 #
 # TODO
 # should be prompting user for each dotfile
@@ -80,7 +80,7 @@ done
 #===================================================================
 #
 # like cfparam=* required=yes
-: ${TEMPDIR2:?ERROR: not specified}
+#: ${TEMPDIR2:?ERROR: not specified}
 : ${HOME:?ERROR: HOME variable must be set}
 
 #
@@ -113,16 +113,13 @@ dot_files="inputrc mvinrc zshrc"
 #===================================================================
 #
 fCreateWorkDirectory(){
-	if [ -d $WORK_DIR ] ; then
+	if [ ! -d $WORK_DIR ] ; then
 		mkdir -p "${WORK_DIR}"
 	else
 		echo "ERROR: $WORK_DIR already exists! ...I want to be the one to create it"
 		exit 2
 	fi
 }
-
-
-
 
 fDownloadFiles(){
 	echo "Retrieve dot files from remote host?... in 4 seconds..."
@@ -132,7 +129,6 @@ fDownloadFiles(){
 		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
 	done
 }
-
 
 fInstallFiles(){
 	echo "Move in $(ls ${WORK_DIR}/*) to your HOME? ...in 4 seconds..."
@@ -146,7 +142,6 @@ fInstallFiles(){
 	done
 }
 
-
 fUploadFiles(){
 	echo "?... in 4 seconds..."
 	sleep 4
@@ -156,7 +151,6 @@ fUploadFiles(){
 	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
 
 }
-
 
 
 
@@ -170,9 +164,11 @@ fCreateWorkDirectory
 
 if [ "$isDownloadOnly" = "YES" ] ; then
 	fDownloadFiles
+	
 elif [ "$isMvIn" = "YES" ] ; then
 	fDownloadFiles
 	fInstallFiles
+	
 else
 	echo "do MvOut... (NOT IMPLEMENTED)"
 fi
