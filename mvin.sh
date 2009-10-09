@@ -12,59 +12,175 @@ fPROMPT_USER_stub(){
 	return 0
 }
 
+
+f_usage(){
+	local _USAGE=$(cat <<__HEREDOC__
+${0}: designed to assist in keeping your dotfiles portable and synchronized.
+Default behavior is to pull dotfiles from remote server and put under home directory.
+
+usage: ${0} [--mvout] [--downloadonly]
+	--mvout
+		Reverse the default "move in" behavior (and "move out").  Push dotfiles
+		from home directory to remote server.
+	--downloadonly
+		Same as default behavior except dotfiles are not put under home directory,
+		but are left under the "tmp.mvin" folder that this script uses as its
+		work directory.
+
+misc/notes:
+	lynx
+	curl
+__HEREDOC__)
+
+	echo "$_USAGE"
+	exit 1;
+}
+
+
+#
+# ARGUMENT PARSING AND SANITY CHECKING
+#===================================================================
+#
+
 if [ $USER = 'root' ] ; then
 	echo "no root user"
+	f_usage
 	exit 1;
 fi
 
 
-WORKING_DIR='tmp.mvin'
-#REMOTE_HOST='http://bdavies522276/mvin'
+# check that $# one in (0, 1, 2)
+#[ $# != 1 ] && f_usage
+
+
+while [[ "$1" = -* ]] ; do
+  case "$1" in
+    --mvout) # no-value arg
+			isMvIn="NO"
+			shift
+			;;
+    --downloadonly) # no-value arg
+			isDownloadOnly="YES"
+			shift
+			;;
+
+    *)
+		echo "ERROR case matched wildcard"
+		f_usage
+		;;
+  esac
+done
+
+
+
+
+#
+# VARIABLE PARAMS/CHECKING (see TEMPLATE.sh for more)
+#===================================================================
+#
+# like cfparam=* required=yes
+: ${TEMPDIR2:?ERROR: not specified}
+: ${HOME:?ERROR: HOME variable must be set}
+
+#
+# like cfparam=*
+#: ${isMvout:="NO"}
+: ${isMvIn:="YES"}
+: ${isDownloadonly:="NO"}
+
+#
+# this programs scratch or work directory
+: ${WORK_DIR:="${HOME}/tmp.mvin"}
+#
+# remote server address
+: ${REMOTE_HOST:="http://bdavies522276/mvin"}
 REMOTE_HOST='http://svn/muzik-work/mvin/dotfiles'
 REMOTE_HOST='http://svn/intel_duo/mvin/dotfiles'
+#REMOTE_HOST='http://svn/intel_duo/online-file-manager/'
 
 #
-# all the dot files / custom configurations to work with
-dot_files='myaliases myvariables myfunctions'
-dot_files='inputrc mvinrc zshrc'
+# the set of all dot files to work with
+: ${dot_files:="myaliases myvariables myfunctions"}
+dot_files="inputrc mvinrc zshrc"
 
 
-#
-# go HOME
-cd
+
 
 
 #
-# create MY working directory
-mkdir $WORKING_DIR
-if [ $? != 0 ] ; then
-	# TODO: the logic here could get bad if user enters in NOT 'n'
-	echo "~/$WORKING_DIR already exists, but I need it.  Ok to delete? ([y]/n)"
-	read isOkToDelete
-
-	if [[ $isOkToDelete = "n" ]]; then
-		echo "ERROR that directory must not exist"
-		exit 1
+# FUNCTIONS
+#===================================================================
+#
+fCreateWorkDirectory(){
+	if [ -d $WORK_DIR ] ; then
+		mkdir -p "${WORK_DIR}"
+	else
+		echo "ERROR: $WORK_DIR already exists! ...I want to be the one to create it"
+		exit 2
 	fi
-
-	rm -rf ~/"$WORKING_DIR"
-	mkdir $WORKING_DIR
-fi
+}
 
 
-cd $WORKING_DIR
+
+
+fDownloadFiles(){
+	echo "Retrieve dot files from remote host?... in 4 seconds..."
+	sleep 4
+
+	for dotfile in $dot_files ; do
+		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
+	done
+}
+
+
+fInstallFiles(){
+	echo "Move in $(ls ${WORK_DIR}/*) to your HOME? ...in 4 seconds..."
+	sleep 4
+	#
+	# MOVE IN
+	for dotfile in $dot_files ; do
+		if [ $? = 0 ] ; then
+			cp -v "${WORK_DIR}/${dotfile}" "${HOME}/.${dotfile}"
+		fi
+	done
+}
+
+
+fUploadFiles(){
+	echo "?... in 4 seconds..."
+	sleep 4
+	#
+	# MOVE IN
+	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
+	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
+
+}
+
+
 
 
 #
-# DOWNLOAD
-fPROMPT_USER_stub "Retrieve dot files from remote host? [y]"
-if [ $? = 0 ] ; then
-	for dotfile in $dot_files ; do
-		wget --no-verbose $REMOTE_HOST/$dotfile
-	done
+# MAIN
+#===================================================================
+#
+
+# always...
+fCreateWorkDirectory
+
+if [ "$isDownloadOnly" = "YES" ] ; then
+	fDownloadFiles
+elif [ "$isMvIn" = "YES" ] ; then
+	fDownloadFiles
+	fInstallFiles
+else
+	echo "do MvOut... (NOT IMPLEMENTED)"
 fi
 
 
+
+exit $?
+
+########### MAYBE LATER............
 
 #
 # PROFILE SOURCING
@@ -90,15 +206,3 @@ else
 	echo "# mvin.sh adds sourcing code" >> $PARENT_PROFILE
 	echo "$tmpSourcingProfile" >> $PARENT_PROFILE
 fi
-
-
-
-
-#
-# MOVE IN
-for dotfile in $dot_files ; do
-	fPROMPT_USER_stub "Move in $dotfile ~/.${dotfile}? [y]"
-	if [ $? = 0 ] ; then
-		cp -v $dotfile ~/.${dotfile}
-	fi
-done
