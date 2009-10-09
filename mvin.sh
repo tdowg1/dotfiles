@@ -30,7 +30,8 @@ usage: ${0} [--mvout] [--downloadonly]
 misc/notes:
 	lynx
 	curl
-__HEREDOC__)
+__HEREDOC__
+)
 
 	echo "$_USAGE"
 	exit 1;
