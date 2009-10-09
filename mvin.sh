@@ -76,7 +76,7 @@ done
 
 
 #
-# VARIABLE PARAMS/CHECKING (see TEMPLATE.sh for more)
+# VARIABLE PARAMS/INITIALIZATION
 #===================================================================
 #
 # like cfparam=* required=yes
@@ -85,7 +85,6 @@ done
 
 #
 # like cfparam=*
-#: ${isMvout:="NO"}
 : ${isMvIn:="YES"}
 : ${isDownloadonly:="NO"}
 
