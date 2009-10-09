@@ -4,8 +4,10 @@
 # should be prompting user for each dotfile
 #	see how see tahoe installer handled default values
 #	see how other people are handling default values in their user promts
+# rename all WORK strings with WORKING strings...
 #
-#
+# ADD
+#	argument: check-update
 #
 
 fPROMPT_USER_stub(){
@@ -98,6 +100,11 @@ REMOTE_HOST='http://svn/muzik-work/mvin/dotfiles'
 REMOTE_HOST='http://svn/intel_duo/mvin/dotfiles'
 #REMOTE_HOST='http://svn/intel_duo/online-file-manager/'
 
+
+REEEEEL_REMOTE_HOST='http://svn/intel_duo/mvin'
+REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
+
+
 #
 # the set of all dot files to work with
 : ${dot_files:="myaliases myvariables myfunctions"}
@@ -120,17 +127,13 @@ fCreateWorkDirectory(){
 	fi
 }
 
-fDownloadFiles(){
-	echo "Retrieve dot files from remote host?... in 4 seconds..."
-	sleep 4
 
-	for dotfile in $dot_files ; do
-		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
-	done
-}
-
-fInstallFiles(){
-	echo "Move in $(ls ${WORK_DIR}/*) to your HOME? ...in 4 seconds..."
+fCopyFromWorkToHomeDirectory(){
+	echo "Move in..."
+	echo "=========="
+	echo "$(ls ${WORK_DIR}/*)"
+	echo "=========="
+	echo "...to your HOME directory? ...in 4 seconds..."
 	sleep 4
 	#
 	# MOVE IN
@@ -141,13 +144,38 @@ fInstallFiles(){
 	done
 }
 
+fDownloadFiles(){
+	echo "Retrieve dot files from remote host?... in 4 seconds..."
+	sleep 4
+
+	for dotfile in $dot_files ; do
+		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
+	done
+}
+
+
+fCopyFromHomeToWorkDirectory(){
+#must copy from $HOME into tmp.mvin and rename to omit leading dot, then re-run:
+}
+
 fUploadFiles(){
-	echo "?... in 4 seconds..."
+	echo "Move out..."
+	echo "==========="
+	echo "$(ls ${WORK_DIR}/*)"
+	echo "==========="
+	echo "...from your HOME directory? ...in 4 seconds..."
 	sleep 4
 	#
-	# MOVE IN
-	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
-	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
+	# MOVE OUT
+	for dotfile in $dot_files ; do
+
+		if [ $? = 0 ] ; then
+			curl -F "upload_file[]=@${HOME}/.${dotfile}" -F "request=HANDLE_UPLOAD" "${REEEEEL_REMOTE_HOST}/upload/"
+		fi
+	done
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
+
 
 }
 
@@ -163,13 +191,17 @@ fCreateWorkDirectory
 
 if [ "$isDownloadOnly" = "YES" ] ; then
 	fDownloadFiles
-	
+
 elif [ "$isMvIn" = "YES" ] ; then
 	fDownloadFiles
-	fInstallFiles
-	
+	#fInstallFiles
+	#^^^fInstallFiles becomes:
+	fCopyFromWorkToHomeDirectory
+
 else
-	echo "do MvOut... (NOT IMPLEMENTED)"
+	fCopyFromHomeToWorkDirectory
+	fUploadFiles
+
 fi
 
 
