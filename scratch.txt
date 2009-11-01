@@ -1,0 +1,5 @@
+#
+# helpful on vm-f112 machines
+
+alias mvout='cd ~/mymvinproj ; svn up ; rm -rf ../tmp.mvin/ ; ./mvin.sh --mvout'
+alias getmvin='cd ~/mymvinproj ; wget http://svn/intel_duo/mvin/mvin.sh ; mv mvin.sh.1 mvin.sh ; chmod ugo+rwx mvin.sh'
