@@ -156,7 +156,11 @@ fDownloadFiles(){
 
 	for dotfile in $dot_files ; do
 #DEVEL		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
-		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile" --output-document=$dotfile
+		wget --no-verbose --output-document="${WORK_DIR}/${dotfile}" "$REMOTE_HOST/$dotfile"
+#DEVEL-ONLY
+		# when file dne on server, but does in the conf file, it will create a zero-sized file
+		[[ $? != 0 ]] && rm "${WORK_DIR}/${dotfile}"
+#DEVEL-ONLY
 	done
 }
 
@@ -196,13 +200,13 @@ fUploadFiles(){
 #===================================================================
 #
 
-# always...
-fCreateWorkDirectory
 
 if [ "$isDownloadOnly" = "YES" ] ; then
+	fCreateWorkDirectory
 	fDownloadFiles
 
 elif [ "$isMvIn" = "YES" ] ; then
+	fCreateWorkDirectory
 	fDownloadFiles
 	#fInstallFiles
 	#^^^fInstallFiles becomes:
