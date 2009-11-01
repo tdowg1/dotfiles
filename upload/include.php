@@ -1,9 +1,23 @@
 <?php
 /*********************** ***************************/
-$SELFWWW = $_SERVER['PHP_SELF'];
+$SELFWWW = $_SERVER["PHP_SELF"];
 //^^ SELFFILEWWW ?
 $SELFFULLYQUALIFIED = $_SERVER["SCRIPT_FILENAME"];
 $SELFDIRFULLYQUALIFIED = dirname($SELFFULLYQUALIFIED) . "/";
+
+/*********************** ***************************/
+
+$protocol = "http";
+//^^how to tell if https or not?  oh well, use http for now.
+$hostname = $_SERVER["HTTP_HOST"];
+$path = dirname($_SERVER["PHP_SELF"]);
+$file = basename($_SERVER["PHP_SELF"]);
+
+// like http://host.com/some/path/
+$SELFDIRWWW = $protocol . "://$hostname" . $path;
+
+// like http://host.com/some/path/someFile.php
+$SELFFILEWWW = $SELFDIRWWW . "/" . $file;
 
 /*********************** ***************************/
 

@@ -17,16 +17,19 @@ fPROMPT_USER_stub(){
 
 f_usage(){
 	local _USAGE=$(cat <<__HEREDOC__
-${0}: designed to assist in keeping your dotfiles portable and synchronized.
-Default behavior is to pull dotfiles from remote server and put under home directory.
+${0}: designed to assist in keeping your dotfiles portable and
+synchronized. Default behavior is to pull dotfiles from remote
+server and put under home directory.
 
 usage: ${0} [--mvout] [--downloadonly]
 	--mvout
-		Reverse the default "move in" behavior (and "move out").  Push dotfiles
-		from home directory to remote server.
+		Move out.
+		Reverses default "move in" behavior. Pushes or uploads
+		dotfiles (from home directory) to remote server
 	--downloadonly
-		Same as default behavior except dotfiles are not put under home directory,
-		but are left under the "tmp.mvin" folder that this script uses as its
+		Same as default behavior except dotfiles are not
+		put under home directory, but are left under the
+		"tmp.mvin" folder that this script uses as its
 		work directory.
 
 misc/notes:
@@ -75,6 +78,10 @@ while [[ "$1" = -* ]] ; do
 done
 
 
+#
+# source conf file, which should be sibling to curr script
+source "$(dirname $0)/mvin.conf"
+
 
 
 #
@@ -107,8 +114,9 @@ REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
 
 #
 # the set of all dot files to work with
-: ${dot_files:="myaliases myvariables myfunctions"}
-dot_files="inputrc mvinrc zshrc"
+#: ${dot_files:="myaliases myvariables myfunctions"}
+: ${dot_files:="inputrc mvinrc zshrc"}
+
 
 
 
@@ -162,7 +170,10 @@ fCopyFromHomeToWorkDirectory(){
 fUploadFiles(){
 	echo "Move out..."
 	echo "==========="
-	echo "$(ls ${WORK_DIR}/*)"
+#	echo "$(ls ${WORK_DIR}/*)"
+	for dotfile in $dot_files ; do
+		echo "${HOME}/.${dotfile}"
+	done
 	echo "==========="
 	echo "...from your HOME directory? ...in 4 seconds..."
 	sleep 4

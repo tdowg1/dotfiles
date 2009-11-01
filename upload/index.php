@@ -49,8 +49,18 @@ function handle_upload($relativeDirectoryName, $_FILES_upload_file){
 				$filenameTemp_relative = $relativeDirectoryName . basename($filenameTemp);
 				$filenameActual = $relativeDirectoryName . $_FILES_upload_file['name'][$key];
 
+				$html[] = "[" . basename($filenameActual) . "]";
+				if(is_file($filenameActual)){
+					$html[] = "UPDATE";
+					$html[] = "\t" . md5_file($filenameActual) . " (old md5)";
+				} else {
+					$html[] = "CREATE";
+				}
+
+
 				if(rename($filenameTemp_relative, $filenameActual)){
-					$html[] = "<p>Upload Successful - file is " . basename($filenameActual) . "</p>";
+					$html[] = "\t" . md5_file($filenameActual) . " (new md5)";
+//					$html[] = "<p>Upload Successful - file is " . basename($filenameActual) . "</p>";
 				} else {
 					$html[] = "<p>Rename UnSuccessful - file was " . basename($filenameActual) . "</p>";
 				}
@@ -95,7 +105,9 @@ switch (strtoupper($_REQUEST["request"])) {
 
 		$htmlBody[] = "hi from " . $_SERVER["PHP_SELF"];
 		$htmlBody[] = "<h2>how to upload here</h2>";
-		$htmlBody[] = 'curl -F "upload_file[0]=@FILE" -F "request=HANDLE_UPLOAD" URL';
+		$htmlBody[] = "<p>for each file, specifiy like this</p>";
+		$htmlBody[] = 'curl -F "upload_file[]==@FILE" -F "request=HANDLE_UPLOAD" ' . $SELFFILEWWW;
+
 
 }
 
@@ -116,9 +128,8 @@ fclose($fp);
  * output page content
  */
 //echo $HEADER;
-
 echo implode("\n", $htmlBody);
-
+echo "\n";
 //echo $FOOTER;
 
 
@@ -134,7 +145,7 @@ echo implode("\n", $htmlBody);
 					$endtime = $endarray[1] + $endarray[0];
 					$totaltime = $endtime - $starttime;
 					$totaltime = round($totaltime,5);
-					echo "\nThis page loaded in $totaltime seconds.\n";
+//					echo "\nThis page loaded in $totaltime seconds.\n";
 					//$ret .= "This page loaded in $totaltime seconds.";
 					/*********************** ***************************RUN AND LOAD TIME*/
 
