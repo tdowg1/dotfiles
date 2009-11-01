@@ -155,7 +155,8 @@ fDownloadFiles(){
 
 
 fCopyFromHomeToWorkDirectory(){
-#must copy from $HOME into tmp.mvin and rename to omit leading dot, then re-run:
+	#must copy from $HOME into tmp.mvin and rename to omit leading dot, then re-run:
+	echo "CALLED STUB FUNCTION:fCopyFromHomeToWorkDirectory"
 }
 
 fUploadFiles(){
@@ -223,7 +224,7 @@ MVIN_PROFILE_MVINRC='~/.mvinrc'
 grep -n ". $MVIN_PROFILE_MVINRC" "$PARENT_PROFILE"
 
 if [ $? = 0 ] ; then
-	echo $PARENT_PROFILE is patched; nothing to do
+	echo "$PARENT_PROFILE is patched; nothing to do"
 
 else
 	echo "Updating $PARENT_PROFILE to source custom profiles"
@@ -234,3 +235,4 @@ else
 	echo "# mvin.sh adds sourcing code" >> $PARENT_PROFILE
 	echo "$tmpSourcingProfile" >> $PARENT_PROFILE
 fi
+
