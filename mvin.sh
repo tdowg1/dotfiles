@@ -6,8 +6,6 @@
 #	see how other people are handling default values in their user promts
 # rename all WORK strings with WORKING strings...
 #
-# ADD
-#	argument: check-update
 #
 
 fPROMPT_USER_stub(){
@@ -115,7 +113,7 @@ REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
 #
 # the set of all dot files to work with
 #: ${dot_files:="myaliases myvariables myfunctions"}
-: ${dot_files:="inputrc mvinrc zshrc"}
+: ${dot_files:=".inputrc .mvinrc .zshrc"}
 
 
 
@@ -127,37 +125,38 @@ REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
 #===================================================================
 #
 fCreateWorkDirectory(){
-	if [ ! -d $WORK_DIR ] ; then
+#DEVEL	if [ ! -d $WORK_DIR ] ; then
 		mkdir -p "${WORK_DIR}"
-	else
-		echo "ERROR: $WORK_DIR already exists! ...I want to be the one to create it"
-		exit 2
-	fi
+#DEVEL	else
+#DEVEL		echo "ERROR: $WORK_DIR already exists! ...I want to be the one to create it"
+#DEVEL		exit 2
+#DEVEL	fi
 }
 
 
 fCopyFromWorkToHomeDirectory(){
 	echo "Move in..."
 	echo "=========="
-	echo "$(ls ${WORK_DIR}/*)"
+	echo "$(ls -A1 ${WORK_DIR}/)"
 	echo "=========="
 	echo "...to your HOME directory? ...in 4 seconds..."
-	sleep 4
+#DEVEL	sleep 4
 	#
 	# MOVE IN
 	for dotfile in $dot_files ; do
 		if [ $? = 0 ] ; then
-			cp -v "${WORK_DIR}/${dotfile}" "${HOME}/.${dotfile}"
+			cp -v "${WORK_DIR}/${dotfile}" "${HOME}/${dotfile}"
 		fi
 	done
 }
 
 fDownloadFiles(){
 	echo "Retrieve dot files from remote host?... in 4 seconds..."
-	sleep 4
+#DEVEL	sleep 4
 
 	for dotfile in $dot_files ; do
-		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
+#DEVEL		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
+		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile" --output-document=$dotfile
 	done
 }
 
@@ -170,9 +169,8 @@ fCopyFromHomeToWorkDirectory(){
 fUploadFiles(){
 	echo "Move out..."
 	echo "==========="
-#	echo "$(ls ${WORK_DIR}/*)"
 	for dotfile in $dot_files ; do
-		echo "${HOME}/.${dotfile}"
+		echo "${HOME}/${dotfile}"
 	done
 	echo "==========="
 	echo "...from your HOME directory? ...in 4 seconds..."
@@ -182,7 +180,7 @@ fUploadFiles(){
 	for dotfile in $dot_files ; do
 
 		if [ $? = 0 ] ; then
-			curl -F "upload_file[]=@${HOME}/.${dotfile}" -F "request=HANDLE_UPLOAD" "${REEEEEL_REMOTE_HOST}/upload/"
+			curl -F "upload_file[]=@${HOME}/${dotfile}" -F "request=HANDLE_UPLOAD" "${REEEEEL_REMOTE_HOST}/upload/"
 		fi
 	done
 #	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
