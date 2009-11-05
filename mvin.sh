@@ -4,13 +4,22 @@
 # should be prompting user for each dotfile
 #	see how see tahoe installer handled default values
 #	see how other people are handling default values in their user promts
-# rename all WORK strings with WORKING strings...
+# rename string: replace all WORK with WORKING
+#			^^tmp?  cause... it's really a temp directory...
 #
 #
 
-fPROMPT_USER_stub(){
-	return 0
-}
+
+#
+# ARGUMENT PARSING AND SANITY CHECKING
+#===================================================================
+#
+
+if [ $USER = 'root' ] ; then
+	echo "no root user"
+	f_usage
+	exit 1;
+fi
 
 
 f_usage(){
@@ -28,7 +37,7 @@ usage: ${0} [--mvout] [--downloadonly]
 		Same as default behavior except dotfiles are not
 		put under home directory, but are left under the
 		"tmp.mvin" folder that this script uses as its
-		work directory.
+		working directory.
 
 misc/notes:
 	lynx
@@ -40,20 +49,7 @@ __HEREDOC__
 	exit 1;
 }
 
-
-#
-# ARGUMENT PARSING AND SANITY CHECKING
-#===================================================================
-#
-
-if [ $USER = 'root' ] ; then
-	echo "no root user"
-	f_usage
-	exit 1;
-fi
-
-
-# check that $# one in (0, 1, 2)
+# check that $# is one in (0, 1, 2)
 #[ $# != 1 ] && f_usage
 
 
@@ -96,8 +92,13 @@ source "$(dirname $0)/mvin.conf"
 : ${isDownloadonly:="NO"}
 
 #
-# this programs scratch or work directory
-: ${WORK_DIR:="${HOME}/tmp.mvin"}
+# the mvin program home directory
+: ${mvinHOME:="${HOME}/.mvin"}
+#
+# mvin's temp directory.  between when files are up/downloaded and
+# copied to the home directory, each one is copied here first.
+: ${mvinTMP:="${mvinHOME}/tmp"}
+
 #
 # remote server address
 : ${REMOTE_HOST:="http://bdavies522276/mvin"}
@@ -124,51 +125,22 @@ REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
 # FUNCTIONS
 #===================================================================
 #
-fCreateWorkDirectory(){
-#DEVEL	if [ ! -d $WORK_DIR ] ; then
-		mkdir -p "${WORK_DIR}"
+fCreateWorkingDirectory(){
+	if [ ! -d $mvinHOME ] ; then
+		echo "creating $mvinTMP directory"
+		mkdir -p "${mvinTMP}"
 #DEVEL	else
-#DEVEL		echo "ERROR: $WORK_DIR already exists! ...I want to be the one to create it"
+#DEVEL		echo "ERROR: $mvinHOME already exists! ...I want to be the one to create it"
 #DEVEL		exit 2
-#DEVEL	fi
+	fi
 }
 
 
-fCopyFromWorkToHomeDirectory(){
-	echo "Move in..."
-	echo "=========="
-	echo "$(ls -A1 ${WORK_DIR}/)"
-	echo "=========="
-	echo "...to your HOME directory? ...in 4 seconds..."
-#DEVEL	sleep 4
-	#
-	# MOVE IN
-	for dotfile in $dot_files ; do
-		if [ $? = 0 ] ; then
-			cp -v "${WORK_DIR}/${dotfile}" "${HOME}/${dotfile}"
-		fi
-	done
-}
-
-fDownloadFiles(){
-	echo "Retrieve dot files from remote host?... in 4 seconds..."
-#DEVEL	sleep 4
-
-	for dotfile in $dot_files ; do
-#DEVEL		wget --no-verbose --directory-prefix="${WORK_DIR}" "$REMOTE_HOST/$dotfile"
-		wget --no-verbose --output-document="${WORK_DIR}/${dotfile}" "$REMOTE_HOST/$dotfile"
-#DEVEL-ONLY
-		# when file dne on server, but does in the conf file, it will create a zero-sized file
-		[[ $? != 0 ]] && rm "${WORK_DIR}/${dotfile}"
-#DEVEL-ONLY
-	done
-}
-
-
-fCopyFromHomeToWorkDirectory(){
+fCopyFromHomeToWorkingDirectory(){
 	#must copy from $HOME into tmp.mvin and rename to omit leading dot, then re-run:
-	echo "CALLED STUB FUNCTION:fCopyFromHomeToWorkDirectory"
+	echo "CALLED STUB FUNCTION:fCopyFromHomeToWorkingDirectory"
 }
+
 
 fUploadFiles(){
 	echo "Move out..."
@@ -193,27 +165,64 @@ fUploadFiles(){
 
 }
 
+fForeachDotfileDoDownload(){
+	remoteSourceDirectory="$1"
+	localDestinationDirectory="$2"
+
+	for dotfile in $dot_files ; do
+		fDownload "$remoteSourceDirectory/${dotfile}" "$localDestinationDirectory/${dotfile}"
+	done
+}
+
+fDownload(){
+	remoteSource="$1"
+	localDestination="$2"
+
+#DEVEL		wget --no-verbose --directory-prefix="${mvinHOME}" "$REMOTE_HOST/$dotfile"
+	wget --no-verbose --output-document="$localDestination" "$remoteSource"
+}
+
+fForeachDotfileDoCopy(){
+	sourceDirectory="$1"
+	destinationDirectory="$2"
+
+	for dotfile in $dot_files ; do
+		fCopy "$sourceDirectory/${dotfile}" "$destinationDirectory/${dotfile}"
+	done
+}
+
+fCopy(){
+	# simply a wrapper for cp
+	cp -v "$1" "$2"
+}
+
+
 
 
 #
 # MAIN
 #===================================================================
 #
+SLEEPTIME=1
+
+if [ "$isMvIn" = "YES" -o "$isDownloadOnly" = "YES" ] ; then
+	fCreateWorkingDirectory
+
+	echo "Retrieve dot files from remote host?... in $SLEEPTIME seconds..."
+	sleep $SLEEPTIME
+	fForeachDotfileDoDownload "$REMOTE_HOST" "$mvinTMP"
+
+	[[ "$isDownloadOnly" = "YES" ]] && break
 
 
-if [ "$isDownloadOnly" = "YES" ] ; then
-	fCreateWorkDirectory
-	fDownloadFiles
+	echo "Move downloaded dotfiles into HOME (HOME files overwritten"
+	echo "if they exist)? ...in $SLEEPTIME seconds..."
+	sleep $SLEEPTIME
+	fForeachDotfileDoCopy "$mvinTMP" "$HOME"
 
-elif [ "$isMvIn" = "YES" ] ; then
-	fCreateWorkDirectory
-	fDownloadFiles
-	#fInstallFiles
-	#^^^fInstallFiles becomes:
-	fCopyFromWorkToHomeDirectory
 
 else
-	fCopyFromHomeToWorkDirectory
+	fCopyFromHomeToWorkingDirectory
 	fUploadFiles
 
 fi
