@@ -109,6 +109,7 @@ REMOTE_HOST='http://svn/intel_duo/mvin/dotfiles'
 
 REEEEEL_REMOTE_HOST='http://svn/intel_duo/mvin'
 REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
+REMOTE_UPLOAD_DIRECTORY="${REEEEEL_REMOTE_HOST}/upload/"
 
 
 #
@@ -136,35 +137,6 @@ fCreateWorkingDirectory(){
 }
 
 
-fCopyFromHomeToWorkingDirectory(){
-	#must copy from $HOME into tmp.mvin and rename to omit leading dot, then re-run:
-	echo "CALLED STUB FUNCTION:fCopyFromHomeToWorkingDirectory"
-}
-
-
-fUploadFiles(){
-	echo "Move out..."
-	echo "==========="
-	for dotfile in $dot_files ; do
-		echo "${HOME}/${dotfile}"
-	done
-	echo "==========="
-	echo "...from your HOME directory? ...in 4 seconds..."
-	sleep 4
-	#
-	# MOVE OUT
-	for dotfile in $dot_files ; do
-
-		if [ $? = 0 ] ; then
-			curl -F "upload_file[]=@${HOME}/${dotfile}" -F "request=HANDLE_UPLOAD" "${REEEEEL_REMOTE_HOST}/upload/"
-		fi
-	done
-#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
-#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
-
-
-}
-
 fForeachDotfileDoDownload(){
 	remoteSourceDirectory="$1"
 	localDestinationDirectory="$2"
@@ -181,6 +153,25 @@ fDownload(){
 #DEVEL		wget --no-verbose --directory-prefix="${mvinHOME}" "$REMOTE_HOST/$dotfile"
 	wget --no-verbose --output-document="$localDestination" "$remoteSource"
 }
+
+fForeachDotfileDoUpload(){
+	localSourceDirectory="$1"
+	remoteDestinationDirectory="$2"
+
+	for dotfile in $dot_files ; do
+		fUpload "$localSourceDirectory/${dotfile}" "$remoteDestinationDirectory"
+	done
+}
+
+fUpload(){
+	localSource="$1"
+	remoteDestination="$2"
+
+	curl -F "upload_file[]=@${localSource}" -F "request=HANDLE_UPLOAD" "${remoteDestination}"
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
+}
+
 
 fForeachDotfileDoCopy(){
 	sourceDirectory="$1"
@@ -208,23 +199,29 @@ SLEEPTIME=1
 if [ "$isMvIn" = "YES" -o "$isDownloadOnly" = "YES" ] ; then
 	fCreateWorkingDirectory
 
-	echo "Retrieve dot files from remote host?... in $SLEEPTIME seconds..."
+	echo "Retrieve dotfiles from remote host?... in $SLEEPTIME seconds..."
 	sleep $SLEEPTIME
 	fForeachDotfileDoDownload "$REMOTE_HOST" "$mvinTMP"
 
-	[[ "$isDownloadOnly" = "YES" ]] && break
+	[[ "$isDownloadOnly" = "YES" ]] && exit 0
 
 
-	echo "Move downloaded dotfiles into HOME (HOME files overwritten"
+	echo "Copy dotfiles from $mvinTMP to HOME (files are overwritten"
 	echo "if they exist)? ...in $SLEEPTIME seconds..."
 	sleep $SLEEPTIME
 	fForeachDotfileDoCopy "$mvinTMP" "$HOME"
 
 
 else
-	fCopyFromHomeToWorkingDirectory
-	fUploadFiles
+	echo "Copy dotfiles from HOME to $mvinTMP (files are overwritten"
+	echo "if they exist)? ...in $SLEEPTIME seconds..."
+	sleep $SLEEPTIME
+	fForeachDotfileDoCopy "$HOME" "$mvinTMP"
 
+
+	echo "Upload dotfiles to remote host?... in $SLEEPTIME seconds..."
+	sleep $SLEEPTIME
+	fForeachDotfileDoUpload "$mvinTMP" "$REMOTE_UPLOAD_DIRECTORY"
 fi
 
 
