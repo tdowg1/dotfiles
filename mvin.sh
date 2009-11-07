@@ -6,6 +6,9 @@
 #	see how other people are handling default values in their user promts
 # rename string: replace all WORK with WORKING
 #			^^tmp?  cause... it's really a temp directory...
+# give a thought to renaming all __foreach__ functions like...
+#	fforeachDotfile_COPY
+#
 #
 #
 
@@ -33,7 +36,9 @@ usage: ${0} [--mvout] [--downloadonly]
 		Move out.
 		Reverses default "move in" behavior. Pushes or uploads
 		dotfiles (from home directory) to remote server
+
 	--downloadonly
+**DISABLED**
 		Same as default behavior except dotfiles are not
 		put under home directory, but are left under the
 		"tmp.mvin" folder that this script uses as its
@@ -41,6 +46,7 @@ usage: ${0} [--mvout] [--downloadonly]
 
 misc/notes:
 	lynx
+	wget
 	curl
 __HEREDOC__
 )
@@ -49,13 +55,19 @@ __HEREDOC__
 	exit 1;
 }
 
-# check that $# is one in (0, 1, 2)
-#[ $# != 1 ] && f_usage
+# ensure at least 1 argument is given
+[ $# = 0 ] && f_usage
 
-
+ACTION=
 while [[ "$1" = -* ]] ; do
   case "$1" in
+    --download) # no-value arg
+			ACTION=download
+			shift
+			;;
+
     --mvout) # no-value arg
+			ACTION=upload
 			isMvIn="NO"
 			shift
 			;;
@@ -85,9 +97,15 @@ source "$(dirname $0)/mvin.conf"
 # like cfparam=* required=yes
 #: ${TEMPDIR2:?ERROR: not specified}
 : ${HOME:?ERROR: HOME variable must be set}
+: ${REMOTE_HOST_MVIN_ADDRESS:?ERROR: REMOTE_HOST_MVIN_ADDRESS variable must be set (see mvin.conf)}
+if [ ${#ACTION} = 0 ] ; then
+	echo "don't know what to do"
+	f_usage
+fi
+
 
 #
-# like cfparam=*
+# like cfparam=* required=no
 : ${isMvIn:="YES"}
 : ${isDownloadonly:="NO"}
 
@@ -101,15 +119,8 @@ source "$(dirname $0)/mvin.conf"
 
 #
 # remote server address
-: ${REMOTE_HOST:="http://bdavies522276/mvin"}
-REMOTE_HOST='http://svn/muzik-work/mvin/dotfiles'
-REMOTE_HOST='http://svn/intel_duo/mvin/dotfiles'
-#REMOTE_HOST='http://svn/intel_duo/online-file-manager/'
-
-
-REEEEEL_REMOTE_HOST='http://svn/intel_duo/mvin'
-REMOTE_HOST="${REEEEEL_REMOTE_HOST}/dotfiles"
-REMOTE_UPLOAD_DIRECTORY="${REEEEEL_REMOTE_HOST}/upload/"
+REMOTE_DOWNLOAD_DIRECTORY="${REMOTE_HOST_MVIN_ADDRESS}/dotfiles"
+REMOTE_UPLOAD_DIRECTORY="${REMOTE_HOST_MVIN_ADDRESS}/upload/"
 
 
 #
@@ -149,8 +160,6 @@ fForeachDotfileDoDownload(){
 fDownload(){
 	remoteSource="$1"
 	localDestination="$2"
-
-#DEVEL		wget --no-verbose --directory-prefix="${mvinHOME}" "$REMOTE_HOST/$dotfile"
 	wget --no-verbose --output-document="$localDestination" "$remoteSource"
 }
 
@@ -166,10 +175,7 @@ fForeachDotfileDoUpload(){
 fUpload(){
 	localSource="$1"
 	remoteDestination="$2"
-
 	curl -F "upload_file[]=@${localSource}" -F "request=HANDLE_UPLOAD" "${remoteDestination}"
-#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
-#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
 }
 
 
@@ -196,14 +202,12 @@ fCopy(){
 #
 SLEEPTIME=1
 
-if [ "$isMvIn" = "YES" -o "$isDownloadOnly" = "YES" ] ; then
+if [ "$ACTION" = "download" ] ; then
 	fCreateWorkingDirectory
 
 	echo "Retrieve dotfiles from remote host?... in $SLEEPTIME seconds..."
 	sleep $SLEEPTIME
-	fForeachDotfileDoDownload "$REMOTE_HOST" "$mvinTMP"
-
-	[[ "$isDownloadOnly" = "YES" ]] && exit 0
+	fForeachDotfileDoDownload "$REMOTE_DOWNLOAD_DIRECTORY" "$mvinTMP"
 
 
 	echo "Copy dotfiles from $mvinTMP to HOME (files are overwritten"
@@ -212,7 +216,7 @@ if [ "$isMvIn" = "YES" -o "$isDownloadOnly" = "YES" ] ; then
 	fForeachDotfileDoCopy "$mvinTMP" "$HOME"
 
 
-else
+else if [ "$ACTION" = "upload" ] ; then
 	echo "Copy dotfiles from HOME to $mvinTMP (files are overwritten"
 	echo "if they exist)? ...in $SLEEPTIME seconds..."
 	sleep $SLEEPTIME

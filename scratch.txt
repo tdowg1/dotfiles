@@ -7,4 +7,8 @@ alias getmvin='cd ~/mymvinproj ; wget http://svn/intel_duo/mvin/mvin.sh ; mv mvi
 alias cpmvintosvn='cp ~/.mvin/mvin.sh /mnt/sshfssvn/var/www/html/intel_duo/mvin/mvin.sh'
 alias cpmvintophisata='cp /mnt/sshfssvn/var/www/html/intel_duo/mvin/mvin.sh ~/.mvin/mvin.sh'
 
- 
+
+#
+# other curl shtuffs
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
