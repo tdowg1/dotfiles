@@ -32,8 +32,13 @@ synchronized. Default behavior is to pull dotfiles from remote
 server and put under home directory.
 
 usage: ${0} [--mvout] [--downloadonly]
-	--mvout
+	--download
+		Probably the most common.
+		Download dotfiles from remote server (see mvin.conf) and put them under
+		your HOME.
+	--upload
 		Move out.
+		Upload dotfiles from your HOME directory to remote server.
 		Reverses default "move in" behavior. Pushes or uploads
 		dotfiles (from home directory) to remote server
 
@@ -65,8 +70,7 @@ while [[ "$1" = -* ]] ; do
 			ACTION=download
 			shift
 			;;
-
-    --mvout) # no-value arg
+    --upload) # no-value arg
 			ACTION=upload
 			isMvIn="NO"
 			shift
@@ -138,7 +142,7 @@ REMOTE_UPLOAD_DIRECTORY="${REMOTE_HOST_MVIN_ADDRESS}/upload/"
 #===================================================================
 #
 fCreateWorkingDirectory(){
-	if [ ! -d $mvinHOME ] ; then
+	if [ ! -d $mvinHOME -o ! -d $mvinTMP ] ; then
 		echo "creating $mvinTMP directory"
 		mkdir -p "${mvinTMP}"
 #DEVEL	else
@@ -216,7 +220,7 @@ if [ "$ACTION" = "download" ] ; then
 	fForeachDotfileDoCopy "$mvinTMP" "$HOME"
 
 
-else if [ "$ACTION" = "upload" ] ; then
+elif [ "$ACTION" = "upload" ] ; then
 	echo "Copy dotfiles from HOME to $mvinTMP (files are overwritten"
 	echo "if they exist)? ...in $SLEEPTIME seconds..."
 	sleep $SLEEPTIME
