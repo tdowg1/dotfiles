@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# this file to be sourced at shell login 
+
+
+
+## ### #### ###################################################################
+##
+## teelah customs -- 'general' ALIASES
+## ### #### ###################################################################
+alias vib='vim ~/.mvin-profile'    # edit this file easily+quickly!
+
+
+alias l='ls -l'
+alias la='ls -la'
+alias lh='ls -lh'
+alias lt='ls -lt'
+alias ltr='ls -ltr'
+alias trll='ls -ltr'    # same as ltr
+alias ltrr='ls -lt'     # same as alias lt
+alias ltra='ls -ltra'
+alias lld='ls -ld'
+alias df='df -hT'
+alias mountdev='mount | grep /dev'
+alias mdstat='more /proc/mdstat'
+alias sshsvn='ssh -2XC tyler@svn'
+# dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
+#alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
+
+
+
+##
+## teelah customs -- PLACES
+## ### #### ###################################################################
+alias cdb='cd ~/bin ; pwd'
+alias cdt='cd ~/tmp ; pwd'
+
+
+
+alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
+# h='/mnt/a14-h/hA4-465'
+
+######(within svn://de/2s/bin), aptly named: r
+#^candel
+#alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
+alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
+alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
+
+
+
+##
+## teelah customs -- variables
+## ### #### ###################################################################
+export PATH=${PATH}:/opt/bin:/opt/bin/filemanagement:/opt/bin/filename_transformations
+
+
+
+
+##
+## teelah customs -- functions
+## ### #### ###################################################################
+helpmd5(){
+(
+        cat <<'__HERE__'
+
+        CREATE:: # cd $DIR
+find . -type f -exec md5sum '{}' \; >> md5sum.md5
+
+        VALIDATE:: (shows only failures) # cd $DIR
+md5sum --check md5sum.md5 | grep ' FAILED'
+__HERE__
+)
+}
+
+helpsynergy(){
+(
+        cat <<'__HERE__'
+renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
+# ( ... see also (my custom): pssynergy)
+__HERE__
+)
+}
+
+helprsnapshotdiffall(){
+        echo "prev=INITIAL; for i in $(ls -tr) ; do echo ; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; done"
+}
+
+pssynergy(){
+        echo '  PID TTY          TIME  NI COMMAND'
+        ps -eo "%p %y %x %n %c" | grep synergy
+}
+
+#mansearch
+#       whatis
+#       apropos
+update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
+export PATH=${PATH}:${update_PATH_with_teelah_utils}
+
+export EDITOR=vi
+
+echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
+
+
