@@ -1,3 +1,6 @@
+#
+# to use (at least in bash) say like# bind -f inputrc
+#
 # do not bell on tab-completion
 set bell-style none
 
@@ -15,7 +18,9 @@ $if mode=emacs
 # for linux console and RH/Debian xterm
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
+# (page up)
 "\e[5~": beginning-of-history
+# (page down)
 "\e[6~": end-of-history
 "\e[3~": delete-char
 "\e[2~": quoted-insert
@@ -35,7 +40,19 @@ $if mode=emacs
 "\e[H": beginning-of-line
 "\e[F": end-of-line
 
+# added by olof
+"\eO5D": backward-word
+"\eO5C": forward-word
 
+
+#FROM PHISATA:
+# added by bdavies (ARINC::PuTTYv0.60--to--RH)
+# (control+left)
+"\eOD": backward-word
+# (control+right)
+"\eOC": forward-word
+
+#/FROM PHISATA:
 
 #
 # for PuTTY
@@ -52,10 +69,15 @@ $if mode=emacs
 #[4~
 #"\e[OC": forward-word
 #"OC": forward-word
-"OC": forward-word
+#
+#phisata:turn off
+#"OC": forward-word
 #"\e[OD": backward-word
 #"OD": backward-word
-"OD": backward-word
+
+#
+#phisata:turn off
+#"OD": backward-word
 
 $endif
 
