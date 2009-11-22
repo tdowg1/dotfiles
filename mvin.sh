@@ -27,20 +27,51 @@ fi
 
 f_usage(){
 	local _USAGE=$(cat <<__HEREDOC__
-${0}: designed to assist in keeping your dotfiles portable and
+${0}:
+designed to assist in keeping your dotfiles portable and
 synchronized. Default behavior is to pull dotfiles from remote
 server and put under home directory.
 
-usage: ${0} [--mvout] [--downloadonly]
+USAGE: ${0} --[download|upload|shellrc] [--downloadonly]
 	--download
 		Probably the most common.
 		Download dotfiles from remote server (see mvin.conf) and put them under
 		your HOME.
+		Do this when you want to get the "latest" dotfile copy set. This will
+		obviously overwrite the dotfiles in your home directory.
 	--upload
-		Move out.
 		Upload dotfiles from your HOME directory to remote server.
 		Reverses default "move in" behavior. Pushes or uploads
-		dotfiles (from home directory) to remote server
+		dotfiles (from home directory) to remote server.
+
+		Do this after you have: (1) performed a --download and subsequently
+		(2) updated dotfile(s) content and wish to OVERWRITE whatever is on
+		remote server.
+		|----> If you've forgotten what content is actually on the remote
+		server and wish to know whats about to be overwriten, see --downloadonly
+		option.
+
+	--shellrc=ACTION
+	ACTIONS:
+		add [--rc=FILE] --source=FILE
+			Adds a source statement to your shell environment profile (the --rc
+			argument) in order to have it automatically source a specified file
+			(the --source argument) upon your login.
+
+			Program assumes there will be a MAXIMUM of 1 source statement added
+			to a given shell environment profile.  Meaning, after executing this
+			with the add ACTION, before another add ACTION occurs, a remove ACTION
+			(below) occurs.
+		remove [--rc=FILE]
+			Opposite of add.
+			Tries to remove any source statement it previously inserted.
+
+		info
+**DISABLED**
+			get nfo about what this program knows about your shell environment such as
+				* your shell environment profile / rc file (~/.bashrc, ~/.zshrc)
+				* whether or not this program has modified said shellrc file and,
+				if it did, the contents.
 
 	--downloadonly
 **DISABLED**
@@ -63,7 +94,11 @@ __HEREDOC__
 # ensure at least 1 argument is given
 [ $# = 0 ] && f_usage
 
-ACTION=
+#
+# source conf file, which should be sibling to curr script
+source "$(dirname $0)/mvin.conf"
+
+
 while [[ "$1" = -* ]] ; do
   case "$1" in
     --download) # no-value arg
@@ -72,14 +107,39 @@ while [[ "$1" = -* ]] ; do
 			;;
     --upload) # no-value arg
 			ACTION=upload
-			isMvIn="NO"
+#			isMvIn="NO"
 			shift
 			;;
+    --shellrc=?*) # specified like: --shellrc=FILE
+#			SHELLRCACTION=${1#--shellrc=}
+			ACTION="${1#--shellrc=}"
+			isShellrc="YES"
+			shift
+			;;
+    --rc=?*) # specified like: --rc=FILE
+    		SHELL_RC="${1#--rc=}"
+
+    		if [ "$isShellrc" != "YES" ] ; then
+				echo "ERROR invalid argument $1"
+				f_usage
+			fi
+			shift
+			;;
+    --source=?*) # specified like: --source=FILE
+    		FILE_TO_SOURCE_WITHIN_SHELL_RC="${1#--source=}"
+
+    		if [ "$isShellrc" != "YES" ] ; then
+				echo "ERROR invalid argument $1"
+				f_usage
+			fi
+			shift
+			;;
+
+
     --downloadonly) # no-value arg
 			isDownloadOnly="YES"
 			shift
 			;;
-
     *)
 		echo "ERROR case matched wildcard"
 		f_usage
@@ -88,30 +148,29 @@ while [[ "$1" = -* ]] ; do
 done
 
 
-#
-# source conf file, which should be sibling to curr script
-source "$(dirname $0)/mvin.conf"
-
-
 
 #
 # VARIABLE PARAMS/INITIALIZATION
 #===================================================================
 #
 # like cfparam=* required=yes
-#: ${TEMPDIR2:?ERROR: not specified}
 : ${HOME:?ERROR: HOME variable must be set}
 : ${REMOTE_HOST_MVIN_ADDRESS:?ERROR: REMOTE_HOST_MVIN_ADDRESS variable must be set (see mvin.conf)}
-if [ ${#ACTION} = 0 ] ; then
-	echo "don't know what to do"
-	f_usage
-fi
+: ${ACTION:?ERROR: dont know what you want me to do (ACTION not set)}
+#if [ ${#ACTION} = 0 ] ; then
+#	echo ""
+#	f_usage
+#fi
 
 
 #
 # like cfparam=* required=no
-: ${isMvIn:="YES"}
+#: ${isMvIn:="YES"}
 : ${isDownloadonly:="NO"}
+: ${isShellrc:="NO"}
+	#DEV-----
+	FILE_TO_SOURCE_WITHIN_SHELL_RC="$HOME/.mvin/dotfiles/.mvinrc"
+
 
 #
 # the mvin program home directory
@@ -131,8 +190,6 @@ REMOTE_UPLOAD_DIRECTORY="${REMOTE_HOST_MVIN_ADDRESS}/upload/"
 # the set of all dot files to work with
 #: ${dot_files:="myaliases myvariables myfunctions"}
 : ${dot_files:=".inputrc .mvinrc .zshrc"}
-
-
 
 
 
