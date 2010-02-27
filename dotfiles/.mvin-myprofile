@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# this file to be sourced at shell login 
+# this file to be sourced at shell login, currently...
+#	phisata: by .bashrc
+#	svn:
+#	vm-f112:
 
 
 
@@ -8,11 +11,15 @@
 ##
 ## teelah customs -- 'general' ALIASES
 ## ### #### ###################################################################
-alias vib='vim ~/.mvin-profile'    # edit this file easily+quickly!
+#alias vib='vim /etc/profile'    # edit this file easily+quickly!
+alias vib='vim ~/.mvin-myprofile'    # edit this file easily+quickly!
 
 
 alias l='ls -l'
 alias la='ls -la'
+alias lla='ls -la'
+alias l.='ls -la'
+alias li='ls -li'
 alias lh='ls -lh'
 alias lt='ls -lt'
 alias ltr='ls -ltr'
@@ -33,25 +40,118 @@ alias sshsvn='ssh -2XC tyler@svn'
 ## teelah customs -- PLACES
 ## ### #### ###################################################################
 alias cdb='cd ~/bin ; pwd'
+alias lb='ls -l ~/bin'
 alias cdt='cd ~/tmp ; pwd'
 
 
+##
+## teelah customs -- THINGS
+## ### #### ###################################################################
+export MAIL=/var/spool/mail/$USER
 
+
+
+## 
+## PHISATA-specific places...
 alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
-# h='/mnt/a14-h/hA4-465'
-
-######(within svn://de/2s/bin), aptly named: r
-#^candel
 #alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
 alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
 alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
+## /PHISATA-specific places...
+##
+
+
+# if less than a page of output, stop it.
+#alias less='less --QUIT-AT-EOF'
+
+
+
+# tell svn to show log messages of the 2 most recent commits
+alias svnlog='svn log -r PREV:COMMITTED'
+
+
+
+
+
+#mansearch
+#       whatis
+#       apropos
+
+
+
+update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
+export PATH=${PATH}:${update_PATH_with_teelah_utils}
+
+export EDITOR=vim
+export SVN_EDITOR=vim
+
 
 
 
 ##
-## teelah customs -- variables
-## ### #### ###################################################################
-export PATH=${PATH}:/opt/bin:/opt/bin/filemanagement:/opt/bin/filename_transformations
+## FROM SVN.HOME MACHINE...
+export PATH=$PATH:/sbin:/usr/sbin
+
+# BASIX
+#not sure if need these...
+   #set -o emacs
+   #bind -f /etc/inputrc
+
+# PROGS
+export PAGER="most"
+
+
+##
+## SVN.HOME-specific places...
+alias p1='cd /mnt/physical465.i ; echo "cd "`pwd`'
+alias pi='cd /mnt/physical465.i ; echo "cd "`pwd`'
+alias p2='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+alias pii='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+alias tmp='cd /tmp ; echo "cd "`pwd`'
+
+# need this so that when I create shtuff, other users in same group can manipulate them
+umask 0002
+
+# message to user
+#echo "[reminder of essential aliases...]"
+#echo "alias | grep -i phy"
+#alias | grep -i phy
+
+
+## /FROM SVN.HOME MACHINE...
+##
+
+
+
+
+
+
+
+
+##
+# only display text on interactive sessions
+# (need to do this because, for instance, scp will fail for remote user)
+#
+if tty -s ; then
+	echo "still todo: cleanout vib / .mvin-myprofile"
+
+	if false ; then
+	echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
+
+	echo "[MESSAGES FROM SVN.HOME]"
+	echo "[helpful message wrt configuring dotfiles]"
+	echo "  vim flashes (try ESC, ESC), but that's about it"
+	echo "  for user smbmuzik:"
+	echo "          pretty cool setup, uses zsh, vi colors are nice, etc."
+	echo "          vi tab: think I just realied this, but Im guessing Tim's vi profile has it inserting spaces FOR TABS, which is reel annoying.  if I want a tab char, I type tab damnit."
+	echo "          flashing happens everywhere, pretty annoything"
+	fi
+
+fi
+
+
+
+
 
 
 
@@ -90,14 +190,82 @@ pssynergy(){
         ps -eo "%p %y %x %n %c" | grep synergy
 }
 
-#mansearch
-#       whatis
-#       apropos
-update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
-export PATH=${PATH}:${update_PATH_with_teelah_utils}
 
-export EDITOR=vi
+helphardinfo(){
+	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
+}
 
-echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
+helphardinfo2(){
+	echo 'while [ true ] ; do hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20; date; sleep 30; echo ; echo ; done'
+}
+
+helppar2(){
+	echo 'par2 create -v -v -r5 -l -f0 -- BASEname.par2 BASEname.part*  > ../par2-create.log'
+	echo '... for example'
+	echo '	par2 create -v -v -r10 -l -f0 -- dswww2009-12-12.par2 dswww2009-12-12.part* > ../par2-create.log'
+}
+
+helpmdadm(){
+	echo 'sudo mdadm --assemble --scan'
+}
+
+helpsvnpropset(){
+	echo 'svn propset svn propval proppath'
+	echo 'example'
+	echo '	svn propset svn executable fileToMakeExecutable'
+}
+
+
+
+##
+## these functions from svn.home!!!!!!
+smartctl(){
+   echo
+   echo "   # LIST ATTRIBUTES"
+   echo 'smartctl -a /dev/sda ; echo ; echo ; smartctl -a /dev/sdb ; echo ; echo;  echo; smartctl -a /dev/sdc'
+   echo '   # LONG TEST'
+   echo 'smartctl -t long /dev/sda'
+   echo 'echo "sleep for 35 minutes" && sleep 2100'
+   echo 'smartctl -t long /dev/sdb'
+   echo 'echo "sleep for 150 minutes" && sleep 2100'
+   echo 'smartctl -t long /dev/sdc'
+   echo 'echo "sleep for 150 minutes" && sleep 2100'
+}
+
+
+helpsvn(){
+   echo '   # svnadmin RECOVER, VERIFY, DUMP all muzik-repos'
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik3'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik3'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik3 > muzik3.dump'
+   echo
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik1 > muzik1.dump'
+   echo
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik1 > muzik1.dump'
+}
+
+helpsamba(){
+   echo '[root@svn ~]# nmblookup intel_duo'
+   echo 'querying intel_duo on 192.168.1.255'
+}
+
+helpdmddevel(){
+   echo 'for syncing thumb drive changes (intel_duo) onto svn webserver:'
+   echo "   watch -n 5 'rsync -av /mnt/intel_duo-q/usr/eclipse/eclipse-SDK-3.4.svn-ws.home/dmd.www-trunk--webroot/ /home/tyler/html/webroot2/'"
+
+   echo 'for updating PUBLIC dmd.com web server w changes from svn:'
+   echo '   first EXPORT'
+   echo '      svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/'
+
+   echo '   second COPY'
+   echo '   rsync -n -rt -v --delete  webroot2.x/ drmarkda@drmarkdavies.com:./public_html/'
+   echo '(^^and remove the "-n" to do it for reel'
+}
+## /////these functions from svn.home!!!!!!
+##
 
 
