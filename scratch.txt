@@ -1,0 +1,40 @@
+#
+# helpful on vm-f112 machines / things to help with development
+
+mount | grep sshfssvn || echo "sshfssvn IS NOT mounted; calling mount now..."
+su -c 'mount /mnt/sshfssvn'
+
+alias mvout='cd ~/mymvinproj ; svn up ; rm -rf ../tmp.mvin/ ; ./mvin.sh --mvout'
+alias getmvin='cd ~/mymvinproj ; wget http://svn/intel_duo/mvin/mvin.sh ; mv mvin.sh.1 mvin.sh ; chmod ugo+rwx mvin.sh'
+
+alias cpmvintosvn='cp ~/.mvin/mvin.sh /mnt/sshfssvn/var/www/html/intel_duo/mvin/mvin.sh'
+alias cpmvintophisata='cp /mnt/sshfssvn/var/www/html/intel_duo/mvin/mvin.sh ~/.mvin/mvin.sh'
+
+# helpful to par@svn~ dir
+alias mi='./mvin.sh'
+
+#
+# other commandline nw shtuffs
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" http://svn/intel_duo/online-file-manager/
+#	curl -F "upload_file[]=@e-muzik.list" -F "request=HANDLE_UPLOAD" $REMOTE_HOST
+#	lynx
+#	wget
+#	curl
+
+
+# set of test cases to run
+./mvin.sh pull ; echo $?
+./mvin.sh push ; echo $?
+./mvin.sh diff ; echo $?
+sleep 5
+./mvin.sh help ; echo $?
+./mvin.sh asdf ; echo $?
+
+
+# set of info to give for each dotfile... (thinking out loud here...)
+#
+path
+size
+no. lines
+?checksum?
+
