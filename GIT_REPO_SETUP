@@ -1,0 +1,12 @@
+''NOTE: copied from github, when it was explaining howto get started with newly created github repo''
+''NOTE: see also: http://help.github.com/create-a-repo/''
+
+Next steps
+  mkdir dotfiles
+  cd dotfiles
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:tdowg1/dotfiles.git
+  git push -u origin master
