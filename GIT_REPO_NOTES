@@ -1,0 +1,12 @@
+
+Notable steps performed to get git where it is now
+
+Obtain a clone of the mvin project from svn so have version history.
+* git svn clone svn://svn/de/trunk/ -T proj/mvin -b proj-branches/mvin -t proj-tags/mvin
+** creates (new git repo) folder: trunk
+renamed to trunk.proj.mvin
+
+Merge the cloned repo into this curr git repo
+* git checkout -b "home-machines"
+* git pull /tmp/trunk.proj.mvin
+
