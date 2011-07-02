@@ -1,0 +1,5 @@
+* start with ARINC dotfiles
+** see dropbox, etc.
+
+* hopefully, ending with current dotfiles on magnificent machine (which is a descendent version of ARINC-created dotfiles)
+
