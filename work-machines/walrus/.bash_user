@@ -1,98 +1,42 @@
 #!/bin/bash
-
-
-#_FCR_SETUP_VALUE=6349
-_FCR_SETUP_VALUE=`~/bin/bdaviesCurrCr.sh`
-#_FCR_SETUP_VALUE=6371
-#_FCR_SETUP_VALUE=6474
-
-
-#######################################################################
-# File:  bash_user_dev.env
-#######################################################################
-# TEMPLATE .bash_user file for development.
 #
-# This file was intended to be tailored by individual users.
+# keyboard, bindings, input, env settings hacks... FIXES!!... etc.
 #
-# Copy to your login account under .bash_user.  This file will be
-# automatically sourced during login.
-#######################################################################
+
+# (fix due to gnms .bash_user_dev) BACKUP ps1
+myPS1=$PS1
 
 
-######################################################################
-####################    MAIN PROCESSING  #############################
-######################################################################
-GRP="$(/usr/bin/groups | awk '{print $1}' )"
-GRP="$(echo ${GRP} | awk -F \) '{print $1}' )"
-ME=$(/usr/bin/whoami)
-CT=/opt/rational/clearcase/bin/cleartool
-#set -o vi
+source ~/.dotfiles/bash_user_dev.env
+
+# (fix due to gnms .bash_user_dev) RESTORE ps1
+export PS1=$myPS1
+
+# (fix due to gnms .bash_user_dev) reset shell option
 set -o emacs
 
-######################################################################
-# Set up for ClearCase
-######################################################################
-alias cout='$CT checkout -nc '
-alias cin='$CT checkin -nc '
-alias cpe='clearprojexp'
-alias xcc='xclearcase'
-
-#fcr_setup $_FCR_SETUP_VALUE
-# ACTIVATES VIEW:::
-fcr $_FCR_SETUP_VALUE
-
-
-
-
-# Set prompt.  \u: user, \h: hostname \w: pwd \$: # if root, else $
-#PS1='[DEV: \u@\h]\$ '
-#export PS1
-
-#
-## --bdavies customs--
-#
-
-### keyboard, bindings, input, env settings hacks...
+# (fix due to gnms .bash_profile)
 # make backspace not output ^? in vi when remotely connected (via PuTTy)
 /bin/stty erase \^?
 
 
 #
-## the ~/bin/ path is set in PATH already...
+# makes anything defined automatically exported
+set -o allexport
 #
 
-#set -o emacs
 
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-# put most recently touched at bottom
-alias lr='ls -ltr'
-alias ltr='ls -ltr'
-alias lta='ls -lta'
-alias ltra='ls -ltra'
+#############################################
+# CLEARCASE SETUP SHTUFF
+#############################################
+#_FCR_SETUP_VALUE=6349
+export _FCR_SETUP_VALUE=`~/bin/bdaviesCurrCr.sh`
+#_FCR_SETUP_VALUE=6371
+#_FCR_SETUP_VALUE=6474
 
-# make human readable
-alias lh='ls -lh'
-alias lld='ls -ld'
-
-alias cdb='cd ~/bin ; ls -l'
-alias cdt='cd ~/tmp ; ls -l'
-
-# change into view directory 
-alias cdv='cd ${CRBASE} ; pwd'
-
-
-alias vib='vi ~/.bash_user'
-alias proj='echo "launching ClearCase project explorer / clearprojexp" ; clearprojexp &'
-alias explorer='use *expl* instead!  ... (dummy)'
-alias expl='echo "launching ClearCase file browser / explorer" ; xclearcase &'
-alias nv='netview &'
-
-alias rmmedia='sudo rm -rf ~/media*'
-alias sudohack='~/bin/sudohack.sh &'
-alias hacksudo='~/bin/sudohack.sh &'
-
+#fcr_setup $_FCR_SETUP_VALUE
+# ACTIVATES VIEW:::
+fcr $_FCR_SETUP_VALUE
 
 
 ##
@@ -107,25 +51,11 @@ BDAVIES_CURR_CR="$HOME/bin/bdaviesCurrCr.sh"
 echo "[$BDAVIES_CURR_CR]: $($BDAVIES_CURR_CR)"
 echo "to set view: fcr CRNUMBER"
 ##
+#############################################
+# /CLEARCASE SETUP SHTUFF
+#############################################
 
-#BDAVIESPC=bdavies522276
 
-
-
-helpmd5(){
-	echo "cd $DIR ; find . -type f -exec md5sum '{}' \; > dir.md5"
-	echo "cd $DIR ; md5sum --check dir.md5 | grep -v ' FAILED'"
-}
-helpclearcase(){
-	echo "	recursive CHECKOUT"
-	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool co -nc \$CLEARCASE_PN'"
-	echo "	recursive CHECKIN"
-	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool ci -nc \$CLEARCASE_PN'"
-	echo "	recursive UNCHECKOUT"
-	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool unco -rm \$CLEARCASE_PN'"
-	echo "	recursive LIST CHECKOUTS"
-	echo "cleartool lsco -r ."
-}
 
 
 
@@ -141,10 +71,8 @@ helpclearcase(){
 
 #//...
 
-#
-# files/directories can safely delete (for gnms machines!)
-# .emacs
-# .subversion/
-# .xemacs/
-
 source ~/.dotfiles/aliases
+source ~/.dotfiles/functions
+source ~/.dotfiles/variables
+
+
