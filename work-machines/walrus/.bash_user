@@ -64,10 +64,14 @@ fcr $_FCR_SETUP_VALUE
 #set -o emacs
 
 alias l='ls -l'
-alias la='ls -al'
+alias la='ls -a'
+alias lla='ls -la'
 # put most recently touched at bottom
 alias lr='ls -ltr'
 alias ltr='ls -ltr'
+alias lta='ls -lta'
+alias ltra='ls -ltra'
+
 # make human readable
 alias lh='ls -lh'
 alias lld='ls -ld'
@@ -86,10 +90,12 @@ alias expl='echo "launching ClearCase file browser / explorer" ; xclearcase &'
 alias nv='netview &'
 
 alias rmmedia='sudo rm -rf ~/media*'
+alias sudohack='~/bin/sudohack.sh &'
+alias hacksudo='~/bin/sudohack.sh &'
 
 
 
-#
+##
 # in order to dev or setup a view for your curr CR, execute these two lines FIRST
 #  $ nn
 #  $ . .b
@@ -97,10 +103,12 @@ echo 'say [nn][. .b]';
 #
 alias nn='newgrp anp_cc'
 #
-
 BDAVIES_CURR_CR="$HOME/bin/bdaviesCurrCr.sh"
 echo "[$BDAVIES_CURR_CR]: $($BDAVIES_CURR_CR)"
 echo "to set view: fcr CRNUMBER"
+##
+
+#BDAVIESPC=bdavies522276
 
 
 
@@ -120,6 +128,10 @@ helpclearcase(){
 }
 
 
+
+## smbclient -L bdavies522276
+# smbmount
+
 ##cout
 #coutr(){}
 ##cin
@@ -128,6 +140,11 @@ helpclearcase(){
 #uncor(){}
 
 #//...
-alias sudohack='~/bin/sudohack.sh &'
-alias hacksudo='~/bin/sudohack.sh &'
 
+#
+# files/directories can safely delete (for gnms machines!)
+# .emacs
+# .subversion/
+# .xemacs/
+
+source ~/.dotfiles/aliases
