@@ -1,0 +1,133 @@
+#!/bin/bash
+
+
+#_FCR_SETUP_VALUE=6349
+_FCR_SETUP_VALUE=`~/bin/bdaviesCurrCr.sh`
+#_FCR_SETUP_VALUE=6371
+#_FCR_SETUP_VALUE=6474
+
+
+#######################################################################
+# File:  bash_user_dev.env
+#######################################################################
+# TEMPLATE .bash_user file for development.
+#
+# This file was intended to be tailored by individual users.
+#
+# Copy to your login account under .bash_user.  This file will be
+# automatically sourced during login.
+#######################################################################
+
+
+######################################################################
+####################    MAIN PROCESSING  #############################
+######################################################################
+GRP="$(/usr/bin/groups | awk '{print $1}' )"
+GRP="$(echo ${GRP} | awk -F \) '{print $1}' )"
+ME=$(/usr/bin/whoami)
+CT=/opt/rational/clearcase/bin/cleartool
+#set -o vi
+set -o emacs
+
+######################################################################
+# Set up for ClearCase
+######################################################################
+alias cout='$CT checkout -nc '
+alias cin='$CT checkin -nc '
+alias cpe='clearprojexp'
+alias xcc='xclearcase'
+
+#fcr_setup $_FCR_SETUP_VALUE
+# ACTIVATES VIEW:::
+fcr $_FCR_SETUP_VALUE
+
+
+
+
+# Set prompt.  \u: user, \h: hostname \w: pwd \$: # if root, else $
+#PS1='[DEV: \u@\h]\$ '
+#export PS1
+
+#
+## --bdavies customs--
+#
+
+### keyboard, bindings, input, env settings hacks...
+# make backspace not output ^? in vi when remotely connected (via PuTTy)
+/bin/stty erase \^?
+
+
+#
+## the ~/bin/ path is set in PATH already...
+#
+
+#set -o emacs
+
+alias l='ls -l'
+alias la='ls -al'
+# put most recently touched at bottom
+alias lr='ls -ltr'
+alias ltr='ls -ltr'
+# make human readable
+alias lh='ls -lh'
+alias lld='ls -ld'
+
+alias cdb='cd ~/bin ; ls -l'
+alias cdt='cd ~/tmp ; ls -l'
+
+# change into view directory 
+alias cdv='cd ${CRBASE} ; pwd'
+
+
+alias vib='vi ~/.bash_user'
+alias proj='echo "launching ClearCase project explorer / clearprojexp" ; clearprojexp &'
+alias explorer='use *expl* instead!  ... (dummy)'
+alias expl='echo "launching ClearCase file browser / explorer" ; xclearcase &'
+alias nv='netview &'
+
+alias rmmedia='sudo rm -rf ~/media*'
+
+
+
+#
+# in order to dev or setup a view for your curr CR, execute these two lines FIRST
+#  $ nn
+#  $ . .b
+echo 'say [nn][. .b]';
+#
+alias nn='newgrp anp_cc'
+#
+
+BDAVIES_CURR_CR="$HOME/bin/bdaviesCurrCr.sh"
+echo "[$BDAVIES_CURR_CR]: $($BDAVIES_CURR_CR)"
+echo "to set view: fcr CRNUMBER"
+
+
+
+helpmd5(){
+	echo "cd $DIR ; find . -type f -exec md5sum '{}' \; > dir.md5"
+	echo "cd $DIR ; md5sum --check dir.md5 | grep -v ' FAILED'"
+}
+helpclearcase(){
+	echo "	recursive CHECKOUT"
+	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool co -nc \$CLEARCASE_PN'"
+	echo "	recursive CHECKIN"
+	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool ci -nc \$CLEARCASE_PN'"
+	echo "	recursive UNCHECKOUT"
+	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool unco -rm \$CLEARCASE_PN'"
+	echo "	recursive LIST CHECKOUTS"
+	echo "cleartool lsco -r ."
+}
+
+
+##cout
+#coutr(){}
+##cin
+#cinr{}
+#unco(){}
+#uncor(){}
+
+#//...
+alias sudohack='~/bin/sudohack.sh &'
+alias hacksudo='~/bin/sudohack.sh &'
+
