@@ -49,8 +49,8 @@ alias mkelem='$CT mkelem -ci -nc '
 alias cdv='cd ${CRBASE} ; pwd'
 
 
-alias vib && unalias vib
-alias vib='vi ~/.bash_user'
+#alias vib && unalias vib
+alias vib='vi ~/.dotfiles/mainly'
 alias viba='vi ~/.dotfiles/aliases.sh'
 alias vibf='vi ~/.dotfiles/functions.sh'
 alias vibv='vi ~/.dotfiles/variables.sh'
