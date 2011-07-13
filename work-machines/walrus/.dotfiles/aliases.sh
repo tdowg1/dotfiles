@@ -1,23 +1,31 @@
 #
 # me
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
+#
+# according to man pages, tty is not a valid option to --color argument, only
+# never, always or auto
+unalias ls
+alias ls='ls --color=always'
+#
+#
+alias l='ls --color=always -l'
+alias ll='ls --color=always -l'
+alias la='ls --color=always -a'
+alias lla='ls --color=always -la'
 # put most recently touched at bottom
-alias lr='ls -ltr'
-alias ltr='ls -ltr'
-alias lta='ls -lta'
-alias ltra='ls -ltra'
+alias lr='ls --color=always -ltr'
+alias ltr='ls --color=always -ltr'
+alias lta='ls --color=always -lta'
+alias ltra='ls --color=always -ltra'
 
 # make human readable
-alias lh='ls -lh'
-alias lld='ls -ld'
+alias lh='ls --color=always -lh'
+alias lld='ls --color=always -ld'
 
-alias cdb='cd ~/bin ; ls -l'
-alias cdt='cd ~/tmp ; ls -l'
+alias cdb='cd ~/bin ; ls --color=always -l'
+alias cdt='cd ~/tmp ; ls --color=always -l'
 
-alias vib='vi /etc/profile'
-alias cdd='cd ~/.dotfiles ; ls -l'
+#alias vib='vi /etc/profile'
+alias cdd='cd ~/.dotfiles ; ls --color=always -l'
 
 alias sudohack='~/bin/sudohack.sh &'
 alias hacksudo='~/bin/sudohack.sh &'
@@ -33,6 +41,7 @@ alias hacksudo='~/bin/sudohack.sh &'
 #alias cin='$CT checkin -nc '
 alias uncout='$CT uncheckout -rm '
 alias lsco='$CT lsco -me -recurse '
+alias lscoshort='$CT lsco -me -recurse -short '
 alias mkelem='$CT mkelem -ci -nc '
 
 
@@ -40,8 +49,11 @@ alias mkelem='$CT mkelem -ci -nc '
 alias cdv='cd ${CRBASE} ; pwd'
 
 
-unalias vib
+alias vib && unalias vib
 alias vib='vi ~/.bash_user'
+alias viba='vi ~/.dotfiles/aliases.sh'
+alias vibf='vi ~/.dotfiles/functions.sh'
+alias vibv='vi ~/.dotfiles/variables.sh'
 
 
 alias proj='echo "launching ClearCase project explorer / clearprojexp" ; clearprojexp &'
@@ -51,3 +63,7 @@ alias nv='netview &'
 
 
 alias rmmedia='sudo rm -rf ~/media*'
+
+
+alias df='df -hT | grep -v vobs'
+

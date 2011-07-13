@@ -1,7 +1,7 @@
 syntax on
 se nu
 set tabstop=3
-set expandtab
+" set expandtab
 set smarttab
 set shiftwidth=3
 set shiftround

@@ -5,6 +5,7 @@ helpmd5(){
 	echo "cd $DIR ; find . -type f -exec md5sum '{}' \; > dir.md5"
 	echo "cd $DIR ; md5sum --check dir.md5 | grep -v ' FAILED'"
 }
+
 helpclearcase(){
 	echo "	recursive CHECKOUT"
 	echo "cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool co -nc \$CLEARCASE_PN'"
@@ -16,9 +17,21 @@ helpclearcase(){
 	echo "cleartool lsco -r ."
 	echo "	create and check in a new folder"
 	echo "cleartool mkdir -nc FOLDERNAME"
+	echo "	checkin entire directory structure (PREVIEW**)"
+	echo "clearfsimport -preview -recurse -nsetevent ~/tmp/interop-vnms-configs/* aqp_iop/"
+	echo "	get more HELP..."
+	echo "cleartool [help|man] command"
 }
 
 
+############## ALTERNATIVE ways to recursive checkin
+#http://stackoverflow.com/questions/973956/recursive-checkin-using-clearcase
+#ct lsco -r -cvi -fmt "ci -nc \"%n\"\n" | ct
+#ct lsco -r -cvi -fmt "unco -rm %n\n" | ct  
+
+############## ALTERNATIVE way to recursive checkin/mkelem/--add new files
+#clearfsimport -preview -rec -nset c:\sourceDir\* m:\MyView\MyVob\MyDestinationDirectory
+#clearfsimport -preview -recurse -nsetevent ~/tmp/interop-vnms-configs/* aqp_iop/
 
 
 
@@ -98,69 +111,12 @@ mkelemr(){
 
 
 
+fixvimrc(){
+	echo "attempt remove .vimrc symlink into production... that's in my home"
+	rm -i ~/.vimrc
+	[ $? != 0 ] && return
 
-
-
-
-
-
-
-OLDcoutr(){
-	echo "cc recursive checkout..."
-	_clearcase_recursive_HANDLER "coutr" "${*}"
-
-	return
-
-
-
-	if [[ $# = 0 ]] ; then
-		echo "start at current working directory"
-		cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool co -nc $CLEARCASE_PN'
-		return
-	fi
-
-#	for x in "${*}"; do
-	for x in ${*}; do
-		echo "[${x}]"
-
-
-		if [[ -d "${x}" ]] ; then
-			cleartool find "${x}" -version 'version(/main/LATEST)' -exec 'cleartool co -nc $CLEARCASE_PN'
-		elif [[ -f "${x}" ]] ; then
-			echo "	IS A FILE: use cout (alias cout='$CT checkout -nc ')!"
-			echo "		Dev-decidE::should I automatically call cout on a file for you?"
-		else
-			echo "	expected ${x} to be a directory"
-			return
-		fi
-	done
-
-return
-
-	echo "$1"
-	echo "in 3 seconds"
-	sleep 3
-
-	if [[ $? = 0 ]] ; then
-		cleartool find "$1" -version 'version(/main/LATEST)' -exec 'cleartool co -nc $CLEARCASE_PN'
-	fi
+	echo "attempt to recreate my own .vimrc..."
+	cp -i ~/.dotfiles/vimrc ~/.vimrc
 }
 
-NEVERcoutr(){
-		case $what_to_do in
-
-			cinr)
-			;;
-			coutr)
-				dir_zip_unzip_and_rename "$SUBDIR"
-				RC=$?;
-			;;
-			uncoutr)
-				_clearcase_recursive_HANDLER "${*}"
-			;;
-			*) # ...
-				echo "expected 1 of"
-				echo "cinr coutr uncoutr"
-			;;
-		esac
-}

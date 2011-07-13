@@ -1,13 +1,8 @@
-## ISSUES #########33
-# * backspace key puts ctrl+question mark; have to do shift+backspace to make backspace werk
-# * make screen flashing stop
-
-
-
 # from http://forums.macosxhints.com/showthread.php?p=541300
 
 # set term to whatever the normal term is (echo $TERM)
 #term xterm-xfree86
+term xterm
 #term xterm
 
 shell -$SHELL
@@ -19,6 +14,9 @@ shell -$SHELL
 startup_message off
 defscrollback 2024
 bell_msg 'Bell in window %n'
+
+##
+# makes screen flashing (at least in vi) stop
 vbell off
 
 
