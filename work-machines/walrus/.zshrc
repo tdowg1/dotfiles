@@ -16,10 +16,14 @@ setopt COMPLETE_IN_WORD
 #setopt HUP
 
 ## history
-#setopt APPEND_HISTORY
+HISTFILE=~/.zsh-histfile
+HISTSIZE=2000
+SAVEHIST=2000
+setopt APPEND_HISTORY
 ## for sharing history between zsh processes
-#setopt INC_APPEND_HISTORY
-#setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
 
 ## never ever beep ever
 #setopt NO_BEEP

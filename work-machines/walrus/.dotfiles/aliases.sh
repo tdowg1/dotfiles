@@ -19,6 +19,7 @@ alias ltra='ls --color=always -ltra'
 
 # make human readable
 alias lh='ls --color=always -lh'
+alias lsd='ls --color=always -d' # ha! lsd, that's funny.
 alias lld='ls --color=always -ld'
 
 alias cdb='cd ~/bin ; ls --color=always -l'
@@ -33,15 +34,15 @@ alias hacksudo='~/bin/sudohack.sh &'
 
 #
 # ARINC
-
+export CT=/opt/rational/clearcase/bin/cleartool
 #
 # previously defined in bash_user_dev.env
 #
 #alias cout='$CT checkout -nc '
 #alias cin='$CT checkin -nc '
 alias uncout='$CT uncheckout -rm '
-alias lsco='$CT lsco -me -recurse '
-alias lscoshort='$CT lsco -me -recurse -short '
+alias lsco='$CT lsco -me -recurse -cview '
+alias lscoshort='$CT lsco -me -recurse -short -cview '
 alias mkelem='$CT mkelem -ci -nc '
 
 
@@ -56,9 +57,9 @@ alias vibf='vi ~/.dotfiles/functions.sh'
 alias vibv='vi ~/.dotfiles/variables.sh'
 
 
-alias proj='echo "launching ClearCase project explorer / clearprojexp" ; clearprojexp &'
+alias proj='clearprojexp'
 alias explorer='use *expl* instead!  ... (dummy)'
-alias expl='echo "launching ClearCase file browser / explorer" ; xclearcase &'
+alias expl='xclearcase &'
 alias nv='netview'
 
 
@@ -67,7 +68,8 @@ alias rmmedia='sudo rm -rf ~/media*'
 
 alias df='df -hT | grep -v vobs'
 
-alias reloadenv='. ~/.bash_user'
+#alias reloadenv='. ~/.bash_user'
+alias reloadenv='. ~/.bash_profile'
 
 
 # accurev-related
