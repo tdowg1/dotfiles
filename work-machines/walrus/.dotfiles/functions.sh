@@ -131,3 +131,33 @@ fixvimrc(){
 	cp -i ~/.dotfiles/vimrc ~/.vimrc
 }
 
+# make accurev help paginate politely
+achelp(){
+	accurev help $* | less -FX
+}
+
+# this function helps w/ searching through a same set of files
+grepdotfiles(){
+	local filesToGrep=$(cat <<__HEREDOC__
+		$HOME/.bash_[pu]*
+		$HOME/.bashrc
+		$HOME/.dotfiles/*
+__HEREDOC__
+	)
+
+	for f in $filesToGrep ; do
+		echo "[$f]:"
+		grep -n "${*}" ${f}
+	done
+}
+
+# function to pull files from walrus
+alias pull='mvinpull'
+mvinpull(){
+	echo "scp pull dotfiles from walrus...";
+	scp -r bdavies@walrus:.dotfiles ~/
+	scp bdavies@walrus:.screenrc ~/
+	scp bdavies@walrus:.vimrc ~/
+}
+
+

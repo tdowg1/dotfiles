@@ -67,3 +67,13 @@ alias rmmedia='sudo rm -rf ~/media*'
 
 alias df='df -hT | grep -v vobs'
 
+alias reloadenv='. ~/.bash_user'
+
+
+# accurev-related
+alias ah='achelp'
+alias ac='accurev'
+alias acinfo='accurev info ; accurev secinfo'
+alias acnf='accurev info ; accurev secinfo'
+# /accurev-related
+
