@@ -1,0 +1,18 @@
+# color man pages
+export PAGER="most"
+
+#
+## ~/bin/ path is NOT in PATH already... for hostname = gds2
+
+alias l='ls -l'
+alias li='ls -il'
+alias la='ls -al'
+# put most recently touched at bottom
+alias lr='ls -ltr'
+alias ltr='ls -ltr'
+# make human readable
+alias lh='ls -lh'
+
+alias cdb='cd ~/bin ; ls -l'
+
+

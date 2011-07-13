@@ -1,0 +1,11 @@
+
+# simplification of
+#   print -l - *(e:' [ -e /other/directory/$REPLY ]':)
+# call like
+#   print -l - *(e:in /other/directory)
+in () {
+	[ -e $1/$REPLY ]
+}
+
+# This is just a quick way to zip dirs from zsh, while ignoring unwanted files like .DS_Store and .svn/*.
+#

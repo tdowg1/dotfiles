@@ -1,0 +1,118 @@
+umask 022
+
+[ -f ~/.profile ] && source ~/.profile
+
+# zsh history
+export HISTSIZE=4096
+export HISTFILE="${HOME}/.zhistory"
+export SAVEHIST=${HISTSIZE}
+
+# zsh completion opstions
+zstyle ':completion:*' completer _expand _complete _correct _approximate _history
+zstyle ':completion:*' matcher-list '' '' 'l:|=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors ''
+zstyle :compinstall filename '~/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# other zsh features
+setopt extendedglob
+setopt auto_cd
+setopt cd_able_vars
+setopt multios
+setopt hist_ignore_all_dups
+setopt appendhistory
+setopt always_to_end
+setopt no_hup
+setopt beep
+
+limit coredumpsize 0
+
+# color grep
+export GREP_COLOR=32
+
+# set ls colors
+export LSCOLORS='dxfxcxdxcxexhxhxhxbxhx'
+
+
+# set color prompt with clock
+if [[ `whoami` == root ]]; then
+  # set color prompt for root
+  export PS1=$'%{\e[1;31m%}%n%{\e[0m%}|%{\e[1;34m%}%m%{\e[0m%} %{\e[1;37m%}%~%{\e[0m%} %{\e[1;35m%}[%!]%{\e[0m%} '
+  export PS2=$'%{\e[1;31m%}>%{\e[0m%} '
+else
+  # common user settings
+  export PS1=$'%{\e[1;32m%}%n%{\e[0m%} %{\e[0;34m%}%~%{\e[0m%} %{\e[1;35m%}[%!]%{\e[0m%} '
+  export PS2=$'%{\e[1;32m%}>%{\e[0m%} '
+fi
+
+# set prompt clock
+if [[ "$TERM" == xterm ]]; then
+  export RPS1=$'%{\e[0;34m%}%T%{\e[0m%}'
+else 
+  export RPS1=' '
+fi
+
+# start default screen session on xterm startup only once if network connection is present
+#if [ 'ping -c 3 www.google.com' ]
+#then
+#   if screen -ls | grep default > /dev/null
+#   then :
+#   else
+#     screen -S default
+#   fi
+#else :
+#fi
+
+# various useful aliases
+alias h='history'
+alias c='clear'
+#alias scbl="screen -c ~/.screenrc-blank"
+#alias scdef="screen -S default"
+#alias ssh-home="ssh ninjasb@67.84.74.65"
+
+# key bindings
+case "$TERM" in
+  cons25*|linux) # plain BSD/Linux console
+    bindkey '\e[H'    beginning-of-line   # home 
+    bindkey '\e[F'    end-of-line         # end  
+    bindkey '\e[5~'   delete-char         # delete
+    bindkey '[D'      emacs-backward-word # esc left
+    bindkey '[C'      emacs-forward-word  # esc right
+    ;;
+  *rxvt*) # rxvt derivatives
+     bindkey '\e[3~'  delete-char         # delete
+    bindkey '\eOc'    forward-word        # ctrl right
+    bindkey '\eOd'    backward-word       # ctrl left
+    # workaround for screen + urxvt
+    bindkey '\e[7~'   beginning-of-line   # home
+    bindkey '\e[8~'   end-of-line         # end
+    bindkey '^[[1~'   beginning-of-line   # home
+    bindkey '^[[4~'   end-of-line         # end
+    ;;
+  *xterm*) # xterm derivatives
+#my    bindkey '\e[0H'    beginning-of-line   # home
+#hax    bindkey '\e[OF'    end-of-line         # end
+    bindkey '^[OH'    beginning-of-line   # home
+    bindkey '^[OF'    end-of-line         # end
+    bindkey '\e[3~'   delete-char         # delete
+    bindkey '\e[1;5C' forward-word        # ctrl right
+    bindkey '\e[1;5D' backward-word       # ctrl left
+    # workaround for screen + xterm
+    bindkey '\e[1~'   beginning-of-line   # home
+    bindkey '\e[4~'   end-of-line         # end
+    ;;
+  screen)
+    bindkey '^[[1~'   beginning-of-line	  # home
+    bindkey '^[[4~'   end-of-line         # end
+    bindkey '\e[3~'   delete-char         # delete
+    bindkey '\eOc'    forward-word        # ctrl right
+    bindkey '\eOd'    backward-word       # ctrl left
+    bindkey '^[[1;5C' forward-word        # ctrl right
+    bindkey '^[[1;5D' backward-word       # ctrl left
+    ;;
+esac
+
+[ -f /etc/myaliases ] && . /etc/myaliases
+
