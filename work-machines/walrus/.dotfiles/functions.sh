@@ -17,8 +17,18 @@ helpclearcase(){
 	echo "cleartool lsco -r ."
 	echo "	create and check in a new folder"
 	echo "cleartool mkdir -nc FOLDERNAME"
+	echo "	create and check in a new file"
+	echo "cleartool mkelem -ci -nc FILE"
+	echo "	add a file (if no -ci, file is added but not its content--MUST cin at some point!)"
+	echo "cleartool mkelem -ci -nc FILENAME"
+	echo "	recursive add a file"
+	echo "find . -type f -exec cleartool mkelem -ci -nc '{}' \;"
 	echo "	checkin entire directory structure (PREVIEW**)"
-	echo "clearfsimport -preview -recurse -nsetevent ~/tmp/interop-vnms-configs/* aqp_iop/"
+	echo "clearfsimport -preview -recurse -nsetevent ~/tmp/* aerothai/"
+	echo "	REMOVE a version of a file (like svn delete)"
+	echo "cleartool rmname FILENAME"
+	echo "	REMOVE a version of a directory"
+	echo ""
 	echo "	get more HELP..."
 	echo "cleartool [help|man] command"
 }
@@ -43,7 +53,7 @@ _clearcase_recursive_HANDLER(){
 	#echo "shift; \$#[${#}]"
 
 
-	# setup list of File System Objects to operate on...
+	# setup list of File System Objects (FSO) to operate on...
 	FSO="${*}"
 	if [[ $# = 0 ]] || [[ $# = 1 ]] && [[ "$1" = "" ]] ; then
 		echo "No argument given! ... starting at current working directory"
@@ -55,15 +65,16 @@ _clearcase_recursive_HANDLER(){
 	for x in ${FSO}; do
 		echo "[${x}] cc recursive ${what_to_do}..."
 
-		if [[ -d "${x}" ]] ; then
+		if [[ -d "${x}" || -f "${x}" ]] ; then
 			#
 			# interpolate function call
 			eval "_clearcase_recursive_${what_to_do}" "${x}"
-		elif [[ -f "${x}" ]] ; then
-			echo "	IS A FILE: use cout (alias cout='$CT checkout -nc ')!"
-			echo "	IS A FILE: use cin (alias cin='$CT checkin -nc ')!"
-			echo "	IS A FILE: use uncout (alias uncout='$CT uncheckout -rm ')!"
-			echo "		Dev-decidE::should I automatically call cout on a file for you?"
+			
+#		elif [[ -f "${x}" ]] ; then
+#			echo "	IS A FILE: use cout (alias cout='$CT checkout -nc ')!"
+#			echo "	IS A FILE: use cin (alias cin='$CT checkin -nc ')!"
+#			echo "	IS A FILE: use uncout (alias uncout='$CT uncheckout -rm ')!"
+#			echo "		Dev-decidE::should I automatically call cout on a file for you?"
 		else
 			echo "	expected ${x} to be a directory"
 			return
