@@ -1,6 +1,6 @@
 syntax on
 se nu
-set tabstop=8
+set tabstop=3
 set expandtab
 set smarttab
 set shiftwidth=3
