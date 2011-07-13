@@ -59,7 +59,7 @@ alias vibv='vi ~/.dotfiles/variables.sh'
 alias proj='echo "launching ClearCase project explorer / clearprojexp" ; clearprojexp &'
 alias explorer='use *expl* instead!  ... (dummy)'
 alias expl='echo "launching ClearCase file browser / explorer" ; xclearcase &'
-alias nv='netview &'
+alias nv='netview'
 
 
 alias rmmedia='sudo rm -rf ~/media*'
