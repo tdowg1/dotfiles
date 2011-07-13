@@ -1,7 +1,5 @@
 umask 022
 
-[ -f ~/.profile ] && source ~/.profile
-
 # zsh history
 export HISTSIZE=4096
 export HISTFILE="${HOME}/.zhistory"
@@ -11,7 +9,7 @@ export SAVEHIST=${HISTSIZE}
 zstyle ':completion:*' completer _expand _complete _correct _approximate _history
 zstyle ':completion:*' matcher-list '' '' 'l:|=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
-zstyle :compinstall filename '~/.zshrc'
+zstyle :compinstall filename '~/zshrc'
 
 autoload -Uz compinit
 compinit
@@ -114,5 +112,5 @@ case "$TERM" in
     ;;
 esac
 
-[ -f /etc/myaliases ] && . /etc/myaliases
+[ -f ~/myaliases ] && . ~/myaliases
 
