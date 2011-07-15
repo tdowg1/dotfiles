@@ -1,0 +1,42 @@
+# /etc/bashrc
+
+# System wide functions and aliases
+# Environment stuff goes in /etc/profile
+
+# For some unknown reason bash refuses to inherit
+# PS1 in some circumstances that I can't figure out.
+# Putting PS1 here ensures that it gets loaded every time.
+alias which="type -path"
+export EDITOR="pico"
+export VISUAL="pico"
+PS1="\u@\h [\w]# "
+
+whoami=`whoami`
+
+
+[ -t 0 ] && mesg y
+
+alias wtf="watch -n 1 w -hs"
+alias wth="ps -uxa | more"
+alias pico="pico -w -z"
+
+
+LS_OPTIONS='--color=tty -F -a -b -T 0';
+export LS_OPTIONS;
+alias ls='/bin/ls $LS_OPTIONS';
+alias dir='/bin/ls $LS_OPTIONS --format=vertical';
+alias vdir='/bin/ls $LS_OPTIONS --format=long';
+alias d=dir;
+alias v=vdir;
+eval `dircolors -b`
+
+
+
+##xbryn.com
+#export JAVA_HOME=/usr/local/jdk
+#export PATH=/ramdisk/bin:/usr/sec/bin:$JAVA_HOME/bin:$PATH
+#export CLASSPATH=.:$JAVA_HOME/lib/classes.zip
+#export PATH="$PATH:/usr/local/bin:/usr/X11R6/bin"
+##
+
+
