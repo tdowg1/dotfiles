@@ -28,9 +28,6 @@ alias cdt='cd ~/tmp ; ls --color=always -l'
 #alias vib='vi /etc/profile'
 alias cdd='cd ~/.dotfiles ; ls --color=always -l'
 
-alias sudohack='~/bin/sudohack.sh &'
-alias hacksudo='~/bin/sudohack.sh &'
-
 
 #
 # ARINC

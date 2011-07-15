@@ -64,34 +64,8 @@ set -o allexport
 
 
 if [[ "$(hostname)" = "walrus" ]] ; then
-#############################################
-# CLEARCASE SETUP SHTUFF
-#############################################
-#_FCR_SETUP_VALUE=6349
-export _FCR_SETUP_VALUE=`~/bin/bdaviesCurrCr.sh`
-#_FCR_SETUP_VALUE=6371
-#_FCR_SETUP_VALUE=6474
-
-#fcr_setup $_FCR_SETUP_VALUE
-# ACTIVATES VIEW:::
-fcr $_FCR_SETUP_VALUE
-
-
-##
-# in order to dev or setup a view for your curr CR, execute these two lines FIRST
-#  $ nn
-#  $ . .b
-echo 'say [nn][. .b]';
-#
-alias nn='newgrp anp_cc'
-#
-BDAVIES_CURR_CR="$HOME/bin/bdaviesCurrCr.sh"
-echo "[$BDAVIES_CURR_CR]: $($BDAVIES_CURR_CR)"
-echo "to set view: fcr CRNUMBER"
-##
-#############################################
-# /CLEARCASE SETUP SHTUFF
-#############################################
+	# do walrus-sy things...
+	test "dummy test" = "camera's ready prepare the flash"
 fi
 
 
