@@ -3,7 +3,6 @@
 ##
 # HOWTO setup quickly on a remote machine...
 #
-#scp -r walrus:.bash_user .
 #scp -r walrus:.dotfiles .
 #scp -r walrus:.screenrc .
 # now, create new shell to apply settings
@@ -12,18 +11,14 @@
 #pull
 #
 ##
-# on the walrus gnms machine, here is NFO regarding how
-# this and other files are sourced.  They are done so according 
-# to the following hierarchy
+# dotfile execution order
 #
 # .bash_profile
 #   |-- .bashrc
-#   `-- .bash_user
-#     `-- .df/mainly        CURR FILE
-#         |-- .df/bash_user_dev.env
-#         |-- .df/aliases.sh
-#         |-- .df/functions.sh
-#         `-- .df/variables.sh
+#   `-- .df/mainly        CURR FILE
+#       |-- .df/aliases.sh
+#       |-- .df/functions.sh
+#       `-- .df/variables.sh
 #
 
 fSourceIfThere(){
@@ -41,10 +36,6 @@ fSourceIfThere(){
 
 # (fix due to gnms .bash_user_dev) BACKUP ps1
 myPS1=$PS1
-
-# original located at /usr/mgr/env/anp_cc/bash_user_dev.env
-#source ~/.dotfiles/bash_user_dev.env
-fSourceIfThere ~/.dotfiles/bash_user_dev.env.0
 
 # (fix due to gnms .bash_user_dev) RESTORE ps1
 export PS1=$myPS1

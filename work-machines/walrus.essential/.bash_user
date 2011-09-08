@@ -1,5 +1,0 @@
-
-# see also the following file for nfo on eshell environment setup 
-# execution (dotfile) order
-source ~/.dotfiles/mainly
-

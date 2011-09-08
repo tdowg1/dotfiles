@@ -1,0 +1,7 @@
+
+# User specific environment and startup programs
+
+# See also 
+# The following file for nfo on environment setup and
+# dotfile execution order.
+source ~/.dotfiles/mainly
