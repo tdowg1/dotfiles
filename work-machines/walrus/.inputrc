@@ -9,7 +9,46 @@
 
 # do not bell on tab-completion
 #set bell-style none
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
 
+# Completed names which are symbolic links to
+# directories have a slash appended.
+set mark-symlinked-directories on
+
+
+$if mode=emacs
+
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+# (page up)
+"\e[5~": beginning-of-history
+# (page down)
+"\e[6~": end-of-history
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# for rxvt
+"\e[8~": end-of-line
+
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+
+# added by olof
+"\eO5D": backward-word
+"\eO5C": forward-word
 
 # added by bdavies (ARINC::PuTTYv0.60--to--RH)
 # (control+left)
@@ -17,3 +56,29 @@
 # (control+right)
 "\eOC": forward-word
 
+$endif
+
+
+$if term=screen
+
+## control+left
+# actually output'ed by cat:
+#"\e[D": backward-word
+# for PuTTYv0.60--to--RHEL
+"\e[D": backward-word
+#"\e[D": backward-word
+#"\e[D": backward-word
+
+## control+right
+# actually output'ed by cat:
+#"\e[C": forward-word
+# for PuTTYv0.60--to--RHEL
+"\e[C": forward-word
+#"\e[C": forward-word
+
+$endif
+
+
+#
+# to use (at least in bash) say like# bind -f inputrc
+#
