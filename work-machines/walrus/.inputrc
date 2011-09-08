@@ -19,7 +19,7 @@ set output-meta on
 set mark-symlinked-directories on
 
 
-$if mode=emacs
+#$if mode=emacs
 
 # for linux console and RH/Debian xterm
 "\e[1~": beginning-of-line
@@ -56,16 +56,16 @@ $if mode=emacs
 # (control+right)
 "\eOC": forward-word
 
-$endif
+#$endif
 
-
-$if term=screen
+#$if mode=emacs
+#$if term=screen
 
 ## control+left
 # actually output'ed by cat:
 #"\e[D": backward-word
 # for PuTTYv0.60--to--RHEL
-"\e[D": backward-word
+######"\e[D": backward-word
 #"\e[D": backward-word
 #"\e[D": backward-word
 
@@ -73,10 +73,12 @@ $if term=screen
 # actually output'ed by cat:
 #"\e[C": forward-word
 # for PuTTYv0.60--to--RHEL
-"\e[C": forward-word
+#######"\e[C": forward-word
+######^^these made it so thatleft and right arrow WITHOUT CONTROL would act like
+######### ctrl+left/right arrow
 #"\e[C": forward-word
-
-$endif
+#$endif
+#$endif
 
 
 #
