@@ -6,13 +6,22 @@
 #	vm-f112:
 
 
+## ### #### ###################################################################
+# Path to diretory containing dotfiles...
+# ...containing *revision controlled* dotfiles.
+# So, this could be the working directory, NOT $HOME !
+#
+# 2011-09-10: currently in a period of... "transision".  This the reason for
+#   absurd names... so ZOMG gimme a break! :D
+ZOMG_DOTFILES="$HOME/dotfiles/home-machines/dotfiles"
+## ### #### ###################################################################
+
 
 ## ### #### ###################################################################
 ##
 ## teelah customs -- 'general' ALIASES
 ## ### #### ###################################################################
-#alias vib='vim /etc/profile'    # edit this file easily+quickly!
-alias vib='vim ~/.mvin-myprofile'    # edit this file easily+quickly!
+alias vib='vim $ZOMG_DOTFILES/.mvin-myprofile'    # edit this file easily+quickly!
 
 ##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable
 ##### grow expnentially.  I'm guessing this is a bad thing... but dont know how
