@@ -1,0 +1,9 @@
+*** /etc/skel/.bashrc	2010-03-31 08:14:39.000000000 -0400
+--- /home/barrington_levy/.bashrc	2009-11-11 01:15:57.000000000 -0500
+***************
+*** 6,8 ****
+--- 6,9 ----
+  fi
+  
+  # User specific aliases and functions
++ source ~/.mvin-myprofile
