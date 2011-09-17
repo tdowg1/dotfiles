@@ -1,18 +1,19 @@
 #!/bin/bash
 
 #
-# This file to be sourced at shell login, e.g. paste the following snippet
-# into .bashrc : >>>
+# This file to be sourced at shell login.  Here is the expected call hierarchy:
+# .bash_profile
+#   |-- .bashrc
+#     `-- .mainly.sh        CURR FILE
+#         |-- .aliases.sh
+#         |-- .functions.sh
+#         `-- .variables.sh
 #
-# # User specific aliases and functions
-# # the profile shared amongst all my machines... 
-#
-#<<<
 # Currently, this file is sourced by these machines, from specified file : 
 #	phisata: by .bashrc
 #	svn: by .bashrc
-#	vm-f112:
-
+#	vm-f112: nil
+#
 
 ## ### #### ###################################################################
 # Path to diretory containing dotfiles...
