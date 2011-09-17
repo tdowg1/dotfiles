@@ -6,8 +6,6 @@
 #
 # # User specific aliases and functions
 # # the profile shared amongst all my machines... 
-# #source ~/.mvin-myprofile
-# source $HOME/.mvin-myprofile
 #
 #<<<
 # Currently, this file is sourced by these machines, from specified file : 
@@ -31,9 +29,8 @@ ZOMG_DOTFILES="$HOME/dotfiles/home-machines"
 ##
 ## teelah customs -- 'general' ALIASES
 ## ### #### ###################################################################
-#alias vib='vim /etc/profile'    # edit this file easily+quickly!
-#alias vib='vim ~/.mvin-myprofile'    # edit this file easily+quickly!
-alias vib='vim $ZOMG_DOTFILES/.mvin-myprofile'    # edit this file easily+quickly!
+#alias vib='vim ~/.mainly.sh'    # edit this file easily+quickly!
+alias vib='vim $ZOMG_DOTFILES/.mainly.sh'    # edit this file easily+quickly!
 
 ##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable
 ##### grow expnentially.  I'm guessing this is a bad thing... but dont know how
@@ -226,7 +223,7 @@ alias wiki='cd /var/www/html/wiki ; pwd'
 # (need to do this because, for instance, scp will fail for remote user)
 #
 if tty -s ; then
-	echo "still todo: separate vib / .mvin-myprofile into alias,func, and var profiles"
+	echo "still todo: separate vib / .mainly.sh into alias,func, and var profiles"
 
 	if false ; then
 	echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
