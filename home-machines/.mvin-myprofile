@@ -383,11 +383,10 @@ helpsmartctl(){
 cat <<'__envHEREDOC__'
    # LOOPS
 for i in a b c ; do   sudo smartctl --all  /dev/sd${i} | less ; done
-for i in a b c ; do  sudo smartctl --test=short /dev/sd${i};  done; date; echo
+for i in a b c ; do   sudo smartctl --test=short /dev/sd${i};  done; date; echo
 
 __envHEREDOC__
 }
-
 helpsvn(){
    echo '   # svnadmin RECOVER, VERIFY, DUMP all muzik-repos'
    echo 'svnadmin recover /srv/svn/muzik-repos/muzik3'
@@ -402,23 +401,26 @@ helpsvn(){
    echo 'svnadmin verify /srv/svn/muzik-repos/muzik1'
    echo 'svnadmin dump /srv/svn/muzik-repos/muzik1 > muzik1.dump'
 }
-
 helpsamba(){
-   echo '[root@svn ~]# nmblookup intel_duo'
-   echo 'querying intel_duo on 192.168.1.255'
+cat <<'__envHEREDOC__'
+$ nmblookup HOSTNAME
+querying HOSTNAME on w.x.y.255
+__envHEREDOC__
 }
 
 helpdmddevel(){
-   echo 'for syncing thumb drive changes (intel_duo) onto svn webserver:'
-   echo "   watch -n 5 'rsync -av /mnt/intel_duo-q/usr/eclipse/eclipse-SDK-3.4.svn-ws.home/dmd.www-trunk--webroot/ /home/tyler/html/webroot2/'"
+cat <<'__envHEREDOC__'
+for syncing thumb drive changes (intel_duo) onto svn webserver:
+   watch -n 5 'rsync -av /mnt/intel_duo-q/usr/eclipse/eclipse-SDK-3.4.svn-ws.home/dmd.www-trunk--webroot/ /home/tyler/html/webroot2/'
 
-   echo 'for updating PUBLIC dmd.com web server w changes from svn:'
-   echo '   first EXPORT'
-   echo '      svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/'
+for updating PUBLIC dmd.com web server w changes from svn:
+   first EXPORT
+      svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/
 
-   echo '   second COPY'
-   echo '   rsync -n -rt -v --delete  webroot2.x/ drmarkda@drmarkdavies.com:./public_html/'
-   echo '(^^and remove the "-n" to do it for reel'
+   second COPY
+   rsync -n -rt -v --delete  webroot2.x/ dmd@dmd.com:./public_html/
+(^^and remove the "-n" to do it for reel
+__envHEREDOC__
 }
 ## /////these functions from svn.home!!!!!!
 ##
@@ -638,7 +640,7 @@ ARCHIVE EXAMPLE1
 	* volume size: 200863744b[YTES] ~= 191MB
 	* save symlinks as links (not the file they point to)
 	* save owner/group metadata
-$ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9 -m0  -r  -v200863744b  -ol -ow   /mnt/intel_duo-d/optical/rt2011-08-03/archives/rt2011-08-03.rar .
+$ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9 -m0  -r  -v200863744b  -ol -ow   /tmp/optical/rt2011-08-03/archives/rt2011-08-03.rar .
 
 ARCHIVE EXAMPLE2
 	* ep1 Exclude base directory from names
@@ -691,13 +693,13 @@ ssh
 __envHEREDOC__
 }
 helpuseradd(){
-      cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 sudo useradd --home=/home/<username> --create-home --password=<passwd>  <username>
 	NOTE value for SHELL in /etc/default/useradd
 __envHEREDOC__
 }
 helpnetstat(){
-      cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 Show open connections
 	netstat -e
 Show open connections specifically for ftp
@@ -708,34 +710,35 @@ __envHEREDOC__
 }
 
 helpgit(){
-      cat <<'__envHEREDOC__'
-STATUS
+	cat <<'__envHEREDOC__'
+= STATUS =
 	STUB: figure out howto list files disregarding any git ignore defs that would otherwise be in effect
-LOGs
+
+= LOGs =
 $ git log --format=oneline
 $ git log v2.5..        # commits since (not reachable from) v2.5
 $ git log test..master  # commits reachable from master but not test
 $ git log master..test  # commits reachable from test but not master
 $ git log master...test # commits reachable from either test or
-                        #    master, but not both
-LOGs ORDERing
+= LOGs ORDERing =
 * [default]: start with most recent commit, working backwards through the parents.
 ** IOW: commits appear in reverse chronological order.
 * --topo-order: descendant commits show before their parents.
 ** IOW: commits appear in topological order.
 * --date-order: similar to --topo-order in that no parent comes before all of its children, ow commits ordered in the commit timestamp order.
 ** IOW: commits appear primarily by commit date.
-BRANCHing
+
+= BRANCHing =
 * create a branch based on an upstream branch:
 ** git branch --track my_branch origin/my_branch
 ** git checkout my_branch
 * delete remote branch
 ** git push origin :my_branch
-TAGs
+= TAGs =
 $ git describe          # prints most recent tag
-$ git push origin :refs/tags/12345  # delete remote tag
+$ git push origin :refs/tags/12345  # delete remote tag named 12345
 
-IGNOREing
+= IGNOREing =
 http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
@@ -746,6 +749,7 @@ helpgit2(){
 = Undocumented (from git help) =
 * git ls-files --directory --others --exclude-from=.git/info/exclude
 * git update-index # Modifies the index or directory cache.
+
 = External Links =
 * git_remote_branch : A tool to simplify working with remote branches (http://github.com/webmat/git_remote_branch)
 __envHEREDOC__
@@ -789,12 +793,10 @@ cat <<'__envHEREDOC__'
 The first character
 of each line indicates the current state of the package: the most
 common states are 
-p, meaning that no trace of the package exists on
-the system, 
-c, meaning that the package was deleted but its
-configuration files remain on the system, 
-i, meaning that the package
-is installed, and 
+p, meaning that no trace of the package exists on the system, 
+c, meaning that the package was deleted but its configuration 
+ files remain on the system, 
+i, meaning that the package is installed, and 
 v, meaning that the package is virtual.
 
 The second
@@ -806,8 +808,7 @@ d, meaning that the package will be deleted, and
 p, meaning that the
 package and its configuration files will be removed.
 
-If the third
-character is 
+If the third character is 
 A, the package was automatically installed.
 __envHEREDOC__
 }
