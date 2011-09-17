@@ -1,0 +1,7 @@
+Create this README so that I can add this directory to git and to 
+also do a little 'splaining.
+
+The dotfiles.sh script that I plan to add into this directory is 
+in alpha state and I choose not to add it into here as of now.  It
+is not robust at ALL and also needs a little bit documentation.
+
