@@ -1,0 +1,557 @@
+#!/bin/bash
+
+# this file to be sourced at shell login, currently...
+#	phisata: by .bashrc
+#	svn:
+#	vm-f112:
+
+
+## ### #### ###################################################################
+# Path to diretory containing dotfiles...
+# ...containing *revision controlled* dotfiles.
+# So, this could be the working directory, NOT $HOME !
+#
+# 2011-09-10: currently in a period of... "transision".  This the reason for
+#   absurd names... so ZOMG gimme a break! :D
+ZOMG_DOTFILES="$HOME/dotfiles/home-machines/dotfiles"
+## ### #### ###################################################################
+
+
+## ### #### ###################################################################
+##
+## teelah customs -- 'general' ALIASES
+## ### #### ###################################################################
+alias vib='vim $ZOMG_DOTFILES/.mvin-myprofile'    # edit this file easily+quickly!
+
+##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable
+##### grow expnentially.  I'm guessing this is a bad thing... but dont know how
+##### to get around it
+alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
+
+
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias l.='ls -la'
+alias li='ls -li'
+alias lh='ls -lh'
+alias lt='ls -lt'
+alias ltr='ls -ltr'
+alias trll='ls -ltr'    # same as ltr
+alias ltrr='ls -lt'     # same as alias lt
+alias ltra='ls -ltra'
+alias lld='ls -ld'
+alias df='df -hT'
+alias mountdev='mount | grep /dev'
+alias mdstat='more /proc/mdstat'
+alias sshsvn='ssh -2XC tyler@svn'
+# dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
+#alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
+
+
+
+##
+## teelah customs -- PLACES
+## ### #### ###################################################################
+alias cdb='cd ~/bin ; pwd'
+alias lb='ls -l ~/bin'
+alias cdt='cd ~/tmp ; pwd'
+
+
+##
+## teelah customs -- THINGS
+## ### #### ###################################################################
+export MAIL=/var/spool/mail/$USER
+
+
+
+## 
+## PHISATA-specific places...
+alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
+#alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
+#alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
+alias r='echo "try cdr"'
+alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
+
+alias life='cd /mnt/a14-h/hA4-465/root/LIFE ; pwd'
+alias dork='cd /mnt/a14-h/hA4-465/root/LIFE.dork ; pwd'
+alias hdd='cd /mnt/a14-h/hA4-465/root/LIFE/hdd ; pwd'
+alias hddsmart='cd /mnt/a14-h/hA4-465/root/LIFE/hdd/smartctl.logs ; pwd'
+alias proj='cd /mnt/a14-h/hA4-465/root/proj ; pwd'
+
+alias a32='cd /mnt/a32-555 ; pwd'
+
+alias t='cd /mnt/a32-555/t ; pwd'
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltr && date'
+## /PHISATA-specific places...
+##
+
+
+# if less than a page of output, stop it.
+#alias less='less --QUIT-AT-EOF'
+
+
+
+# tell svn to show log messages of the 2 most recent commits
+alias svnlog='svn log -r PREV:COMMITTED'
+#alias svnloghead='svn log -r HEAD'
+svnloghead(){
+	headRev=$( svn info | grep 'Last Changed Rev' | awk '{ print $NF }' )
+	numberOfRevsBack=2
+
+	svn log -r $(( $headRev - $numberOfRevsBack )):HEAD
+}
+
+
+
+
+#mansearch
+#       whatis
+#       apropos
+
+
+alias tu='cd /opt/teelah-utils/bin/; pwd'
+update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
+export PATH=${PATH}:${update_PATH_with_teelah_utils}
+
+export PYTHON_EXTERNALS_PATH=/opt/python-externals
+export PYTHONPATH=/opt/teelah-utils/bin:$PYTHON_EXTERNALS_PATH
+export EDITOR=vim
+export SVN_EDITOR=vim
+
+
+
+
+##
+## FROM SVN.HOME MACHINE...
+export PATH=$PATH:/sbin:/usr/sbin
+
+# BASIX
+#not sure if need these...
+   #set -o emacs
+   #bind -f /etc/inputrc
+
+# PROGS
+export PAGER="less"
+
+
+##
+## SVN.HOME-specific places...
+alias p1='cd /mnt/physical465.i ; echo "cd "`pwd`'
+alias pi='cd /mnt/physical465.i ; echo "cd "`pwd`'
+alias p2='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+alias pii='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+alias tmp='cd /tmp ; echo "cd "`pwd`'
+
+# need this so that when I create shtuff, other users in same group can manipulate them
+umask 0002
+
+# message to user
+#echo "[reminder of essential aliases...]"
+#echo "alias | grep -i phy"
+#alias | grep -i phy
+
+## /SVN.HOME-specific places...
+##
+
+
+##
+## VM-F121-specific places
+alias wiki='cd /var/www/html/wiki ; pwd'
+
+
+## /VM-F121-specific places
+##
+
+
+
+##
+# only display text on interactive sessions
+# (need to do this because, for instance, scp will fail for remote user)
+#
+if tty -s ; then
+	echo "still todo: separate vib / .mvin-myprofile into alias,func, and var profiles"
+
+	if false ; then
+	echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
+
+	echo "[MESSAGES FROM SVN.HOME]"
+	echo "[helpful message wrt configuring dotfiles]"
+	echo "  vim flashes (try ESC, ESC), but that's about it"
+	echo "  for user smbmuzik:"
+	echo "          pretty cool setup, uses zsh, vi colors are nice, etc."
+	echo "          vi tab: think I just realied this, but Im guessing Tim's vi profile has it inserting spaces FOR TABS, which is reel annoying.  if I want a tab char, I type tab damnit."
+	echo "          flashing happens everywhere, pretty annoything"
+	fi
+
+fi
+
+
+
+
+
+
+
+
+##
+## teelah customs -- ------- FUNCIONS ---------------
+## ### #### ###################################################################
+
+# "nicely paginate" `svn help' text
+svnhelp(){
+	svn help $* | less -FX
+}
+
+
+
+
+######### STRICTLY HELP-TEXT AND DISPLAY FUNCTIONS... THIS FUNCTIONS
+######### WILL DO NOTHING BUT PRINT OUT SOME TEXT TO STDOUT!!!!!!!!!
+helpmd5(){
+(
+        cat <<'__HERE__'
+
+        CREATE:: # cd $DIR
+find . -type f -exec md5sum '{}' \; >> md5sum.md5
+
+        VALIDATE:: (shows only failures) # cd $DIR
+md5sum --check md5sum.md5 | grep ' FAILED'
+__HERE__
+)
+}
+
+helpshasum(){
+(
+        cat <<'__HERE__'
+		  Handy when checking Linux distros that have CHECKSUM files
+find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
+__HERE__
+)
+}
+
+helpsynergy(){
+(
+        cat <<'__HERE__'
+renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
+# ( ... see also (my custom): pssynergy)
+__HERE__
+)
+}
+
+helprsnapshotdiffall(){
+        echo "YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)"
+		  echo 'prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done'
+}
+
+pssynergy(){
+        echo '  PID TTY          TIME  NI COMMAND'
+        ps -eo "%p %y %x %n %c" | grep synergy
+}
+
+
+helphardinfo(){
+	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
+}
+
+helphardinfo2(){
+	echo 'while [ true ] ; do hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20; date; sleep 30; echo ; echo ; done'
+}
+
+helppar2(){
+	echo 'par2 create -v -v -r5 -l -f0 -- BASEname.par2 BASEname.part*  > ../par2-create.log'
+	echo '... for example'
+	echo '	par2 create -v -v -r10 -l -f0 -- dswww2009-12-12.par2 dswww2009-12-12.part* > ../par2-create.log'
+}
+
+helpmdadm(){
+	echo 'sudo mdadm --assemble --scan'
+}
+
+helpsvnpropset(){
+	echo 'svn propset svn propval proppath'
+	echo 'example'
+	echo '	svn propset svn executable fileToMakeExecutable'
+	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision FILE"'
+}
+
+
+
+##
+## these functions from svn.home!!!!!!
+helpsmartctl(){
+   echo
+   echo "   # LIST ATTRIBUTES"
+   echo 'smartctl -a /dev/sda ; echo ; echo ; smartctl -a /dev/sdb ; echo ; echo;  echo; smartctl -a /dev/sdc'
+   echo '   # LONG TEST'
+   echo 'smartctl -t long /dev/sda'
+   echo 'echo "sleep for 45 minutes" && sleep 45m'
+   echo 'smartctl -t long /dev/sdb'
+   echo 'echo "sleep for 175 minutes" && sleep 175m'
+   echo 'smartctl -t long /dev/sdc'
+   echo 'echo "sleep for 175 minutes" && sleep 175m'
+}
+
+
+helpsvn(){
+   echo '   # svnadmin RECOVER, VERIFY, DUMP all muzik-repos'
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik3'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik3'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik3 > muzik3.dump'
+   echo
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik1 > muzik1.dump'
+   echo
+   echo 'svnadmin recover /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin verify /srv/svn/muzik-repos/muzik1'
+   echo 'svnadmin dump /srv/svn/muzik-repos/muzik1 > muzik1.dump'
+}
+
+helpsamba(){
+   echo '[root@svn ~]# nmblookup intel_duo'
+   echo 'querying intel_duo on 192.168.1.255'
+}
+
+helpdmddevel(){
+   echo 'for syncing thumb drive changes (intel_duo) onto svn webserver:'
+   echo "   watch -n 5 'rsync -av /mnt/intel_duo-q/usr/eclipse/eclipse-SDK-3.4.svn-ws.home/dmd.www-trunk--webroot/ /home/tyler/html/webroot2/'"
+
+   echo 'for updating PUBLIC dmd.com web server w changes from svn:'
+   echo '   first EXPORT'
+   echo '      svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/'
+
+   echo '   second COPY'
+   echo '   rsync -n -rt -v --delete  webroot2.x/ drmarkda@drmarkdavies.com:./public_html/'
+   echo '(^^and remove the "-n" to do it for reel'
+}
+## /////these functions from svn.home!!!!!!
+##
+
+
+
+helpdd(){
+cat <<'__envHEREDOC__'
+READ (use SKIP) from disk
+   dd if=/dev/sdk of=/dev/null skip=1440000000
+WRITE (use SEEK) to disk
+   dd if=/dev/zero of=/dev/sdd count=1 seek=1849566775
+EXAMPLES --------
+   dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
+   dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
+   dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+EXAMPLES hdd-REMAPPING ----------------------
+WRITE-remap block sector (seemed to have good luck w this)"
+   dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
+WRITE-rewrite entire disk (trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18))
+   dd if=/dev/sdk of=/dev/sdk bs=4096 oflag=direct conv=notrunc,noerror
+MISC ----
+MONITORING progress
+   dd ... & pid=$! ; watch kill -USR1 $pid
+   while [ 1 ] ; do kill -USR1 $pid ; sleep 5 ; done
+LBA approximations (assumes 512-byte block size (bs) ; uses iA18 as subject disk)
+   iA18 is 698GiB;
+   slightly more than 12876374016 bytes (~13GB) were written before completing
+   arg given to skip=1440000000
+   *therefore*, 'LBA' 1440000000 is approx at the 686GiB location of the hdd.
+__envHEREDOC__
+}
+
+helpdate(){
+	#local useThisDate="2010/06/05 16:15:15"
+	local useThisDate=`date`
+	echo "using date $useThisDate"
+	echo -e "[OUTPUT]\t\t[CMDLN]"
+	
+	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y-%m-%d %H-%M-%S\""
+	echo -e "$(eval $cmdln)\t$cmdln"
+	
+	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y%m%d_%H%M%S\""
+	echo -e "$(eval $cmdln)\t\t$cmdln"
+	
+	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y-%m-%d_%H,%M,%S\""
+	echo -e "$(eval $cmdln)\t$cmdln"
+}
+helpawk(){
+cat <<'__envHEREDOC__'
+PRINT LAST COLUMN
+	$ svn info | grep 'Last Changed Rev:' | awk '{ print $NF }'
+	> 1200
+PRINT LAST COLUMN and DO MATH
+	$ svn info | grep 'Last Changed Rev:' | awk '{ print $NF-5 }'
+	> 1195
+PRINT 2rd TO-LAST COLUMN
+	$ svn info | grep 'Last Changed Rev:' | awk '{ print $(NF-1) }'
+	> Rev:
+PRINT VARIOUS
+	$ echo 'one t z' | awk '{ print $2 " " $1 }'
+	> t one
+__envHEREDOC__
+}
+helpsetuid(){
+	echo "from stat /muzik-work/: Access: (2775/drwxrwsr-x)"
+}
+
+helprsync(){
+	echo "** copy -r DIR amadedir into another_dir (post-op: another_dir/amadedir)"
+	echo "	rsync -av path/to/amadedir /path/to/another_dir/"
+	echo "	rsync -av path/to/amadedir /path/to/another_dir"
+	echo "... copy -r DIR amadedir __contents!!__ (post-op: another_dir contains amadedir/*)"
+	echo "... this is awkward-typically, something I wouldn't do"
+	echo "	rsync -av path/to/amadedir/ /path/to/another_dir/"
+	echo
+	echo "IOW, these 2 cmdln's are equivalent:"
+	echo "	* cp -rf /tmp/some/folder /tmp     # --> new \`/tmp/folder'"
+	echo "	* rsync -av /tmp/some/folder /tmp  # --> new \`/tmp/folder'"
+	echo ""
+	echo "rsync -av xbryncom@xbryn.com:. /mnt/a32-555/xbryn.com --exclude=em-200* --dry-run"
+	echo 
+	echo "--checksum : used this to detect xls differences that weren't detected, ow"
+	cat <<'__envHEREDOC__'
+ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?'::
+COPY FOLDER
+	rsync -av /opt/muzik /mnt/rsnapshot/
+COPY FOLDER's CONTENTS
+	rsync -av /opt/muzik/ /mnt/rsnapshot/
+__envHEREDOC__
+}
+helprename(){
+	echo "# pad certain directories with zeros"
+	echo 'disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"'
+	echo 'rename "$disk" "$disk"0 "$disk"?'
+	echo '[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??'
+}
+helprenameexamples(){
+	echo "mv [0, 1, 2] => [00, 01, 02]"
+	echo '	rename "" 0"" [0-9]'
+}
+helpe2fsck(){
+	echo "gParted uses:"
+	echo "	e2fsck -f -y -v /dev/DEV"
+	echo "others:"
+	echo "	e2fsck -f -y -v -C 0 -c /dev/DEV"
+	echo "		Force, assume Yes, Verbosity, C=progress bar, c=badblock check+add"
+}
+helprpm(){
+cat <<'__envHEREDOC__'
+	rpm -qa --last # gives pkg and date modified
+__envHEREDOC__
+}
+helpvim(){
+	cat <<'__envHEREDOC__'
+http://vim.wikia.com
+:set nonu #disables line numbering
+:%s/foo/bar/g #Find each occurrence of 'foo', and replace it with 'bar'
+:%s/foo/bar/gc #Change each 'foo' to 'bar', but ask for confirmation first
+UNDO REDO (:help undo)
+Note that (somewhat confusingly) U is undo-able with u.
+undo last change (can be repeated to undo preceding cmds)
+	u
+return the line to its orig state (undo all changes in curr line)
+	U
+Redo changes which were undo (undo the undos). Compare to '.' to /repeat/ a
+prev change, at the curr cursor position. c-R will redo a previously undone
+change, wherever the change occurred.
+	c-R
+ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M', ''))
+	c-v c-X
+		where X is the desired character
+__envHEREDOC__
+}
+helpvimdiff(){
+      cat <<'__envHEREDOC__'
+NEXT CHANGE
+
+PREV CHANGE
+
+SWITCH
+
+CURR CHANGE -> TO RIGHT
+
+CURR CHANGE -> TO LEFT
+
+MAKE WINDOW WIDTH EQUAL
+^W=
+
+__envHEREDOC__
+}
+helpxargs(){
+	cat <<'__envHEREDOC__'
+ex:
+   echo bluetooth iscsi iscsid lvm2-monitor notExecuted |\
+	xargs --verbose -n 1 -i{} --delimiter=' ' chkconfig --levels 123456 {} off
+EXECUTE LINES FROM A FILE
+	cat /some/FILE | xargs --verbose -L 1 -i{} bash -c {} --another-optional-arg
+__envHEREDOC__
+}
+helpirb(){
+      cat <<'__envHEREDOC__'
+Martin Fowler once tweeted
+      when I need a calculator, I fire up irb.
+Pretty shweet!  interactive ruby can do decimals and all sorts of shtuff!
+__envHEREDOC__
+}
+helprar(){
+      cat <<'__envHEREDOC__'
+EXTRACT
+	rar x
+TEST
+	rar vt
+__envHEREDOC__
+}
+helpless(){
+      cat <<'__envHEREDOC__'
+SHOW NFO
+	^G
+__envHEREDOC__
+}
+helptune2fs(){
+      cat <<'__envHEREDOC__'
+MOUNT COUNTS && CHECKS
+	tune2fs -l /dev/sda4 | grep -iP 'mount|check'
+__envHEREDOC__
+}
+helpblkid(){
+      cat <<'__envHEREDOC__'
+!!!! -- locate/print block device attributes!!!
+blkid
+	prints things like UUID, LABEL, etc.
+
+__envHEREDOC__
+}
+helpssh(){
+	cat <<'__envHEREDOC__'
+ssh
+	[-N (Do not execute a remote command; useful when forwarding ports)]
+	[-p ssh-server-port-to-connect-with]
+	[-D localhost-SOCKS-proxy-to-use]
+	[-i identity_file (NOTE:should be 400)]
+	[user@]ssh-server
+__envHEREDOC__
+}
+helpuseradd(){
+      cat <<'__envHEREDOC__'
+sudo useradd --home=/home/<username> --create-home --password=<passwd>  <username>
+__envHEREDOC__
+}
+helpnetstat(){
+      cat <<'__envHEREDOC__'
+Show open connections
+	netstat -e
+Show open connections specifically for ftp
+	netstat -e | grep ftp
+Show all *T*cp ports being *L*istened to
+	netstat -tl
+__envHEREDOC__
+}
+
+
+_help6(){
+      cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+}
+
+# (end strictly help-text section:)
+######### /STRICTLY HELP-TEXT AND DISPLAY FUNCTIONS... THIS FUNCTIONS
+
+
