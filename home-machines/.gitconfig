@@ -1,0 +1,49 @@
+[user]
+	name = Bryn Davies
+	email = tdowg1@yahoo.com
+[github]
+	user = tdowg1
+	token = e5efbf38d1a9145056c794dec3ee474c
+
+
+
+[alias]
+	h = help
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	#df = diff
+	di = diff
+	#logp = log -p
+	#logs = log --stat
+	#logps = log -p --stat
+
+	#DOESN'T WORK
+	#taghash = show -s --format='%h - %s' $1^{commit}
+	
+	# Additional: goog'git log wiki pretty'
+	# git 'pretty log' "plog" v A; date sorting=default
+	plog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	# git 'pretty log' "plog" v A.2; date sorting=--date-order
+	plog2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative   --date-order
+	# git 'pretty log' "plog" v B
+	plogb = log --graph --pretty=format:'%h was %an, %ar, message: %s'
+
+	who = shortlog -s --
+	new = "!sh -c 'git log $1@{1}..$1@{0} \"$@\"'"
+	# See Also: http://hoagland.org/Dot.html
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	
+	changes = diff --name-status -r
+	diffstat = diff --stat -r
+
+
+
+[color]
+	ui = true
+[branch]
+	autosetupmerge = true
+
+[push]
+	default = tracking

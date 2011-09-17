@@ -1,8 +1,18 @@
 #!/bin/bash
 
-# this file to be sourced at shell login, currently...
+#
+# This file to be sourced at shell login, e.g. paste the following snippet
+# into .bashrc : >>>
+#
+# # User specific aliases and functions
+# # the profile shared amongst all my machines... 
+# #source ~/.mvin-myprofile
+# source $HOME/.mvin-myprofile
+#
+#<<<
+# Currently, this file is sourced by these machines, from specified file : 
 #	phisata: by .bashrc
-#	svn:
+#	svn: by .bashrc
 #	vm-f112:
 
 
@@ -13,7 +23,7 @@
 #
 # 2011-09-10: currently in a period of... "transision".  This the reason for
 #   absurd names... so ZOMG gimme a break! :D
-ZOMG_DOTFILES="$HOME/dotfiles/home-machines/dotfiles"
+ZOMG_DOTFILES="$HOME/dotfiles/home-machines"
 ## ### #### ###################################################################
 
 
@@ -21,6 +31,8 @@ ZOMG_DOTFILES="$HOME/dotfiles/home-machines/dotfiles"
 ##
 ## teelah customs -- 'general' ALIASES
 ## ### #### ###################################################################
+#alias vib='vim /etc/profile'    # edit this file easily+quickly!
+#alias vib='vim ~/.mvin-myprofile'    # edit this file easily+quickly!
 alias vib='vim $ZOMG_DOTFILES/.mvin-myprofile'    # edit this file easily+quickly!
 
 ##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable
@@ -29,6 +41,21 @@ alias vib='vim $ZOMG_DOTFILES/.mvin-myprofile'    # edit this file easily+quickl
 alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 
 
+#
+# `ls' customs
+##
+# (at least for phisata-#8-F13_2010-06-30_02:59:17-0400)
+# `ls' already aliased to:
+#   [teelah@phisata ~]$ date
+#   Sat Aug 13 01:49:48 EDT 2011
+#   [teelah@phisata ~]$ alias ls
+#   alias ls='ls --color=auto'
+#   [teelah@phisata ~]$
+#
+unalias ls
+#
+alias ls='ls --color=auto --time-style=iso'
+#
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
@@ -41,12 +68,31 @@ alias trll='ls -ltr'    # same as ltr
 alias ltrr='ls -lt'     # same as alias lt
 alias ltra='ls -ltra'
 alias lld='ls -ld'
+##
+# /`ls' customs
+
+
 alias df='df -hT'
 alias mountdev='mount | grep /dev'
 alias mdstat='more /proc/mdstat'
 alias sshsvn='ssh -2XC tyler@svn'
 # dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
 #alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
+
+
+# git shtuff
+alias g='git'
+alias gh='git help'
+alias log='git log'
+alias loghead='git log | head'
+alias loghead='git plog | head'
+alias st='git status'
+alias di='git diff'
+alias dic='git diff --cached'
+alias br='git branch'
+alias bra='git branch --verbose'
+alias tag='git tag'
+alias taga='git tag -l -n'
 
 
 
@@ -67,7 +113,8 @@ export MAIL=/var/spool/mail/$USER
 
 ## 
 ## PHISATA-specific places...
-alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
+#alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
+alias cdp='cd /mnt/a14-h/hA4-465 ; pwd'
 #alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
 #alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
 alias r='echo "try cdr"'
@@ -135,6 +182,9 @@ export PATH=$PATH:/sbin:/usr/sbin
 export PAGER="less"
 
 
+
+
+
 ##
 ## SVN.HOME-specific places...
 alias p1='cd /mnt/physical465.i ; echo "cd "`pwd`'
@@ -155,6 +205,8 @@ umask 0002
 ##
 
 
+
+
 ##
 ## VM-F121-specific places
 alias wiki='cd /var/www/html/wiki ; pwd'
@@ -162,6 +214,10 @@ alias wiki='cd /var/www/html/wiki ; pwd'
 
 ## /VM-F121-specific places
 ##
+
+
+
+
 
 
 
@@ -193,6 +249,35 @@ fi
 
 
 
+
+
+##
+## teelah customs -- ------- VARIABLES ---------------
+## ### #### ###################################################################
+
+# 2011-07-09: tweaks for a git working directory (/etc/bash_completion.d/git)
+if [[ -f /etc/bash_completion.d/git ]] ; then
+	PREV_PS1="$PS1"
+	PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+	GIT_PS1_SHOWDIRTYSTATE=true
+	GIT_PS1_SHOWSTASHSTATE=true
+	GIT_PS1_SHOWUNTRACKEDFILES=true
+	GIT_PS1_SHOWUPSTREAM="auto"
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##
 ## teelah customs -- ------- FUNCIONS ---------------
 ## ### #### ###################################################################
@@ -210,16 +295,17 @@ svnhelp(){
 helpmd5(){
 (
         cat <<'__HERE__'
-
-        CREATE:: # cd $DIR
-find . -type f -exec md5sum '{}' \; >> md5sum.md5
-
-        VALIDATE:: (shows only failures) # cd $DIR
-md5sum --check md5sum.md5 | grep ' FAILED'
+CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
+ find . -type f -exec md5sum '{}' \; > md5sum.md5
+ # it may then be desirable to have hashes sorted by filename:
+ sort -k2 md5sum.md5
+CREATE2:: have hashes sorted by filename from the start # cd $DIR
+ find .  -type f | sort | xargs md5sum > md5sum.md5
+VALIDATE:: (shows only failures) # cd $DIR
+ md5sum --check md5sum.md5 | grep ' FAILED'
 __HERE__
 )
 }
-
 helpshasum(){
 (
         cat <<'__HERE__'
@@ -239,8 +325,12 @@ __HERE__
 }
 
 helprsnapshotdiffall(){
-        echo "YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)"
-		  echo 'prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done'
+cat <<'__envHEREDOC__'
+YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)
+prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
+
+for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
+__envHEREDOC__
 }
 
 pssynergy(){
@@ -289,8 +379,14 @@ helpsmartctl(){
    echo 'echo "sleep for 175 minutes" && sleep 175m'
    echo 'smartctl -t long /dev/sdc'
    echo 'echo "sleep for 175 minutes" && sleep 175m'
-}
 
+cat <<'__envHEREDOC__'
+   # LOOPS
+for i in a b c ; do   sudo smartctl --all  /dev/sd${i} | less ; done
+for i in a b c ; do  sudo smartctl --test=short /dev/sd${i};  done; date; echo
+
+__envHEREDOC__
+}
 
 helpsvn(){
    echo '   # svnadmin RECOVER, VERIFY, DUMP all muzik-repos'
@@ -355,6 +451,13 @@ LBA approximations (assumes 512-byte block size (bs) ; uses iA18 as subject disk
    *therefore*, 'LBA' 1440000000 is approx at the 686GiB location of the hdd.
 __envHEREDOC__
 }
+helpdd2(){
+      cat <<'__envHEREDOC__'
+See Also
+* ddrescue tries hard to rescue data in case of read errors
+* safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
+__envHEREDOC__
+}
 
 helpdate(){
 	#local useThisDate="2010/06/05 16:15:15"
@@ -362,13 +465,13 @@ helpdate(){
 	echo "using date $useThisDate"
 	echo -e "[OUTPUT]\t\t[CMDLN]"
 	
-	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y-%m-%d %H-%M-%S\""
+	cmdln="date +\"%Y-%m-%d %H-%M-%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 	
-	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y%m%d_%H%M%S\""
+	cmdln="date +\"%Y%m%d_%H%M%S\"      --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t\t$cmdln"
 	
-	cmdln="date --date=\"$(eval echo ${useThisDate})\" +\"%Y-%m-%d_%H,%M,%S\""
+	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 }
 helpawk(){
@@ -406,7 +509,8 @@ helprsync(){
 	echo "rsync -av xbryncom@xbryn.com:. /mnt/a32-555/xbryn.com --exclude=em-200* --dry-run"
 	echo 
 	echo "--checksum : used this to detect xls differences that weren't detected, ow"
-	cat <<'__envHEREDOC__'
+
+cat <<'__envHEREDOC__'
 ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?'::
 COPY FOLDER
 	rsync -av /opt/muzik /mnt/rsnapshot/
@@ -414,6 +518,13 @@ COPY FOLDER's CONTENTS
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
 __envHEREDOC__
 }
+helprsyncexamples(){
+cat <<'__envHEREDOC__'
+BU an rsnapshot root (or "repository")
+	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
+__envHEREDOC__
+}
+
 helprename(){
 	echo "# pad certain directories with zeros"
 	echo 'disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"'
@@ -434,6 +545,7 @@ helpe2fsck(){
 helprpm(){
 cat <<'__envHEREDOC__'
 	rpm -qa --last # gives pkg and date modified
+	    --filesbypkg # List all the files in package 
 __envHEREDOC__
 }
 helpvim(){
@@ -452,26 +564,39 @@ Redo changes which were undo (undo the undos). Compare to '.' to /repeat/ a
 prev change, at the curr cursor position. c-R will redo a previously undone
 change, wherever the change occurred.
 	c-R
-ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M', ''))
+ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 	c-v c-X
 		where X is the desired character
+[RE-]FORMATTING TEXT
+* make length of each line auto-trimmed to fit
+** :se textwidth=72
+* reformat too long and too short lines according to curr textwidth
+** globally: gggqG
+** curr paragraph: gqap
+INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
+	K
+SHTUFF
+* delete from curr cursor to end of 'word': dw
+* delete from curr cursor to end of line: D
 __envHEREDOC__
 }
 helpvimdiff(){
       cat <<'__envHEREDOC__'
-NEXT CHANGE
+COPY LEFT / RIGHT
+* do - Get changes from other window into the current window.
+* dp - Put the changes from current window into the other window.
+NEXT/PREVIOUS CHANGE
+* ]c - Jump to the next change.
+* [c - Jump to the previous change.
+CHANGE WINDOW
+* C-w + C-w - Switch to the other split window.
 
-PREV CHANGE
-
-SWITCH
-
-CURR CHANGE -> TO RIGHT
-
-CURR CHANGE -> TO LEFT
-
-MAKE WINDOW WIDTH EQUAL
-^W=
-
+MISC
+* :diffupdate – diff update
+* :syntax off – syntax off
+* zo – open folded text
+* zc – close folded text
+* C-w= - make window width equal
 __envHEREDOC__
 }
 helpxargs(){
@@ -492,10 +617,47 @@ __envHEREDOC__
 }
 helprar(){
       cat <<'__envHEREDOC__'
+ALL
+	-ol # save symbolic link as the link instead of the file
+	-ow # save || restore file owner and group
+
+ARCHIVE
+	rar a \
+		-tsmca \ # timstamps 
+		-hpPASSWORD \
+		-rrRECOVERY_RECORD_AMT \ # AVOID making amount > 9 (specified 10 one time which produced 1% recovery)
+		-r \ # recurse
+		RAR_OUTPUT_FILE
+		RAR_INPUT_SRC
+
+ARCHIVE EXAMPLE1
+	* timestamps: save as much as possible
+	* recovery record: 9%
+	* compression: NONE / 'store'
+	* recursive
+	* volume size: 200863744b[YTES] ~= 191MB
+	* save symlinks as links (not the file they point to)
+	* save owner/group metadata
+$ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9 -m0  -r  -v200863744b  -ol -ow   /mnt/intel_duo-d/optical/rt2011-08-03/archives/rt2011-08-03.rar .
+
+ARCHIVE EXAMPLE2
+	* ep1 Exclude base directory from names
+	* m5 compression level 5/5; "maximal" highest
+	* m1 compression level 1/5; "lowest" none
+	* m0 compression level 0/5; "store" none
+	* r recurse subdirectories
+	* rr4 add 4% recovery record
+
+	* t test after archive
+	* tsmca save file time file time (modification, creation, access)
+	* v<size>[k,b] where size=size*1000 and k,b=[*1024,*1]
+	* -hp[password] to encrypt file header and data using given password string
+   rar a -m5 -r -rr4 -t -tsmca
+
 EXTRACT
 	rar x
 TEST
-	rar vt
+	rar t [v] [pPASSWD]
 __envHEREDOC__
 }
 helpless(){
@@ -531,6 +693,7 @@ __envHEREDOC__
 helpuseradd(){
       cat <<'__envHEREDOC__'
 sudo useradd --home=/home/<username> --create-home --password=<passwd>  <username>
+	NOTE value for SHELL in /etc/default/useradd
 __envHEREDOC__
 }
 helpnetstat(){
@@ -544,9 +707,140 @@ Show all *T*cp ports being *L*istened to
 __envHEREDOC__
 }
 
+helpgit(){
+      cat <<'__envHEREDOC__'
+STATUS
+	STUB: figure out howto list files disregarding any git ignore defs that would otherwise be in effect
+LOGs
+$ git log --format=oneline
+$ git log v2.5..        # commits since (not reachable from) v2.5
+$ git log test..master  # commits reachable from master but not test
+$ git log master..test  # commits reachable from test but not master
+$ git log master...test # commits reachable from either test or
+                        #    master, but not both
+LOGs ORDERing
+* [default]: start with most recent commit, working backwards through the parents.
+** IOW: commits appear in reverse chronological order.
+* --topo-order: descendant commits show before their parents.
+** IOW: commits appear in topological order.
+* --date-order: similar to --topo-order in that no parent comes before all of its children, ow commits ordered in the commit timestamp order.
+** IOW: commits appear primarily by commit date.
+BRANCHing
+* create a branch based on an upstream branch:
+** git branch --track my_branch origin/my_branch
+** git checkout my_branch
+* delete remote branch
+** git push origin :my_branch
+TAGs
+$ git describe          # prints most recent tag
+$ git push origin :refs/tags/12345  # delete remote tag
+
+IGNOREing
+http://www.randallkent.com/development/gitignore-not-working
+or?
+git update-index --assume-unchanged
+__envHEREDOC__
+}
+helpgit2(){
+      cat <<'__envHEREDOC__'
+= Undocumented (from git help) =
+* git ls-files --directory --others --exclude-from=.git/info/exclude
+* git update-index # Modifies the index or directory cache.
+= External Links =
+* git_remote_branch : A tool to simplify working with remote branches (http://github.com/webmat/git_remote_branch)
+__envHEREDOC__
+}
+helptree(){
+      cat <<'__envHEREDOC__'
+tree --charset=${LANG} # works
+tree --charset=en_US.UTF-8 # perhaps more portable?  idk both have worked when tree is exec'd via putty (wo '--charset', putty displays garbage)
+__envHEREDOC__
+}
+helpps(){
+      cat <<'__envHEREDOC__'
+ps axfww # shows complete exec str and in tree form
+__envHEREDOC__
+}
+helppatch(){
+      cat <<'__envHEREDOC__'
+# create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
+diff -c START_FILE END_FILE > patch
+diff -c INITIAL_FILE FINAL_FILE > patch
+diff -c OLD_FILE NEW_FILE > patch
+	diff -c bash_user_dev.env.production bash_user_dev.env > bash_user_dev.env.patch
+
+# apply patch
+patch --input=patch
+	patch --input=bash_user_dev.env.patch
+__envHEREDOC__
+}
+helpsed(){
+      cat <<'__envHEREDOC__'
+PREVIEW file find /replace
+ sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]
+. . . ^. . . . . . . . . . . . ^
+
+perform file find/replace
+ sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]
+__envHEREDOC__
+}
+helpaptitude(){
+cat <<'__envHEREDOC__'
+The first character
+of each line indicates the current state of the package: the most
+common states are 
+p, meaning that no trace of the package exists on
+the system, 
+c, meaning that the package was deleted but its
+configuration files remain on the system, 
+i, meaning that the package
+is installed, and 
+v, meaning that the package is virtual.
+
+The second
+character indicates the stored action (if any; otherwise a blank
+space is displayed) to be performed on the package, with the most
+common actions being 
+i, meaning that the package will be installed,
+d, meaning that the package will be deleted, and 
+p, meaning that the
+package and its configuration files will be removed.
+
+If the third
+character is 
+A, the package was automatically installed.
+__envHEREDOC__
+}
+helpbash(){
+cat <<'__envHEREDOC__'
+-n   : syntax check
+__envHEREDOC__
+}
+helpsort(){
+cat <<'__envHEREDOC__'
+SORT A FILE OF FILE HASHES (md5sum output)
+ sort -k 2 path/to/input-file
+
+__envHEREDOC__
+}
+helpzip(){
+cat <<'__envHEREDOC__'
+STUB!!! THERES NOTHING HERE :(
+__envHEREDOC__
+}
+helptcpdump(){
+cat <<'__envHEREDOC__'
+tcpdump  -A -i eth1 -q
+__envHEREDOC__
+}
+
+
+
+
+
 
 _help6(){
-      cat <<'__envHEREDOC__'
+cat <<'__envHEREDOC__'
 
 __envHEREDOC__
 }
