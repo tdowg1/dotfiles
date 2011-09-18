@@ -322,10 +322,10 @@ CHANGE WINDOW
 * C-w + C-w - Switch to the other split window.
 
 MISC
-* :diffupdate – diff update
-* :syntax off – syntax off
-* zo – open folded text
-* zc – close folded text
+* :diffupdate - diff update
+* :syntax off - syntax off
+* zo - open folded text
+* zc - close folded text
 * C-w= - make window width equal
 __envHEREDOC__
 }
