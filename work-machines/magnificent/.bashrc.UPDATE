@@ -1,5 +1,4 @@
 
-# see also the following file for nfo on eshell environment setup 
-# execution (dotfile) order
+# append the following sourcepath to your .bashrc file.
 source ~/.dotfiles/mainly
 

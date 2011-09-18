@@ -1,9 +1,19 @@
 #!/bin/bash
 #
+helpsed(){
+	echo "perform find/replace on files"
+	echo ' sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]'
+	echo 'PREVIEW file/replace on files'
+	echo ' sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]'
+}
+
+helpsvn(){
+	echo "svn propset svn:keywords \"Id\" FILE"
+}
 
 helpmd5(){
-	echo "cd $DIR ; find . -type f -exec md5sum '{}' \; > dir.md5"
-	echo "cd $DIR ; md5sum --check dir.md5 | grep -v ' FAILED'"
+	echo "cd \$DIR ; find . -type f -exec md5sum '{}' \; > dir.md5"
+	echo "cd \$DIR ; md5sum --check dir.md5 | grep -v ' FAILED'"
 }
 
 helpclearcase(){

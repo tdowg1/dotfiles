@@ -1,6 +1,7 @@
 syntax on
 se nu
 set tabstop=3
+
 " set expandtab
 set smarttab
 set shiftwidth=3
@@ -21,4 +22,8 @@ syntax enable
 :set cpo-=<
 :set wcm=<C-Z>
 :map <F4> :emenu <C-Z>
+
+
+" (me!) add from gVim
+set gfn=Terminus\ 13
 

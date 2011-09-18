@@ -1,5 +1,5 @@
 #
-# me
+# me... bdavies!
 #
 # according to man pages, tty is not a valid option to --color argument, only
 # never, always or auto
@@ -7,15 +7,15 @@ unalias ls
 alias ls='ls --color=always'
 #
 #
-alias l='ls --color=always -l'
-alias ll='ls --color=always -l'
-alias la='ls --color=always -a'
-alias lla='ls --color=always -la'
+alias l='ls --color=always -lF'
+alias ll='ls --color=always -lF'
+alias la='ls --color=always -aF'
+alias lla='ls --color=always -alF'
 # put most recently touched at bottom
-alias lr='ls --color=always -ltr'
-alias ltr='ls --color=always -ltr'
-alias lta='ls --color=always -lta'
-alias ltra='ls --color=always -ltra'
+alias lr='ls --color=always -ltrF'
+alias ltr='ls --color=always -ltrF'
+alias lta='ls --color=always -ltaF'
+alias ltra='ls --color=always -ltraF'
 
 # make human readable
 alias lh='ls --color=always -lh'
@@ -75,4 +75,22 @@ alias ac='accurev'
 alias acinfo='accurev info ; accurev secinfo'
 alias acnf='accurev info ; accurev secinfo'
 # /accurev-related
+
+# /ARINC
+#
+
+
+# git
+alias g='git'
+#
+alias gh='git help'
+#
+alias st='git status'
+alias sts='git status --short'
+alias di='git diff'
+alias br='git branch'
+alias ta='git tag'
+alias log='git log'
+#alias plog='git plog'
+alias loghead='git log | head'
 

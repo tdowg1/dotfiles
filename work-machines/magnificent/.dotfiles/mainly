@@ -18,12 +18,12 @@
 #
 # .bash_profile
 #   |-- .bashrc
-#   `-- .bash_user
-#     `-- .df/mainly        CURR FILE
-#         |-- .df/bash_user_dev.env
-#         |-- .df/aliases.sh
-#         |-- .df/functions.sh
-#         `-- .df/variables.sh
+# ~~ `-- .bash_user ~~
+#     `-- .dotfiles/mainly        CURR FILE
+#         |-- .dotfiles/bash_user_dev.env
+#         |-- .dotfiles/aliases.sh
+#         |-- .dotfiles/functions.sh
+#         `-- .dotfiles/variables.sh
 #
 
 fSourceIfThere(){
