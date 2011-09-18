@@ -1,0 +1,24 @@
+Options +Indexes -FollowSymLinks
+IndexOptions FancyIndexing IconsAreLinks ShowForbidden
+
+IndexStyleSheet ".mvin.style.css"
+
+# removes the description col
+IndexOptions SuppressDescription
+# dont sort folders like ordinary files, show them first
+IndexOptions FoldersFirst
+# show files and folders in a table (important if you want to use a non fixed font)
+#IndexOptions HTMLTable
+# dont cut the name col
+IndexOptions NameWidth=*
+# ignore case for sorting
+IndexOptions IgnoreCase
+
+
+
+# src: http://www.redips.net/apache/xml-directory-list/
+# the XHTML keyword forces mod_autoindex to emit XHTML 1.0 code instead of HTML 3.2
+IndexOptions XHTML
+
+# add HTTP header text/xml
+IndexOptions Type=text/xml

@@ -1,0 +1,28 @@
+body {
+	font-family: sans-serif;
+	font-size: 14px;
+	line-height: 1.4em;
+	padding: 0;
+	margin: 20px;
+	}
+h1 {
+	font-size: 36px;
+	letter-spacing: -1px;
+	line-height: 1em;
+	}
+table {
+	width: 75%;
+	}
+table th {
+	text-align: left;
+	}
+table th hr {	
+	height: 1px;
+	border: 0;
+	}
+table td {
+	text-align: left;
+	border-top: 1px dotted #ccc;
+	padding: 4px 0;
+	}
+
