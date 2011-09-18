@@ -457,11 +457,17 @@ $ git log master...test # commits reachable from either test or
 ** IOW: commits appear primarily by commit date.
 
 = BRANCHing =
-* create a branch based on an upstream branch:
+* Push local branch to upstream branch / remote origin (creates remote branch if DNE):
+** git push origin east1999eternal-branch
+* Create a branch based on an upstream branch (v1):
+** git fetch origin
+** git checkout --track origin/east1999eternal-branch
+* Create a branch based on an upstream branch (v2):
 ** git branch --track my_branch origin/my_branch
 ** git checkout my_branch
-* delete remote branch
+* Delete remote branch
 ** git push origin :my_branch
+
 = TAGs =
 $ git describe          # prints most recent tag
 $ git push origin :refs/tags/12345  # delete remote tag named 12345
