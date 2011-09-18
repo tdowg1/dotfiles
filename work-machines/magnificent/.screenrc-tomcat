@@ -1,0 +1,37 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+#source /home/$HOME/.screenrc
+
+
+#
+# begin .screenrc-tomcat specific shtuff
+# (NOTE: the c-M character says to execute statement)
+screen -t "tc"
+stuff "cd $TOMCAT_HOME"
+stuff "sudo bin/shutdown.sh ; sleep 3; sudo bin/startup.sh"
+
+screen -t "log"
+stuff "cd $TOMCAT_HOME"
+stuff "echo 'NOTICE LOG SIZE...' ; ls -lh logs/catalina.out"
+stuff "tail -f logs/catalina.out"
+
+screen -t "db"
+stuff "cd $TOMCAT_HOME"
+stuff "sudo vim conf/Catalina/localhost/SpryRestSvc.xml"
+
+screen -t "vocab"
+stuff "cd $TOMCAT_HOME"
+stuff "sudo vim webapps/SpryRestSvc/WEB-INF/web.xml"
+
+screen -t "e"
+stuff "cd $TOMCAT_HOME"
+stuff ""
+
+select 1
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""

@@ -1,0 +1,49 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+
+
+#
+# begin .screenrc-gitdevel-all specific shtuff
+# (NOTE: the c-M character says to execute statement (presses ENTER))
+screen -t "man"
+stuff "cd $HOME/dev/git/"
+
+screen -t "~"
+stuff "cd $HOME/dev/git/"
+
+screen -t "gFed"
+stuff "cd $HOME/dev/git/gadget-hr-fed"
+
+screen -t "gNfo"
+stuff "cd $HOME/dev/git/gadget-hr-info"
+
+screen -t "gOp"
+stuff "cd $HOME/dev/git/gadget-operations"
+
+screen -t "gPda"
+stuff "cd $HOME/dev/git/gadget-pda"
+
+screen -t "p2p"
+stuff "cd $HOME/dev/git/p2p"
+
+screen -t "SpryRC"
+stuff "cd $HOME/dev/git/SpryRestSvc"
+
+screen -t "~"
+stuff "cd $HOME/dev/git/"
+
+screen -t "~"
+stuff "cd $HOME/dev/git/"
+
+#screen -t ""
+#stuff "cd $HOME/dev/git/"
+
+
+select 3
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""

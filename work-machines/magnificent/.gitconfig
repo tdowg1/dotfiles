@@ -1,0 +1,25 @@
+[user]
+	name = Bryn Davies
+	email = bdavies@spryinc.com
+[core]
+	excludesfile = /home/bdavies/.gitignore_core.excludesfile
+
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	df = diff
+	lg = log -p
+	plog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	who = shortlog -s --
+	di = diff
+	h = help
+
+[gui]
+	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	trustmtime = true
+	recentrepo = /home/bdavies/dev/git/gadget-nyc-w-year-selector-wo-tabset
+	diffcontext = 100
+[color]
+	ui = auto
