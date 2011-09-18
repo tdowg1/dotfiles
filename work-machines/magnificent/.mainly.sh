@@ -19,11 +19,11 @@
 # .bash_profile
 #   |-- .bashrc
 # ~~ `-- .bash_user ~~
-#     `-- .dotfiles/mainly        CURR FILE
+#     `-- .mainly.sh        CURR FILE
 #         |-- .dotfiles/bash_user_dev.env
-#         |-- .dotfiles/aliases.sh
-#         |-- .dotfiles/functions.sh
-#         `-- .dotfiles/variables.sh
+#         |-- .aliases.sh
+#         |-- .functions.sh
+#         `-- .variables.sh
 #
 
 fSourceIfThere(){
@@ -72,7 +72,7 @@ fi
 ## smbclient -L bdavies522276
 # smbmount
 
-fSourceIfThere ~/.dotfiles/aliases.sh
-fSourceIfThere ~/.dotfiles/functions.sh
-fSourceIfThere ~/.dotfiles/variables.sh
+fSourceIfThere ~/.aliases.sh
+fSourceIfThere ~/.functions.sh
+fSourceIfThere ~/.variables.sh
 

@@ -52,10 +52,10 @@ alias cdv='cd ${CRBASE} ; pwd'
 
 
 #alias vib && unalias vib
-alias vib='vi ~/.dotfiles/mainly'
-alias viba='vi ~/.dotfiles/aliases.sh'
-alias vibf='vi ~/.dotfiles/functions.sh'
-alias vibv='vi ~/.dotfiles/variables.sh'
+alias vib='vi ~/.mainly.sh'
+alias viba='vi ~/.aliases.sh'
+alias vibf='vi ~/.functions.sh'
+alias vibv='vi ~/.variables.sh'
 
 
 alias proj='clearprojexp'
