@@ -308,8 +308,8 @@ helpsvn(){
 }
 
 helpsamba(){
-   echo '[root@svn ~]# nmblookup intel_duo'
-   echo 'querying intel_duo on 192.168.1.255'
+   echo '$ nmblookup HOSTNAME'
+   echo 'querying HOSTNAME on w.x.y.255'
 }
 
 helpdmddevel(){
@@ -321,7 +321,7 @@ helpdmddevel(){
    echo '      svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/'
 
    echo '   second COPY'
-   echo '   rsync -n -rt -v --delete  webroot2.x/ drmarkda@drmarkdavies.com:./public_html/'
+   echo '   rsync -n -rt -v --delete  webroot2.x/ gregory.isaacs@dmd.com:./public_html/'
    echo '(^^and remove the "-n" to do it for reel'
 }
 ## /////these functions from svn.home!!!!!!
@@ -403,7 +403,7 @@ helprsync(){
 	echo "	* cp -rf /tmp/some/folder /tmp     # --> new \`/tmp/folder'"
 	echo "	* rsync -av /tmp/some/folder /tmp  # --> new \`/tmp/folder'"
 	echo ""
-	echo "rsync -av xbryncom@xbryn.com:. /mnt/a32-555/xbryn.com --exclude=em-200* --dry-run"
+	echo "rsync -av beres.hammond@xbryn:. /mnt/a32-555/xbryn --exclude=em-200* --dry-run"
 	echo 
 	echo "--checksum : used this to detect xls differences that weren't detected, ow"
 	cat <<'__envHEREDOC__'

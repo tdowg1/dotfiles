@@ -146,7 +146,7 @@ for updating PUBLIC dmd.com web server w changes from svn:
       svn export svn://svn/svn-dev-repo/dmd.inherited/trunk/webroot webroot2.x/
 
    second COPY
-   rsync -n -rt -v --delete  webroot2.x/ dmd@dmd.com:./public_html/
+   rsync -n -rt -v --delete  webroot2.x/ gregory.isaacs@dmd.com:./public_html/
 (^^and remove the "-n" to do it for reel
 __envHEREDOC__
 }
@@ -236,7 +236,7 @@ helprsync(){
 	echo "	* cp -rf /tmp/some/folder /tmp     # --> new \`/tmp/folder'"
 	echo "	* rsync -av /tmp/some/folder /tmp  # --> new \`/tmp/folder'"
 	echo ""
-	echo "rsync -av xbryncom@xbryn.com:. /mnt/a32-555/xbryn.com --exclude=em-200* --dry-run"
+	echo "rsync -av beres.hammond@xbryn:. /mnt/a32-555/xbryn --exclude=em-200* --dry-run"
 	echo 
 	echo "--checksum : used this to detect xls differences that weren't detected, ow"
 

@@ -32,7 +32,7 @@ eval `dircolors -b`
 
 
 
-##xbryn.com
+##xbryn
 #export JAVA_HOME=/usr/local/jdk
 #export PATH=/ramdisk/bin:/usr/sec/bin:$JAVA_HOME/bin:$PATH
 #export CLASSPATH=.:$JAVA_HOME/lib/classes.zip
