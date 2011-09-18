@@ -28,6 +28,10 @@ alias cdt='cd ~/tmp ; ls --color=always -l'
 #alias vib='vi /etc/profile'
 alias cdd='cd ~/.dotfiles ; ls --color=always -l'
 
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls --color=always -ltraF'
+alias cdgit='cd $HOME/dev/git'
+alias cdsvn='cd $HOME/dev/svn'
+
 
 #
 # ARINC
@@ -88,9 +92,12 @@ alias gh='git help'
 alias st='git status'
 alias sts='git status --short'
 alias di='git diff'
+alias dic='git diff --cached'
 alias br='git branch'
 alias ta='git tag'
 alias log='git log'
 #alias plog='git plog'
 alias loghead='git log | head'
+alias gitcommittxt='clear ; git config --list | grep remote.origin.url ; git log | head'
+
 

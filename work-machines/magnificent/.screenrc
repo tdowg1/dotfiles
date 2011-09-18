@@ -12,7 +12,7 @@ shell -$SHELL
 
 #altscreen on
 startup_message off
-defscrollback 2024
+defscrollback 10000
 bell_msg 'Bell in window %n'
 
 ##

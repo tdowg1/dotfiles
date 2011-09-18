@@ -11,23 +11,32 @@ source $HOME/.screenrc
 # (NOTE: the c-M character says to execute statement)
 screen -t "tc"
 stuff "cd $TOMCAT_HOME"
-stuff "sudo bin/shutdown.sh ; sleep 3; sudo bin/startup.sh"
+#stuff "bin/shutdown.sh ; sleep 3; bin/startup.sh"
+stuff "echo 'IS /etc/hosts OK with magnificent.com?'"
+stuff "_bin/my-tomcat-bouncer.sh"
+
 
 screen -t "log"
 stuff "cd $TOMCAT_HOME"
+stuff "sleep 4s"
+stuff "echo ;  echo ;"
 stuff "echo 'NOTICE LOG SIZE...' ; ls -lh logs/catalina.out"
 stuff "tail -f logs/catalina.out"
 
+screen -t "mlog"
+stuff "cd $TOMCAT_HOME"
+stuff "multitail -o 'colorscheme:sktk' -cS log4j -cS apache -cS sktk -ev '.*mitre.*' logs/catalina.out"
+
 screen -t "db"
 stuff "cd $TOMCAT_HOME"
-stuff "sudo vim conf/Catalina/localhost/SpryRestSvc.xml"
+stuff "vim conf/Catalina/localhost/SpryRestSvc.xml"
 
 screen -t "vocab"
 stuff "cd $TOMCAT_HOME"
-stuff "sudo vim webapps/SpryRestSvc/WEB-INF/web.xml"
+stuff "vim webapps/SpryRestSvc/WEB-INF/web.xml"
 
-screen -t "e"
-stuff "cd $TOMCAT_HOME"
+screen -t "_"
+stuff "cd $TOMCAT_HOME/_conf.bdavies-magnificent"
 stuff ""
 
 select 1

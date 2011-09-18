@@ -1,11 +1,5 @@
 #!/bin/bash
 #
-helpsed(){
-	echo "perform find/replace on files"
-	echo ' sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]'
-	echo 'PREVIEW file/replace on files'
-	echo ' sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]'
-}
 
 helpsvn(){
 	echo "svn propset svn:keywords \"Id\" FILE"
@@ -57,6 +51,53 @@ helpclearcase(){
 	echo "for GMS development+CC cin's and whatnot:"
 	echo "must CHANGE CURR GROUP to be anp_cc (i.e. 'nn')"
 }
+
+
+helpaptitude(){
+cat <<'__envHEREDOC__'
+The first character
+of each line indicates the current state of the package: the most
+common states are 
+p, meaning that no trace of the package exists on
+the system, 
+c, meaning that the package was deleted but its
+configuration files remain on the system, 
+i, meaning that the package
+is installed, and 
+v, meaning that the package is virtual.
+
+The second
+character indicates the stored action (if any; otherwise a blank
+space is displayed) to be performed on the package, with the most
+common actions being 
+i, meaning that the package will be installed,
+d, meaning that the package will be deleted, and 
+p, meaning that the
+package and its configuration files will be removed.
+
+If the third
+character is 
+A, the package was automatically installed.
+__envHEREDOC__
+}
+helpsed(){
+cat <<'__envHEREDOC__'
+PREVIEW file/replace on files:
+ sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]
+perform CHANGE find/replace on files:
+ sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]
+
+HELPFUL for changing all the [fileN]'s:
+ grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
+__envHEREDOC__
+}
+
+_help6(){
+cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+}
+
 
 
 ############## ALTERNATIVE ways to recursive checkin
