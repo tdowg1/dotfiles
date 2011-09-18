@@ -1,0 +1,7 @@
+ignore
+.swp
+.bashrc.PATCH
+dotfiles.sh
+.inputrc
+other_dotfiles_to_consider_syncing.txt
+
