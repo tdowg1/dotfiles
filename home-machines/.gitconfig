@@ -1,11 +1,18 @@
 [user]
+	# user.name value can be overridden by the GIT_AUTHOR_NAME and 
+	# GIT_COMMITTER_NAME env var's.
 	name = Bryn Davies
+	# user.email value can be overridden by the GIT_AUTHOR_EMAIL, 
+	# GIT_COMMITTER_EMAIL, and EMAIL env var's.
 	email = tdowg1@yahoo.com
+#	email = bdavies@spryinc.com
+
 [github]
 	user = tdowg1
 	token = e5efbf38d1a9145056c794dec3ee474c
 
-
+[core]
+	excludesfile = ~/.gitignore_core.excludesfile
 
 [alias]
 	h = help
@@ -13,8 +20,9 @@
 	ci = commit
 	br = branch
 	co = checkout
-	#df = diff
+	df = diff
 	di = diff
+	#lg = log -p
 	#logp = log -p
 	#logs = log --stat
 	#logps = log -p --stat
@@ -40,8 +48,15 @@
 
 
 
+[gui]
+	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	trustmtime = true
+	recentrepo = /home/bdavies/dev/git/gadget-nyc-w-year-selector-wo-tabset
+	diffcontext = 100
+
 [color]
-	ui = true
+	ui = auto
+
 [branch]
 	autosetupmerge = true
 

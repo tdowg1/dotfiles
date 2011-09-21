@@ -84,6 +84,19 @@ if tty -s ; then
 fi
 
 
+# ~/.gitconfig special case:
+# If (this script) executing on work machine, use work email.
+# Else use the personal email which is specified in my .gitconfig.
+#if [[ x"$(hostname)" = x"magnificent" ]] ; then
+if [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ] ; then
+	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+	#if [[ $( tty -s ) = 0 ]] ; then
+	if tty -s ; then
+		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
+	fi
+fi
+
+
 source ~/.aliases.sh
 source ~/.functions.sh
 source ~/.variables.sh
