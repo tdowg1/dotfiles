@@ -31,7 +31,12 @@ List of commands:
 diff
 		Compare dotfiles in cwd with those in HOME.
 install
+push-out
 		Copy dotfiles in cwd to HOME.
+pull-in
+		Copy dotfiles in HOME to cwd.
+		Note: the set of dotfiles to be copied is determined by
+		analyzing dotfiles in cwd.
 help
 		Show this help message and exit.
 patch
@@ -54,7 +59,8 @@ fi
 while [[ $# != 0 ]] ; do
   case "$1" in
     diff) COMMAND='DIFF';;
-    install) COMMAND='INSTALL';;
+    install|push-out) COMMAND='PUSH_OUT';;
+    pull-in) COMMAND='PULL_IN';;
     patch) COMMAND='PATCH';;
     --help|-h|help) f_usage ;;
     *)
@@ -108,7 +114,7 @@ case "$COMMAND" in
 		done
 		;;
 	
-	INSTALL)
+	PUSH_OUT) # formerly, "INSTALL"
 		for i in `/bin/ls -A` ; do
 			isIgnored=$( fIsIgnored "$i" )
 
@@ -116,6 +122,18 @@ case "$COMMAND" in
 			if [[ x"$isIgnored" != x'true' ]] ; then
 				#echo cp --verbose "$i" $HOME   # DRY-RUN
 				cp --verbose "$i" $HOME;
+			fi
+		done
+		;;
+
+	PULL_IN)
+		for i in `/bin/ls -A` ; do
+			isIgnored=$( fIsIgnored "$i" )
+
+			# if currFile is not ignored:
+			if [[ x"$isIgnored" != x'true' ]] ; then
+				#echo cp --verbose "$HOME/$i" .    # DRY-RUN
+				cp --verbose "$HOME/$i" .
 			fi
 		done
 		;;
