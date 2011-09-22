@@ -2,20 +2,55 @@
 
 ## ### #### ###################################################################
 ##
-## teelah customs -- 'general' ALIASES
+## misc.
+##
 ## ### #### ###################################################################
-#alias vib='vim ~/.mainly.sh'    # edit this file easily+quickly!
-alias vib='vim $ZOMG_DOTFILES/.mainly.sh'    # edit this file easily+quickly!
+
+##
+## rc, config, dotfile-related
+#alias vib='vim $ZOMG_DOTFILES/.mainly.sh'
+alias vib='vim ~/.mainly.sh'
+
+alias viba='vim ~/.aliases.sh'
+alias vibf='vim ~/.functions.sh'
+alias vibv='vim ~/.variables.sh'
+
+#alias cdd='cd ~/.dotfiles ; ls -l'  # !!! want this.... STUB
+alias cdd='cd $ZOMG_DOTFILES ; lla'
 
 ##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable
-##### grow expnentially.  I'm guessing this is a bad thing... but dont know how
-##### to get around it
+##### grow humongously.  I'm guessing this is a bad thing?
+##### Is opening a new terminal /really/ the ONLY way to realize any env/ changes?
 alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
-
-
-#
-# `ls' customs
+## /rc, config, dotfile-related
 ##
+
+
+
+##
+## misc
+alias df='df -hT'
+alias mountdev='mount | grep /dev'
+alias mdstat='more /proc/mdstat'
+alias sshsvn='ssh -2XC tyler@svn'
+# dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
+#alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
+
+# if less than a page of output, stop it.
+#alias less='less --QUIT-AT-EOF'
+
+alias cdb='cd ~/bin ; pwd'
+#alias cdb='cd ~/bin ; ls -l'
+#alias lb='ls -l ~/bin'
+alias cdt='cd ~/tmp ; pwd'
+#alias cdt='cd ~/tmp ; ls -l'
+## /misc
+##
+
+
+
+##
+## ls-related
 # (at least for phisata-#8-F13_2010-06-30_02:59:17-0400)
 # `ls' already aliased to:
 #   [teelah@phisata ~]$ date
@@ -24,127 +59,159 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 #   alias ls='ls --color=auto'
 #   [teelah@phisata ~]$
 #
+# valid options to --color argument: never, always or auto
 unalias ls
+alias ls='ls --classify --color=auto --time-style=iso'
 #
-alias ls='ls --color=auto --time-style=iso'
+# --time-style=iso examples:
+#  04-30 23:57  <-- refers to a recent file
+#  2009-10-21   <-- refers to a non-recent file
 #
+alias l.='ls -la'
 alias l='ls -l'
 alias la='ls -a'
-alias lla='ls -la'
-alias l.='ls -la'
-alias li='ls -li'
 alias lh='ls -lh'
-alias lt='ls -lt'
-alias ltr='ls -ltr'
-alias trll='ls -ltr'    # same as ltr
-alias ltrr='ls -lt'     # same as alias lt
-alias ltra='ls -ltra'
+alias li='ls -li'
+alias lla='ls -la'
 alias lld='ls -ld'
+alias lsd='ls -d'       # orly?
+alias lt='ls -lt'
+alias lta='ls -lta'
+#alias lr='ls -ltr'
+alias ltr='ls -ltr'
+alias ltra='ls -ltra'
+alias ltrr='ls -lt'     # same as alias lt
+alias trll='ls -ltr'    # same as ltr
+## /ls-related
 ##
-# /`ls' customs
 
 
-alias df='df -hT'
-alias mountdev='mount | grep /dev'
-alias mdstat='more /proc/mdstat'
-alias sshsvn='ssh -2XC tyler@svn'
-# dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
-#alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
 
-
-# git shtuff
-alias g='git'
-alias gh='git help'
-alias log='git log'
-alias loghead='git log | head'
-alias loghead='git plog | head'
-alias st='git status'
-alias di='git diff'
-alias dic='git diff --cached'
+##
+## git-related
 alias br='git branch'
 alias bra='git branch --verbose'
+alias di='git diff'
+alias dic='git diff --cached'
+alias g='git'
+alias gh='git help'
+alias gitcommittxt='clear ; git config --list | grep remote.origin.url ; git log | head'
+alias log='git log'
+#alias loghead='git log | head'
+alias loghead='git log | head'
+alias loghead2='git log | head -20'
+alias logheadp='git plog | head'
+alias logheadp2='git plog | head -20'
+#alias plog='git plog'
+alias st='git status'
+alias sts='git status --short'
 alias tag='git tag'
 alias taga='git tag -l -n'
-
-
-
+## git-related
 ##
-## teelah customs -- PLACES
+
+
+
 ## ### #### ###################################################################
-alias cdb='cd ~/bin ; pwd'
-alias lb='ls -l ~/bin'
-alias cdt='cd ~/tmp ; pwd'
-
-
-
-
-
-
-
-
-
+##
+## HOST-specific
+##
+## ### #### ###################################################################
 
 ## 
-## PHISATA-specific places...
-#alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
-alias cdp='cd /mnt/a14-h/hA4-465 ; pwd'
-#alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
-#alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
-alias r='echo "try cdr"'
-alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
+## PHISATA-specific
+if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
+	#alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
+	alias cdp='cd /mnt/a14-h/hA4-465 ; pwd'
+	#alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
+	#alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
+	alias r='echo "try cdr"'
+	alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
 
-alias life='cd /mnt/a14-h/hA4-465/root/LIFE ; pwd'
-alias dork='cd /mnt/a14-h/hA4-465/root/LIFE.dork ; pwd'
-alias hdd='cd /mnt/a14-h/hA4-465/root/LIFE/hdd ; pwd'
-alias hddsmart='cd /mnt/a14-h/hA4-465/root/LIFE/hdd/smartctl.logs ; pwd'
-alias proj='cd /mnt/a14-h/hA4-465/root/proj ; pwd'
+	alias life='cd /mnt/a14-h/hA4-465/root/LIFE ; pwd'
+	alias dork='cd /mnt/a14-h/hA4-465/root/LIFE.dork ; pwd'
+	alias hdd='cd /mnt/a14-h/hA4-465/root/LIFE/hdd ; pwd'
+	alias hddsmart='cd /mnt/a14-h/hA4-465/root/LIFE/hdd/smartctl.logs ; pwd'
+	alias proj='cd /mnt/a14-h/hA4-465/root/proj ; pwd'
 
-alias a32='cd /mnt/a32-555 ; pwd'
+	alias a32='cd /mnt/a32-555 ; pwd'
 
-alias t='cd /mnt/a32-555/t ; pwd'
-alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltr && date'
-## /PHISATA-specific places...
-##
-
-
-# if less than a page of output, stop it.
-#alias less='less --QUIT-AT-EOF'
-
-
-
-
-
-
-
-
-
-##
-## SVN.HOME-specific places...
-alias p1='cd /mnt/physical465.i ; echo "cd "`pwd`'
-alias pi='cd /mnt/physical465.i ; echo "cd "`pwd`'
-alias p2='cd /mnt/physical465.ii ; echo "cd "`pwd`'
-alias pii='cd /mnt/physical465.ii ; echo "cd "`pwd`'
-alias tmp='cd /tmp ; echo "cd "`pwd`'
-
-# need this so that when I create shtuff, other users in same group can manipulate them
-umask 0002
-
-# message to user
-#echo "[reminder of essential aliases...]"
-#echo "alias | grep -i phy"
-#alias | grep -i phy
-
-## /SVN.HOME-specific places...
+	alias t='cd /mnt/a32-555/t ; pwd'
+	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltr && date'
+fi
+## /PHISATA-specific
 ##
 
 
 
+##
+## SVN.HOME-specific
+if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
+	alias p1='cd /mnt/physical465.i ; echo "cd "`pwd`'
+	alias pi='cd /mnt/physical465.i ; echo "cd "`pwd`'
+	alias p2='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+	alias pii='cd /mnt/physical465.ii ; echo "cd "`pwd`'
+	alias tmp='cd /tmp ; echo "cd "`pwd`'
+
+	# need this so that when I create shtuff, other users in same group can manipulate them
+	umask 0002
+	# ^^STUB this is not an alias.
+
+	# message to user
+	#echo "[reminder of essential aliases...]"
+	#echo "alias | grep -i phy"
+	#alias | grep -i phy
+fi
+## /SVN.HOME-specific
+##
+
+
 
 ##
-## VM-F121-specific places
+## VM-F121-specific
 alias wiki='cd /var/www/html/wiki ; pwd'
-
-
-## /VM-F121-specific places
+## /VM-F121-specific
 ##
+
+
+
+##
+## ARINC-specific
+export CT=/opt/rational/clearcase/bin/cleartool
+#^^STUB this not an alias
+
+alias nv='netview'
+#alias df='df -hT | grep -v vobs'
+
+# Rational, ClearCase-related
+#alias cout='$CT checkout -nc '
+#alias cin='$CT checkin -nc '
+alias uncout='$CT uncheckout -rm '
+alias lsco='$CT lsco -me -recurse -cview '
+alias lscoshort='$CT lsco -me -recurse -short -cview '
+alias mkelem='$CT mkelem -ci -nc '
+alias cdv='cd ${CRBASE} ; pwd'  # change into view directory
+alias proj='clearprojexp'
+alias explorer='use *expl* instead!  ... (dummy)'
+alias expl='xclearcase &'
+
+# AccuRev-related
+alias ah='achelp'
+alias ac='accurev'
+alias acinfo='accurev info ; accurev secinfo'
+alias acnf='accurev info ; accurev secinfo'
+## /ARINC-specific
+##
+
+
+
+##
+## [com.spryinc.]MAGNIFICENT-specific
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
+alias cdgit='cd $HOME/dev/git'
+alias cdsvn='cd $HOME/dev/svn'
+
+## /[com.spryinc.]MAGNIFICENT-specific
+##
+
 
