@@ -26,6 +26,17 @@ ZOMG_DOTFILES="$HOME/dotfiles/home-machines"
 ## ### #### ###################################################################
 
 
+fSourceIfThere(){
+	local fileToSource="${1}"
+
+	if [[ -f "${fileToSource}" ]] ; then
+		echo "${fileToSource}"
+		source "${fileToSource}"
+	else
+		echo "NO ${fileToSource}!"
+	fi
+}
+
 
 ##
 ## teelah customs -- THINGS
@@ -84,11 +95,48 @@ if tty -s ; then
 fi
 
 
+#
+# makes anything defined automatically exported
+set -o allexport
+#
+
+
+
+
+
+
+IS_I_ON_INTELDUO='false'
+IS_I_ON_LAPTOP='false'
+IS_I_ON_MAGNIFICENT='false'
+IS_I_ON_PHISATA='false'
+IS_I_ON_SVN='false'
+#
+#if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
+#
+if [ x"${HOSTNAME}" = x"intelduo"  -o  x"${HOSTNAME}" = x"intelduo.home" ] ; then
+	IS_I_ON_INTELDUO='true'
+
+elif [ x"${HOSTNAME}" = x"laptop"  -o  x"${HOSTNAME}" = x"laptop.home" ] ; then
+	IS_I_ON_LAPTOP='true'
+
+elif [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ] ; then
+	IS_I_ON_MAGNIFICENT='true'
+
+elif [ x"${HOSTNAME}" = x"phisata"  -o  x"${HOSTNAME}" = x"phisata.home" ] ; then
+	IS_I_ON_PHISATA='true'
+
+elif [ x"${HOSTNAME}" = x"svn"  -o  x"${HOSTNAME}" = x"svn.home" ] ; then
+	IS_I_ON_SVN='true'
+
+fi
+
+
+
 # ~/.gitconfig special case:
 # If (this script) executing on work machine, use work email.
 # Else use the personal email which is specified in my .gitconfig.
 #if [[ x"$(hostname)" = x"magnificent" ]] ; then
-if [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ] ; then
+if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
 	#if [[ $( tty -s ) = 0 ]] ; then
 	if tty -s ; then
@@ -97,7 +145,10 @@ if [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ]
 fi
 
 
-source ~/.aliases.sh
-source ~/.functions.sh
-source ~/.variables.sh
+## smbclient -L bdavies522276
+# smbmount
+
+fSourceIfThere ~/.aliases.sh
+fSourceIfThere ~/.functions.sh
+fSourceIfThere ~/.variables.sh
 
