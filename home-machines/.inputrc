@@ -1,9 +1,14 @@
 #
 # to use (at least in bash) say like# bind -f inputrc
 #
-# do not bell on tab-completion
-set bell-style none
 
+# Shows all files instead of beep when tab-completing
+#set show-all-if-ambiguous on
+# Ignore case when completing, very nice!
+#set completion-ignore-case on
+
+# do not bell on tab-completion
+#set bell-style none
 set meta-flag on
 set input-meta on
 set convert-meta off
@@ -13,7 +18,8 @@ set output-meta on
 # directories have a slash appended.
 set mark-symlinked-directories on
 
-$if mode=emacs
+
+#$if mode=emacs
 
 # for linux console and RH/Debian xterm
 "\e[1~": beginning-of-line
@@ -79,5 +85,32 @@ $if mode=emacs
 #phisata:turn off
 #"OD": backward-word
 
-$endif
+#$endif
+
+#$if mode=emacs
+#$if term=screen
+
+## control+left
+# actually output'ed by cat:
+#"\e[D": backward-word
+# for PuTTYv0.60--to--RHEL
+######"\e[D": backward-word
+#"\e[D": backward-word
+#"\e[D": backward-word
+
+## control+right
+# actually output'ed by cat:
+#"\e[C": forward-word
+# for PuTTYv0.60--to--RHEL
+#######"\e[C": forward-word
+######^^these made it so thatleft and right arrow WITHOUT CONTROL would act like
+######### ctrl+left/right arrow
+#"\e[C": forward-word
+#$endif
+#$endif
+
+
+#
+# to use (at least in bash) say like# bind -f inputrc
+#
 
