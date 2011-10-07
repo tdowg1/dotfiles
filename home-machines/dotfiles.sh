@@ -14,8 +14,6 @@
 # ** compare contents of cwd vs. $HOME
 # * install
 # ** copy contents of cwd into $HOME
-# * patch (rarely used)
-# ** update $HOME/.bashrc file so that it calls one of my dotfiles
 #
 
 #
@@ -39,10 +37,6 @@ pull-in
 		analyzing dotfiles in cwd.
 help
 		Show this help message and exit.
-patch
-		Attempts to patch curr users .bashrc file using the
-		.bashrc.PATCH located in the cwd.
-		Note: should rarely ever have to use this.
 List of options:
 nil
 __HEREDOC__
@@ -61,7 +55,6 @@ while [[ $# != 0 ]] ; do
     diff) COMMAND='DIFF';;
     install|push-out) COMMAND='PUSH_OUT';;
     pull-in) COMMAND='PULL_IN';;
-    patch) COMMAND='PATCH';;
     --help|-h|help) f_usage ;;
     *)
 		echo "ERROR: unsupported COMMAND[$1] (case matched wildcard)"
@@ -138,10 +131,6 @@ case "$COMMAND" in
 		done
 		;;
 
-	PATCH)
-		patch --input=.bashrc.PATCH  ~/.bashrc
-		;;
-		
 	*) echo "ERROR: unsupported COMMAND[$1] (case matched wildcard)" ;;
 esac
 
