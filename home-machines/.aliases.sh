@@ -60,7 +60,9 @@ alias cdt='cd ~/tmp ; pwd'
 #   [teelah@phisata ~]$
 #
 # valid options to --color argument: never, always or auto
-unalias ls
+# unalias ls if if it's already been defined
+alias ls  >/dev/null  2>&1 \
+	&& unalias ls
 alias ls='ls --classify --color=auto --time-style=iso'
 #
 # --time-style=iso examples:

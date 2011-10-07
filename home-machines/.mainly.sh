@@ -30,10 +30,14 @@ fSourceIfThere(){
 	local fileToSource="${1}"
 
 	if [[ -f "${fileToSource}" ]] ; then
-		echo "${fileToSource}"
+		if tty -s ; then
+			echo "${fileToSource}"
+		fi
 		source "${fileToSource}"
 	else
-		echo "NO ${fileToSource}!"
+		if tty -s ; then
+			echo "NO ${fileToSource}!"
+		fi
 	fi
 }
 

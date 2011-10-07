@@ -530,8 +530,9 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
 SHTUFF
-* delete from curr cursor to end of 'word': dw
-* delete from curr cursor to end of line: D
+* delete from cursor to end of 'word': dw
+* delete from cursor to end of line: D
+* delete from cursor to end of file: dG
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -841,6 +842,22 @@ helpclearcase(){
 }
 ## /pulled from ARINC
 ##
+helpgrub(){
+cat <<'__envHEREDOC__'
+== GRUB V0.9x ==
+(fedora13, 8, etc.)
+
+== GRUB V1.99 ==
+(ubu1104)
+FREAKING DOCUMENTATION IS HERE... pain in my arse.
+	info -f grub -n 'Simple configuration'
+Config:
+	/etc/default/grub
+Apply / Install any config changes made:
+	update-grub  # which is esentially an alias for `grub-install > $BOOT/grub.cfg`
+__envHEREDOC__
+}
+## ### #### ###################################################################
 
 
 
