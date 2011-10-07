@@ -12,7 +12,8 @@ export SVN_EDITOR=vim
 
 ##
 ## FROM SVN.HOME MACHINE...
-export PATH=$PATH:/sbin:/usr/sbin
+#export PATH=$PATH:/sbin:/usr/sbin
+PATH=$PATH:/sbin:/usr/sbin
 
 export PAGER="less"
 
@@ -81,11 +82,15 @@ fi
 ## [com.spryinc.]MAGNIFICENT-specific
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
+	JAVA_HOME=/opt/jdk1.6.0_25
+	PATH=/opt/jdk1.6.0_25/bin:$PATH
+	LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
+
 	#
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
 	# 2011-06-24: NOTE M2_HOME already set in /etc/profile
-	export M2_HOME=/usr/share/maven2
+	M2_HOME=/usr/share/maven2
 	###
 	#^^^^CAN PROB RE-COMMENT THIS OUT AFTER AN OS BOUNCE???
 	##
@@ -99,11 +104,12 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# 2011-06-08: sbin's already set somewhere else! wtf?
 	#PATH=$PATH:/sbin:/usr/sbin
 
-	PATH=$JAVA_HOME/bin:$PATH
-	export PATH=$PATH
+	# 2011-10-05: move PATH update for JAVA_HOME into /etc/profile
+	#PATH=$JAVA_HOME/bin:$PATH
+	#export PATH=$PATH
 
 
-	export HISTTIMEFORMAT="%F_%T"
+	HISTTIMEFORMAT="%F_%T"
 
 	#HISTCONTROL=ignoreboth
 	HISTCONTROL=ignoredups:ignorespace
