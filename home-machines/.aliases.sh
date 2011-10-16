@@ -29,6 +29,7 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 
 ##
 ## misc
+alias kill9='kill -9'
 alias df='df -hT'
 alias mountdev='mount | grep /dev'
 alias mdstat='more /proc/mdstat'
@@ -38,6 +39,7 @@ alias sshsvn='ssh -2XC tyler@svn'
 
 # if less than a page of output, stop it.
 #alias less='less --QUIT-AT-EOF'
+alias less='less -FX'
 
 alias cdb='cd ~/bin ; pwd'
 #alias cdb='cd ~/bin ; ls -l'
@@ -61,8 +63,14 @@ alias cdt='cd ~/tmp ; pwd'
 #
 # valid options to --color argument: never, always or auto
 # unalias ls if if it's already been defined
+#unalias ls
 alias ls  >/dev/null  2>&1 \
 	&& unalias ls
+########## STUB FIX THIS ABOVE bc get error when do...
+#teelah@intelduo:~$ scp -r phisata:/bin .
+#/home/usrs.cp/teelah/.aliases.sh
+#teelah@intelduo:~$ /home/usrs.cp/teelah/.aliases.sh: line 63: unalias: ls: not found
+######### /STUB
 alias ls='ls --classify --color=auto --time-style=iso'
 #
 # --time-style=iso examples:
