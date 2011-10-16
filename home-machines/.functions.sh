@@ -531,6 +531,12 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * reformat too long and too short lines according to curr textwidth
 ** globally: gggqG
 ** curr paragraph: gqap
+BLOCK EDIT MODE
+* c-v (to ggo into col mode)
+* select columns and rows where want to enter text
+* shift+i (to go into insert mode in column modea0
+* type in text want to enter
+* ESC (or c-c) to apply
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
 SHTUFF
