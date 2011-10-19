@@ -2,11 +2,15 @@
 == BUGS ==
 * home-machines/.functions.sh has /some/ kind of weird bash syntax error (but
 not exactly because `bash -n .functions.sh' says its ok).  It is located
-I'm sure around the clearcase ish.  Investigate.
+I think around the clearcase ish.  Investigate.
 ** I verfied this because I'm doing some totally unrelated shell scripting 
 shtuff and like all my functions were being printed to stdout.  Removing any
 and all of those clearcase functions I wrote a while ago, stopped this
 odd printing of functions to stdout.
+** STEPS TO REPRODUCE:
+**# write a dummy script that just sets a variable or soemthing
+**# call dummy script like `bash -vx dummy.sh'
+**# notice all the extra crap is is dumped out
 
 
 == ENHANCEMENTS ==
