@@ -1,0 +1,20 @@
+
+== BUGS ==
+* home-machines/.functions.sh has /some/ kind of weird bash syntax error (but
+not exactly because `bash -n .functions.sh' says its ok).  It is located
+I'm sure around the clearcase ish.  Investigate.
+** I verfied this because I'm doing some totally unrelated shell scripting 
+shtuff and like all my functions were being printed to stdout.  Removing any
+and all of those clearcase functions I wrote a while ago, stopped this
+odd printing of functions to stdout.
+
+
+== ENHANCEMENTS ==
+=== dotfiles.sh ===
+* all for single file operations, currently, its all or nothing
+
+
+== NOTES ==
+
+== MISC ==
+
