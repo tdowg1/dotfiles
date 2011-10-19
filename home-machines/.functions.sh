@@ -867,24 +867,20 @@ Apply / Install any config changes made:
 	update-grub  # which is esentially an alias for `grub-install > $BOOT/grub.cfg`
 __envHEREDOC__
 }
-## ### #### ###################################################################
-
-
 helpaptitude2(){
 cat <<'__envHEREDOC__'
 SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 __envHEREDOC__
 }
-## ### #### ###################################################################
-
-
 
 _help6(){
 cat <<'__envHEREDOC__'
 
 __envHEREDOC__
 }
+
+
 ## ### #### ###################################################################
 ##
 ## /help text functions

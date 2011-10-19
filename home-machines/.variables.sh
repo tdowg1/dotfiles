@@ -143,7 +143,7 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# 2011-06-23: seeing if can save screen sessions.
 	# 2011-09-21: ^^NO YOU CANT, BUT YOU CAN HAVE IT AUTOCREATE TABSS
 	# src: http://superuser.com/questions/117000/tell-gnu-screen-where-to-save-the-sessions
-	export SCREENDIR=$HOME/.screen
+	#export SCREENDIR=$HOME/.screen
 
 	export TOMCAT_HOME=/opt/apache-tomcat-6.0.26/
 

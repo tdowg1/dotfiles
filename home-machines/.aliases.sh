@@ -30,6 +30,8 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 ##
 ## misc
 alias kill9='kill -9'
+alias k9='kill -9'
+alias kn='kill -9'
 alias df='df -hT'
 alias mountdev='mount | grep /dev'
 alias mdstat='more /proc/mdstat'
