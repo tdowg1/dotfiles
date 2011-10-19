@@ -32,6 +32,10 @@ achelp(){
 	accurev help $* | less -FX
 }
 
+aptitudesns(){
+	aptitude search "$1" | awk '{ print $2 }' | xargs --verbose  aptitude show | less -FX
+}
+
 
 ##
 ## pulled from ARINC
@@ -866,6 +870,13 @@ __envHEREDOC__
 ## ### #### ###################################################################
 
 
+helpaptitude2(){
+cat <<'__envHEREDOC__'
+SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
+aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+__envHEREDOC__
+}
+## ### #### ###################################################################
 
 
 
