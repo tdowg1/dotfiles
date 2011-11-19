@@ -1,0 +1,34 @@
+# from http://forums.macosxhints.com/showthread.php?p=541300
+
+# set term to whatever the normal term is (echo $TERM)
+#term xterm-xfree86
+term xterm
+
+shell -$SHELL
+
+# (at least on PuTTYv.60) enabling this prevented screen keyboard shortties
+#escape ^pp
+
+#altscreen on
+startup_message off
+defscrollback 2024
+bell_msg 'Bell in window %n'
+#hardstatus alwayslastline "%{= bk}%-w%{= bC} %n %t %{= bk}%+w %=%{= mW} %D %M %d, %C%A "
+
+# from tcreech
+hardstatus alwayslastline
+hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+#shelltitle "$ |bash"
+
+
+# from http://www.pixelbeat.org/settings/.screenrc
+# Bind F11 and F12 (NOT F1 and F2) to previous and next screen window
+#bindkey -k F1 prev
+#bindkey -k F2 next
+
+#startup_message off
+
+# Window list at the bottom.
+#hardstatus alwayslastline
+#hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
+
