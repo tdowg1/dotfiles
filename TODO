@@ -21,4 +21,13 @@ odd printing of functions to stdout.
 == NOTES ==
 
 == MISC ==
+=== misc TODO ===
+* rename "home-machines" something else; is incorrect.
+** rename ideas
+*** curr
+*** active
+** here's a totally diff approach
+*** move all content currently in "home-machines" into root.
+*** split out the "apps" folder (would need some way of making/getting updates to the dotfiles.sh syncer script tho...; perhaps git submodules?).
+*** move all those archive/whatever folders into root as well, but name the folder like ".historical" ".archives" or something stupid, which i dont even know why i need since this is revision control but Im just a stupid human I guess.
 
