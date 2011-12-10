@@ -13,12 +13,11 @@ odd printing of functions to stdout.
 **# write a dummy script that just sets a variable or soemthing
 **# call dummy script like `bash -vx dummy.sh'
 **# notice all the extra crap is is dumped out
+* gracefully fail (i.e. no bash error) if __git_ps1 thinggy is not configured properly in the environment
 
 
 
 == ENHANCEMENTS ==
-=== dotfiles.sh ===
-* all for single file operations, currently, its all or nothing
 * make top-level shell dotfiles announce themselves (when tty interactive, of course)
 
 
@@ -52,4 +51,15 @@ odd printing of functions to stdout.
 *** nil--what to call the operation that copies from $HOME to cwd?
 **** uninstall, mvout, out, get, pull, getfromhome
 *** reverseinstall, `--reverse install'
+
+* ability to perform any command 1-by-1 / individually specifying 1 or more specific files
+* ability to perform any command, but be propted for each
+
+* for install command, be able to handle copying of directories, for instance i get this error 
+** cp: omitting directory `.vim'
+
+* totally different approach / alternative to the install cmd:
+** setup-symlinks
+*** create symlink from home directory to target file, stored in the git working directory
+** similarly, will need an teardown-symlinks cmd
 
