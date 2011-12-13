@@ -32,16 +32,24 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 
 
-
 # 2011-07-09: tweaks for a git working directory (/etc/bash_completion.d/git)
 if [[ -f /etc/bash_completion.d/git ]] ; then
-	PREV_PS1="$PS1"
-	PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+	source /etc/bash_completion.d/git
 
-	GIT_PS1_SHOWDIRTYSTATE=true
-	GIT_PS1_SHOWSTASHSTATE=true
-	GIT_PS1_SHOWUNTRACKEDFILES=true
-	GIT_PS1_SHOWUPSTREAM="auto"
+	# test to see if /etc/bash_completion.d/git is even being sourced
+	env | grep __gitdir 2>&1 >/dev/null
+	if [[ $? = 0 ]] ; then
+		# ok it is.
+		PREV_PS1="$PS1"
+		PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+		GIT_PS1_SHOWDIRTYSTATE=true
+		GIT_PS1_SHOWSTASHSTATE=true
+		GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+	else
+		echo "/etc/bash_completion.d/git exists but doesn't seem to have been sourced by your env"
+	fi
 fi
 
 
