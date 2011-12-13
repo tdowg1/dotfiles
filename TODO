@@ -37,7 +37,7 @@ odd printing of functions to stdout.
 *** split out the "apps" folder (would need some way of making/getting updates to the dotfiles.sh syncer script tho...; perhaps git submodules?).
 *** move all those archive/whatever folders into root as well, but name the folder like ".historical" ".archives" or something stupid, which i dont even know why i need since this is revision control but Im just a stupid human I guess.
 * search for 'STUB' notes in-line in dotfiles for clean ups and additional werk.
-
+* add phisata's ~/.vimrc/ contents (has a neat little bash thinggy), and more
 
 
 
@@ -57,6 +57,10 @@ odd printing of functions to stdout.
 
 * for install command, be able to handle copying of directories, for instance i get this error 
 ** cp: omitting directory `.vim'
+** ALTERNATIVELY
+*** could just have a special little script that sets up (and re-checks) the .vim//.vimrc setup, for example
+**** copies .vim/ to home OR symlinks (checks symlink is set up) ~/.vim directory to .vim/
+**** symlinks (checks symlink is set up) ~/.vimrc to ~/.vim/plugins/vimrc.vim
 
 * totally different approach / alternative to the install cmd:
 ** setup-symlinks
