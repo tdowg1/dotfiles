@@ -58,6 +58,10 @@ fi
 ## 
 ## PHISATA-specific
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
+	[[ -f /etc/teelah-utils.conf ]] && source /etc/teelah-utils.conf
+	alias tu='$TUTILS'
+	tu="$TUTILS"
+
 	update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
 	export PATH=${PATH}:${update_PATH_with_teelah_utils}
 

@@ -11,7 +11,8 @@ grepdotfiles(){
 	local filesToGrep=$(cat <<__HEREDOC__
 		$HOME/.bash_[pu]*
 		$HOME/.bashrc
-		$HOME/.dotfiles/*
+		$ZOMG_DOTFILES/*
+		$ZOMG_DOTFILES/.*
 __HEREDOC__
 	)
 
@@ -446,6 +447,8 @@ PRINT 2rd TO-LAST COLUMN
 PRINT VARIOUS
 	$ echo 'one t z' | awk '{ print $2 " " $1 }'
 	> t one
+ltrim( rtrim( $1 ) )
+	awk  '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'
 __envHEREDOC__
 }
 helpsetuid(){
@@ -691,7 +694,7 @@ $ git log master...test # commits reachable from either test or
 * --date-order: similar to --topo-order in that no parent comes before all of its children, ow commits ordered in the commit timestamp order.
 ** IOW: commits appear primarily by commit date.
 
-= BRANCHing =
+= BRANCHes =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin east1999eternal-branch
 * Create a branch based on an upstream branch (v1):
@@ -704,8 +707,13 @@ $ git log master...test # commits reachable from either test or
 ** git push origin :my_branch
 
 = TAGs =
-$ git describe          # prints most recent tag
-$ git push origin :refs/tags/12345  # delete remote tag named 12345
+* Push local tags upstream
+** git push --verbose --tags
+* Delete remote tag named 12345
+** git push origin :refs/tags/12345
+
+* Print most recent tag
+** git describe
 
 = IGNOREing =
 http://www.randallkent.com/development/gitignore-not-working
