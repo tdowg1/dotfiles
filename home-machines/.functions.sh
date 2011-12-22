@@ -873,6 +873,13 @@ SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 __envHEREDOC__
 }
+helpcut(){
+cat <<'__envHEREDOC__'
+$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
+b,c,d
+__envHEREDOC__
+}
+
 
 _help6(){
 cat <<'__envHEREDOC__'
