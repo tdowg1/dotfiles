@@ -1,0 +1,35 @@
+
+
+== PHISATA ==
+=== from phisata's .bash_profile ===
+{{{
+# User specific environment and startup programs
+}}}
+
+=== from phisata's .bashrc ===
+{{{
+# User specific aliases and functions
+source ~/.mvin-myprofile
+}}}
+
+
+
+== MAGNIFICENT ==
+=== from magnificent's .bash_profile ===
+nil
+
+=== from magnificent's .bashrc ===
+{{{
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+echo "$HOME/.bashrc"
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+}}}
+
+{{{
+. ~/.dotfiles/mainly
+}}}
+
+

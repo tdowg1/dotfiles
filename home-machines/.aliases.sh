@@ -197,8 +197,11 @@ fi
 
 
 ##
-## VM-F121-specific
+## VM-F121-specific; vm-f121
 alias wiki='cd /var/www/html/wiki ; pwd'
+alias mwstart='dropbox start ; sudo service mysqld start ; sudo service httpd start'
+alias mwstop='dropbox stop ; sudo service mysqld stop ; sudo service httpd stop'
+alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd status'
 ## /VM-F121-specific
 ##
 

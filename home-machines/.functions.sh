@@ -952,13 +952,12 @@ cat <<'__envHEREDOC__'
 SKIP TESTS
 * -Dmaven.test.skip=true
 __envHEREDOC__
+}
 helprsnapshot(){
 cat <<'__envHEREDOC__'
 == STUB FIGURES OUT / DO ==
 * shortcut to replace the most recent bu (hourly.0), with one taken right _meow_;;.... overwrite latest rsnapshot with current disk state;; useful when know have good curr disk state want to rsnap, and is OK to delete most recent rsnap.
 __envHEREDOC__
-}
-
 }
 help7zip(){
 cat <<'__envHEREDOC__'
@@ -966,9 +965,12 @@ p7zip -d Tomato_1_28.7z      # decompress
 p7zip file-to-be-compressed  # compress
 __envHEREDOC__
 }
-
-
-
+helpcut(){
+cat <<'__envHEREDOC__'
+$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
+b,c,d
+__envHEREDOC__
+}
 
 _help6(){
 cat <<'__envHEREDOC__'
