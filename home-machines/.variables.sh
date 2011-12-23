@@ -84,13 +84,21 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	JAVA_HOME=/opt/jdk1.6.0_25
 	PATH=/opt/jdk1.6.0_25/bin:$PATH
-	LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
+	# ~2011-10-00: added for nss ssl development
+	# 2011-11-16: disabled
+	#LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
 
 	#
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
 	# 2011-06-24: NOTE M2_HOME already set in /etc/profile
-	M2_HOME=/usr/share/maven2
+	# 2011-11-15: do not set M2_HOME to be /usr/share/maven2 because it conflicts with mvn3
+	#M2_HOME=/usr/share/maven2
+	if [[ -z "$MAVEN_REPOSITORY" ]] ; then
+		M2_REPO="$HOME/.m2/repository"
+	else
+		M2_REPO="$MAVEN_REPOSITORY"
+	fi
 	###
 	#^^^^CAN PROB RE-COMMENT THIS OUT AFTER AN OS BOUNCE???
 	##
@@ -145,7 +153,8 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# src: http://superuser.com/questions/117000/tell-gnu-screen-where-to-save-the-sessions
 	#export SCREENDIR=$HOME/.screen
 
-	export TOMCAT_HOME=/opt/apache-tomcat-6.0.26/
+	export TOMCAT_HOME="/opt/tomcat/"
+	export tc="/opt/tomcat/"
 
 
 	##

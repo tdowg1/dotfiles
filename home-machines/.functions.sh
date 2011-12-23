@@ -36,10 +36,8 @@ aptitudesns(){
 	aptitude search "$1" | awk '{ print $2 }' | xargs --verbose  aptitude show | less -FX
 }
 
-
 ##
 ## pulled from ARINC
-
 ## CLEARCASE-RELATED
 ############## ALTERNATIVE ways to recursive checkin
 #http://stackoverflow.com/questions/973956/recursive-checkin-using-clearcase
@@ -307,7 +305,9 @@ helpsvnpropset(){
 	echo 'svn propset svn propval proppath'
 	echo 'example'
 	echo '	svn propset svn executable fileToMakeExecutable'
-	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision FILE"'
+	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision" FILE'
+	echo '   svn propset svn:executable "true" FILE'
+
 }
 
 
@@ -474,12 +474,16 @@ COPY FOLDER
 	rsync -av /opt/muzik /mnt/rsnapshot/
 COPY FOLDER's CONTENTS
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
+COPY wrt HARDLINKS
+	rsync -a --hard-links --delete "${src}/" "${dest}/"
 __envHEREDOC__
 }
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
 BU an rsnapshot root (or "repository")
 	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
+rsync using public-private openssh keys
+	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
 __envHEREDOC__
 }
 
@@ -669,6 +673,8 @@ Show open connections specifically for ftp
 	netstat -e | grep ftp
 Show all *T*cp ports being *L*istened to
 	netstat -tl
+Sort of like a "top" for network connections made (is not actively refreshed, new output is generated every so many seconds)
+	netstat -tcp -apc 10
 __envHEREDOC__
 }
 
@@ -694,6 +700,8 @@ $ git log master...test # commits reachable from either test or
 = BRANCHing =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin east1999eternal-branch
+* Make local branch track an upstream branch
+** git branch --set-upstream east1999eternal-branch origin/east1999eternal-branch
 * Create a branch based on an upstream branch (v1):
 ** git fetch origin
 ** git checkout --track origin/east1999eternal-branch
@@ -702,6 +710,9 @@ $ git log master...test # commits reachable from either test or
 ** git checkout my_branch
 * Delete remote branch
 ** git push origin :my_branch
+== branching example (push upstream and track) ==
+* git push origin  Environment--DEMO
+* git branch --set-upstream Environment--DEMO origin/Environment--DEMO
 
 = TAGs =
 $ git describe          # prints most recent tag
@@ -711,16 +722,47 @@ $ git push origin :refs/tags/12345  # delete remote tag named 12345
 http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
+
+= MERGEing =
+* when in 'MERGING' mode, and /after/ merge conflict resolution has been done, execute the following to indicate that conflicts have been resolved in the files (afterwards, just commit and youre done):
+** git update-index <file(s) in question>
+
 __envHEREDOC__
 }
 helpgit2(){
       cat <<'__envHEREDOC__'
+= STASHing =
+* respect staged,unstaged when <pop|apply>
+** git stash <pop|apply> --index
+
 = Undocumented (from git help) =
 * git ls-files --directory --others --exclude-from=.git/info/exclude
 * git update-index # Modifies the index or directory cache.
 
 = External Links =
 * git_remote_branch : A tool to simplify working with remote branches (http://github.com/webmat/git_remote_branch)
+__envHEREDOC__
+}
+helpgit3(){
+      cat <<'__envHEREDOC__'
+= COMMIT MODIFICATION =
+== modify last commit ==
+* git reset --soft HEAD^
+# make desired modifications
+* git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
+
+== modify any commit ==
+* using the commit hash prior to the commit you want to modify, run
+* a. git rebase --interactive ${commit_to_modify_parent}
+** can also use ${commit_to_modify}^, which does the same thing, HOWEVER I've found this approach undesirable because in your shell history you'll have ${commit_to_modify}^. And the ${commit_to_modify} hash will change
+* b. change leading text to edit for each commit you want to modify
+* c. make desired changes. then change your commit history with,
+* d. git commit -a --amend
+* once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run
+* e. git rebase --continue
+* f. if you're modifying >1 commit (which was specified in b.),
+** GOTO c.
+** ELSE finished
 __envHEREDOC__
 }
 helptree(){
@@ -736,6 +778,7 @@ __envHEREDOC__
 }
 helppatch(){
       cat <<'__envHEREDOC__'
+= v1 =
 # create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
 diff -c START_FILE END_FILE > patch
 diff -c INITIAL_FILE FINAL_FILE > patch
@@ -745,6 +788,14 @@ diff -c OLD_FILE NEW_FILE > patch
 # apply patch
 patch --input=patch
 	patch --input=bash_user_dev.env.patch
+	patch --verbose --input web.xml.patch $TOMCAT_HOME/webapps/portal/WEB-INF/web.xml
+
+= v2 (svn) =
+(src: http://incubator.apache.org/jena/getting_involved/index.html)
+# create patch
+svn diff > JENA-XYZ.patch
+# apply patch
+patch -p0 < JENA-XYZ.patch
 __envHEREDOC__
 }
 helpsed(){
@@ -791,6 +842,15 @@ __envHEREDOC__
 helpbash(){
 cat <<'__envHEREDOC__'
 -n   : syntax check
+__envHEREDOC__
+}
+helpbashstrings(){
+cat <<'__envHEREDOC__'
+$ kv='database_hostname=asdf'
+$ echo "${kv%%asdf}"
+database_hostname=
+$ echo "${kv##database_hostname=}"
+asdf
 __envHEREDOC__
 }
 helpsort(){
@@ -878,6 +938,37 @@ SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 __envHEREDOC__
 }
+helpionice(){
+cat <<'__envHEREDOC__'
+EXAMPLES
+* nice ionice -c 3 svn up
+** run svn with low priority (+10 (+20 being lowest priority)) and as an idle io process.
+* ionice -c 3 -p 89
+** Sets process with PID 89 as an idle io process.
+__envHEREDOC__
+}
+helpmvn(){
+cat <<'__envHEREDOC__'
+SKIP TESTS
+* -Dmaven.test.skip=true
+__envHEREDOC__
+helprsnapshot(){
+cat <<'__envHEREDOC__'
+== STUB FIGURES OUT / DO ==
+* shortcut to replace the most recent bu (hourly.0), with one taken right _meow_;;.... overwrite latest rsnapshot with current disk state;; useful when know have good curr disk state want to rsnap, and is OK to delete most recent rsnap.
+__envHEREDOC__
+}
+
+}
+help7zip(){
+cat <<'__envHEREDOC__'
+p7zip -d Tomato_1_28.7z      # decompress
+p7zip file-to-be-compressed  # compress
+__envHEREDOC__
+}
+
+
+
 
 _help6(){
 cat <<'__envHEREDOC__'

@@ -9,37 +9,38 @@ source $HOME/.screenrc
 # begin .screenrc-gitdevel-all specific shtuff
 # (NOTE: the c-M character says to execute statement (presses ENTER))
 screen -t "man"
-stuff "cd $HOME/dev/git/"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
-screen -t "~"
-stuff "cd $HOME/dev/git/"
+screen -t "Fed"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-fed"
 
-screen -t "gFed"
-stuff "cd $HOME/dev/git/gadget-hr-fed"
+screen -t "Nfo"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-info"
 
-screen -t "gNfo"
-stuff "cd $HOME/dev/git/gadget-hr-info"
+screen -t "Op"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-operations"
 
-screen -t "gOp"
-stuff "cd $HOME/dev/git/gadget-operations"
-
-screen -t "gPda"
+screen -t "!Pda!"
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-pda"
 stuff "cd $HOME/dev/git/gadget-pda"
 
-screen -t "p2p"
-stuff "cd $HOME/dev/git/p2p"
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "p2"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/p2p"
+
+screen -t "SparqPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
 
 screen -t "SpryRC"
-stuff "cd $HOME/dev/git/SpryRestSvc"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryRestSvc"
 
 screen -t "~"
-stuff "cd $HOME/dev/git/"
-
-screen -t "~"
-stuff "cd $HOME/dev/git/"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
 #screen -t ""
-#stuff "cd $HOME/dev/git/"
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
 
 select 3
