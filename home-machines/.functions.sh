@@ -749,10 +749,15 @@ __envHEREDOC__
 }
 helpsed(){
 cat <<'__envHEREDOC__'
-PREVIEW file/replace on files:
+== MISC ==
+* print specific line (N) of a file; print line 3 /etc/hosts file
+** sed -n "Ns/.//p" file
+** sed -n "3s/.//p" /etc/hosts
+== FIND/REPLACE ==
+PREVIEW find/replace on files:
  sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]
 . . . ^. . . . . . . . . . . . ^
-perform CHANGE find/replace on files:
+DO find/replace on files:
  sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]
 . . . ^
 HELPFUL for changing all the [fileN]'s:
