@@ -67,3 +67,6 @@ odd printing of functions to stdout.
 *** create symlink from home directory to target file, stored in the git working directory
 ** similarly, will need an teardown-symlinks cmd
 
+* i got fed up and started just doign this
+** ./dotfiles.sh diff | sed -n 's/\ and\ /   /p' | sed -n 's/Files\ /meld   /p' | sed -n 's/\ differ//p'
+*** which generates output that can be exeucted, line-by-line, opening up each conflict within meld program
