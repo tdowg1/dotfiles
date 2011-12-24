@@ -631,8 +631,8 @@ __envHEREDOC__
 }
 helpless(){
       cat <<'__envHEREDOC__'
-SHOW NFO
-	^G
+* show nfo: ^G
+* jump to line number N: Ng
 __envHEREDOC__
 }
 helptune2fs(){
@@ -841,7 +841,17 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
--n   : syntax check
+== misc ==
+-n   : syntax check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
+-x   : xtrace
+-o option-name : enable option-name, e.g. `set -o xtrace'
++o option-name : disable option-name, e.g. `set +o xtrace'
+
+== man page massiveness shortcuts (GNU Bash-4.1) ==
+* ~ln3050: section:: SHELL BUILTIN COMMANDS
+* ~ln3900: buildin cmd:: set
+* ~ln4400: end section:: SHELL BUILTIN COMMANDS
+* ~ln
 __envHEREDOC__
 }
 helpbashstrings(){
@@ -983,6 +993,21 @@ $ #
 $ IFS=$SAVEIFS
 __envHEREDOC__
 }
+helpdropbox(){
+cat <<'__envHEREDOC__'
+INSTALL
+The Dropbox daemon works fine on all 32-bit and 64-bit Linux servers. To install, run the following command in your Linux terminal.
+32-bit:
+cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86 | tar xzf -
+
+64-bit:
+cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86_64 | tar xzf -
+
+Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
+~/.dropbox-dist/dropboxd
+__envHEREDOC__
+}
+
 
 
 _help6(){
