@@ -971,6 +971,19 @@ $ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
 b,c,d
 __envHEREDOC__
 }
+helpIFS(){
+cat <<'__envHEREDOC__'
+$ # This IFS stuff allows to handle file names with spaces in them:
+$ SAVEIFS=$IFS
+$ IFS=$(echo -en "\n\b")
+$ #
+$ i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
+$ # ... output from looping over echo...
+$ #
+$ IFS=$SAVEIFS
+__envHEREDOC__
+}
+
 
 _help6(){
 cat <<'__envHEREDOC__'
