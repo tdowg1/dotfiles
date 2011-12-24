@@ -38,7 +38,8 @@ odd printing of functions to stdout.
 *** move all those archive/whatever folders into root as well, but name the folder like ".historical" ".archives" or something stupid, which i dont even know why i need since this is revision control but Im just a stupid human I guess.
 * search for 'STUB' notes in-line in dotfiles for clean ups and additional werk.
 * add phisata's ~/.vimrc/ contents (has a neat little bash thinggy), and more
-
+* copy /etc/bash_completion* shtuff from an appropriate box, into here.  alternatively, a more appropriate technique may be provided at
+** http://bash-completion.alioth.debian.org/
 
 
 
