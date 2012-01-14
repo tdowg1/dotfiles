@@ -486,12 +486,16 @@ rsync using public-private openssh keys
 	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
 __envHEREDOC__
 }
-
 helprename(){
-	echo "# pad certain directories with zeros"
-	echo 'disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"'
-	echo 'rename "$disk" "$disk"0 "$disk"?'
-	echo '[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??'
+cat <<'__envHEREDOC__'
+GENERAL USAGE
+rename "intel_duo" "intelduo" intel*
+
+PAD CERTAIN DIRECTORIES WITH ZEROS
+disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
+rename "$disk" "$disk"0 "$disk"?
+[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
+__envHEREDOC__
 }
 helprenameexamples(){
 	echo "mv [0, 1, 2] => [00, 01, 02]"
@@ -543,6 +547,13 @@ BLOCK EDIT MODE
 * ESC (or c-c) to apply
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
+UPPER && LOWER CASING
+* toUpper convert visual selection: gU
+* toLower convert visual selection: gu
+* toUpper until the end of the word: gUw
+* toUpper until the end of 2 words: gU2w
+* toUpper until the end of the line: gU$
+* toUpper until the end of 10 characters: gU10l
 SHTUFF
 * delete from cursor to end of 'word': dw
 * delete from cursor to end of line: D
@@ -591,13 +602,25 @@ ALL
 	-ow # save || restore file owner and group
 
 ARCHIVE
-	rar a \
-		-tsmca \ # timstamps 
-		-hpPASSWORD \
-		-rrRECOVERY_RECORD_AMT \ # AVOID making amount > 9 (specified 10 one time which produced 1% recovery)
-		-r \ # recurse
-		RAR_OUTPUT_FILE
-		RAR_INPUT_SRC
+* hp[PASSWORD]
+* m<0..5>       Set compression level (0-store...3-default...5-maximal)
+* r             Recurse subdirectories
+* rr            Add data recovery record; recovery record size will be selected
+						 automatically according to the archive size: a size of the 
+						 recovery information will be about 1% of the total archive 
+						 size, usually allowing the recovery of up to 0.6% of the 
+						 total archive size of continuously damaged data.
+* rr<N>         Add data recovery record; N = 1, 2 .. 524288 recovery sectors.
+						 A recovery record contains up to 524288 recovery sectors.
+* rr<N>%%       Add data recovery record; N = 1, 2 .. 100 percent.
+* rr<N>p        Add data recovery record; N = 1, 2 .. 100 percent.
+* rv            Add data recovery volumes
+* t             Test files after archiving
+* ts<m,c,a>[N]  Save or restore file time (modification, creation, access).
+                   just say: -tsmca to get everything.
+
+ARCHIVE EXAMPLE0
+* rar a -m5 -r -rr4p -t -tsmca  "rarchive.rar"  "<path to file or directory>"
 
 ARCHIVE EXAMPLE1
 	* timestamps: save as much as possible
