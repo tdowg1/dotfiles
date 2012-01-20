@@ -488,6 +488,7 @@ __envHEREDOC__
 }
 helprename(){
 cat <<'__envHEREDOC__'
+== rename v1 (non-regex) ==
 GENERAL USAGE
 rename "intel_duo" "intelduo" intel*
 
@@ -495,11 +496,21 @@ PAD CERTAIN DIRECTORIES WITH ZEROS
 disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
 rename "$disk" "$disk"0 "$disk"?
 [[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
+
+== rename v2 (regex) ==
+rename 's/REGEX/REPLACE' files
 __envHEREDOC__
 }
 helprenameexamples(){
-	echo "mv [0, 1, 2] => [00, 01, 02]"
-	echo '	rename "" 0"" [0-9]'
+cat <<'__envHEREDOC__'
+== rename v1 (non-regex) ==
+$ rename "" 0"" [0-9]     # desired behaviour: mv [0, 1, 2] => [00, 01, 02]
+
+== rename v2 (regex) ==
+$ rename -n  's/\ HEAD//'  intelduo\ bookmarks-201*
+intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
+intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
+__envHEREDOC__
 }
 helpe2fsck(){
 	echo "gParted uses:"

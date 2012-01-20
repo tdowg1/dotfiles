@@ -14,15 +14,11 @@ stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 screen -t "Fed"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-fed"
 
-screen -t "Nfo"
+screen -t "Nf"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-info"
 
 screen -t "Op"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-operations"
-
-screen -t "!Pda!"
-#stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-pda"
-stuff "cd $HOME/dev/git/gadget-pda"
 
 screen -t "be"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
@@ -30,10 +26,21 @@ stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
 screen -t "p2"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/p2p"
 
-screen -t "SparqPS"
-stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+screen -t "~"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
-screen -t "SpryRC"
+screen -t "QT"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/QueryTester/"
+
+screen -t "SPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+screen -t "Arcks"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryArchetypes/"
+
+screen -t "jsU"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/spry-jsUiLib/"
+
+screen -t "SRst"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryRestSvc"
 
 screen -t "~"
