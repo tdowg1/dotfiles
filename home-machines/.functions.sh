@@ -554,6 +554,8 @@ UPPER && LOWER CASING
 * toUpper until the end of 2 words: gU2w
 * toUpper until the end of the line: gU$
 * toUpper until the end of 10 characters: gU10l
+* toUpper the entire curr line: gUU
+* toLower the entire curr line: guu
 SHTUFF
 * delete from cursor to end of 'word': dw
 * delete from cursor to end of line: D
