@@ -1009,7 +1009,13 @@ help7zip(){
 cat <<'__envHEREDOC__'
 p7zip -d Tomato_1_28.7z      # decompress
 p7zip file-to-be-compressed  # compress
+
+# adds all files from "dir1" to archive.7z using 'ultra settings':
+7za a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on  archive.7z  dir1
 __envHEREDOC__
+}
+helpp7zip(){
+	help7zip
 }
 helpcut(){
 cat <<'__envHEREDOC__'
