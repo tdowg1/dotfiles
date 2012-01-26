@@ -237,8 +237,7 @@ createSymlinkTogms_pvobCCView(){
 ## ### #### ###################################################################
 
 helpmd5(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
@@ -247,42 +246,32 @@ CREATE2:: have hashes sorted by filename from the start # cd $DIR
  find .  -type f | sort | xargs md5sum > md5sum.md5
 VALIDATE:: (shows only failures) # cd $DIR
  md5sum --check md5sum.md5 | grep ' FAILED'
-__HERE__
-)
+__envHEREDOC__
 }
 helpshasum(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 		  Handy when checking Linux distros that have CHECKSUM files
 find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
-__HERE__
-)
+__envHEREDOC__
 }
-
 helpsynergy(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
 # ( ... see also (my custom): pssynergy)
-__HERE__
-)
+__envHEREDOC__
 }
-
 helprsnapshotdiffall(){
-cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)
 prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
 
 for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
 __envHEREDOC__
 }
-
 pssynergy(){
         echo '  PID TTY          TIME  NI COMMAND'
         ps -eo "%p %y %x %n %c" | grep synergy
 }
-
-
 helphardinfo(){
 	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
 }
