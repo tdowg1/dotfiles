@@ -6,6 +6,34 @@
 ##
 ## ### #### ###################################################################
 
+# TODO
+#get that echoandexec method I wrote
+
+
+
+gitgetcurrentbranch(){
+	git branch >/dev/null 2>&1  ||  return $?
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+# Pushes an untracked, local branch, upstream, then sets the local branch to 
+# track the upstream.
+gitbranchpushandtrackupstream(){
+	local branch="$1"
+	if [[ -z "$branch" ]] ; then
+		echo "ATTENTION: you did not specify the branch to push; defaulting to current."
+		branch="$( gitgetcurrentbranch )" || return $?
+		echo "current branch: $branch"
+	fi
+
+	git push origin  "$branch"  ||  return $?
+	git branch --set-upstream  "$branch"  "origin/${branch}"
+}
+
+
+
+
+# TODO STUB
 # this function helps w/ searching through a same set of files
 grepdotfiles(){
 	local filesToGrep=$(cat <<__HEREDOC__
