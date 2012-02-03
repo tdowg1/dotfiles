@@ -448,6 +448,11 @@ helpdate(){
 	
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
+
+cat <<'__envHEREDOC__'
+
+date  --reference=file-to-reference
+__envHEREDOC__
 }
 helpawk(){
 cat <<'__envHEREDOC__'
