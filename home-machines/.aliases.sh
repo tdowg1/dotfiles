@@ -49,6 +49,9 @@ alias sshsvn='ssh -2XC tyler@svn'
 #alias less='less --QUIT-AT-EOF'
 alias less='less -FX'
 
+alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+
+
 alias cdb='cd ~/bin ; pwd'
 #alias cdb='cd ~/bin ; ls -l'
 #alias lb='ls -l ~/bin'
