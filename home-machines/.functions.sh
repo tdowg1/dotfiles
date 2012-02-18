@@ -6,6 +6,34 @@
 ##
 ## ### #### ###################################################################
 
+# TODO
+#get that echoandexec method I wrote
+
+
+
+gitgetcurrentbranch(){
+	git branch >/dev/null 2>&1  ||  return $?
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+# Pushes an untracked, local branch, upstream, then sets the local branch to 
+# track the upstream.
+gitbranchpushandtrackupstream(){
+	local branch="$1"
+	if [[ -z "$branch" ]] ; then
+		echo "ATTENTION: you did not specify the branch to push; defaulting to current."
+		branch="$( gitgetcurrentbranch )" || return $?
+		echo "current branch: $branch"
+	fi
+
+	git push origin  "$branch"  ||  return $?
+	git branch --set-upstream  "$branch"  "origin/${branch}"
+}
+
+
+
+
+# TODO STUB
 # this function helps w/ searching through a same set of files
 grepdotfiles(){
 	local filesToGrep=$(cat <<__HEREDOC__
@@ -237,8 +265,7 @@ createSymlinkTogms_pvobCCView(){
 ## ### #### ###################################################################
 
 helpmd5(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
@@ -249,42 +276,32 @@ CREATE2:: have hashes sorted by filename from the start # cd $DIR
 
 VALIDATE:: (shows only failures) # cd $DIR
  md5sum --check md5sum.md5 | grep ' FAILED'
-__HERE__
-)
+__envHEREDOC__
 }
 helpshasum(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 		  Handy when checking Linux distros that have CHECKSUM files
 find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
-__HERE__
-)
+__envHEREDOC__
 }
-
 helpsynergy(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
 # ( ... see also (my custom): pssynergy)
-__HERE__
-)
+__envHEREDOC__
 }
-
 helprsnapshotdiffall(){
-cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)
 prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
 
 for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
 __envHEREDOC__
 }
-
 pssynergy(){
         echo '  PID TTY          TIME  NI COMMAND'
         ps -eo "%p %y %x %n %c" | grep synergy
 }
-
-
 helphardinfo(){
 	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
 }
@@ -395,6 +412,9 @@ EXAMPLES --------
    dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+rewrite disk (with itself)
+   dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
+
 EXAMPLES hdd-REMAPPING ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
@@ -433,6 +453,11 @@ helpdate(){
 	
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
+
+cat <<'__envHEREDOC__'
+
+date  --reference=file-to-reference
+__envHEREDOC__
 }
 helpawk(){
 cat <<'__envHEREDOC__'
@@ -670,7 +695,8 @@ __envHEREDOC__
 helpless(){
       cat <<'__envHEREDOC__'
 * show nfo: ^G
-* jump to line number N: Ng
+* jump to line number, "N", with: Ng
+** ex: ln88 : 88g
 __envHEREDOC__
 }
 helptune2fs(){
@@ -1012,7 +1038,13 @@ help7zip(){
 cat <<'__envHEREDOC__'
 p7zip -d Tomato_1_28.7z      # decompress
 p7zip file-to-be-compressed  # compress
+
+# adds all files from "dir1" to archive.7z using 'ultra settings':
+7za a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on  archive.7z  dir1
 __envHEREDOC__
+}
+helpp7zip(){
+	help7zip
 }
 helpcut(){
 cat <<'__envHEREDOC__'
@@ -1046,6 +1078,25 @@ Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
 ~/.dropbox-dist/dropboxd
 __envHEREDOC__
 }
+helpgrep(){
+cat <<'__envHEREDOC__'
+== Examples ==
+* recursively find pattern, while also specifying a filename pattern:
+STUB
+
+== Syntax ==
+
+__envHEREDOC__
+}
+helpcurl(){
+cat <<'__envHEREDOC__'
+== Perform POST request ==
+curl -d @<file-containing-POST-data> <URL>
+
+__envHEREDOC__
+}
+
+
 
 
 

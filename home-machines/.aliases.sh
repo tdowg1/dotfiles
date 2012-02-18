@@ -49,6 +49,9 @@ alias sshsvn='ssh -2XC tyler@svn'
 #alias less='less --QUIT-AT-EOF'
 alias less='less -FX'
 
+alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+
+
 alias cdb='cd ~/bin ; pwd'
 #alias cdb='cd ~/bin ; ls -l'
 #alias lb='ls -l ~/bin'
@@ -114,6 +117,8 @@ alias trll='ls -ltr'    # same as ltr
 ## git-related
 alias br='git branch'
 alias bra='git branch --verbose'
+alias brm='git branch --merged'
+alias brnm='git branch --no-merged'
 alias cop='git checkout --patch'  # interactively discard changes in working directory
 alias di='git diff'
 alias dic='git diff --cached'

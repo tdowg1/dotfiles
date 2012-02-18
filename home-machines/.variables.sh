@@ -99,9 +99,14 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	#
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
+
+
+
 	# 2011-06-24: NOTE M2_HOME already set in /etc/profile
 	# 2011-11-15: do not set M2_HOME to be /usr/share/maven2 because it conflicts with mvn3
 	#M2_HOME=/usr/share/maven2
+	# 2012-01-27: not using maven2; haven't in a while.  set M2_HOME because you're supposed to
+	M2_HOME=/usr/local/share/maven3
 	if [[ -z "$MAVEN_REPOSITORY" ]] ; then
 		M2_REPO="$HOME/.m2/repository"
 	else
