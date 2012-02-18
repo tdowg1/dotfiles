@@ -690,7 +690,8 @@ __envHEREDOC__
 helpless(){
       cat <<'__envHEREDOC__'
 * show nfo: ^G
-* jump to line number N: Ng
+* jump to line number, "N", with: Ng
+** ex: ln88 : 88g
 __envHEREDOC__
 }
 helptune2fs(){
@@ -1071,6 +1072,25 @@ Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
 ~/.dropbox-dist/dropboxd
 __envHEREDOC__
 }
+helpgrep(){
+cat <<'__envHEREDOC__'
+== Examples ==
+* recursively find pattern, while also specifying a filename pattern:
+STUB
+
+== Syntax ==
+
+__envHEREDOC__
+}
+helpcurl(){
+cat <<'__envHEREDOC__'
+== Perform POST request ==
+curl -d @<file-containing-POST-data> <URL>
+
+__envHEREDOC__
+}
+
+
 
 
 
