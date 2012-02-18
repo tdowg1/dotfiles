@@ -410,6 +410,9 @@ EXAMPLES --------
    dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+rewrite disk (with itself)
+   dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
+
 EXAMPLES hdd-REMAPPING ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
