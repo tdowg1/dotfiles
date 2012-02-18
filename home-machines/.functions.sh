@@ -242,9 +242,11 @@ helpmd5(){
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
- sort -k2 md5sum.md5
+ sort -k2 md5sum.md5  >  md5sumsorted.md5
+
 CREATE2:: have hashes sorted by filename from the start # cd $DIR
  find .  -type f | sort | xargs md5sum > md5sum.md5
+
 VALIDATE:: (shows only failures) # cd $DIR
  md5sum --check md5sum.md5 | grep ' FAILED'
 __HERE__
@@ -902,7 +904,8 @@ __envHEREDOC__
 helpsort(){
 cat <<'__envHEREDOC__'
 SORT A FILE OF FILE HASHES (md5sum output)
- sort -k 2 path/to/input-file
+ sort -k 2 path/to/input-file > output-file
+ sort -k2 path/to/input-file > output-file
 
 __envHEREDOC__
 }
