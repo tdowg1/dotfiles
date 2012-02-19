@@ -498,6 +498,9 @@ COPY FOLDER's CONTENTS
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
 COPY wrt HARDLINKS
 	rsync -a --hard-links --delete "${src}/" "${dest}/"
+
+GIVE SSH OPTIONS
+	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
 __envHEREDOC__
 }
 helprsyncexamples(){
@@ -680,6 +683,15 @@ ARCHIVE EXAMPLE2
 	* v<size>[k,b] where size=size*1000 and k,b=[*1024,*1]
 	* -hp[password] to encrypt file header and data using given password string
    rar a -m5 -r -rr4 -t -tsmca
+
+ARCHIVE EXAMPLE3
+	create archives of folders in curr directory; space-character: OK
+ifsbak=$IFS
+IFS=$(echo -en "\n\b")
+for i in $( find ./  -maxdepth 1 -mindepth 1 -type d  ) ; do 
+	echo rar a -m5 -r -rr4p -t -tsmca  "${i}.rar" "${i}";
+done
+IFS=$ifsbak
 
 EXTRACT
 	rar x
