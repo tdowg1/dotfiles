@@ -269,9 +269,11 @@ helpmd5(){
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
- sort -k2 md5sum.md5
+ sort -k2 md5sum.md5  >  md5sumsorted.md5
+
 CREATE2:: have hashes sorted by filename from the start # cd $DIR
  find .  -type f | sort | xargs md5sum > md5sum.md5
+
 VALIDATE:: (shows only failures) # cd $DIR
  md5sum --check md5sum.md5 | grep ' FAILED'
 __envHEREDOC__
@@ -410,6 +412,9 @@ EXAMPLES --------
    dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+rewrite disk (with itself)
+   dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
+
 EXAMPLES hdd-REMAPPING ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
@@ -702,7 +707,8 @@ __envHEREDOC__
 helpless(){
       cat <<'__envHEREDOC__'
 * show nfo: ^G
-* jump to line number N: Ng
+* jump to line number, "N", with: Ng
+** ex: ln88 : 88g
 __envHEREDOC__
 }
 helptune2fs(){
@@ -936,7 +942,8 @@ __envHEREDOC__
 helpsort(){
 cat <<'__envHEREDOC__'
 SORT A FILE OF FILE HASHES (md5sum output)
- sort -k 2 path/to/input-file
+ sort -k 2 path/to/input-file > output-file
+ sort -k2 path/to/input-file > output-file
 
 __envHEREDOC__
 }
@@ -1083,6 +1090,25 @@ Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
 ~/.dropbox-dist/dropboxd
 __envHEREDOC__
 }
+helpgrep(){
+cat <<'__envHEREDOC__'
+== Examples ==
+* recursively find pattern, while also specifying a filename pattern:
+STUB
+
+== Syntax ==
+
+__envHEREDOC__
+}
+helpcurl(){
+cat <<'__envHEREDOC__'
+== Perform POST request ==
+curl -d @<file-containing-POST-data> <URL>
+
+__envHEREDOC__
+}
+
+
 
 
 
