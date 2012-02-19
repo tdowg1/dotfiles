@@ -917,6 +917,10 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
+== typeset ==
+-f [function name] : display [specific] function(s) and its defn
+-F [function name] : display [specific] function(s)
+
 == misc ==
 -n   : syntax check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
 -x   : xtrace
