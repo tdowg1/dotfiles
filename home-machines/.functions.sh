@@ -1097,8 +1097,10 @@ __envHEREDOC__
 helpgrep(){
 cat <<'__envHEREDOC__'
 == Examples ==
-* recursively find pattern, while also specifying a filename pattern:
-grep dependency $( find . -name pom.xml )  # just take advantage of `find'
+* recursively find "dependency" pattern, while specifying a filename pattern:
+ grep dependency $( find . -name pom.xml )
+* edit pom.xml files that contain "opensocial" pattern:
+ vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
 
 == Syntax ==
 
