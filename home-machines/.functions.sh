@@ -1098,7 +1098,7 @@ helpgrep(){
 cat <<'__envHEREDOC__'
 == Examples ==
 * recursively find pattern, while also specifying a filename pattern:
-STUB
+grep dependency $( find . -name pom.xml )  # just take advantage of `find'
 
 == Syntax ==
 
