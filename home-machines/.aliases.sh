@@ -47,7 +47,7 @@ alias sshsvn='ssh -2XC tyler@svn'
 
 # if less than a page of output, stop it.
 #alias less='less --QUIT-AT-EOF'
-alias less='less -FX'
+alias less='less -FX --tabs=3'
 
 alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
 

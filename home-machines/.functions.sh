@@ -580,6 +580,9 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * reformat too long and too short lines according to curr textwidth
 ** globally: gggqG
 ** curr paragraph: gqap
+* reformat src code
+** :se filetype=xml
+** gg=G
 BLOCK EDIT MODE
 * c-v (to ggo into col mode)
 * select columns and rows where want to enter text
@@ -778,15 +781,14 @@ $ git log master...test # commits reachable from either test or
 ** git push origin east1999eternal-branch
 * Make local branch track an upstream branch
 ** git branch --set-upstream east1999eternal-branch origin/east1999eternal-branch
-* Create a branch based on an upstream branch (v1):
-** git fetch origin
+* Create a branch based on an upstream branch (v1) (and check it out):
 ** git checkout --track origin/east1999eternal-branch
 * Create a branch based on an upstream branch (v2):
 ** git branch --track my_branch origin/my_branch
-** git checkout my_branch
 * Delete remote branch
 ** git push origin :my_branch
-== branching example (push upstream and track) ==
+== branching example (create new branch, push upstream and track) ==
+* git co -b  Environment--DEMO
 * git push origin  Environment--DEMO
 * git branch --set-upstream Environment--DEMO origin/Environment--DEMO
 
