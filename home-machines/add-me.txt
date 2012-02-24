@@ -31,4 +31,17 @@ done
 git checkout @{-${i}}
 
 
+==== vmware tools isntall || upgrader ====
+vmware-tools-upgrader
+or
+cd /tmp ; sudo tar zxf /media/VMware\ Tools/VMwareTools-*.tar.gz
+
+# sudo vmware-tools-distrib/vmware-install.pl --help
+# VMware Tools 8.4.8 build-491717 for Linux installer
+# Usage: vmware-tools-distrib/vmware-install.pl [[-][-]d[efault]]
+# default: Automatically answer questions with the proposed answer.
+# [[-][-]prefix=<path to install product: bin, lib, doc>    Put the installation 
+# at <path> instead of the default location.  This implies '--default'.
+
+sudo vmware-tools-distrib/vmware-install.pl --default
 
