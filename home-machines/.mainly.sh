@@ -142,6 +142,7 @@ fi
 #if [[ x"$(hostname)" = x"magnificent" ]] ; then
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+	GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
 	#if [[ $( tty -s ) = 0 ]] ; then
 	if tty -s ; then
 		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"

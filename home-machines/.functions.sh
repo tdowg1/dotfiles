@@ -6,6 +6,34 @@
 ##
 ## ### #### ###################################################################
 
+# TODO
+#get that echoandexec method I wrote
+
+
+
+gitgetcurrentbranch(){
+	git branch >/dev/null 2>&1  ||  return $?
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+# Pushes an untracked, local branch, upstream, then sets the local branch to 
+# track the upstream.
+gitbranchpushandtrackupstream(){
+	local branch="$1"
+	if [[ -z "$branch" ]] ; then
+		echo "ATTENTION: you did not specify the branch to push; defaulting to current."
+		branch="$( gitgetcurrentbranch )" || return $?
+		echo "current branch: $branch"
+	fi
+
+	git push origin  "$branch"  ||  return $?
+	git branch --set-upstream  "$branch"  "origin/${branch}"
+}
+
+
+
+
+# TODO STUB
 # this function helps w/ searching through a same set of files
 grepdotfiles(){
 	local filesToGrep=$(cat <<__HEREDOC__
@@ -37,10 +65,8 @@ aptitudesns(){
 	aptitude search "$1" | awk '{ print $2 }' | xargs --verbose  aptitude show | less -FX
 }
 
-
 ##
 ## pulled from ARINC
-
 ## CLEARCASE-RELATED
 ############## ALTERNATIVE ways to recursive checkin
 #http://stackoverflow.com/questions/973956/recursive-checkin-using-clearcase
@@ -240,52 +266,43 @@ createSymlinkTogms_pvobCCView(){
 ## ### #### ###################################################################
 
 helpmd5(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
- sort -k2 md5sum.md5
+ sort -k2 md5sum.md5  >  md5sumsorted.md5
+
 CREATE2:: have hashes sorted by filename from the start # cd $DIR
  find .  -type f | sort | xargs md5sum > md5sum.md5
+
 VALIDATE:: (shows only failures) # cd $DIR
  md5sum --check md5sum.md5 | grep ' FAILED'
-__HERE__
-)
+__envHEREDOC__
 }
 helpshasum(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 		  Handy when checking Linux distros that have CHECKSUM files
 find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
-__HERE__
-)
+__envHEREDOC__
 }
-
 helpsynergy(){
-(
-        cat <<'__HERE__'
+	cat <<'__envHEREDOC__'
 renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
 # ( ... see also (my custom): pssynergy)
-__HERE__
-)
+__envHEREDOC__
 }
-
 helprsnapshotdiffall(){
-cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)
 prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
 
 for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
 __envHEREDOC__
 }
-
 pssynergy(){
         echo '  PID TTY          TIME  NI COMMAND'
         ps -eo "%p %y %x %n %c" | grep synergy
 }
-
-
 helphardinfo(){
 	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
 }
@@ -308,7 +325,9 @@ helpsvnpropset(){
 	echo 'svn propset svn propval proppath'
 	echo 'example'
 	echo '	svn propset svn executable fileToMakeExecutable'
-	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision FILE"'
+	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision" FILE'
+	echo '   svn propset svn:executable "true" FILE'
+
 }
 
 
@@ -394,6 +413,9 @@ EXAMPLES --------
    dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+rewrite disk (with itself)
+   dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
+
 EXAMPLES hdd-REMAPPING ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
@@ -432,6 +454,11 @@ helpdate(){
 	
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
+
+cat <<'__envHEREDOC__'
+
+date  --reference=file-to-reference
+__envHEREDOC__
 }
 helpawk(){
 cat <<'__envHEREDOC__'
@@ -477,24 +504,46 @@ COPY FOLDER
 	rsync -av /opt/muzik /mnt/rsnapshot/
 COPY FOLDER's CONTENTS
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
+COPY wrt HARDLINKS
+	rsync -a --hard-links --delete "${src}/" "${dest}/"
+
+GIVE SSH OPTIONS
+	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
 __envHEREDOC__
 }
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
 BU an rsnapshot root (or "repository")
 	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
+rsync using public-private openssh keys
+	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
 __envHEREDOC__
 }
-
 helprename(){
-	echo "# pad certain directories with zeros"
-	echo 'disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"'
-	echo 'rename "$disk" "$disk"0 "$disk"?'
-	echo '[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??'
+cat <<'__envHEREDOC__'
+== rename v1 (non-regex) ==
+GENERAL USAGE
+rename "intel_duo" "intelduo" intel*
+
+PAD CERTAIN DIRECTORIES WITH ZEROS
+disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
+rename "$disk" "$disk"0 "$disk"?
+[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
+
+== rename v2 (regex) ==
+rename 's/REGEX/REPLACE' files
+__envHEREDOC__
 }
 helprenameexamples(){
-	echo "mv [0, 1, 2] => [00, 01, 02]"
-	echo '	rename "" 0"" [0-9]'
+cat <<'__envHEREDOC__'
+== rename v1 (non-regex) ==
+$ rename "" 0"" [0-9]     # desired behaviour: mv [0, 1, 2] => [00, 01, 02]
+
+== rename v2 (regex) ==
+$ rename -n  's/\ HEAD//'  intelduo\ bookmarks-201*
+intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
+intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
+__envHEREDOC__
 }
 helpe2fsck(){
 	echo "gParted uses:"
@@ -534,6 +583,9 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * reformat too long and too short lines according to curr textwidth
 ** globally: gggqG
 ** curr paragraph: gqap
+* reformat src code
+** :se filetype=xml
+** gg=G
 BLOCK EDIT MODE
 * c-v (to ggo into col mode)
 * select columns and rows where want to enter text
@@ -542,6 +594,15 @@ BLOCK EDIT MODE
 * ESC (or c-c) to apply
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
+UPPER && LOWER CASING
+* toUpper convert visual selection: gU
+* toLower convert visual selection: gu
+* toUpper until the end of the word: gUw
+* toUpper until the end of 2 words: gU2w
+* toUpper until the end of the line: gU$
+* toUpper until the end of 10 characters: gU10l
+* toUpper the entire curr line: gUU
+* toLower the entire curr line: guu
 SHTUFF
 * delete from cursor to end of 'word': dw
 * delete from cursor to end of line: D
@@ -590,13 +651,25 @@ ALL
 	-ow # save || restore file owner and group
 
 ARCHIVE
-	rar a \
-		-tsmca \ # timstamps 
-		-hpPASSWORD \
-		-rrRECOVERY_RECORD_AMT \ # AVOID making amount > 9 (specified 10 one time which produced 1% recovery)
-		-r \ # recurse
-		RAR_OUTPUT_FILE
-		RAR_INPUT_SRC
+* hp[PASSWORD]
+* m<0..5>       Set compression level (0-store...3-default...5-maximal)
+* r             Recurse subdirectories
+* rr            Add data recovery record; recovery record size will be selected
+						 automatically according to the archive size: a size of the 
+						 recovery information will be about 1% of the total archive 
+						 size, usually allowing the recovery of up to 0.6% of the 
+						 total archive size of continuously damaged data.
+* rr<N>         Add data recovery record; N = 1, 2 .. 524288 recovery sectors.
+						 A recovery record contains up to 524288 recovery sectors.
+* rr<N>%%       Add data recovery record; N = 1, 2 .. 100 percent.
+* rr<N>p        Add data recovery record; N = 1, 2 .. 100 percent.
+* rv            Add data recovery volumes
+* t             Test files after archiving
+* ts<m,c,a>[N]  Save or restore file time (modification, creation, access).
+                   just say: -tsmca to get everything.
+
+ARCHIVE EXAMPLE0
+* rar a -m5 -r -rr4p -t -tsmca  "rarchive.rar"  "<path to file or directory>"
 
 ARCHIVE EXAMPLE1
 	* timestamps: save as much as possible
@@ -622,6 +695,15 @@ ARCHIVE EXAMPLE2
 	* -hp[password] to encrypt file header and data using given password string
    rar a -m5 -r -rr4 -t -tsmca
 
+ARCHIVE EXAMPLE3
+	create archives of folders in curr directory; space-character: OK
+ifsbak=$IFS
+IFS=$(echo -en "\n\b")
+for i in $( find ./  -maxdepth 1 -mindepth 1 -type d  ) ; do 
+	echo rar a -m5 -r -rr4p -t -tsmca  "${i}.rar" "${i}";
+done
+IFS=$ifsbak
+
 EXTRACT
 	rar x
 TEST
@@ -630,8 +712,9 @@ __envHEREDOC__
 }
 helpless(){
       cat <<'__envHEREDOC__'
-SHOW NFO
-	^G
+* show nfo: ^G
+* jump to line number, "N", with: Ng
+** ex: ln88 : 88g
 __envHEREDOC__
 }
 helptune2fs(){
@@ -672,6 +755,8 @@ Show open connections specifically for ftp
 	netstat -e | grep ftp
 Show all *T*cp ports being *L*istened to
 	netstat -tl
+Sort of like a "top" for network connections made (is not actively refreshed, new output is generated every so many seconds)
+	netstat -tcp -apc 10
 __envHEREDOC__
 }
 
@@ -697,14 +782,18 @@ $ git log master...test # commits reachable from either test or
 = BRANCHes =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin east1999eternal-branch
-* Create a branch based on an upstream branch (v1):
-** git fetch origin
+* Make local branch track an upstream branch
+** git branch --set-upstream east1999eternal-branch origin/east1999eternal-branch
+* Create a branch based on an upstream branch (v1) (and check it out):
 ** git checkout --track origin/east1999eternal-branch
 * Create a branch based on an upstream branch (v2):
 ** git branch --track my_branch origin/my_branch
-** git checkout my_branch
 * Delete remote branch
 ** git push origin :my_branch
+== branching example (create new branch, push upstream and track) ==
+* git co -b  Environment--DEMO
+* git push origin  Environment--DEMO
+* git branch --set-upstream Environment--DEMO origin/Environment--DEMO
 
 = TAGs =
 * Push local tags upstream
@@ -719,16 +808,47 @@ $ git log master...test # commits reachable from either test or
 http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
+
+= MERGEing =
+* when in 'MERGING' mode, and /after/ merge conflict resolution has been done, execute the following to indicate that conflicts have been resolved in the files (afterwards, just commit and youre done):
+** git update-index <file(s) in question>
+
 __envHEREDOC__
 }
 helpgit2(){
       cat <<'__envHEREDOC__'
+= STASHing =
+* respect staged,unstaged when <pop|apply>
+** git stash <pop|apply> --index
+
 = Undocumented (from git help) =
 * git ls-files --directory --others --exclude-from=.git/info/exclude
 * git update-index # Modifies the index or directory cache.
 
 = External Links =
 * git_remote_branch : A tool to simplify working with remote branches (http://github.com/webmat/git_remote_branch)
+__envHEREDOC__
+}
+helpgit3(){
+      cat <<'__envHEREDOC__'
+= COMMIT MODIFICATION =
+== modify last commit ==
+* git reset --soft HEAD^
+# make desired modifications
+* git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
+
+== modify any commit ==
+* using the commit hash prior to the commit you want to modify, run
+* a. git rebase --interactive ${commit_to_modify_parent}
+** can also use ${commit_to_modify}^, which does the same thing, HOWEVER I've found this approach undesirable because in your shell history you'll have ${commit_to_modify}^. And the ${commit_to_modify} hash will change
+* b. change leading text to edit for each commit you want to modify
+* c. make desired changes. then change your commit history with,
+* d. git commit -a --amend
+* once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run
+* e. git rebase --continue
+* f. if you're modifying >1 commit (which was specified in b.),
+** GOTO c.
+** ELSE finished
 __envHEREDOC__
 }
 helptree(){
@@ -744,6 +864,7 @@ __envHEREDOC__
 }
 helppatch(){
       cat <<'__envHEREDOC__'
+= v1 =
 # create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
 diff -c START_FILE END_FILE > patch
 diff -c INITIAL_FILE FINAL_FILE > patch
@@ -753,14 +874,27 @@ diff -c OLD_FILE NEW_FILE > patch
 # apply patch
 patch --input=patch
 	patch --input=bash_user_dev.env.patch
+	patch --verbose --input web.xml.patch $TOMCAT_HOME/webapps/portal/WEB-INF/web.xml
+
+= v2 (svn) =
+(src: http://incubator.apache.org/jena/getting_involved/index.html)
+# create patch
+svn diff > JENA-XYZ.patch
+# apply patch
+patch -p0 < JENA-XYZ.patch
 __envHEREDOC__
 }
 helpsed(){
 cat <<'__envHEREDOC__'
-PREVIEW file/replace on files:
+== MISC ==
+* print specific line (N) of a file; print line 3 /etc/hosts file
+** sed -n "Ns/.//p" file
+** sed -n "3s/.//p" /etc/hosts
+== FIND/REPLACE ==
+PREVIEW find/replace on files:
  sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]
 . . . ^. . . . . . . . . . . . ^
-perform CHANGE find/replace on files:
+DO find/replace on files:
  sed -i "s/192.168.8.3/bryn-pc/" file1 [fileN]
 . . . ^
 HELPFUL for changing all the [fileN]'s:
@@ -793,13 +927,37 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
--n   : syntax check
+== typeset ==
+-f [function name] : display [specific] function(s) and its defn
+-F [function name] : display [specific] function(s)
+
+== misc ==
+-n   : syntax check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
+-x   : xtrace
+-o option-name : enable option-name, e.g. `set -o xtrace'
++o option-name : disable option-name, e.g. `set +o xtrace'
+
+== man page massiveness shortcuts (GNU Bash-4.1) ==
+* ~ln3050: section:: SHELL BUILTIN COMMANDS
+* ~ln3900: buildin cmd:: set
+* ~ln4400: end section:: SHELL BUILTIN COMMANDS
+* ~ln
+__envHEREDOC__
+}
+helpbashstrings(){
+cat <<'__envHEREDOC__'
+$ kv='database_hostname=asdf'
+$ echo "${kv%%asdf}"
+database_hostname=
+$ echo "${kv##database_hostname=}"
+asdf
 __envHEREDOC__
 }
 helpsort(){
 cat <<'__envHEREDOC__'
 SORT A FILE OF FILE HASHES (md5sum output)
- sort -k 2 path/to/input-file
+ sort -k 2 path/to/input-file > output-file
+ sort -k2 path/to/input-file > output-file
 
 __envHEREDOC__
 }
@@ -881,6 +1039,94 @@ SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 __envHEREDOC__
 }
+helpionice(){
+cat <<'__envHEREDOC__'
+EXAMPLES
+* nice ionice -c 3 svn up
+** run svn with low priority (+10 (+20 being lowest priority)) and as an idle io process.
+* ionice -c 3 -p 89
+** Sets process with PID 89 as an idle io process.
+__envHEREDOC__
+}
+helpmvn(){
+cat <<'__envHEREDOC__'
+SKIP TESTS
+* -Dmaven.test.skip=true
+__envHEREDOC__
+}
+helprsnapshot(){
+cat <<'__envHEREDOC__'
+== STUB FIGURES OUT / DO ==
+* shortcut to replace the most recent bu (hourly.0), with one taken right _meow_;;.... overwrite latest rsnapshot with current disk state;; useful when know have good curr disk state want to rsnap, and is OK to delete most recent rsnap.
+__envHEREDOC__
+}
+help7zip(){
+cat <<'__envHEREDOC__'
+p7zip -d Tomato_1_28.7z      # decompress
+p7zip file-to-be-compressed  # compress
+
+# adds all files from "dir1" to archive.7z using 'ultra settings':
+7za a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on  archive.7z  dir1
+__envHEREDOC__
+}
+helpp7zip(){
+	help7zip
+}
+helpcut(){
+cat <<'__envHEREDOC__'
+$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
+b,c,d
+__envHEREDOC__
+}
+helpIFS(){
+cat <<'__envHEREDOC__'
+$ # This IFS stuff allows to handle file names with spaces in them:
+$ SAVEIFS=$IFS
+$ IFS=$(echo -en "\n\b")
+$ #
+$ i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
+$ # ... output from looping over echo...
+$ #
+$ IFS=$SAVEIFS
+__envHEREDOC__
+}
+helpdropbox(){
+cat <<'__envHEREDOC__'
+INSTALL
+The Dropbox daemon works fine on all 32-bit and 64-bit Linux servers. To install, run the following command in your Linux terminal.
+32-bit:
+cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86 | tar xzf -
+
+64-bit:
+cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86_64 | tar xzf -
+
+Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
+~/.dropbox-dist/dropboxd
+__envHEREDOC__
+}
+helpgrep(){
+cat <<'__envHEREDOC__'
+== Examples ==
+* recursively find "dependency" pattern, while specifying a filename pattern:
+ grep dependency $( find . -name pom.xml )
+* edit pom.xml files that contain "opensocial" pattern:
+ vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
+
+== Syntax ==
+
+__envHEREDOC__
+}
+helpcurl(){
+cat <<'__envHEREDOC__'
+== Perform POST request ==
+curl -d @<file-containing-POST-data> <URL>
+
+__envHEREDOC__
+}
+
+
+
+
 
 _help6(){
 cat <<'__envHEREDOC__'

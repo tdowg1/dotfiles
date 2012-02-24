@@ -1,4 +1,8 @@
+(magnificent machine): ok to delete work-machines_pull-in-magnificent branch
 
+
+= TODO'isms pertaining to the configs/dotfiles themselves =
+-----------------------------------------------------------
 == BUGS ==
 * home-machines/.functions.sh has /some/ kind of weird bash syntax error (but
 not exactly because `bash -n .functions.sh' says its ok).  It is located
@@ -11,14 +15,61 @@ odd printing of functions to stdout.
 **# write a dummy script that just sets a variable or soemthing
 **# call dummy script like `bash -vx dummy.sh'
 **# notice all the extra crap is is dumped out
+* gracefully fail (i.e. no bash error) if __git_ps1 thinggy is not configured properly in the environment
+
 
 
 == ENHANCEMENTS ==
-=== dotfiles.sh ===
-* all for single file operations, currently, its all or nothing
+* make top-level shell dotfiles announce themselves (when tty interactive, of course)
 
 
 == NOTES ==
+* just a thought on host-specific shtuff : may want to consider wrapping those content blocks with /where-am-i-executing?/ tests so dont clutter up EVERY env with garbage.
+
+
 
 == MISC ==
+=== misc TODO ===
+* rename "home-machines" something else; is incorrect.
+** rename ideas
+*** curr
+*** active
+** here's a totally diff approach
+*** move all content currently in "home-machines" into root.
+*** split out the "apps" folder (would need some way of making/getting updates to the dotfiles.sh syncer script tho...; perhaps git submodules?).
+*** move all those archive/whatever folders into root as well, but name the folder like ".historical" ".archives" or something stupid, which i dont even know why i need since this is revision control but Im just a stupid human I guess.
+* search for 'STUB' notes in-line in dotfiles for clean ups and additional werk.
+* add phisata's ~/.vimrc/ contents (has a neat little bash thinggy), and more
+* copy /etc/bash_completion* shtuff from an appropriate box, into here.  alternatively, a more appropriate technique may be provided at
+** http://bash-completion.alioth.debian.org/
 
+
+
+= TODO'isms pertaining to the dotfiles.sh script =
+--------------------------------------------------
+* can do 'install' which copies from cwd to $HOME, but would be nice if could go the other way.
+** ideas on what to call the commands
+*** install (copies from cwd to $HOME)
+**** install, mvin, in, put, push, update
+*** nil--what to call the operation that copies from $HOME to cwd?
+**** uninstall, mvout, out, get, pull, getfromhome
+*** reverseinstall, `--reverse install'
+
+* ability to perform any command 1-by-1 / individually specifying 1 or more specific files
+* ability to perform any command, but be propted for each
+
+* for install command, be able to handle copying of directories, for instance i get this error 
+** cp: omitting directory `.vim'
+** ALTERNATIVELY
+*** could just have a special little script that sets up (and re-checks) the .vim//.vimrc setup, for example
+**** copies .vim/ to home OR symlinks (checks symlink is set up) ~/.vim directory to .vim/
+**** symlinks (checks symlink is set up) ~/.vimrc to ~/.vim/plugins/vimrc.vim
+
+* totally different approach / alternative to the install cmd:
+** setup-symlinks
+*** create symlink from home directory to target file, stored in the git working directory
+** similarly, will need an teardown-symlinks cmd
+
+* i got fed up and started just doign this
+** ./dotfiles.sh diff | sed -n 's/\ and\ /   /p' | sed -n 's/Files\ /meld   /p' | sed -n 's/\ differ//p'
+*** which generates output that can be exeucted, line-by-line, opening up each conflict within meld program

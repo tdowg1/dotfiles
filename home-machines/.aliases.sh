@@ -15,6 +15,7 @@ alias viba='vim ~/.aliases.sh'
 alias vibf='vim ~/.functions.sh'
 alias vibv='vim ~/.variables.sh'
 
+alias pushvibftogit='cp --verbose ~/.functions.sh $ZOMG_DOTFILES'
 #alias cdd='cd ~/.dotfiles ; ls -l'  # !!! want this.... STUB
 alias cdd='cd $ZOMG_DOTFILES ; lla'
 
@@ -29,7 +30,12 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 
 ##
 ## misc
+alias epwd='echo `pwd`/'
 alias kill9='kill -9'
+alias k9='kill -9'
+alias kn='kill -9'
+#STUB alias pgr='ps -ef | grep'
+alias psaxfww='ps axfww'
 alias df='df -hT'
 alias mountdev='mount | grep /dev'
 alias mdstat='more /proc/mdstat'
@@ -39,7 +45,10 @@ alias sshsvn='ssh -2XC tyler@svn'
 
 # if less than a page of output, stop it.
 #alias less='less --QUIT-AT-EOF'
-alias less='less -FX'
+alias less='less -FX --tabs=3'
+
+alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+
 
 alias cdb='cd ~/bin ; pwd'
 #alias cdb='cd ~/bin ; ls -l'
@@ -72,6 +81,10 @@ alias ls  >/dev/null  2>&1 \
 #teelah@intelduo:~$ /home/usrs.cp/teelah/.aliases.sh: line 63: unalias: ls: not found
 ######### /STUB
 alias ls='ls --classify --color=auto --time-style=iso'
+
+alias ll  >/dev/null  2>&1 \
+	&& unalias ll
+alias ll='ls -lF'
 #
 # --time-style=iso examples:
 #  04-30 23:57  <-- refers to a recent file
@@ -80,6 +93,7 @@ alias ls='ls --classify --color=auto --time-style=iso'
 alias l.='ls -la'
 alias l='ls -l'
 alias la='ls -a'
+alias lsa='ls -a'
 alias lh='ls -lh'
 alias li='ls -li'
 alias lla='ls -la'
@@ -101,18 +115,26 @@ alias trll='ls -ltr'    # same as ltr
 ## git-related
 alias br='git branch'
 alias bra='git branch --verbose'
+alias brm='git branch --merged'
+alias brnm='git branch --no-merged'
+alias cop='git checkout --patch'  # interactively discard changes in working directory
 alias di='git diff'
 alias dic='git diff --cached'
 alias g='git'
 alias gh='git help'
 alias gitcommittxt='clear ; git config --list | grep remote.origin.url ; git log | head'
+alias list='git stash list'
 alias log='git log'
-#alias loghead='git log | head'
+alias logp='git log -p'
+alias logs='git log --stat'
+alias logps='git log -p --stat'
+alias logsp='git log -p --stat'   # same as the above
 alias loghead='git log | head'
 alias loghead2='git log | head -20'
 alias logheadp='git plog | head'
 alias logheadp2='git plog | head -20'
 #alias plog='git plog'
+alias sta='git stash'
 alias st='git status'
 alias sts='git status --short'
 alias tag='git tag'
@@ -178,8 +200,11 @@ fi
 
 
 ##
-## VM-F121-specific
+## VM-F121-specific; vm-f121
 alias wiki='cd /var/www/html/wiki ; pwd'
+alias mwstart='dropbox start ; sudo service mysqld start ; sudo service httpd start'
+alias mwstop='dropbox stop ; sudo service mysqld stop ; sudo service httpd stop'
+alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd status'
 ## /VM-F121-specific
 ##
 
@@ -221,6 +246,11 @@ alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
 alias cdgit='cd $HOME/dev/git'
 alias cdsvn='cd $HOME/dev/svn'
 
+
+if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
+	alias cdsuper='cd $HOME/dev/git/sprySuperGitRepo'
+
+fi
 ## /[com.spryinc.]MAGNIFICENT-specific
 ##
 

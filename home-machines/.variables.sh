@@ -32,16 +32,24 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 
 
-
 # 2011-07-09: tweaks for a git working directory (/etc/bash_completion.d/git)
 if [[ -f /etc/bash_completion.d/git ]] ; then
-	PREV_PS1="$PS1"
-	PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+	source /etc/bash_completion.d/git
 
-	GIT_PS1_SHOWDIRTYSTATE=true
-	GIT_PS1_SHOWSTASHSTATE=true
-	GIT_PS1_SHOWUNTRACKEDFILES=true
-	GIT_PS1_SHOWUPSTREAM="auto"
+	# test to see if /etc/bash_completion.d/git is even being sourced
+	env | grep __gitdir 2>&1 >/dev/null
+	if [[ $? = 0 ]] ; then
+		# ok it is.
+		PREV_PS1="$PS1"
+		PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+		GIT_PS1_SHOWDIRTYSTATE=true
+		GIT_PS1_SHOWSTASHSTATE=true
+		GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+	else
+		echo "/etc/bash_completion.d/git exists but doesn't seem to have been sourced by your env"
+	fi
 fi
 
 
@@ -88,13 +96,26 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	JAVA_HOME=/opt/jdk1.6.0_25
 	PATH=/opt/jdk1.6.0_25/bin:$PATH
-	LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
+	# ~2011-10-00: added for nss ssl development
+	# 2011-11-16: disabled
+	#LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
 
 	#
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
+
+
+
 	# 2011-06-24: NOTE M2_HOME already set in /etc/profile
-	M2_HOME=/usr/share/maven2
+	# 2011-11-15: do not set M2_HOME to be /usr/share/maven2 because it conflicts with mvn3
+	#M2_HOME=/usr/share/maven2
+	# 2012-01-27: not using maven2; haven't in a while.  set M2_HOME because you're supposed to
+	M2_HOME=/usr/local/share/maven3
+	if [[ -z "$MAVEN_REPOSITORY" ]] ; then
+		M2_REPO="$HOME/.m2/repository"
+	else
+		M2_REPO="$MAVEN_REPOSITORY"
+	fi
 	###
 	#^^^^CAN PROB RE-COMMENT THIS OUT AFTER AN OS BOUNCE???
 	##
@@ -149,7 +170,8 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# src: http://superuser.com/questions/117000/tell-gnu-screen-where-to-save-the-sessions
 	#export SCREENDIR=$HOME/.screen
 
-	export TOMCAT_HOME=/opt/apache-tomcat-6.0.26/
+	export TOMCAT_HOME="/opt/tomcat/"
+	export tc="/opt/tomcat/"
 
 
 	##

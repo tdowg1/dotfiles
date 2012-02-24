@@ -9,37 +9,45 @@ source $HOME/.screenrc
 # begin .screenrc-gitdevel-all specific shtuff
 # (NOTE: the c-M character says to execute statement (presses ENTER))
 screen -t "man"
-stuff "cd $HOME/dev/git/"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+screen -t "Fed"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-fed"
+
+screen -t "Nf"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-info"
+
+screen -t "Op"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-operations"
+
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "p2"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/p2p"
 
 screen -t "~"
-stuff "cd $HOME/dev/git/"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
-screen -t "gFed"
-stuff "cd $HOME/dev/git/gadget-hr-fed"
+screen -t "QT"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/QueryTester/"
 
-screen -t "gNfo"
-stuff "cd $HOME/dev/git/gadget-hr-info"
+screen -t "SPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+screen -t "Arcks"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryArchetypes/"
 
-screen -t "gOp"
-stuff "cd $HOME/dev/git/gadget-operations"
+screen -t "jsU"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/spry-jsUiLib/"
 
-screen -t "gPda"
-stuff "cd $HOME/dev/git/gadget-pda"
-
-screen -t "p2p"
-stuff "cd $HOME/dev/git/p2p"
-
-screen -t "SpryRC"
-stuff "cd $HOME/dev/git/SpryRestSvc"
+screen -t "SRst"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryRestSvc"
 
 screen -t "~"
-stuff "cd $HOME/dev/git/"
-
-screen -t "~"
-stuff "cd $HOME/dev/git/"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
 #screen -t ""
-#stuff "cd $HOME/dev/git/"
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
 
 select 3

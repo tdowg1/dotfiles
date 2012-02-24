@@ -1,0 +1,47 @@
+
+== bash aliases ==
+cdeiw
+cdeiwtrunk
+cdsupersps
+cdsuperjs
+
+gitconfigremote
+
+== bash functions ==
+crud : create, read, update, dELETE
+
+gitbranchdELETE
+gitbranchdELETEupstream
+gitbranchdELETEAll
+gitbranchcREATEpushupstream
+gitbranchuPDATEtrackupstream
+gitbranchcREATEpushupstreamandtrack
+gitbranchcREATEfromupstream
+
+gitcustombranch_updatealllocalbranches
+set -x
+i=0
+git fetch --all
+for branch in "$@"; do
+    git checkout "$branch"      || exit 1
+    git rebase "origin/$branch" || exit 1
+    let i=$(( i + 1 ))
+done
+# return to originally checked out branch
+git checkout @{-${i}}
+
+
+==== vmware tools isntall || upgrader ====
+vmware-tools-upgrader
+or
+cd /tmp ; sudo tar zxf /media/VMware\ Tools/VMwareTools-*.tar.gz
+
+# sudo vmware-tools-distrib/vmware-install.pl --help
+# VMware Tools 8.4.8 build-491717 for Linux installer
+# Usage: vmware-tools-distrib/vmware-install.pl [[-][-]d[efault]]
+# default: Automatically answer questions with the proposed answer.
+# [[-][-]prefix=<path to install product: bin, lib, doc>    Put the installation 
+# at <path> instead of the default location.  This implies '--default'.
+
+sudo vmware-tools-distrib/vmware-install.pl --default
+
