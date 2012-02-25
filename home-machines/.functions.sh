@@ -765,7 +765,6 @@ Sort of like a "top" for network connections made (is not actively refreshed, ne
 	netstat -tcp -apc 10
 __envHEREDOC__
 }
-
 helpgit(){
 	cat <<'__envHEREDOC__'
 = STATUS =
@@ -787,11 +786,11 @@ $ git log master...test # commits reachable from either test or
 
 = BRANCHes =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
-** git push origin east1999eternal-branch
+** git push origin e1999eternal-branch
 * Make local branch track an upstream branch
-** git branch --set-upstream east1999eternal-branch origin/east1999eternal-branch
+** git branch --set-upstream e1999eternal-branch origin/e1999eternal-branch
 * Create a branch based on an upstream branch (v1) (and check it out):
-** git checkout --track origin/east1999eternal-branch
+** git checkout --track origin/e1999eternal-branch
 * Create a branch based on an upstream branch (v2):
 ** git branch --track my_branch origin/my_branch
 * Delete remote branch
@@ -816,16 +815,11 @@ $ git log master...test # commits reachable from either test or
 http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
-
-= MERGEing =
-* when in 'MERGING' mode, and /after/ merge conflict resolution has been done, execute the following to indicate that conflicts have been resolved in the files (afterwards, just commit and youre done):
-** git update-index <file(s) in question>
-
 __envHEREDOC__
 }
 helpgit2(){
       cat <<'__envHEREDOC__'
-= STASHing =
+= STASHes =
 * respect staged,unstaged when <pop|apply>
 ** git stash <pop|apply> --index
 
@@ -833,8 +827,51 @@ helpgit2(){
 * git ls-files --directory --others --exclude-from=.git/info/exclude
 * git update-index # Modifies the index or directory cache.
 
-= External Links =
-* git_remote_branch : A tool to simplify working with remote branches (http://github.com/webmat/git_remote_branch)
+= MERGEs and Conflict Resolution-related =
+=== 'MERGING'-mode.1 : post-merge ===
+
+* Just performed a merge and want to undo it -> for most cases, you'll want this(^1)...
+** git reset --hard                # THINK: --dry-run option for `git merge'
+* ... as opposed to this(^1):
+** git revert
+* (^1) := from `git help merge':
+ Reverting a merge commit declares that __you will never want__ the tree changes
+ brought in by the merge. As a result, later merges will only bring in tree
+ changes introduced by commits that are not ancestors of the previously reverted
+ merge. __This may or may not be what you want__.
+ See the revert-a-faulty-merge How-To[1] for more details.
+
+=== 'MERGING'-mode.2 : post-resolution && pre-commit ===
+* when in 'MERGING' mode, and /after/ merge conflict resolution has been done, execute the following to indicate that conflicts have been resolved in the files (afterwards, just commit and youre done):
+** git update-index <file(s) in question>
+* PRE-commit : delete any ''*.orig'' files
+** git mergetool saves the merge-conflict version of the file with a ''.orig''
+suffix.  Make sure to delete it before adding and committing the merge or add *.orig
+to your .gitignore.
+
+=== 'MERGING' : post-commit ===
+* Since reviewing git log ONLY shows the merge commit entry and makes it difficult to get at the /actual/ change _content_, HERES SOME WAYS TO get at that content:
+** BRIEF
+*** git show --raw              # gives file listing, some hashes
+** VERBOSE
+*** git show -c                 # shows changes introduced by the merge
+*** git di HEAD^^ HEAD^         # something I tried out, not sure if I'm in cloudland || !.
+*** git di <2nd newest commit> <newest commit>  # diff FROM 2nd newest commit
+                                                #        TO newest commit.
+**** e.g.: git di 3f13e..2721c  # diff FROM 3f13e TO 2721c
+ *   2721caf (HEAD, phisata-conflicts, master) Merge branch 'master' into phisata-conflicts (18m ago)
+ |\
+ | * 3f13ede (origin/master, origin/HEAD) misc dotfile changes (vm-ubu10041) (13h ago)
+
+= DIFFs =
+* git diff <from> <to>          # diff FROM <from> commit TO <to> commit
+* Useful when want to review the actual content brought in i.e. MERGED IN from a branch.
+** git di <2nd newest commit> <newest commit>   # (see example-above)
+* git di <branch1 name> <branch2 name>
+* git di <branch name> <current branch>
+* git di <branch name>          # same as above ("TO" branch implied to be current branch)
+
+
 __envHEREDOC__
 }
 helpgit3(){
