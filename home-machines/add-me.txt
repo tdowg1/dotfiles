@@ -15,7 +15,7 @@ gitbranchdELETEupstream
 gitbranchdELETEAll
 gitbranchcREATEpushupstream
 gitbranchuPDATEtrackupstream
-gitbranchcREATEpushupstreamandtrack
+DONE gitbranchcREATEpushupstreamandtrack
 gitbranchcREATEfromupstream
 
 gitcustombranch_updatealllocalbranches

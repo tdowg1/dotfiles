@@ -16,9 +16,15 @@ gitgetcurrentbranch(){
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
-# Pushes an untracked, local branch, upstream, then sets the local branch to 
-# track the upstream.
-gitbranchpushandtrackupstream(){
+#gitbranchpushandtrackupstream(){
+gitbranchcREATEpushupstreamandtrack(){
+	local description="Pushes an untracked, local branch, upstream, then sets 
+	the local branch to track the upstream.
+	"
+	if [[ x"$1" = x"--help" ]] ; then
+		echo $description
+		return
+	fi
 	local branch="$1"
 	if [[ -z "$branch" ]] ; then
 		echo "ATTENTION: you did not specify the branch to push; defaulting to current."
@@ -270,7 +276,7 @@ helpmd5(){
 CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
  find . -type f -exec md5sum '{}' \; > md5sum.md5
  # it may then be desirable to have hashes sorted by filename:
- sort -k2 md5sum.md5  >  md5sumsorted.md5
+ sort -k2 md5sum.md5  >  md5sum.md5.sorted
 
 CREATE2:: have hashes sorted by filename from the start # cd $DIR
  find .  -type f | sort | xargs md5sum > md5sum.md5
@@ -796,6 +802,8 @@ $ git log master...test # commits reachable from either test or
 * git branch --set-upstream Environment--DEMO origin/Environment--DEMO
 
 = TAGs =
+* Create
+** git tag -m <msg> <tagname> [<commit>]
 * Push local tags upstream
 ** git push --verbose --tags
 * Delete remote tag named 12345
@@ -890,6 +898,11 @@ cat <<'__envHEREDOC__'
 * print specific line (N) of a file; print line 3 /etc/hosts file
 ** sed -n "Ns/.//p" file
 ** sed -n "3s/.//p" /etc/hosts
+* trim trailing whitespace
+** sed 's/[ \t]*$//'
+* delete blank lines
+** sed '/^$/d'
+
 == FIND/REPLACE ==
 PREVIEW find/replace on files:
  sed -n "s/192.168.8.3/bryn-pc/p" file1 [fileN]
@@ -959,6 +972,10 @@ SORT A FILE OF FILE HASHES (md5sum output)
  sort -k 2 path/to/input-file > output-file
  sort -k2 path/to/input-file > output-file
 
+SORT A SINGLE LINE
+ echo "b t n h" | sort                              # invalid.
+ echo "n y a n" | tr ' ' '\n' | sort                # get sorted characters, 1-per-line
+ echo "n y a n" | tr ' ' '\n' | sort | xargs echo   # get sorted characters, SINGLE line
 __envHEREDOC__
 }
 helpzip(){
