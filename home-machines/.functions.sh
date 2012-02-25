@@ -355,7 +355,9 @@ helpsmartctl(){
 cat <<'__envHEREDOC__'
    # LOOPS
 for i in a b c ; do   sudo smartctl --all  /dev/sd${i} | less ; done
-for i in a b c ; do   sudo smartctl --test=short /dev/sd${i};  done; date; echo
+for i in a b c ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
+for i in a b c ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
+for i in a b c ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m; 
 
 __envHEREDOC__
 }
