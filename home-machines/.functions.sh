@@ -354,10 +354,11 @@ helpsmartctl(){
 
 cat <<'__envHEREDOC__'
    # LOOPS
-for i in a b c ; do   sudo smartctl --all  /dev/sd${i} | less ; done
-for i in a b c ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
-for i in a b c ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
-for i in a b c ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m; 
+devicelist="a b c"
+for i in $devicelist ; do   sudo smartctl --all  /dev/sd${i} | less ; done
+for i in $devicelist ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
+for i in $devicelist ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
+for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m; 
 
 __envHEREDOC__
 }
@@ -1099,7 +1100,8 @@ helpionice(){
 cat <<'__envHEREDOC__'
 EXAMPLES
 * nice ionice -c 3 svn up
-** run svn with low priority (+10 (+20 being lowest priority)) and as an idle io process.
+** run svn with low priority (+10 (`nice -10') is default (+20 being lowest priority)) and as an idle io process.
+* nice -12 ionice -c 3 svn up
 * ionice -c 3 -p 89
 ** Sets process with PID 89 as an idle io process.
 __envHEREDOC__
