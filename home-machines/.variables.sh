@@ -5,21 +5,26 @@
 ## misc.
 ##
 ## ### #### ###################################################################
-
+export MAIL=/var/spool/mail/$USER
 export EDITOR=vim
 export SVN_EDITOR=vim
-
-
-##
-## FROM SVN.HOME MACHINE...
-#export PATH=$PATH:/sbin:/usr/sbin
-PATH=$PATH:/sbin:/usr/sbin
-
 export PAGER="less"
 
-# 2011-09-01:
-# src: http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
+
+# PATH modifications
+PATH=$PATH:/sbin:/usr/sbin
+
+# add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )
+if [[ -d "$HOME/bin" ]] ; then
+	PATH=$PATH:$HOME/bin
+	if [[ -d "$HOME/bin/$HOSTNAME" ]] ; then
+		PATH=$PATH:$HOME/bin/$HOSTNAME
+	fi
+fi
+
+
 # Less Colors for Man Pages
+# src: http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
 export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
 export LESS_TERMCAP_me=$'\E[0m'           # end mode
@@ -28,11 +33,10 @@ export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
 #export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-###SWEET!!! it works!
 
 
 
-# 2011-07-09: tweaks for a git working directory (/etc/bash_completion.d/git)
+# Git preferences and hacks (/etc/bash_completion.d/git)
 if [[ -f /etc/bash_completion.d/git ]] ; then
 	source /etc/bash_completion.d/git
 
@@ -64,34 +68,32 @@ fi
 ## ### #### ###################################################################
 
 ## 
-## PHISATA-specific
+## PHISATA-specific ...........................................................
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	[[ -f /etc/teelah-utils.conf ]] && source /etc/teelah-utils.conf
-	alias tu='$TUTILS'
 	tu="$TUTILS"
-
 	update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
 	export PATH=${PATH}:${update_PATH_with_teelah_utils}
 
 	export PYTHON_EXTERNALS_PATH=/opt/python-externals
 	export PYTHONPATH=/opt/teelah-utils/bin:$PYTHON_EXTERNALS_PATH
 fi
-## /PHISATA-specific
+
+
+## 
+## SVN-specific ...............................................................
+if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
+	[[ -f /etc/teelah-utils.conf ]] && source /etc/teelah-utils.conf
+	tu="$TUTILS"
+	update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
+	export PATH=${PATH}:${update_PATH_with_teelah_utils}
+	
+	export PYTHONPATH=/opt/teelah-utils/bin
+fi
+
+
 ##
-
-
-
-##
-## ARINC-specific
-#
-#BDAVIESPC=bdavies522276
-## /ARINC-specific
-##
-
-
-
-##
-## [com.spryinc.]MAGNIFICENT-specific
+## [com.spryinc.]MAGNIFICENT-specific .........................................
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	JAVA_HOME=/opt/jdk1.6.0_25
@@ -104,6 +106,18 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
 
+	
+	# Git-preferences:
+	# If (this script) executing on work machine, use work email.
+	# Else use the personal email which is specified in my .gitconfig.
+	if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
+		GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+		GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+		#if [[ $( tty -s ) = 0 ]] ; then
+		if tty -s ; then
+			echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
+		fi
+	fi
 
 
 	# 2011-06-24: NOTE M2_HOME already set in /etc/profile
@@ -124,14 +138,10 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	## after removing)
 	##
 
-	PATH=$PATH:$HOME/bin:$HOME/opt/bin
-
-	# 2011-06-08: sbin's already set somewhere else! wtf?
-	#PATH=$PATH:/sbin:/usr/sbin
+	PATH=$PATH:$HOME/opt/bin
 
 	# 2011-10-05: move PATH update for JAVA_HOME into /etc/profile
 	#PATH=$JAVA_HOME/bin:$PATH
-	#export PATH=$PATH
 
 
 	HISTTIMEFORMAT="%F_%T"
@@ -194,6 +204,4 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	##
 
 fi # /IS_I_ON_MAGNIFICENT
-## /[com.spryinc.]MAGNIFICENT-specific
-##
 

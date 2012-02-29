@@ -596,11 +596,15 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 ** :se filetype=xml
 ** gg=G
 BLOCK EDIT MODE
-* c-v (to ggo into col mode)
-* select columns and rows where want to enter text
-* shift+i (to go into insert mode in column modea0
-* type in text want to enter
-* ESC (or c-c) to apply
+* c-v (to go into col mode)
+* select columns and rows where want to do something
+* Insert Text
+** shift+i (to go into insert mode in column modea0
+** type in text want to enter
+** ESC (or c-c) to apply
+* Indent Text
+** indent once: >
+** indent thrice: 3>
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
 UPPER && LOWER CASING

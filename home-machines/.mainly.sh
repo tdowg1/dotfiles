@@ -4,15 +4,11 @@
 # This file to be sourced at shell login.  Here is the expected call hierarchy:
 # .bash_profile
 #   |-- .bashrc
+#     `-- /etc/bashrc
 #     `-- .mainly.sh        CURR FILE
 #         |-- .aliases.sh
 #         |-- .functions.sh
 #         `-- .variables.sh
-#
-# Currently, this file is sourced by these machines, from specified file : 
-#	phisata: by .bashrc
-#	svn: by .bashrc
-#	vm-f112: nil
 #
 
 ## ### #### ###################################################################
@@ -45,9 +41,6 @@ fSourceIfThere(){
 ##
 ## teelah customs -- THINGS
 ## ### #### ###################################################################
-export MAIL=/var/spool/mail/$USER
-
-
 
 
 # tell svn to show log messages of the 2 most recent commits
@@ -66,9 +59,10 @@ svnloghead(){
 #mansearch
 #       whatis
 #       apropos
+## smbclient -L bdavies522276
+# smbmount
 
 
-alias tu='cd /opt/teelah-utils/bin/; pwd'
 
 
 
@@ -88,12 +82,8 @@ if tty -s ; then
 		echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
 
 		echo "[MESSAGES FROM SVN.HOME]"
-		echo "[helpful message wrt configuring dotfiles]"
-		echo "  vim flashes (try ESC, ESC), but that's about it"
 		echo "  for user smbmuzik:"
 		echo "          pretty cool setup, uses zsh, vi colors are nice, etc."
-		echo "          vi tab: think I just realied this, but Im guessing Tim's vi profile has it inserting spaces FOR TABS, which is reel annoying.  if I want a tab char, I type tab damnit."
-		echo "          flashing happens everywhere, pretty annoything"
 	fi
 
 fi
@@ -135,23 +125,6 @@ elif [ x"${HOSTNAME}" = x"svn"  -o  x"${HOSTNAME}" = x"svn.home" ] ; then
 fi
 
 
-
-# ~/.gitconfig special case:
-# If (this script) executing on work machine, use work email.
-# Else use the personal email which is specified in my .gitconfig.
-#if [[ x"$(hostname)" = x"magnificent" ]] ; then
-if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
-	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
-	GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
-	#if [[ $( tty -s ) = 0 ]] ; then
-	if tty -s ; then
-		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
-	fi
-fi
-
-
-## smbclient -L bdavies522276
-# smbmount
 
 fSourceIfThere ~/.aliases.sh
 fSourceIfThere ~/.functions.sh

@@ -170,6 +170,9 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 
 	alias t='cd /mnt/a32-555/t ; pwd'
 	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltr && date'
+	
+	alias tu='$TUTILS'
+	alias cdtu='cd /opt/teelah-utils/bin/; pwd'
 fi
 ## /PHISATA-specific
 ##
@@ -193,6 +196,9 @@ if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
 	#echo "[reminder of essential aliases...]"
 	#echo "alias | grep -i phy"
 	#alias | grep -i phy
+	
+	alias tu='$TUTILS'
+	alias cdtu='cd /opt/teelah-utils/bin/; pwd'
 fi
 ## /SVN.HOME-specific
 ##
