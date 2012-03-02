@@ -1,3 +1,6 @@
+" 
+" SEE ALSO : /etc/vim/*
+" 
 syntax on
 se nu
 set tabstop=3
@@ -31,3 +34,18 @@ set gfn=Terminus\ 13
 set bg=light
 
 set paste
+
+" 2012-03-02 from /etc/vim/vimrc
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Uncomment the following to have Vim load indentation rules and plugins
+" according to the detected filetype.
+if has("autocmd")
+  filetype plugin indent on
+endif
+" /2012-03-02 from /etc/vim/vimrc
+

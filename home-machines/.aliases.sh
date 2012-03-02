@@ -43,18 +43,10 @@ alias sshsvn='ssh -2XC tyler@svn'
 # dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
 #alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
 
-# if less than a page of output, stop it.
-#alias less='less --QUIT-AT-EOF'
-alias less='less -FX --tabs=3'
-
-alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
-
-
-alias cdb='cd ~/bin ; pwd'
-#alias cdb='cd ~/bin ; ls -l'
-#alias lb='ls -l ~/bin'
-alias cdt='cd ~/tmp ; pwd'
-#alias cdt='cd ~/tmp ; ls -l'
+#alias less='less -FX --tabs=3'
+#alias less='less --quit-if-one-screen --no-init --tabs=3'   # no-init sometimes prevents clearing of display
+alias less='less --quit-if-one-screen --tabs=3'
+#alias le=' ... '
 ## /misc
 ##
 
@@ -110,13 +102,29 @@ alias trll='ls -ltr'    # same as ltr
 ##
 
 
+## 
+## cd-related
+#alias cdb='cd ~/bin ; ls -l'
+alias cdb='cd ~/bin ; pwd'
+#alias cdt='cd ~/tmp ; ls -l'
+alias cdt='cd ~/tmp ; pwd'
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
+alias tmp='cd /tmp ; echo "cd "`pwd`'
+## /cd-related
+##
 
 ##
 ## git-related
+alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+alias gitupstreamUrl='git config --list | grep remote.origin.url'
+
 alias br='git branch'
 alias bra='git branch --verbose'
 alias brm='git branch --merged'
+alias merged='git branch --merged'      # same as above
 alias brnm='git branch --no-merged'
+alias nomerged='git branch --no-merged' # same as above
+alias nom='git branch --no-merged'      # same as above
 alias cop='git checkout --patch'  # interactively discard changes in working directory
 alias di='git diff'
 alias dic='git diff --cached'
@@ -155,9 +163,6 @@ alias taga='git tag -l -n'
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	#alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
 	alias cdp='cd /mnt/a14-h/hA4-465 ; pwd'
-	#alias cdr='cd /mnt/a14-h/hA4-465/root/ ; ls -l'
-	#alias r='cd /mnt/a14-h/hA4-465/root ; pwd'      # like the win 'Run...' alias ===
-	alias r='echo "try cdr"'
 	alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
 
 	alias life='cd /mnt/a14-h/hA4-465/root/LIFE ; pwd'
@@ -169,7 +174,7 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	alias a32='cd /mnt/a32-555 ; pwd'
 
 	alias t='cd /mnt/a32-555/t ; pwd'
-	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltr && date'
+	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
 	
 	alias tu='$TUTILS'
 	alias cdtu='cd /opt/teelah-utils/bin/; pwd'
@@ -186,7 +191,6 @@ if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
 	alias pi='cd /mnt/physical465.i ; echo "cd "`pwd`'
 	alias p2='cd /mnt/physical465.ii ; echo "cd "`pwd`'
 	alias pii='cd /mnt/physical465.ii ; echo "cd "`pwd`'
-	alias tmp='cd /tmp ; echo "cd "`pwd`'
 
 	# need this so that when I create shtuff, other users in same group can manipulate them
 	umask 0002
@@ -218,29 +222,29 @@ alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd
 
 ##
 ## ARINC-specific
-export CT=/opt/rational/clearcase/bin/cleartool
-#^^STUB this not an alias
-
-alias nv='netview'
+# (correct, this is the alias file, but this is not an alias. It's 1 defn.  DEAL.)
+#export CT=/opt/rational/clearcase/bin/cleartool
+#
+#alias nv='netview'
 #alias df='df -hT | grep -v vobs'
-
-# Rational, ClearCase-related
+#
+## Rational, ClearCase-related
 #alias cout='$CT checkout -nc '
 #alias cin='$CT checkin -nc '
-alias uncout='$CT uncheckout -rm '
-alias lsco='$CT lsco -me -recurse -cview '
-alias lscoshort='$CT lsco -me -recurse -short -cview '
-alias mkelem='$CT mkelem -ci -nc '
-alias cdv='cd ${CRBASE} ; pwd'  # change into view directory
-alias proj='clearprojexp'
-alias explorer='use *expl* instead!  ... (dummy)'
-alias expl='xclearcase &'
-
-# AccuRev-related
-alias ah='achelp'
-alias ac='accurev'
-alias acinfo='accurev info ; accurev secinfo'
-alias acnf='accurev info ; accurev secinfo'
+#alias uncout='$CT uncheckout -rm '
+#alias lsco='$CT lsco -me -recurse -cview '
+#alias lscoshort='$CT lsco -me -recurse -short -cview '
+#alias mkelem='$CT mkelem -ci -nc '
+#alias cdv='cd ${CRBASE} ; pwd'  # change into view directory
+#alias proj='clearprojexp'
+#alias explorer='use *expl* instead!  ... (dummy)'
+#alias expl='xclearcase &'
+#
+## AccuRev-related
+#alias ah='achelp'
+#alias ac='accurev'
+#alias acinfo='accurev info ; accurev secinfo'
+#alias acnf='accurev info ; accurev secinfo'
 ## /ARINC-specific
 ##
 
@@ -248,7 +252,7 @@ alias acnf='accurev info ; accurev secinfo'
 
 ##
 ## [com.spryinc.]MAGNIFICENT-specific
-alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
+# ... I'm thinking I might like this... so, at current, not wrapping within host-specific test
 alias cdgit='cd $HOME/dev/git'
 alias cdsvn='cd $HOME/dev/svn'
 

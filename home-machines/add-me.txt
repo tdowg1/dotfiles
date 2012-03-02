@@ -5,7 +5,6 @@ cdeiwtrunk
 cdsupersps
 cdsuperjs
 
-gitconfigremote
 
 == bash functions ==
 crud : create, read, update, dELETE
@@ -31,6 +30,22 @@ done
 git checkout @{-${i}}
 
 
+^^here, the following use cases may help with determining werk needed for git function helpers
+* 1
+** am in master branch
+** need to co origin/branchb, check it out, and set its upstream to origin
+** 
+* 2
+** am in master branch
+** want to *create* a branch, checki it out, 
+** push it upstream and set it to track upstream
+** 
+* 3
+** am in a branch that i want to push to upstream repo 
+** (to me, this implies also that i want to SET it to track upstream)
+** 
+
+
 ==== vmware tools isntall || upgrader ====
 vmware-tools-upgrader
 or
@@ -44,4 +59,12 @@ cd /tmp ; sudo tar zxf /media/VMware\ Tools/VMwareTools-*.tar.gz
 # at <path> instead of the default location.  This implies '--default'.
 
 sudo vmware-tools-distrib/vmware-install.pl --default
+
+
+
+== mvn crap ==
+=== release's plugin ===
+==== after failure snipp[ets  ====
+===== mvn release:prepare FAILURE =====
+rm pom.xml.tag pom.xml.releaseBackup  release.properties   &&  git co -- pom.xml
 

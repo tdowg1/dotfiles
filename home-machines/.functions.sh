@@ -602,13 +602,13 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 ** :se filetype=xml
 ** gg=G
 ** {VISUAL}  WANTED!
-VISUAL / BLOCK EDIT MODE
-* c-v (to go into col mode)
-* select columns and rows where want to do something
+VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
 * Insert Text
 ** shift+i (to go into insert mode in column modea0
 ** type in text want to enter
 ** ESC (or c-c) to apply
+* Delete Text
+** STUB-----------WANTED 
 * Indent Text
 ** indent once: >
 ** indent thrice: 3>

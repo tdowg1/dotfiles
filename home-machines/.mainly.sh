@@ -78,6 +78,12 @@ svnloghead(){
 if tty -s ; then
 	#echo "still todo: separate vib / .mainly.sh into alias,func, and var profiles"
 
+	
+	## THEN--ITS OKAY TO TALK!  HOORAY FISH! (IS_I_CAN_TALK
+	##MAKE FUNCTION:
+	#echoifok()
+
+
 	if false ; then
 		echo "check out the default screen profile under ubuntu904 (see also:live cd I have)"
 
