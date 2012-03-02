@@ -692,7 +692,7 @@ ARCHIVE EXAMPLE1
 	* volume size: 200863744b[YTES] ~= 191MB
 	* save symlinks as links (not the file they point to)
 	* save owner/group metadata
-$ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9 -m0  -r  -v200863744b  -ol -ow   /tmp/optical/rt2011-08-03/archives/rt2011-08-03.rar .
+$ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9p -m0  -r  -v200863744b  -ol -ow   /tmp/optical/rt2011-08-03/archives/rt2011-08-03.rar .
 
 ARCHIVE EXAMPLE2
 	* ep1 Exclude base directory from names
@@ -706,7 +706,7 @@ ARCHIVE EXAMPLE2
 	* tsmca save file time file time (modification, creation, access)
 	* v<size>[k,b] where size=size*1000 and k,b=[*1024,*1]
 	* -hp[password] to encrypt file header and data using given password string
-   rar a -m5 -r -rr4 -t -tsmca
+   rar a -m5 -r -rr4p -t -tsmca
 
 ARCHIVE EXAMPLE3
 	create archives of folders in curr directory; space-character: OK
@@ -716,6 +716,10 @@ for i in $( find ./  -maxdepth 1 -mindepth 1 -type d  ) ; do
 	echo rar a -m5 -r -rr4p -t -tsmca  "${i}.rar" "${i}";
 done
 IFS=$ifsbak
+
+ARCHIVE EXAMPLE4
+perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012:
+* for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca -ri1 "${i}.rar"  "${i}" ; done
 
 EXTRACT
 	rar x
@@ -1185,6 +1189,15 @@ curl -d @<file-containing-POST-data> <URL>
 
 __envHEREDOC__
 }
+helpdevices(){
+cat <<'__envHEREDOC__'
+== Device and Driver and Hardware-related commands ==
+$ udevadm trigger --verbose --dry-run
+$ modprobe --list
+$ lsusb --verbose ; lspci, lscpu, etc.
+__envHEREDOC__
+}
+
 
 
 
