@@ -480,6 +480,11 @@ PRINT LAST COLUMN and DO MATH
 PRINT 2rd TO-LAST COLUMN
 	$ svn info | grep 'Last Changed Rev:' | awk '{ print $(NF-1) }'
 	> Rev:
+PRINT 2nd COLUMN and ALL REMAINING COLUMNS
+	# _note_ prob better off using `cut'
+	$ echo 'one two three and to the fo' |  awk '{ for(i = 2; i <= NF; i++) { printf("%s ", $i) }
+printf("\n") }' 
+	> two three and to the fo
 PRINT VARIOUS
 	$ echo 'one t z' | awk '{ print $2 " " $1 }'
 	> t one
@@ -592,10 +597,12 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * reformat too long and too short lines according to curr textwidth
 ** globally: gggqG
 ** curr paragraph: gqap
+** {VISUAL}gq
 * reformat src code
 ** :se filetype=xml
 ** gg=G
-BLOCK EDIT MODE
+** {VISUAL}  WANTED!
+VISUAL / BLOCK EDIT MODE
 * c-v (to go into col mode)
 * select columns and rows where want to do something
 * Insert Text
@@ -1136,8 +1143,9 @@ helpp7zip(){
 }
 helpcut(){
 cat <<'__envHEREDOC__'
-$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
-b,c,d
+PRINT 2nd COLUMN and ALL REMAINING COLUMNS
+	$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
+	> b,c,d
 __envHEREDOC__
 }
 helpIFS(){
@@ -1185,6 +1193,53 @@ curl -d @<file-containing-POST-data> <URL>
 
 __envHEREDOC__
 }
+helpgeditmultieditmode(){
+cat <<'__envHEREDOC__'
+* c-Shift-c         # beginmode
+* c-e               # insert edit point
+* c-Home            # insert edit point at beginning of line
+* c-End             # insert edit point at end of line
+* select text+Enter # column editing
+* esc               # endmode
+__envHEREDOC__
+}
+helpscp(){
+cat <<'__envHEREDOC__'
+* -l LIMIT # in kbits/s; 2000 ~= 250KiB/s
+* -p       # preserve times
+__envHEREDOC__
+}
+helphdd(){
+cat <<'__envHEREDOC__'
+== Partition-related ==
+=== What kind of partition is it? ===
+==== EXTENDED ('logical' in the stupid windows realm) ====
+$ sudo tune2fs -l /dev/sdc2    # /dev/sdc2 is an extended partition
+tune2fs 1.41.12 (17-May-2010)
+tune2fs: Attempt to read block from filesystem resulted in short read while trying to open /dev/sdc2
+Couldn't find valid filesystem superblock.
+
+==== NOT-ext[234] ====
+$ sudo tune2fs -l /dev/sdc5    # /dev/sdc5 is an ntfs partition
+tune2fs 1.41.12 (17-May-2010)
+tune2fs: Bad magic number in super-block while trying to open /dev/sdc5
+Couldn't find valid filesystem superblock.
+
+==== DNE ====
+$ sudo tune2fs -l /dev/sdc3    # /dev/sdc3 there is no such device
+tune2fs 1.41.12 (17-May-2010)
+tune2fs: No such file or directory while trying to open /dev/sdc3
+Couldn't find valid filesystem superblock.
+
+=== What is the filesystem volume name (its label)? ===
+$ ntfslabel <device>
+$ tune2fs -l <device> | grep name
+	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
+__envHEREDOC__
+}
+
+
+
 
 
 

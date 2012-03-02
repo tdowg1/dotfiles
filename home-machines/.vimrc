@@ -30,3 +30,4 @@ set gfn=Terminus\ 13
 
 set bg=light
 
+set paste

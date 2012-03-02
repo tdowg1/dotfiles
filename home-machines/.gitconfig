@@ -62,3 +62,17 @@
 
 [push]
 	default = tracking
+
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 1278x1170+640+0
+	history-view-vpane-position = 241
+	file-view-vpane-position = 258
+	main-window-view = FileView
+
+
+# merge and conflict resolution shtuffs
+[merge]
+    tool = mymeld
+[mergetool "mymeld"]
+    cmd = $HOME/bin/gitmerge.sh $BASE $LOCAL $REMOTE $MERGED
