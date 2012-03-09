@@ -523,6 +523,12 @@ COPY wrt HARDLINKS
 
 GIVE SSH OPTIONS
 	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
+		--stats  --human-readable --progress
+
+DATA INTEGRITY (at expense of : time increase, i/o increase)
+	--checksum
+DATA INTEGRITY (cont.) (SEE ALSO)
+	 --inplace --ignore-times
 __envHEREDOC__
 }
 helprsyncexamples(){
@@ -763,6 +769,9 @@ ssh
 	[-D localhost-SOCKS-proxy-to-use]
 	[-i identity_file (NOTE:should be 400)]
 	[user@]ssh-server
+
+FINGERPRINTs
+	ssh-keygen -l -f  private-open-ssh-key
 __envHEREDOC__
 }
 helpuseradd(){
