@@ -8,15 +8,13 @@
 
 ##
 ## rc, config, dotfile-related
-#alias vib='vim $ZOMG_DOTFILES/.mainly.sh'
-alias vib='vim ~/.mainly.sh'
+alias vib='vim "$ZOMG_DOTFILES/.mainly.sh"'
+#alias vib='vim ~/.mainly.sh'
 
-alias viba='vim ~/.aliases.sh'
-alias vibf='vim ~/.functions.sh'
-alias vibv='vim ~/.variables.sh'
+alias viba='vim "$ZOMG_DOTFILES/.aliases.sh"'
+alias vibf='vim "$ZOMG_DOTFILES/.functions.sh"'
+alias vibv='vim "$ZOMG_DOTFILES/.variables.sh"'
 
-alias pushvibftogit='cp --verbose ~/.functions.sh $ZOMG_DOTFILES'
-#alias cdd='cd ~/.dotfiles ; ls -l'  # !!! want this.... STUB
 alias cdd='cd $ZOMG_DOTFILES ; lla'
 
 ##### THERE IS AN ISSUE WHEREBY each successfive call will make the PATH variable

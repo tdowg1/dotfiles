@@ -134,7 +134,7 @@ fi
 
 
 
-fSourceIfThere ~/.aliases.sh
-fSourceIfThere ~/.functions.sh
-fSourceIfThere ~/.variables.sh
+fSourceIfThere "$ZOMG_DOTFILES/.aliases.sh"
+fSourceIfThere "$ZOMG_DOTFILES/.functions.sh"
+fSourceIfThere "$ZOMG_DOTFILES/.variables.sh"
 
