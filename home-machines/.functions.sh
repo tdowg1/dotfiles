@@ -1275,6 +1275,16 @@ $ modprobe --list
 $ lsusb --verbose ; lspci, lscpu, etc.
 __envHEREDOC__
 }
+helpchkconfig(){
+cat <<'__envHEREDOC__'
+== ubuntu-related ==
+chkconfig /seems/ to be workable, but isn't exactly like rhel... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
+
+see also : insserve
+other keywords : lsb upstart lsb-header
+__envHEREDOC__
+}
+
 
 
 
