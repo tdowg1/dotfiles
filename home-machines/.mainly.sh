@@ -16,9 +16,11 @@
 # ...containing *revision controlled* dotfiles.
 # So, this could be the working directory, NOT $HOME !
 #
+# Here, only define a _default_value_ for DOTFILES_HOME
+: ${DOTFILES_HOME:="$HOME/dotfiles/home-machines"}
 # 2011-09-10: currently in a period of... "transision".  This the reason for
 #   absurd names... so ZOMG gimme a break! :D
-ZOMG_DOTFILES="$HOME/dotfiles/home-machines"
+ZOMG_DOTFILES="$DOTFILES_HOME"
 ## ### #### ###################################################################
 
 
