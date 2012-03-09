@@ -2,4 +2,6 @@ ignore
 .swp
 .bashrc.PATCH
 dotfiles.sh
+vim.INSTALL
+.vim/plugin/vimrc.vim
 
