@@ -6,9 +6,21 @@
 ##
 ## ### #### ###################################################################
 
-# TODO
+# TODO STUB
 #get that echoandexec method I wrote
 
+
+getfullpath(){
+	# Example invocations
+	#  $ getfullpath .functions.sh
+	#  /home/bdavies/tmp/dotfiles.2/home-machines/.functions.sh
+	#  $ getfullpath ~/../../dev/tty50
+	#  /dev/tty50
+	#  $ getfullpath ~/
+	#  /home/bdavies
+	local fso="${1}"  # file system object
+	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
+}
 
 
 gitgetcurrentbranch(){
