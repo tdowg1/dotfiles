@@ -607,8 +607,9 @@ prev change, at the curr cursor position. c-R will redo a previously undone
 change, wherever the change occurred.
 	c-R
 ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
-	c-v c-X
-		where X is the desired character
+* c-X  ; where X is the desired control character
+** e.g. c-v  ; to insert
+
 [RE-]FORMATTING TEXT
 * make length of each line auto-trimmed to fit
 ** :se textwidth=72
@@ -619,7 +620,8 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * reformat src code
 ** :se filetype=xml
 ** gg=G
-** {VISUAL}  WANTED!
+** {VISUAL} STUB-----------WANTED 
+
 VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
 * Insert Text
 ** shift+i (to go into insert mode in column modea0
@@ -630,6 +632,9 @@ VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where wa
 * Indent Text
 ** indent once: >
 ** indent thrice: 3>
+* UnIndent Text
+** STUB-----------WANTED 
+
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
 UPPER && LOWER CASING
@@ -838,6 +843,12 @@ $ git log master...test # commits reachable from either test or
 * git co -b  Environment--DEMO
 * git push origin  Environment--DEMO
 * git branch --set-upstream Environment--DEMO origin/Environment--DEMO
+=== branching example example :) ===
+for i in Environment--DEMO environment-dev ; do
+ git co -b $i
+ git push origin $i
+ git branch --set-upstream $i origin/${i}
+done
 
 = TAGs =
 * Create
