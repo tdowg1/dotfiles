@@ -22,6 +22,30 @@ getfullpath(){
 	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
 }
 
+f_isinteger(){
+	# TRUE  -> return 0 (If is able to parse to integer)
+	# FALSE -> ow
+	local x="$1"
+	if ! [[ "${x}" =~ ^-?[0-9]+$ ]] ; then
+		exec >&2;
+		#echo "error: Not a number";
+		return 1
+	fi
+	return 0
+}
+f_isfloat(){
+	# TRUE  -> return 0 (If is able to parse to float)
+	# FALSE -> ow
+	local x="$1"
+	if ! [[ "${x}" =~ ^-?[0-9]+([.][0-9]+)?$ ]] ; then
+		exec >&2;
+		#echo "FALSE";
+		return 1
+	fi
+	return 0
+}
+
+
 
 gitgetcurrentbranch(){
 	git branch >/dev/null 2>&1  ||  return $?
