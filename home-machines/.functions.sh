@@ -9,6 +9,31 @@
 # TODO STUB
 #get that echoandexec method I wrote
 
+chdotfiles(){
+	# A stupid function that takes a path to dotfiles folder and re-sets up
+	# bash environment by sourcing the '.mainly.sh' file in said path.
+	# Think: chroot
+	# Basically, its a shortcut to using and setting up a bash environment
+	# that is NOT the default one that may already be set up.
+	# For example, this would be useful if need to work on a bug or different
+	# dotfiles src code, but don't want this work to impact the default
+	# "production" shell. (you could also achieve this by creating another
+	# user on the box i.e. dotfiles-development-user and having that user
+	# set up to use the desired dotfiles to be worked on, but that doesn't
+	# really scale, probably, and: no.
+	if [[ $# != 1 ]] || [[ x"$1" = x"--help" ]] ; then
+		echo "$FUNCNAME - setup curr shell with special dotfiles directory"
+		echo "Usage: $FUNCNAME NEWDOTFILESHOME"
+		return 1
+	fi
+	
+	local newdotfileshome="$1"
+	cd "$newdotfileshome"
+	export DOTFILES_HOME=`pwd`
+	source .mainly.sh
+	echo $ZOMG_DOTFILES ;
+	#/home/bdavies/tmp/dotfiles.2/home-machines/ ; export DOTFILES_HOME=`pwd` ; source .mainly.sh ; echo $ZOMG_DOTFILES ;
+}
 
 getfullpath(){
 	# Example invocations
@@ -21,6 +46,8 @@ getfullpath(){
 	local fso="${1}"  # file system object
 	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
 }
+
+
 
 f_isinteger(){
 	# TRUE  -> return 0 (If is able to parse to integer)
