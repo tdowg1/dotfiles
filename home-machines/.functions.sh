@@ -895,7 +895,7 @@ $ git log master...test # commits reachable from either test or
 * git push origin  Environment--DEMO
 * git branch --set-upstream Environment--DEMO origin/Environment--DEMO
 === branching example example :) ===
-for i in Environment--DEMO environment-dev ; do
+for i in Environment--DEMO environment--dev ; do
  git co -b $i
  git push origin $i
  git branch --set-upstream $i origin/${i}
@@ -1353,6 +1353,19 @@ see also : insserve
 other keywords : lsb upstart lsb-header
 __envHEREDOC__
 }
+helprenice(){
+cat <<'__envHEREDOC__'
+$ sudo renice -2 23871     # increase scheduling favorability
+23871: old priority 0, new priority -2
+$ sudo renice 2 23871      # decrease scheduling favorability
+23871: old priority -2, new priority 2
+$ sudo renice 9 23871      # decrease scheduling favorability
+23871: old priority 2, new priority 9
+$ sudo renice 11 23871     # decrease scheduling favorability
+23871: old priority 9, new priority 11
+__envHEREDOC__
+}
+
 
 
 
