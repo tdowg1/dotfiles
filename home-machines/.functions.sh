@@ -1271,6 +1271,13 @@ Couldn't find valid filesystem superblock.
 $ ntfslabel <device>
 $ tune2fs -l <device> | grep name
 	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
+
+=== Get Nfo (intelduo machine) ===
+==== which devices are seen? ====
+$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"
+
+==== what are block sizes? ====
+$ cat /proc/partitions
 __envHEREDOC__
 }
 

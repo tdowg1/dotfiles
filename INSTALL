@@ -1,34 +1,26 @@
 
 == cmdln operations performed to get my env up with my github dotfiles ==
-* obtain an authorized github ssh key, then clone repo
+* if necessary, obtain an authorized github ssh key, then clone repo
 >>>
 git clone git@github.com:tdowg1/dotfiles
 <<<
 
 * append the following to .bashrc
 >>>
-if [[ -f ~/.mainly.sh ]] ; then
-    . ~/.mainly.sh
-fi
+source  ~/.mainly.sh
 <<<
 
-* manually source desired '.mainly.sh' script.
-** do this so can get the $ZOMG_DOTFILES variable.
-** NOTE: currently, this is what I'm doing
+* create symlinks to main bash configs, assuming they live under dotfiles/home-machines/, do
 >>>
-source dotfiles/home-machines/.mainly.sh
+for i in .aliases.sh .functions.sh .gitconfig .gitignore_core.excludesfile  .gitk .htoprc .mainly.sh  .screenrc .variables.sh .vim .vimrc .zshrc ; do 
+ echo ln -s "dotfiles/home-machines/${i}"; 
+done
+# then do it without the echo (above) if you're satisfied or want to run a command individually
 <<<
 
-* create symlinks to main bash configs
->>>
-ln -s $ZOMG_DOTFILES/.mainly.sh
-ln -s $ZOMG_DOTFILES/.aliases.sh
-ln -s $ZOMG_DOTFILES/.functions.sh
-ln -s $ZOMG_DOTFILES/.variables.sh
-<<<
+* open a new terminal and ensure env gets set up OK.
 
-* Open a new terminal and ensure env gets set up OK.
-* deploy the rest of the other dotfiles
+* optionally, copy the other dotfiles to home directory by executing
 >>>
 cdd
 ./dotfiles.sh install
