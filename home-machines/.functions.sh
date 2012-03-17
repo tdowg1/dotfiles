@@ -1331,6 +1331,25 @@ __envHEREDOC__
 
 
 
+#
+# mergeconflictavoiddothismeow : here add from phisata ONLY
+helpwHOA_wtf_cmd__u_blow_my_mind(){
+cat <<'__envHEREDOC__'
+List of cmds I just happen to randomly come across and make me say "WHOA! WTF!! :) cmd, u blow my mind..."
+smbtar backup/restore a Windows PC directories to a local tape file
+smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
+smbget - wget-like utility for download files over SMB
+
+__envHEREDOC__
+}
+# mergeconflictavoiddothismeow : here add from phisata ONLY
+#
+
+
+
+
+
+
 
 _help6(){
 cat <<'__envHEREDOC__'
