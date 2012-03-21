@@ -485,6 +485,7 @@ EXAMPLES --------
    dd if=/dev/zero of=/tmp/a-7-gig-file count=7 bs=1G
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
+*  dd if=/dev/zero of=/some/path/to/the.img bs=1M count=600  # **create 600 Meg image file**
 rewrite disk (with itself)
    dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
 
@@ -1316,6 +1317,7 @@ Couldn't find valid filesystem superblock.
 $ ntfslabel <device>
 $ tune2fs -l <device> | grep name
 	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
+	^^alternatively, COULD JUST LOOK HERE : /dev/disk/by-label
 
 === Get Nfo (intelduo machine) ===
 ==== which devices are seen? ====
