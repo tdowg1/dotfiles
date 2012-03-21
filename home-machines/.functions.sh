@@ -791,12 +791,6 @@ ARCHIVE EXAMPLE2
 
 ARCHIVE EXAMPLE3
 	create archives of folders in curr directory; space-character: OK
-ifsbak=$IFS
-IFS=$(echo -en "\n\b")
-for i in $( find ./  -maxdepth 1 -mindepth 1 -type d  ) ; do 
-	echo rar a -m5 -r -rr4p -t -tsmca  "${i}.rar" "${i}";
-done
-IFS=$ifsbak
 
 ARCHIVE EXAMPLE4
 perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012:
