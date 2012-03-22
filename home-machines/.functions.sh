@@ -503,6 +503,10 @@ LBA approximations (assumes 512-byte block size (bs) ; uses iA18 as subject disk
    slightly more than 12876374016 bytes (~13GB) were written before completing
    arg given to skip=1440000000
    *therefore*, 'LBA' 1440000000 is approx at the 686GiB location of the hdd.
+Dump System memory to a file
+   dd if=/dev/mem of=/root/system-memory.dump
+Duplicate one hard disk partition to another hard disk partition
+   dd if=/dev/sda2 of=/dev/sdb2 bs=4096 conv=notrunc,noerror
 __envHEREDOC__
 }
 helpdd2(){
