@@ -1382,6 +1382,15 @@ smbget - wget-like utility for download files over SMB
 
 __envHEREDOC__
 }
+helpmount(){
+cat <<'__envHEREDOC__'
+Mount NTFS volume with full user write permission
+  sudo mkdir /media/mraid0a2244_ad/  &&  \
+  sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
+__envHEREDOC__
+}
+
+
 # mergeconflictavoiddothismeow : here add from phisata ONLY
 #
 
