@@ -978,22 +978,26 @@ helpgit3(){
       cat <<'__envHEREDOC__'
 = COMMIT MODIFICATION =
 == modify last commit ==
-* git reset --soft HEAD^
-# make desired modifications
-* git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
+a. $ git reset --soft HEAD^
+b. make desired modifications
+c. $ git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
 
 == modify any commit ==
-* using the commit hash prior to the commit you want to modify, run
-* a. git rebase --interactive ${commit_to_modify_parent}
-** can also use ${commit_to_modify}^, which does the same thing, HOWEVER I've found this approach undesirable because in your shell history you'll have ${commit_to_modify}^. And the ${commit_to_modify} hash will change
-* b. change leading text to edit for each commit you want to modify
-* c. make desired changes. then change your commit history with,
-* d. git commit -a --amend
-* once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run
-* e. git rebase --continue
-* f. if you're modifying >1 commit (which was specified in b.),
-** GOTO c.
-** ELSE finished
+Using the commit hash prior to the commit you want to modify, run:
+a. $ git rebase --interactive ${parent_commit_of_commit_to_be_modified}
+b. change leading text to edit for each commit you want to modify
+c. make desired changes. then change your commit history with:
+d. $ git commit -a --amend
+e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
+f. $ git rebase --continue
+g. if you're modifying >1 commit (specified in b.),
+g1. GOTO c.
+g2. ELSE finished
+
+== revert hunk of any commit ==
+* src && see also http://bit.ly/GVnJWt
+** http://bit.ly/HevPZ9  http://bit.ly/GVYk3l
+* $ git checkout --patch [<tree-ish>] [--] [<paths>...]
 __envHEREDOC__
 }
 helptree(){
