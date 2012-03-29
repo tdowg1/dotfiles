@@ -1057,6 +1057,7 @@ __envHEREDOC__
 }
 helpaptitude(){
 cat <<'__envHEREDOC__'
+== PACKAGE DISPLAY NFOs ==
 The first character
 of each line indicates the current state of the package: the most
 common states are 
@@ -1077,6 +1078,10 @@ package and its configuration files will be removed.
 
 If the third character is 
 A, the package was automatically installed.
+
+== NOTES FOR YOU, SLACKER ==
+ remove       - Remove packages.
+ purge        - Remove packages and their configuration files.
 __envHEREDOC__
 }
 helpbash(){

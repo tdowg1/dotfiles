@@ -100,9 +100,12 @@ fi
 ##
 ## [com.spryinc.]MAGNIFICENT-specific .........................................
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
+	
+	# 2012-03-29: removing this jdk (and maybe re-installing 6u31?), so
+	# in the meantime, use the openjdk joint.
+	#JAVA_HOME=/opt/jdk1.6.0_25
+	#PATH=/opt/jdk1.6.0_25/bin:$PATH
 
-	JAVA_HOME=/opt/jdk1.6.0_25
-	PATH=/opt/jdk1.6.0_25/bin:$PATH
 	# ~2011-10-00: added for nss ssl development
 	# 2011-11-16: disabled
 	#LD_LIBRARY_PATH=/usr/lib:/usr/lib/nss
