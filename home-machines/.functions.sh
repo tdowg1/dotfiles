@@ -1036,13 +1036,21 @@ __envHEREDOC__
 helpsed(){
 cat <<'__envHEREDOC__'
 == MISC ==
-* print specific line (N) of a file; print line 3 /etc/hosts file
-** sed -n "Ns/.//p" file
-** sed -n "3s/.//p" /etc/hosts
-* trim trailing whitespace
-** sed 's/[ \t]*$//'
-* delete blank lines
-** sed '/^$/d'
+$ sed -n -e "<LINE NUMBER>p"        # print a specific line
+$ sed -n -e "3p" -e "3p" /etc/hosts # print /etc/hosts:ln3, twice
+$ sed 's/[ \t]*$//'         # trim trailing whitespace
+$ sed '/^$/d'               # delete blank lines
+$ echo /e/s/conf | sed "y/\//|/"    # transliterate src to dest
+  `--> |e|s|conf
+
+== SNIPPETS ==
+COPY SYSTEM FILE (e.g. rsyslog) and rename by dotifying the original
+files' full path (1: repeat path; 2: "/" -> "."; 3: remove leading "." (if E)):
+$ echo /etc/sysconfig/rsyslog | \
+>  sed   -e 1p   -e "s/\//./g"   -e "s/\//./g" | \  # <-- 1,2,3
+>  xargs --verbose  cp --preserve --no-clobber --verbose
+  `--> $ cp --no-clobber --preserve --verbose /etc/sysconfig/rsyslog etc.sysconfig.rsyslog
+         `--> `/etc/sysconfig/rsyslog' -> `etc.sysconfig.rsyslog'
 
 == FIND/REPLACE ==
 PREVIEW find/replace on files:
