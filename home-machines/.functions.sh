@@ -135,7 +135,6 @@ aptitudesns(){
 }
 
 ##
-## pulled from ARINC
 ## CLEARCASE-RELATED
 ############## ALTERNATIVE ways to recursive checkin
 #http://stackoverflow.com/questions/973956/recursive-checkin-using-clearcase
@@ -309,7 +308,6 @@ createSymlinkTogms_pvobCCView(){
 #	scp bdavies@walrus:.screenrc ~/
 #	echo "MVINPULL(): now run 'fixvimrc' to mv .dotfiles/vimrc ~> .vimrc"
 #}
-## /pulled from ARINC
 ##
 
 
@@ -1145,7 +1143,6 @@ __envHEREDOC__
 
 
 ##
-## pulled from ARINC
 helpclearcase(){
 	echo "recursive CHECKOUT"
 	echo "	cleartool find . -version 'version(/main/LATEST)' -exec 'cleartool co -nc \$CLEARCASE_PN'"
@@ -1187,7 +1184,6 @@ helpclearcase(){
 	echo "for GMS development+CC cin's and whatnot:"
 	echo "must CHANGE CURR GROUP to be anp_cc (i.e. 'nn')"
 }
-## /pulled from ARINC
 ##
 helpgrub(){
 cat <<'__envHEREDOC__'
@@ -1314,6 +1310,11 @@ __envHEREDOC__
 }
 helphdd(){
 cat <<'__envHEREDOC__'
+== Lesser Known hdd-related cmds ==
+hdparm : A utility for displaying and/or setting hard disk parameters,
+       : for instance, to spin down hard drives, tweak performance.
+sdparm : List or change SCSI/SATA disk parameters
+
 == Partition-related ==
 === What kind of partition is it? ===
 ==== EXTENDED ('logical' in the stupid windows realm) ====
