@@ -102,15 +102,25 @@ alias trll='ls -ltr'    # same as ltr
 
 
 ## 
-## cd-related
+## Places (`cd'-related)
 #alias cdb='cd ~/bin ; ls -l'
 alias cdb='cd ~/bin ; pwd'
 #alias cdt='cd ~/tmp ; ls -l'
 alias cdt='cd ~/tmp ; pwd'
 alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
 alias tmp='cd /tmp ; echo "cd "`pwd`'
-## /cd-related
+
+# dropbox folders
+alias db='cd "$db"'
+alias dbi='cd "$dbi"'
+alias dbm='cd "$dbm"'
+alias dbs='cd "$dbs"'
+alias dbi='cd "$dbi"'
+alias dbpub='cd "$dbpub"'
+
+## /Places (`cd'-related)
 ##
+
 
 ##
 ## git-related

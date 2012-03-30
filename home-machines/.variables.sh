@@ -5,10 +5,21 @@
 ## misc.
 ##
 ## ### #### ###################################################################
+
+# Misc (again)
 export MAIL=/var/spool/mail/$USER
 export EDITOR=vim
 export SVN_EDITOR=vim
 export PAGER="less"
+
+
+# Places
+# dropbox folders
+export db="$HOME/Dropbox"
+export dbi="$HOME/Dropbox/db.inst-and-sysconfig"
+export dbm="$HOME/Dropbox/db.misc-linuxish"
+export dbs="$HOME/Dropbox/db.scripts-snippets"
+export dbpub="$HOME/Dropbox/Public"
 
 
 # PATH modifications
