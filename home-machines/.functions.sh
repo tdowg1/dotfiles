@@ -898,9 +898,6 @@ __envHEREDOC__
 }
 helpgit(){
 	cat <<'__envHEREDOC__'
-= STATUS =
-	STUB: figure out howto list files disregarding any git ignore defs that would otherwise be in effect
-
 = LOGs =
 $ git log --format=oneline
 $ git log v2.5..        # commits since (not reachable from) v2.5
@@ -952,6 +949,7 @@ done
 http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
+^^ya I think this workd
 __envHEREDOC__
 }
 helpgit2(){
@@ -963,6 +961,7 @@ helpgit2(){
 = Undocumented (from git help) =
 * git ls-files --directory --others --exclude-from=.git/info/exclude
 * git update-index # Modifies the index or directory cache.
+* gitattributes (see git-log --help --> merge.renormalize)
 
 = MERGEs and Conflict Resolution-related =
 === 'MERGING'-mode.1 : post-merge ===

@@ -30,14 +30,27 @@
 	#DOESN'T WORK
 	#taghash = show -s --format='%h - %s' $1^{commit}
 	
+	
 	# Additional: goog'git log wiki pretty'
-	# git 'pretty log' "plog" v A; date sorting=default
-	plog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	# git 'pretty log' "plog" v A.2; date sorting=--date-order
-	plog2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative   --date-order
-	# git 'pretty log' "plog" v B
-	plogb = log --graph --pretty=format:'%h was %an, %ar, message: %s'
+	# git 'pretty graph log' "plog" v 1; date sorting=default
+	plog     = log --graph --pretty=format:'use gplog1 instead!! %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	plog1    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+		# print iso date, stupid!!!!!
+	plog1iso = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+		# use date sorting=--date-order (useful; diff graph generation algorithm)
+	plog1sortdateorder = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative   --date-order
+	
+	plog2    = log --graph --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
+	
+	plog3    = log --graph --pretty=format:'%h %C(bold blue)<%an>%Creset %Cgreen(%cr)%Creset %s'
+	
+	plog8    = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
+	plog8iso = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%ci)%Creset, message: %s'
 
+	plog9    = log --pretty=format:'%h %Cgreen(%cr)%Creset %s %C(bold blue)<%an>%Creset'
+	plog9iso = log --pretty=format:'%h %Cgreen(%ci)%Creset %s %C(bold blue)<%an>%Creset'
+
+	
 	who = shortlog -s --
 	new = "!sh -c 'git log $1@{1}..$1@{0} \"$@\"'"
 	# See Also: http://hoagland.org/Dot.html
@@ -76,3 +89,7 @@
     tool = mymeld
 [mergetool "mymeld"]
     cmd = $HOME/bin/gitmerge.sh $BASE $LOCAL $REMOTE $MERGED
+
+#[log]
+#	date = iso8601
+
