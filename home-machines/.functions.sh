@@ -9,6 +9,45 @@
 # TODO STUB
 #get that echoandexec method I wrote
 
+
+## WARNING!  these 2 functions NOT tested
+slowdown(){
+	local pid=$1
+	ionice -c3 -p $pid
+	renice -n 20 $pid
+}
+unslowdown(){
+	local pid=$1
+	# best-effort io class
+	ionice -c 2 -p $pid
+	renice -n -19 $pid
+}
+## /WARNING!  these 2 functions NOT tested
+
+
+getprocesspriority(){
+	# print the current niceness and io priority of pid
+	local pid=$1
+
+	## psstats
+	#intpri		(\$niceness + 80?) slowest 99 or 100, highest 1 or 0 internal kernel sheduling priority
+	#pri			priority (\$niceness + 20?--NO!  this is not how get the number... its weird tho)     kernel scheduling priority
+	#ni			slowest 19 or 20, fastest -19 or -20
+	local psformat="intpri,pri,nice"
+	local psformatforprintf="%6d,%3d,%4d"
+	local psnoheader="h"
+	local psstats="$( ps -o "$psformat" "$psnoheader" -p $pid )"
+
+	## iostats
+	# io scheduling class and io priority
+	local ioformat="classio[: prio]"
+	local ioformatforprintf="%15s"
+	local iostats="$( ionice -p $pid )"
+	
+	echo "$psformat,$ioformat"
+	printf "$psformatforprintf,$ioformatforprintf\n" $psstats "$iostats"
+}
+
 chdotfiles(){
 	# A stupid function that takes a path to dotfiles folder and re-sets up
 	# bash environment by sourcing the '.mainly.sh' file in said path.
@@ -1005,8 +1044,18 @@ tree --charset=en_US.UTF-8 # perhaps more portable?  idk both have worked when t
 __envHEREDOC__
 }
 helpps(){
-      cat <<'__envHEREDOC__'
-ps axfww # shows complete exec str and in tree form
+	cat <<'__envHEREDOC__'
+== Misc ==
+$ ps L | sort -k2       # list format codes, sorted by rhs (rhs
+                        # has many dupes, lhs has none)
+== Examples ==
+$ ps axfww              # exec str nfo, in tree form
+$ ps -f -p PID...       # nfo for PID(s)
+                        # nfo in user-defined formats
+$ ps -p PID... -o pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+$ ps -p PID... -o stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+$ ps -p PID... -o pid,tt,user,fname,tmout,f,wchan
+
 __envHEREDOC__
 }
 helppatch(){
