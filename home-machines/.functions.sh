@@ -686,9 +686,11 @@ __envHEREDOC__
 helpvim(){
 	cat <<'__envHEREDOC__'
 http://vim.wikia.com
-:set nonu #disables line numbering
-:%s/foo/bar/g #Find each occurrence of 'foo', and replace it with 'bar'
-:%s/foo/bar/gc #Change each 'foo' to 'bar', but ask for confirmation first
+:set nonu                           # disable line numbering
+:%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar'
+:[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
+http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
+
 :colorscheme slate
 UNDO REDO (:help undo)
 Note that (somewhat confusingly) U is undo-able with u.
@@ -866,14 +868,6 @@ helptune2fs(){
       cat <<'__envHEREDOC__'
 MOUNT COUNTS && CHECKS
 	tune2fs -l /dev/sda4 | grep -iP 'mount|check'
-__envHEREDOC__
-}
-helpblkid(){
-      cat <<'__envHEREDOC__'
-!!!! -- locate/print block device attributes!!!
-blkid
-	prints things like UUID, LABEL, etc.
-
 __envHEREDOC__
 }
 helpssh(){
@@ -1406,6 +1400,21 @@ $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"
 
 ==== what are block sizes? ====
 $ cat /proc/partitions
+
+==== misc ====
+findfs {LABEL=label | UUID=uuid}               # identify device that matches query
+blkid                                          # locate/print block device attributes like UUID and LABEL
+__envHEREDOC__
+}
+helphdd2(){
+cat <<'__envHEREDOC__'
+parted                                         # manage partitions
+
+mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem
+tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d)
+tune2fs -e remount-ro device                   # change errors behaviour
+
+mkntfs [-v] --label label --quick device       # create ntfs filesystem
 __envHEREDOC__
 }
 
@@ -1419,6 +1428,9 @@ cat <<'__envHEREDOC__'
 $ udevadm trigger --verbose --dry-run
 $ modprobe --list
 $ lsusb --verbose ; lspci, lscpu, etc.
+
+# Find all mounted USB CD-ROM's
+awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
 __envHEREDOC__
 }
 helpchkconfig(){
@@ -1457,6 +1469,8 @@ smbtar backup/restore a Windows PC directories to a local tape file
 smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
 smbget - wget-like utility for download files over SMB
 
+fuser - identify processes using files or sockets (similar to lsof)
+   fuser -v -m /
 __envHEREDOC__
 }
 helpmount(){
