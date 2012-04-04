@@ -689,6 +689,7 @@ http://vim.wikia.com
 :set nonu #disables line numbering
 :%s/foo/bar/g #Find each occurrence of 'foo', and replace it with 'bar'
 :%s/foo/bar/gc #Change each 'foo' to 'bar', but ask for confirmation first
+:colorscheme slate
 UNDO REDO (:help undo)
 Note that (somewhat confusingly) U is undo-able with u.
 undo last change (can be repeated to undo preceding cmds)

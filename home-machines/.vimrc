@@ -33,7 +33,8 @@ set gfn=Terminus\ 13
 
 set bg=light
 
-set paste
+" 2012-04-04 phisata comment this out, it was preventing autoindent and such
+"set paste
 
 " 2012-03-02 from /etc/vim/vimrc
 " Uncomment the following to have Vim jump to the last position when
