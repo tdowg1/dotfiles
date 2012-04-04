@@ -832,8 +832,18 @@ ARCHIVE EXAMPLE2
 	* -hp[password] to encrypt file header and data using given password string
    rar a -m5 -r -rr4p -t -tsmca
 
-ARCHIVE EXAMPLE3
+ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
+		snippet land and screw up my bash environment, therefore, extra
+		spaces have been inserted)
 	create archives of folders in curr directory; space-character: OK
+-ifsbak=$I F S
+-I F S = $ ( e c h o - e n "__backslash-ENN____backslash-bee__" )
+-for i in $( find ./  -maxdepth 1 -mindepth 1 -type d  ) ; do
+-       echo rar a -m5 -r -rr4p -t -tsmca  "${i}.rar" "${i}";
+-done
+-I F S = $ i f s b a k
+
+
 
 ARCHIVE EXAMPLE4
 perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012:
