@@ -1011,8 +1011,6 @@ to your .gitignore.
 * git di <branch1 name> <branch2 name>
 * git di <branch name> <current branch>
 * git di <branch name>          # same as above ("TO" branch implied to be current branch)
-
-
 __envHEREDOC__
 }
 helpgit3(){
@@ -1039,6 +1037,12 @@ g2. ELSE finished
 * src && see also http://bit.ly/GVnJWt
 ** http://bit.ly/HevPZ9  http://bit.ly/GVYk3l
 * $ git checkout --patch [<tree-ish>] [--] [<paths>...]
+__envHEREDOC__
+}
+helpgitsvn(){
+cat <<'__envHEREDOC__'
+Creates (new git repo) folder: trunk
+$ git svn clone svn://svn/de/trunk/ -T proj/mvin -b proj-branches/mvin -t proj-tags/mvin
 __envHEREDOC__
 }
 helptree(){
@@ -1404,6 +1408,7 @@ $ cat /proc/partitions
 ==== misc ====
 findfs {LABEL=label | UUID=uuid}               # identify device that matches query
 blkid                                          # locate/print block device attributes like UUID and LABEL
+sfdisk                                         # Partition table manipulator for Linux
 __envHEREDOC__
 }
 helphdd2(){
