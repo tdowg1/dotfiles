@@ -1255,6 +1255,11 @@ Config:
 	/etc/default/grub
 Apply / Install any config changes made:
 	update-grub  # which is esentially an alias for `grub-install > $BOOT/grub.cfg`
+
+vbeinfo         # nfo about display capabilities (for grub, that is)
+
+== misc ==
+set pager=1     # /really/ grub guys? this couldn't have been enabled by default?
 __envHEREDOC__
 }
 helpaptitude2(){
