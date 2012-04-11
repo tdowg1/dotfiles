@@ -889,6 +889,12 @@ sudo useradd --home=/home/<username> --create-home --password=<passwd>  <usernam
 	NOTE value for SHELL in /etc/default/useradd
 __envHEREDOC__
 }
+_help6(){
+cat <<'__envHEREDOC__'
+helpnetstat
+helpnslookup
+__envHEREDOC__
+}
 helpnetstat(){
 	cat <<'__envHEREDOC__'
 Show open connections
@@ -901,6 +907,21 @@ Sort of like a "top" for network connections made (is not actively refreshed, ne
 	netstat -tcp -apc 10
 __envHEREDOC__
 }
+helpnslookup(){
+cat <<'__envHEREDOC__'
+nslookup - query Internet name servers interactively
+nslookup( hostname ) : ipaddr
+nslookup some-host.example.com    # get ip address for some-host.example.com
+
+== See also ==
+==== From man Page ====
+/etc/resolv.conf
+dig(1)
+host(1)
+named(8)
+__envHEREDOC__
+}
+
 helpgit(){
 	cat <<'__envHEREDOC__'
 = LOGs =
@@ -1349,9 +1370,8 @@ __envHEREDOC__
 }
 helpcurl(){
 cat <<'__envHEREDOC__'
-== Perform POST request ==
-curl -d @<file-containing-POST-data> <URL>
-
+curl --data @<file-containing-POST-data> <URL>  # Perform POST request
+curl --silent whatismyip.org | xargs echo   # display WAN ipaddr
 __envHEREDOC__
 }
 helpgeditmultieditmode(){
