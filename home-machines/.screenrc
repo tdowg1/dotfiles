@@ -12,7 +12,7 @@ shell -$SHELL
 
 #altscreen on
 startup_message off
-defscrollback 2024
+defscrollback 8192
 bell_msg 'Bell in window %n'
 
 ##
@@ -22,9 +22,17 @@ vbell off
 
 #hardstatus alwayslastline "%{= bk}%-w%{= bC} %n %t %{= bk}%+w %=%{= mW} %D %M %d, %C%A "
 
+
+# src http://log.bthomson.com/2009/06/saving-your-sessions-with-gnu-screen.html
+autodetach on
+defutf8 on
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+
 # from tcreech
 hardstatus alwayslastline
-hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+#hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+hardstatus string '%{gk}[%{G}%H%{g}][%=%{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[%m/%d %c]%{W}'
 #shelltitle "$ |bash"
 
 
