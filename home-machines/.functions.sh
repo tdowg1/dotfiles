@@ -690,6 +690,7 @@ http://vim.wikia.com
 :%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar'
 :[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
 http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
+http://www.worldtimzone.com/res/vi.html   Nice cheat sheet
 
 :colorscheme slate
 UNDO REDO (:help undo)
@@ -719,17 +720,16 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 ** {VISUAL} STUB-----------WANTED 
 
 VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
-* Insert Text
-** shift+i (to go into insert mode in column modea0
+* I - Insert Text
+** I
 ** type in text want to enter
 ** ESC (or c-c) to apply
-* Delete Text
-** STUB-----------WANTED 
-* Indent Text
+* d - Delete Text
+* > - Shift right / Indent Text
 ** indent once: >
 ** indent thrice: 3>
-* UnIndent Text
-** STUB-----------WANTED 
+* < - Shift left / UnIndent Text
+* ~ - Switch Case
 
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
@@ -1484,6 +1484,13 @@ $ sudo renice 11 23871     # decrease scheduling favorability
 23871: old priority 9, new priority 11
 __envHEREDOC__
 }
+helppasswd(){
+cat <<'__envHEREDOC__'
+passwd -d USERNAME   # BAD!!! this allows *anyone* to become USERNAME (literally puts the empty string in /etc/shadow)
+passwd -l USERNAME   # BETTER. this "locks" the account (this is what you want if you use ssh keys for authentication--puts "!!" or "!" in /etc/shadow)
+__envHEREDOC__
+}
+
 
 
 
