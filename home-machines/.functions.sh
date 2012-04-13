@@ -849,7 +849,7 @@ ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 
 ARCHIVE EXAMPLE4
 perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012:
-* for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca -ri1 "${i}.rar"  "${i}" ; done
+* for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar"  "${i}" ; done
 
 EXTRACT
 	rar x
