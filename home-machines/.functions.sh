@@ -1527,6 +1527,12 @@ fdupes --size --recurse .           # again, but show sizes
 fdupes --size --delete --noprompt --recurse .   # delete!
 __envHEREDOC__
 }
+helpunzip(){
+cat <<'__envHEREDOC__'
+unzip -d extractiondirectory zipfile
+__envHEREDOC__
+}
+
 
 
 
