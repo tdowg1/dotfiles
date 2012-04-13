@@ -74,17 +74,17 @@ chdotfiles(){
 	#/home/bdavies/tmp/dotfiles.2/home-machines/ ; export DOTFILES_HOME=`pwd` ; source .mainly.sh ; echo $ZOMG_DOTFILES ;
 }
 
-getfullpath(){
-	# Example invocations
-	#  $ getfullpath .functions.sh
-	#  /home/bdavies/tmp/dotfiles.2/home-machines/.functions.sh
-	#  $ getfullpath ~/../../dev/tty50
-	#  /dev/tty50
-	#  $ getfullpath ~/
-	#  /home/bdavies
-	local fso="${1}"  # file system object
-	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
-}
+#getfullpath(){
+#	# Example invocations
+#	#  $ getfullpath .functions.sh
+#	#  /home/bdavies/tmp/dotfiles.2/home-machines/.functions.sh
+#	#  $ getfullpath ~/../../dev/tty50
+#	#  /dev/tty50
+#	#  $ getfullpath ~/
+#	#  /home/bdavies
+#	local fso="${1}"  # file system object
+#	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
+#}
 
 
 
@@ -848,8 +848,8 @@ ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 
 
 ARCHIVE EXAMPLE4
-perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012:
-* for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar"  "${i}" ; done
+	Perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
+for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
 
 EXTRACT
 	rar x
@@ -1211,6 +1211,9 @@ __envHEREDOC__
 helpzip(){
 cat <<'__envHEREDOC__'
 STUB!!! THERES NOTHING HERE :(
+
+zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
+zip -T|--test        archive.zip
 __envHEREDOC__
 }
 helptcpdump(){
@@ -1517,6 +1520,14 @@ Mount NTFS volume with full user write permission
   sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
 __envHEREDOC__
 }
+helpfdupes(){
+cat <<'__envHEREDOC__'
+fdupes --recurse .                  # initial
+fdupes --size --recurse .           # again, but show sizes
+fdupes --size --delete --noprompt --recurse .   # delete!
+__envHEREDOC__
+}
+
 
 
 # mergeconflictavoiddothismeow : here add from phisata ONLY
