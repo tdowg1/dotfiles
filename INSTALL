@@ -26,3 +26,5 @@ cdd
 ./dotfiles.sh install
 <<<
 
+* follow INSTALL.extra
+

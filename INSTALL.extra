@@ -1,0 +1,38 @@
+
+== extra cmdln operations performed to get extra tweaks, personals into env ==
+* install Dropbox && sync Dropbox
+* create symlink to ~/bin directory within Dropbox
+>>>
+cd
+ln -s Dropbox/linux/bin
+<<<
+
+
+== allow for other users to execute scripts, but linking to them from /usr/local/bin ==
+* create symlink to some ~/bin scripts
+>>>
+cd /usr/local/bin
+for i in hdd-dump-ext-filesystem.sh hdd-dump-ext-filesystem-rsnapshot.sh getfullpath.sh ; do
+ sudo ln -s ~/bin/${i}
+done
+<<<
+
+* update sudoers file : "secure_path" directive
+>>>
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+<<<
+
+* 
+>>>
+<<<
+* 
+>>>
+<<<
+* 
+>>>
+<<<
+* 
+>>>
+<<<
+
+
