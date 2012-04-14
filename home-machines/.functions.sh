@@ -1448,6 +1448,8 @@ tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d)
 tune2fs -e remount-ro device                   # change errors behaviour
 
 mkntfs [-v] --label label --quick device       # create ntfs filesystem
+
+mkfs -t btrfs HELP STUB                        # create btrfs filesystem
 __envHEREDOC__
 }
 
