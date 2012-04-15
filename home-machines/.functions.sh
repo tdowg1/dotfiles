@@ -1170,17 +1170,20 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
+== shopt ==
+TODO STUB pretty cool... lots of options... should spend some time playing with this.
+
 == typeset ==
 -f [function name] : display [specific] function(s) and its defn
 -F [function name] : display [specific] function(s)
 
-== misc ==
+== Misc ==
 -n   : syntax check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
 -x   : xtrace
 -o option-name : enable option-name, e.g. `set -o xtrace'
 +o option-name : disable option-name, e.g. `set +o xtrace'
 
-== man page massiveness shortcuts (GNU Bash-4.1) ==
+== man-Page-Massiveness Shortcuts (GNU Bash-4.1) ==
 * ~ln3050: section:: SHELL BUILTIN COMMANDS
 * ~ln3900: buildin cmd:: set
 * ~ln4400: end section:: SHELL BUILTIN COMMANDS

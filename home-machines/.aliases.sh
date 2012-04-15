@@ -125,6 +125,7 @@ alias dbpub='cd "$dbpub"'
 ##
 ## git-related
 alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+alias gitcommitmisca='git commit -m -a "misc dotfile changes ($HOSTNAME)"'
 alias gitupstreamUrl='git config --list | grep remote.origin.url'
 
 alias br='git branch'
