@@ -852,9 +852,11 @@ ARCHIVE EXAMPLE4
 for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
 
 EXTRACT
-	rar x
+   rar x
+REPAIR
+   rar r <archive-to-repair>
 TEST
-	rar t [v] [pPASSWD]
+   rar t [v] [pPASSWD]
 __envHEREDOC__
 }
 helpless(){
