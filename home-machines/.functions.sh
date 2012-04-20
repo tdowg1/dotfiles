@@ -571,6 +571,8 @@ Dump System memory to a file
    dd if=/dev/mem of=/root/system-memory.dump
 Duplicate one hard disk partition to another hard disk partition
    dd if=/dev/sda2 of=/dev/sdb2 bs=4096 conv=notrunc,noerror
+Dump typical MBR location in hex ; first 512-bytes of device
+   dd if=/dev/sda bs=512 count=1 | hexdump -C
 __envHEREDOC__
 }
 helpdd2(){
@@ -578,6 +580,7 @@ helpdd2(){
 See Also
 * ddrescue tries hard to rescue data in case of read errors
 * safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
+* ??? ddclac 	?? 
 __envHEREDOC__
 }
 
