@@ -433,8 +433,9 @@ for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hou
 __envHEREDOC__
 }
 pssynergy(){
-        echo '  PID TTY          TIME  NI COMMAND'
-        ps -eo "%p %y %x %n %c" | grep synergy
+	#ps -ef | grep -i -P "[s]ynergyc|[s]ynergys"
+	echo '  PID TTY          TIME  NI COMMAND'
+	ps -eo "%p %y %x %n %c" | grep synergy
 }
 helphardinfo(){
 	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
@@ -460,7 +461,9 @@ helpsvnpropset(){
 	echo '	svn propset svn executable fileToMakeExecutable'
 	echo '	svn propset svn:keywords "Id HeadURL LastChangedBy LastChangedDate LastChangedRevision" FILE'
 	echo '   svn propset svn:executable "true" FILE'
-
+	cat <<'__envHEREDOC__'
+   svn propset svn:ignore 'instance-management.i*' .
+__envHEREDOC__
 }
 
 
@@ -1438,6 +1441,7 @@ cat <<'__envHEREDOC__'
 == Lesser Known hdd-related cmds ==
 hdparm : A utility for displaying and/or setting hard disk parameters,
        : for instance, to spin down hard drives, tweak performance.
+ `--> can be used to benchmark *AN UNMOUNTED* device : hdparm -t /dev/md0
 sdparm : List or change SCSI/SATA disk parameters
 
 == Partition-related ==
