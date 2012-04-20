@@ -94,6 +94,30 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 
 	export PYTHON_EXTERNALS_PATH=/opt/python-externals
 	export PYTHONPATH=/opt/teelah-utils/bin:$PYTHON_EXTERNALS_PATH
+
+
+	
+	# 2012-04-14 bash tweakers shamelessly stolen from magnificent eshtupido.
+	HISTTIMEFORMAT="%F_%T"
+	#HISTCONTROL=ignoreboth
+	HISTCONTROL=ignoredups:ignorespace
+
+	# append to the history file, don't overwrite it
+	shopt -s histappend
+
+	#HISTSIZE=5000
+	if tty -s ; then
+		echo "NOTE: whenever you get all logged out (all screens, all sessionts, etc)"
+		echo "      you maybe wanna enable this bash HISTSIZE config change"
+		echo "      ahhhummmmmmmmmmmmmmmmm??????????????????!!!!!!!!!!!!!!!!   >:|   "
+	#HISTSIZE=50000
+	fi
+
+	# The maximum number of lines contained in the history file.
+	# If HISTFILESIZE is not set, no truncation is performed.
+	#unset HISTFILESIZE
+	#export HISTFILESIZE=$(( 10000 * 2 ))
+	#HISTFILESIZE=10000
 fi
 
 

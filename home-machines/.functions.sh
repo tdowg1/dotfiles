@@ -143,7 +143,7 @@ gitbranchcREATEpushupstreamandtrack(){
 
 # TODO STUB
 # this function helps w/ searching through a same set of files
-grepdotfiles(){
+grepdotfiles-original(){
 	local filesToGrep=$(cat <<__HEREDOC__
 		$HOME/.bash_[pu]*
 		$HOME/.bashrc
@@ -157,6 +157,33 @@ __HEREDOC__
 		grep -n "${*}" ${f}
 	done
 }
+greptxtfiles(){
+	# SYNOPSYS greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
+	# ENHANCEMENTS LIST
+	#  asdf 
+	#   
+	#   
+	#   
+	#   
+	local searchquery="$1"
+	local searchpath="$2"
+	echo "TODO STUB make me into a file so can sudo use ; implement greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH"
+	for i in $( find "$searchpath" -type f ) ; do
+		file --brief  "$i"  | grep ASCII >/dev/null 2>&1
+		
+		if [[ $? = 0 ]] ; then
+			grep --with-filename "$searchquery" "$i"
+		fi
+	done
+}
+grepdotfiles(){
+	# SYNOPSYS grepdotfiles SINGLE-STRING-SEARCH-QUERY
+	local searchquery="$1"
+	local searchpath="$ZOMG_DOTFILES"
+	#greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
+	greptxtfiles "$searchquery" "$searchpath"
+}
+
 
 
 
@@ -718,6 +745,10 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 ** :se filetype=xml
 ** gg=G
 ** {VISUAL} STUB-----------WANTED 
+* tab/un-tab??? (witnessed in a shell script that was indented once, and was within if-stmt)
+** (insert mode)
+** un-tabs curr line: c-d
+** tabs curr line: c-f
 
 VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
 * I - Insert Text
@@ -786,8 +817,10 @@ __envHEREDOC__
 helprar(){
       cat <<'__envHEREDOC__'
 ALL
-	-ol # save symbolic link as the link instead of the file
-	-ow # save || restore file owner and group
+   -ol # save symbolic link as the link instead of the file
+   -ow # save || restore file owner and group
+   -mt<number of threads>
+	-y  # assume Yes on all queries
 
 ARCHIVE
 * hp[PASSWORD]
@@ -811,28 +844,28 @@ ARCHIVE EXAMPLE0
 * rar a -m5 -r -rr4p -t -tsmca  "rarchive.rar"  "<path to file or directory>"
 
 ARCHIVE EXAMPLE1
-	* timestamps: save as much as possible
-	* recovery record: 9%
-	* compression: NONE / 'store'
-	* recursive
-	* volume size: 200863744b[YTES] ~= 191MB
-	* save symlinks as links (not the file they point to)
-	* save owner/group metadata
+   * timestamps: save as much as possible
+   * recovery record: 9%
+   * compression: NONE / 'store'
+   * recursive
+   * volume size: 200863744b[YTES] ~= 191MB
+   * save symlinks as links (not the file they point to)
+   * save owner/group metadata
 $ sudo /usr/local/bin/rar  a  -tsmca -hpPASSWD -rr9p -m0  -r  -v200863744b  -ol -ow   /tmp/optical/rt2011-08-03/archives/rt2011-08-03.rar .
 
 ARCHIVE EXAMPLE2
-	* ep1 Exclude base directory from names
-	* m5 compression level 5/5; "maximal" highest
-	* m1 compression level 1/5; "lowest" none
-	* m0 compression level 0/5; "store" none
-	* r recurse subdirectories
-	* rr4 add 4% recovery record
+   * ep1 Exclude base directory from names
+   * m5 compression level 5/5; "maximal" highest
+   * m1 compression level 1/5; "lowest" none
+   * m0 compression level 0/5; "store" none
+   * r recurse subdirectories
+   * rr4 add 4% recovery record
 
-	* t test after archive
-	* tsmca save file time file time (modification, creation, access)
-	* v<size>[k,b] where size=size*1000 and k,b=[*1024,*1]
-	* -hp[password] to encrypt file header and data using given password string
-   rar a -m5 -r -rr4p -t -tsmca
+   * t test after archive
+   * tsmca save file time file time (modification, creation, access)
+   * v<size>[k,b] where size=size*1000 and k,b=[*1024,*1]
+   * -hp[password] to encrypt file header and data using given password string
+     rar a -m5 -r -rr4p -t -tsmca
 
 ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 		snippet land and screw up my bash environment, therefore, extra
@@ -845,16 +878,15 @@ ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 -done
 -I F S = $ i f s b a k
 
-
-
 ARCHIVE EXAMPLE4
-	Perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
+   Perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
 for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
 
 EXTRACT
+   -kb keep broken extracted files
    rar x
 REPAIR
-   rar r <archive-to-repair>
+   rar r [-y] <archive-to-repair>
 TEST
    rar t [v] [pPASSWD]
 __envHEREDOC__
@@ -1532,10 +1564,29 @@ cat <<'__envHEREDOC__'
 unzip -d extractiondirectory zipfile
 __envHEREDOC__
 }
+helparchive(){
+cat <<'__envHEREDOC__'
+helprar help7zip helpzip helpunzip helparchivesnippets
+__envHEREDOC__
+}
+helparchivesnippets(){
+cat <<'__envHEREDOC__'
+Fix stupid zip files to do with stupid 4GB limit to do with getting usable backups to do with 'kill yourself, zip':
+$ cd <directory containing stupid 4GB-limit-reachy-fied zip files>
+$ destdir=/mnt/intelduo-s/tmp/rearchive    # use my fast sas'ies
+$ for izip in *.zip ; do echo $izip; i="${izip%.zip}" ; sudo unzip -d "${destdir}/${i}" "$izip"  ;  sudo rardefault.sh "${destdir}/${i}"  ;  echo ; done
+__envHEREDOC__
+}
 
 
 
 
+
+_help6(){
+cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+}
 # mergeconflictavoiddothismeow : here add from phisata ONLY
 #
 

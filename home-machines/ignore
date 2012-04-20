@@ -1,4 +1,5 @@
 ignore
+.gitignore
 .swp
 .bashrc.PATCH
 dotfiles.sh
