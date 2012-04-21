@@ -565,6 +565,13 @@ MISC ----
 MONITORING progress
    dd ... & pid=$! ; watch kill -USR1 $pid
    while [ 1 ] ; do kill -USR1 $pid ; sleep 5 ; done
+	HELP!  if I obtain the pid, and then go to another terminal
+	 in order to minitor progress, i always seem to end up killing
+	 --actually--killing-- the dd process... what gives?!
+	  ok ok.. it turns out that when you use sudo, the pid printed
+	  out is not the one you should be -USR1 signaling.  I *think* 
+	  thats the actual sudo process (?) and NOT the actual dd 
+	  process id... which is the pid you need to signal.
 LBA approximations (assumes 512-byte block size (bs) ; uses iA18 as subject disk)
    iA18 is 698GiB;
    slightly more than 12876374016 bytes (~13GB) were written before completing
@@ -1411,7 +1418,7 @@ cat <<'__envHEREDOC__'
  vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
 
 == Syntax ==
-
+$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # grep with regex
 __envHEREDOC__
 }
 helpcurl(){
