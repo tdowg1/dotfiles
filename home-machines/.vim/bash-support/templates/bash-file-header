@@ -18,3 +18,53 @@
 
 set -o nounset                              # Treat unset variables as an error
 
+f_usage(){
+	local scriptname="$( basename "$0" )"
+	cat <<__usageHEREDOC__
+Usage: $scriptname a b c
+
+This script 
+
+--long-arg
+                Option
+and continues to next line
+
+a               a1
+and continues to next line
+
+Examples
+  $scriptname a b c
+
+  $scriptname c d e
+
+Enhancement Ideas
+force           Simply 
+and next line continuing
+__usageHEREDOC__
+   exit 1
+}
+
+
+if [[ $# != 3 ]] && [[ $# != 4 ]] ; then
+   echo "ERROR: $# is not enough cmdln arguments"
+   f_usage
+fi
+
+
+
+# ===================================================================
+# PARSE CMDLN, VARIABLE DEFINITIONS, SANITY CHECKS && META GENERATION
+
+#some test condition
+
+if [[ $? != 0 ]] ; then
+   echo "ERROR: $source_filesystem must be a mountpoint"
+   f_usage
+fi
+
+
+
+# ===================================================================
+# FINALLY (!) DO WORK
+
+
