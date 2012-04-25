@@ -583,6 +583,8 @@ Duplicate one hard disk partition to another hard disk partition
    dd if=/dev/sda2 of=/dev/sdb2 bs=4096 conv=notrunc,noerror
 Dump typical MBR location in hex ; first 512-bytes of device
    dd if=/dev/sda bs=512 count=1 | hexdump -C
+Backup device
+   dd if=/dev/sda6 bs=4096 conv=notrunc,noerror | gzip > rsnapshot.dd.gz
 __envHEREDOC__
 }
 helpdd2(){
