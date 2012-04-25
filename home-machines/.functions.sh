@@ -1210,9 +1210,11 @@ package and its configuration files will be removed.
 If the third character is 
 A, the package was automatically installed.
 
-== NOTES FOR YOU, SLACKER ==
- remove       - Remove packages.
- purge        - Remove packages and their configuration files.
+== NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
+ remove        - Remove packages.
+ purge         - Remove packages and their configuration files.
+ search ~ahold - Show held packages
+
 __envHEREDOC__
 }
 helpbash(){
