@@ -792,6 +792,7 @@ SHTUFF
 * delete from cursor to end of 'word': dw
 * delete from cursor to end of line: D
 * delete from cursor to end of file: dG
+* insert timestamp: !!date                  bit.ly/I0xzvq
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -1584,7 +1585,8 @@ __envHEREDOC__
 }
 helparchive(){
 cat <<'__envHEREDOC__'
-helprar help7zip helpzip helpunzip helparchivesnippets
+HELP     helprar help7zip helpzip helpunzip helparchivesnippets
+SEE ALSO dtrx
 __envHEREDOC__
 }
 helparchivesnippets(){

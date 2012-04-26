@@ -1,11 +1,9 @@
 #!/bin/bash - 
 #===============================================================================
 #          FILE:  |FILENAME|
-#         USAGE:  ./|FILENAME| 
-# 
-#   DESCRIPTION:  |CURSOR|
-# 
-#       OPTIONS:  ---
+#         USAGE:  <see f_usage()>
+#   DESCRIPTION:  <see f_usage()>
+#       OPTIONS:  <see f_usage()>
 #  REQUIREMENTS:  ---
 #          BUGS:  ---
 #         NOTES:  ---
