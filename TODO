@@ -1,8 +1,7 @@
-(magnificent machine): ok to delete work-machines_pull-in-magnificent branch
 
 
-= TODO'isms pertaining to the configs/dotfiles themselves =
------------------------------------------------------------
+= TODO list for dotfiles =
+----
 == BUGS ==
 * home-machines/.functions.sh has /some/ kind of weird bash syntax error (but
 not exactly because `bash -n .functions.sh' says its ok).  It is located
@@ -15,16 +14,30 @@ odd printing of functions to stdout.
 **# write a dummy script that just sets a variable or soemthing
 **# call dummy script like `bash -vx dummy.sh'
 **# notice all the extra crap is is dumped out
-* gracefully fail (i.e. no bash error) if __git_ps1 thinggy is not configured properly in the environment
+** NOTES ON HOWTO FIX ( pulled in from 'work-machines.notes.txt' ):
+*** suggestions for howto possibly fix whawtever is the freaking problem with/or around the clearcase function guys... (dotfiles/work-machines/walrus/.dotfiles/functions.sh)
+**** check that it's ok to have the `return' statement in a bash function, like I have it in a lot of the clearcase functions
+**** check that the usage of "*"'s is ok
+**** check that all of the bash syntax is correct
+***** parens, curly braces, and quotes are balanced
+***** run it through a bash cmdln syntax check
+***** run it through bash "debugger"
+***** open it in various IDE's/editors
+***** run back through ALL of the revision history changes... trying to reproduce the bad behaviour.
+**** specfic lines should focus on
+***** search for 'if [[ -d "${x}" || -f "${x}" ]] ; then' because I dont think that's valid syntax... if its the OR operation you want, that's accomplished via '-o', like  ' if [[ -d "${x}" -o -f "${x}" ]] ; then'
+
+* COMPLETE gracefully fail (i.e. no bash error) if __git_ps1 thinggy is not configured properly in the environment
 
 
 
 == ENHANCEMENTS ==
-* make top-level shell dotfiles announce themselves (when tty interactive, of course)
+* COMPLETE make top-level shell dotfiles announce themselves (when tty interactive, of course)
+* find out howto get a keyboard key to do right-click (on Linux of course)
 
 
 == NOTES ==
-* just a thought on host-specific shtuff : may want to consider wrapping those content blocks with /where-am-i-executing?/ tests so dont clutter up EVERY env with garbage.
+* COMPLETE just a thought on host-specific shtuff : may want to consider wrapping those content blocks with /where-am-i-executing?/ tests so dont clutter up EVERY env with garbage.
 
 
 
@@ -45,8 +58,10 @@ odd printing of functions to stdout.
 
 
 
-= TODO'isms pertaining to the dotfiles.sh script =
---------------------------------------------------
+
+
+= TODO list for the dotfiles.sh script =
+----
 * can do 'install' which copies from cwd to $HOME, but would be nice if could go the other way.
 ** ideas on what to call the commands
 *** install (copies from cwd to $HOME)
@@ -66,10 +81,12 @@ odd printing of functions to stdout.
 **** symlinks (checks symlink is set up) ~/.vimrc to ~/.vim/plugins/vimrc.vim
 
 * totally different approach / alternative to the install cmd:
-** setup-symlinks
+** setup-symlinks ++++ YES I LIKE THIS ONE
 *** create symlink from home directory to target file, stored in the git working directory
 ** similarly, will need an teardown-symlinks cmd
 
 * i got fed up and started just doign this
 ** ./dotfiles.sh diff | sed -n 's/\ and\ /   /p' | sed -n 's/Files\ /meld   /p' | sed -n 's/\ differ//p'
 *** which generates output that can be exeucted, line-by-line, opening up each conflict within meld program
+
+

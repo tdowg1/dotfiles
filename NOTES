@@ -1,4 +1,9 @@
 
+This txt contains various notes pertaining to dotfiles.
+That's a pretty broad statement and I appolojize.  TODO content
+and 'things to do' -in general- should not end up here, but
+should end up in the TODO doc.
+
 
 = Observations of some *profile and startup file content =
 ----
@@ -37,8 +42,11 @@ echo "$HOME/.bashrc"
 
 
 
-= Additional reading =
+= Additional resources =
 ----
+* "environment-modules" package
 * http://dotfiles.org/ - dotfiles.org is a place to upload, download, and share your dotfiles.
+* https://github.com/zong-sharo/dotfiles/blob/master/Makefile
+** installs dotfiles
 
 

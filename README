@@ -1,5 +1,17 @@
 
-This repo contains a collection of personal Linux configuration files, aka /dotfiles/, along with a couple of futile attempts at keeping them easily synchronized.
+This repo contains a collection of personal Linux configuration files, aka
+/dotfiles/.
+
+This repo also contains an apps directory
+(https://github.com/tdowg1/dotfiles/tree/master/apps/) that stores a few of my
+more futile attempts at "easily" keeping my dotfiles synchronized.  Currently,
+there are 2 apps and then are quite different from one another.  For instance,
+mvin-HTTP (https://github.com/tdowg1/dotfiles/tree/master/apps/mvin-HTTP)
+depends on a previously configured webserver that's setup to receive content.
+The use-case for this (quite buggy) app was to allow for dotfile
+synchronization even if you're in an environment where the super awesome
+network administrators block just about every port except for 80.  Alas,
+nowadays I just use github :)
 
 '' PERSONAL NOTE: see https://github.com/github/markup ''
 
