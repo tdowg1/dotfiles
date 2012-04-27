@@ -188,7 +188,12 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	#PATH=$JAVA_HOME/bin:$PATH
 
 
-	HISTTIMEFORMAT="%F_%T"
+	# %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
+	# %T     The time in 24-hour notation (%H:%M:%S). (SU)
+	#
+	# this variable assignment makes `history' output be like
+	#:space::space:182:space::space:2012-03-20_19:15:06____pwd
+	HISTTIMEFORMAT="%F_%T____"
 
 	#HISTCONTROL=ignoreboth
 	HISTCONTROL=ignoredups:ignorespace
@@ -208,13 +213,13 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	#unset HISTSIZE  # the number of commands to save in a history list.
 	#export HISTSIZE=$(( 5000 * 20 ))
-	HISTSIZE=5000
+	HISTSIZE=50000
 
 	# The maximum number of lines contained in the history file.
 	# If HISTFILESIZE is not set, no truncation is performed.
 	#unset HISTFILESIZE
 	#export HISTFILESIZE=$(( 10000 * 2 ))
-	HISTFILESIZE=10000
+	HISTFILESIZE=100000
 
 
 
