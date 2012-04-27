@@ -463,6 +463,7 @@ helpsvnpropset(){
 	echo '   svn propset svn:executable "true" FILE'
 	cat <<'__envHEREDOC__'
    svn propset svn:ignore 'instance-management.i*' .
+	find /opt/svn-wc/EIW-Middleware/ -type f -name *.sh -exec svn propset svn:executable "true"  '{}' \;
 __envHEREDOC__
 }
 
