@@ -490,6 +490,9 @@ for i in $devicelist ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep
 for i in $devicelist ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
 for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m; 
 
+   # STUPID SNIPPET
+	# dd overwrite self with self, all smart tests x2, dd again, all smart tests (x1)
+DEVICE=/dev/sdb  ;  sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror  ;  sleep 15m ; sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ;             sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ;               sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror ;               sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ; 
 __envHEREDOC__
 }
 helpsvn(){
