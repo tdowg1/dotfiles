@@ -1,12 +1,14 @@
 
 
+= Observations of some *profile and startup file content =
+----
 == PHISATA ==
-=== from phisata's .bash_profile ===
+=== pulled from phisata's .bash_profile ===
 {{{
 # User specific environment and startup programs
 }}}
 
-=== from phisata's .bashrc ===
+=== pulled from phisata's .bashrc ===
 {{{
 # User specific aliases and functions
 source ~/.mvin-myprofile
@@ -15,10 +17,10 @@ source ~/.mvin-myprofile
 
 
 == MAGNIFICENT ==
-=== from magnificent's .bash_profile ===
+=== pulled from magnificent's .bash_profile ===
 nil
 
-=== from magnificent's .bashrc ===
+=== pulled from magnificent's .bashrc ===
 {{{
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -31,5 +33,12 @@ echo "$HOME/.bashrc"
 {{{
 . ~/.dotfiles/mainly
 }}}
+
+
+
+
+= Additional reading =
+----
+* http://dotfiles.org/ - dotfiles.org is a place to upload, download, and share your dotfiles.
 
 
