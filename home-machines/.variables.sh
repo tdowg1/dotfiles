@@ -98,26 +98,27 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 
 	
 	# 2012-04-14 bash tweakers shamelessly stolen from magnificent eshtupido.
-	HISTTIMEFORMAT="%F_%T"
+	
+	# %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
+	# %T     The time in 24-hour notation (%H:%M:%S). (SU)
+	#
+	# this variable assignment makes `history' output be like
+	#:space::space:182:space::space:2012-03-20_19:15:06____pwd
+	HISTTIMEFORMAT="%F_%T____"
+
 	#HISTCONTROL=ignoreboth
 	HISTCONTROL=ignoredups:ignorespace
 
 	# append to the history file, don't overwrite it
 	shopt -s histappend
 
-	#HISTSIZE=5000
-	if tty -s ; then
-		echo "NOTE: whenever you get all logged out (all screens, all sessionts, etc)"
-		echo "      you maybe wanna enable this bash HISTSIZE config change"
-		echo "      ahhhummmmmmmmmmmmmmmmm??????????????????!!!!!!!!!!!!!!!!   >:|   "
-	#HISTSIZE=50000
-	fi
+	HISTSIZE=50000
 
 	# The maximum number of lines contained in the history file.
 	# If HISTFILESIZE is not set, no truncation is performed.
 	#unset HISTFILESIZE
 	#export HISTFILESIZE=$(( 10000 * 2 ))
-	#HISTFILESIZE=10000
+	HISTFILESIZE=100000
 fi
 
 
