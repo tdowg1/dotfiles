@@ -843,6 +843,11 @@ ALL
 	-y  # assume Yes on all queries
 
 ARCHIVE
+* ep1           Exclude base dir from names. Do not store the path entered in 
+                   the cmdln. e.g.
+						 rar a -ep1 -r test tmp\*
+						   is === to
+					    cd tmp ; rar a -r ..\test ; cd ..
 * hp[PASSWORD]
 * m<0..5>       Set compression level (0-store...3-default...5-maximal)
 * r             Recurse subdirectories
@@ -857,6 +862,8 @@ ARCHIVE
 * rr<N>p        Add data recovery record; N = 1, 2 .. 100 percent.
 * rv            Add data recovery volumes
 * t             Test files after archiving
+* tk            Keep original archive time
+* tl            Set archive time to latest file
 * ts<m,c,a>[N]  Save or restore file time (modification, creation, access).
                    just say: -tsmca to get everything.
 
@@ -899,16 +906,62 @@ ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 -I F S = $ i f s b a k
 
 ARCHIVE EXAMPLE4
-   Perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
-for i in 201[12]* ; do sudo /usr/local/bin/rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
+perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
+   for i in 201[12]* ; do sudo rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
+__envHEREDOC__
+}
+helprar2(){
+   cat <<'__envHEREDOC__'
+xxxADD ARCHIVE COMMENT (these are INVALID)
+   rar c rarchive "my comment oh hai111111"
+   rar c rarchive "i could envision this being a little bit useful, in that you can store the cmdln options that were originally specified to create archive"
+
+xxxMODIFY ARCHIVE1
+   By removing 1 or more top level / leading directories (and moving its contents up 1
+	level /prior/ to removal).
+	1. use rename operation (works with files and directories):
+	  rar rn <arcname> <srcname1> <destname1> ... <srcnameN> <destnameN>
+	  rar rn -m5 -rr4p -t -tsmca [-tk] rarchive FROM TO
+
+	2. re-archive ; can use extraction option to remove leading director(y|ies)
+	
+	3. re-archive ; can use archive option to strip leading director(y|ies)
+     rar a -ep1
+
+xxxADD/MODIFY ARCHIVE2
+   By setting the path inside archive
+	  rar a -apDOCS\ENG release.rar readme.txt   # add readme.txt to the directory 'DOCS\ENG'.
+     rar x -apDOCS release DOCS\ENG\*.*         # extract 'ENG' to the current directory.
 
 EXTRACT
    -kb keep broken extracted files
-   rar x
-REPAIR
-   rar r [-y] <archive-to-repair>
-TEST
-   rar t [v] [pPASSWD]
+	-ad append archive name to destination path
+   rar x archive.rar
+
+TEST EXAMPLE0 (base case)
+   rar t [v[t|b]] [-pPASSWD] archive.rar
+TEST EXAMPLE1 (N+1)
+(sudo access was reqd in example environment)
+   for i in *.rar ; do echo $i; sudo su -c "time rar t $i > $i.test.log" ; echo ; echo ; done
+TEST EXAMPLE2 (N+2) with auto-repair exec upon test failure
+(sudo access was reqd in example environment)
+   for i in *.rar ; do echo $i; sudo su -c "time rar t $i > $i.test.log"; rc=$? ; if [[ $rc != 0 ]] ; then echo "WARNING rc[$rc] was non-zero for rar test. calling rar repair."; sudo su -c "time rar r -y $i > $i.repair.log"; rc=$?; if [[ $rc != 0 ]] ; then  echo "ERROR rc[$rc] was non-zero for rar repair <exclamation>"; fi; fi; echo; done
+
+REPAIR EXAMPLE0 (base case)
+   rar r -y archive.rar                         # the -y(es) is important!
+REPAIR EXAMPLE1 (N+1)
+
+UPDATE EXAMPLE0 (base case)
+add file to specific location within a pre-existing archive (keep orig archive time (alt. -tl : set time to latest file)).
+must specify archive creation options... it doesnt seem to persist the original archive's properties--if you just add a file, for example, and it previously had a recovery record set--its lost--and the only way to get a recovery record generated for the final updated rarchive, you must define it.
+   rar u   [-ap<PATH INSIDE ARCHIVE TO USE>]   -m5 -rr4p -t -tsmca   -tk   archive.rar   file1[ file2[...]]
+UPDATE EXAMPLE1 (N+1)
+   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   2011-09-08_23.18.01.rar   2011-09-08_23.18.01.NOTE.txt
+UPDATE EXAMPLE2 (N+2)
+??? do you have to say "-ep1" too in this case???? to avoid having "ARCHIVES-TESTED-FAILED/rearchived/" folders created within the archive?? that I just want to add a single stupid file to?
+   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   ARCHIVES-TESTED-FAILED/rearchived/2011-09-08_23.18.01.rar   2011-09-08_23.18.01.NOTE.txt
+UPDATE EXAMPLE3 (N+3)
+   rar u   -apmnt/intelduo-s/tmp/rearchive/2011-09-08_23.18.01/   -m5 -rr4p -t -tsmca   -tk   rearchived/2011-09-08_23.18.01.rar  ../2011-09-08_23.18.01.NOTE.txt
 __envHEREDOC__
 }
 helpless(){
@@ -1497,6 +1550,7 @@ $ cat /proc/partitions
 findfs {LABEL=label | UUID=uuid}               # identify device that matches query
 blkid                                          # locate/print block device attributes like UUID and LABEL
 sfdisk                                         # Partition table manipulator for Linux
+blockdev                                       # call block device ioctls from the command line
 __envHEREDOC__
 }
 helphdd2(){
