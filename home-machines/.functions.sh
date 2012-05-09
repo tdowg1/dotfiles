@@ -1566,11 +1566,6 @@ mkntfs [-v] --label label --quick device       # create ntfs filesystem
 mkfs -t btrfs HELP STUB                        # create btrfs filesystem
 __envHEREDOC__
 }
-
-
-
-
-
 helpdevices(){
 cat <<'__envHEREDOC__'
 == Device and Driver and Hardware-related commands ==
@@ -1607,6 +1602,20 @@ helppasswd(){
 cat <<'__envHEREDOC__'
 passwd -d USERNAME   # BAD!!! this allows *anyone* to become USERNAME (literally puts the empty string in /etc/shadow)
 passwd -l USERNAME   # BETTER. this "locks" the account (this is what you want if you use ssh keys for authentication--puts "!!" or "!" in /etc/shadow)
+__envHEREDOC__
+}
+helpmail(){
+cat <<'__envHEREDOC__'
+# Send an email message to Guru (using the mailx package):
+$ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  mail -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
+
+#^^TODO STUB uhuhg this doesn't look right on the reciever's side... fixup the stdout string crap thats going on here
+__envHEREDOC__
+}
+
+_help6(){
+cat <<'__envHEREDOC__'
+
 __envHEREDOC__
 }
 
