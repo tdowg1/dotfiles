@@ -1612,6 +1612,12 @@ $ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  ma
 #^^TODO STUB uhuhg this doesn't look right on the reciever's side... fixup the stdout string crap thats going on here
 __envHEREDOC__
 }
+helpshred(){
+cat <<'__envHEREDOC__'
+shred [--interations=3] --remove --verbose --zero  file
+__envHEREDOC__
+}
+
 
 _help6(){
 cat <<'__envHEREDOC__'
