@@ -113,9 +113,9 @@ alias tmp='cd /tmp ; echo "cd "`pwd`'
 # dropbox folders
 alias db='cd "$db"'
 alias dbi='cd "$dbi"'
+alias dbl='cd "$dbl"'
 alias dbm='cd "$dbm"'
 alias dbs='cd "$dbs"'
-alias dbi='cd "$dbi"'
 alias dbpub='cd "$dbpub"'
 
 ## /Places (`cd'-related)
