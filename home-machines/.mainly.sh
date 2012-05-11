@@ -70,7 +70,26 @@ svnloghead(){
 
 
 
-
+# 
+# [Re-]Sets title of whichever terminal program you're using.
+# Obviously, the ~/.whereami file is unnecessary.
+# Usually, could put this in ~/.bash_profile like so...
+#
+## User specific environment and startup programs
+#if [[ -f ~/.whereami ]]; then
+#        where="$(cat ~/.whereami)"
+#        #export TITLEBAR='\[\e]0;\u@\h\a\]'
+#        TITLEBAR='\[\e]0;\u@'${where}'\a\]'
+#        #export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$'
+#        #export PS1="${TITLEBAR}[\u@\h \W] "
+#        #export PS1="${TITLEBAR}[\u@\h \W] "
+#        PS1="${TITLEBAR}[\u@${where} \W] "
+#fi
+#
+##resettitlebar(){
+##	export TITLEBAR='\[\e]0;\u@\h\a\]'
+##	export PS1="${TITLEBAR}${PS1}"
+##}
 
 
 ##
