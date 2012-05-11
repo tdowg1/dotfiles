@@ -1287,7 +1287,7 @@ TODO STUB pretty cool... lots of options... should spend some time playing with 
 -F [function name] : display [specific] function(s)
 
 == Misc ==
--n   : syntax check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
+-n   : Syntax Check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
 -x   : xtrace
 -o option-name : enable option-name, e.g. `set -o xtrace'
 +o option-name : disable option-name, e.g. `set +o xtrace'
@@ -1422,6 +1422,9 @@ __envHEREDOC__
 }
 helprsnapshot(){
 cat <<'__envHEREDOC__'
+# Syntax Check rsnapshot.conf
+rsnapshot configtest
+
 == STUB FIGURES OUT / DO ==
 * shortcut to replace the most recent bu (hourly.0), with one taken right _meow_;;.... overwrite latest rsnapshot with current disk state;; useful when know have good curr disk state want to rsnap, and is OK to delete most recent rsnap.
 __envHEREDOC__
