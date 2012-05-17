@@ -1659,18 +1659,30 @@ cat <<'__envHEREDOC__'
 unzip -d extractiondirectory zipfile
 __envHEREDOC__
 }
+helptar(){
+cat <<'__envHEREDOC__'
+$ tar zcfW a.tar.gz  a/    # -W attempt to verify the archive after writing it
+__envHEREDOC__
+}
 helparchive(){
 cat <<'__envHEREDOC__'
-HELP     helprar help7zip helpzip helpunzip helparchivesnippets
+HELP     helptar helprar help7zip helpzip helpunzip helparchivesnippets
 SEE ALSO dtrx
 __envHEREDOC__
 }
 helparchivesnippets(){
 cat <<'__envHEREDOC__'
-Fix stupid zip files to do with stupid 4GB limit to do with getting usable backups to do with 'kill yourself, zip':
+CONVERT ZIP ARCHIVES TO RAR
+Convert stupid zip files with their stupid 4GB limit with their getting usable as backups to do with their... erm... JUST 	kill yourself, zip archives!!!  TWICE!
 $ cd <directory containing stupid 4GB-limit-reachy-fied zip files>
 $ destdir=/mnt/intelduo-s/tmp/rearchive    # use my fast sas'ies
 $ for izip in *.zip ; do echo $izip; i="${izip%.zip}" ; sudo unzip -d "${destdir}/${i}" "$izip"  ;  sudo rardefault.sh "${destdir}/${i}"  ;  echo ; done
+
+CONVERT TARBALLED ARCHIVES TO RAR
+$ cd <directory containing tarballs>
+$ destdir=/mnt/intelduo-s/tmp/rearchive
+$ # '--strip-components=1' says to strip the one (1) leading component (the top-level directory, for instance) off the file names of all extracted content.  So, in this snippet, a directory is created keyed off the source archive.  Contents of the archive are extracted into said directory, with each filename of the extracted contents having its leading directory removed.
+$ for curr in *.tar.gz ; do echo $curr; i="${curr%.tar.gz}" ; mkdir "$i" ; cd "$i" ; tar -z -x --strip-components=1 -f "../$curr" ;  cd - ; rar a -m5 -r -rr4p -t -tsmca "${i}.rar"  "${i}"  ;       echo ; done
 __envHEREDOC__
 }
 
