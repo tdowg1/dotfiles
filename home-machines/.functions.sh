@@ -424,12 +424,20 @@ renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
 # ( ... see also (my custom): pssynergy)
 __envHEREDOC__
 }
-helprsnapshotdiffall(){
+helprsnapshotsnippets(){
 	cat <<'__envHEREDOC__'
-YOU MUST BE IN RSNAPSHOT DIRECTORY (see hourly.0, hourly.1, etc.)
-prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
+Handful of snippets dedicated to getting nfo about rsnapshots. (NOTE: most/all of these assume CWD is the rsnapshot_root)
 
-for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
+EXECUTING CMDS OVER RSNAPSHOTS (most of these are designed st each rsnapshot directory appears in chronilogical order (oldest first)
+# rsnapshot-diff:
+$ prev=INITIAL; for i in $(ls -trd ./*) ; do if [ "$prev" = "INITIAL" ] ; then echo ; prev=$i; continue; fi; echo "prev[$prev];curr[$i]"; rsnapshot-diff $prev $i ; prev=$i; echo ; done
+$ for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ hourly.$(( ${i} - 1))/magnificent.home/; done
+
+# du:
+$ d=$( for i in $( ls -trA ) ; do test -f "$i"  &&  continue ; echo $i; done | xargs echo  )
+$ sudo du -hs $d
+$ echo
+$ sudo du -hs --count-links $d
 __envHEREDOC__
 }
 pssynergy(){
