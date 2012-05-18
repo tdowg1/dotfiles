@@ -603,8 +603,17 @@ helpdd2(){
       cat <<'__envHEREDOC__'
 See Also
 * ddrescue tries hard to rescue data in case of read errors
+** see also : gddrescue 
 * safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
 * ??? ddclac 	?? 
+* dcfldd based on the dd program but with additional features...
+** on-the-fly hashing (to help ensure data integrity)
+** status outputs its progress to user and gives ETA
+** flexible disk wipes
+** image/wipe verify that a target drive is a bit-for-bit match of the specified input file or pattern
+** Multiple outputs, dcfldd can output to multiple files or disks at the same time
+** Split output, dcfldd can split output to multiple file
+** Piped output and logs, dcfldd can send all its log data and output to commands as well as files natively.
 __envHEREDOC__
 }
 
