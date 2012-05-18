@@ -633,8 +633,15 @@ helpdate(){
 	echo -e "$(eval $cmdln)\t$cmdln"
 
 cat <<'__envHEREDOC__'
+$ date  --reference=file-to-reference
+TIMEZONES
+$ export TZ=Europe/Stockholm; echo "Stockholm:    `date +\"%F %R (%Z)\"`"
+# `--> Stockholm:    2012-05-18 20:31 (CEST)
+$ export TZ=US/Central; echo "Dallas:             `date +\"%F %R (%Z)\"`"
+# `--> Dallas:       2012-05-18 13:32 (CDT)
 
-date  --reference=file-to-reference
+SEE ALSO
+$ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
 __envHEREDOC__
 }
 helpawk(){
