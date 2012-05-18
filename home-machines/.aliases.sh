@@ -265,7 +265,7 @@ alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd
 # ... I'm thinking I might like this... so, at current, not wrapping within host-specific test
 alias cdgit='cd $HOME/dev/git'
 alias cdsvn='cd $HOME/dev/svn'
-
+alias cdwork='cd $HOME/work'
 
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	alias cdsuper='cd $HOME/dev/git/sprySuperGitRepo'

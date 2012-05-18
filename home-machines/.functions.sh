@@ -1616,13 +1616,15 @@ __envHEREDOC__
 helprenice(){
 cat <<'__envHEREDOC__'
 $ sudo renice -2 23871     # increase scheduling favorability
-23871: old priority 0, new priority -2
+   `--> 23871: old priority 0, new priority -2
 $ sudo renice 2 23871      # decrease scheduling favorability
-23871: old priority -2, new priority 2
+   `--> 23871: old priority -2, new priority 2
 $ sudo renice 9 23871      # decrease scheduling favorability
-23871: old priority 2, new priority 9
+   `--> 23871: old priority 2, new priority 9
 $ sudo renice 11 23871     # decrease scheduling favorability
-23871: old priority 9, new priority 11
+   `--> 23871: old priority 9, new priority 11
+SEE ALSO
+getprocesspriority() slowdown() unslowdown()
 __envHEREDOC__
 }
 helppasswd(){
