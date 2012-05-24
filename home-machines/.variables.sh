@@ -233,6 +233,7 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	export TOMCAT_HOME="/opt/tomcat/"
 	export tc="/opt/tomcat/"
+	export ec2="$HOME/dev/svn-wc/ec2-account-instance-management/"
 
 
 	##

@@ -435,9 +435,11 @@ $ for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ h
 
 # du:
 $ d=$( for i in $( ls -trA ) ; do test -f "$i"  &&  continue ; echo $i; done | xargs echo  )
-$ sudo du -hs $d
-$ echo
-$ sudo du -hs --count-links $d
+echo ; date --rfc-3339 seconds
+sudo du -hs $d
+echo ; date --rfc-3339 seconds
+sudo du -hs --count-links $d
+echo ; date --rfc-3339 seconds
 __envHEREDOC__
 }
 pssynergy(){
@@ -639,6 +641,13 @@ $ export TZ=Europe/Stockholm; echo "Stockholm:    `date +\"%F %R (%Z)\"`"
 # `--> Stockholm:    2012-05-18 20:31 (CEST)
 $ export TZ=US/Central; echo "Dallas:             `date +\"%F %R (%Z)\"`"
 # `--> Dallas:       2012-05-18 13:32 (CDT)
+
+CONVERT a given locale-->to the current (iow: convert a diff-TZ into curr-TZ):
+$ date --date="2012-05-24 18:08:56 UTC"   # current locale is EDT
+# `--> Thu May 24 14:08:56 EDT 2012
+CONVERT between locale's:
+$ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08:56 UTC"`"
+# `--> Jaisalmer, India: Thu May 24 23:38:56 IST 2012
 
 SEE ALSO
 $ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour

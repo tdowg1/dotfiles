@@ -269,6 +269,7 @@ alias cdwork='cd $HOME/work'
 
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	alias cdsuper='cd $HOME/dev/git/sprySuperGitRepo'
+	alias cdec2='cd "$ec2"'
 
 fi
 ## /[com.spryinc.]MAGNIFICENT-specific

@@ -69,6 +69,14 @@ svnloghead(){
 
 
 
+# 
+# [Re-]Sets hostname portion of terminal prompt to the contents of ~/.whereami
+#if [[ -f ~/.whereami ]]; then
+#        where="$(cat ~/.whereami)"
+#        TITLEBAR='\[\e]0;\u@'${where}'\a\]'
+#        PS1="${TITLEBAR}[\u@${where} \W] "
+#fi
+
 
 # 
 # [Re-]Sets title of whichever terminal program you're using.
