@@ -110,6 +110,26 @@ f_isfloat(){
 	fi
 	return 0
 }
+f_isip(){
+	# TRUE  -> return 0 (If is an IP address)
+	# FALSE -> ow
+	local x="$1"
+
+	# original src : http://www.linuxjournal.com/content/validating-ip-address-bash-script
+	if [[ $x =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+		OIFS=$IFS
+		IFS='.'
+		x=($x)
+		IFS=$OIFS
+		
+		if [[ ${x[0]} -le 255 && ${x[1]} -le 255 \
+				&& ${x[2]} -le 255 && ${x[3]} -le 255 ]] ; then
+			return 0
+		fi
+	fi
+	#echo "FALSE";
+	return 1
+}
 
 
 
