@@ -524,6 +524,9 @@ for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 
    # STUPID SNIPPET
 	# dd overwrite self with self, all smart tests x2, dd again, all smart tests (x1)
 DEVICE=/dev/sdb  ;  sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror  ;  sleep 15m ; sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ;             sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ;               sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror ;               sudo smartctl ${DEVICE} --test=short ; sleep 10m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 20m ; sudo smartctl ${DEVICE} --test=long ; sleep 300m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ; 
+
+   # STUPID SNIPPET2
+sudo smartctl --test conveyance /dev/sda  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short /dev/sda  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long /dev/sda  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 110m
 __envHEREDOC__
 }
 helpsvn(){
@@ -1530,10 +1533,12 @@ __envHEREDOC__
 helpgrep(){
 cat <<'__envHEREDOC__'
 == Examples ==
-* recursively find "dependency" pattern, while specifying a filename pattern:
- grep dependency $( find . -name pom.xml )
-* edit pom.xml files that contain "opensocial" pattern:
- vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
+# Find files that contain "dependency" pattern, while specifying a filename pattern:
+$ grep dependency $( find . -name pom.xml )
+# Edit pom.xml files that contain "opensocial" pattern:
+$ vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
+# Find files that contain an IP address:
+$ grep -P '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' $( find . -type f )
 
 == Syntax ==
 $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # grep with regex
