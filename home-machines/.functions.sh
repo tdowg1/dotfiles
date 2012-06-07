@@ -622,6 +622,7 @@ Dump typical MBR location in hex ; first 512-bytes of device
    dd if=/dev/sda bs=512 count=1 | hexdump -C
 Backup device
    dd if=/dev/sda6 bs=4096 conv=notrunc,noerror | gzip > rsnapshot.dd.gz
+TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
 __envHEREDOC__
 }
 helpdd2(){
