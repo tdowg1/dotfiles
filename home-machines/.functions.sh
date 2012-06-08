@@ -1773,6 +1773,10 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
+== sshfs /etc/fstab ==
+sshfs#t@phisata:/mnt/a14-h/h/  /mnt/phisata   fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
+sshfs#b@demoportal:/usr/local/tomcat/  /home/b/mnt/demoportal  fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
+
 == ext4 default mount opts ==
 Jun  7 21:07:26 intelduo ntfs-3g[15480]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
 Jun  7 21:07:26 intelduo ntfs-3g[15480]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,default_permissions,fsname=/dev/sdg3,blkdev,blksize=4096
