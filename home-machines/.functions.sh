@@ -1767,12 +1767,17 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
-== Notice mount options used by default after plugging in an NTFS USB drive ==
-Jan 31 21:02:52 laptop kernel: [86704.202069] sd 4:0:0:0: [sdc] Attached SCSI disk
-Jan 31 21:02:53 laptop ntfs-3g[3689]: Version 2010.8.8 external FUSE 28
-Jan 31 21:02:53 laptop ntfs-3g[3689]: Mounted /dev/sdc1 (Read-Write, label "a58-458", NTFS 3.1)
+== ext4 default mount opts ==
+Jun  7 21:07:26 intelduo ntfs-3g[15480]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
+Jun  7 21:07:26 intelduo ntfs-3g[15480]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,default_permissions,fsname=/dev/sdg3,blkdev,blksize=4096
+
+== NTFS default mount opts ==
+~~Jan 31 21:02:52 laptop kernel: [86704.202069] sd 4:0:0:0: [sdc] Attached SCSI disk
+~~Jan 31 21:02:53 laptop ntfs-3g[3689]: Version 2010.8.8 external FUSE 28
+~~Jan 31 21:02:53 laptop ntfs-3g[3689]: Mounted /dev/sdc1 (Read-Write, label "a58-458", NTFS 3.1)
 Jan 31 21:02:53 laptop ntfs-3g[3689]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
 Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,fsname=/dev/sdc1,blkdev,blksize=4096,default_permissions
+
 == Mount NTFS volume with full user write permission ==
   sudo mkdir /media/mraid0a2244_ad/  &&  \
   sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
