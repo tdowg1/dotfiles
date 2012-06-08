@@ -1332,6 +1332,12 @@ A, the package was automatically installed.
  purge         - Remove packages and their configuration files.
  search ~ahold - Show held packages
 
+== Determine which package provides a file ==
+$ dpkg --search /etc/bash_completion
+bash-completion: /etc/bash_completion
+$ dpkg --search `which gethostip`
+syslinux: /usr/bin/gethostip
+
 __envHEREDOC__
 }
 helpbash(){

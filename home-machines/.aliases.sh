@@ -36,6 +36,7 @@ alias kn='kill -9'
 alias psaxfww='ps axfww'
 alias df='df -hT'
 alias mountdev='mount | grep /dev'
+alias mountdev2='mount -l | grep -P "^\/dev" | sort'
 alias mdstat='more /proc/mdstat'
 alias sshsvn='ssh -2XC tyler@svn'
 # dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
