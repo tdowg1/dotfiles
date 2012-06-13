@@ -20,6 +20,9 @@ stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-hr-info"
 screen -t "Op"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadget-operations"
 
+screen -t "P"
+stuff "cd $HOME/dev/git/gadget-pda/"
+
 screen -t "be"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
 
@@ -29,16 +32,12 @@ stuff "cd $HOME/dev/git/sprySuperGitRepo/p2p"
 screen -t "~"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/"
 
-screen -t "QT"
-stuff "cd $HOME/dev/git/sprySuperGitRepo/QueryTester/"
-
 screen -t "SPS"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
-screen -t "Arcks"
-stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryArchetypes/"
-
-screen -t "jsU"
-stuff "cd $HOME/dev/git/sprySuperGitRepo/spry-jsUiLib/"
+#screen -t "Arcks"
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryArchetypes/"
+#screen -t "jsU"
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/spry-jsUiLib/"
 
 screen -t "SRst"
 stuff "cd $HOME/dev/git/sprySuperGitRepo/SpryRestSvc"
