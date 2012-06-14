@@ -1757,6 +1757,12 @@ cat <<'__envHEREDOC__'
 A handy file search tool using different backends which is configurable via the command line.
 __envHEREDOC__
 }
+helplocate(){
+cat <<'__envHEREDOC__'
+locate --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
+__envHEREDOC__
+}
+# mergeconflictavoiddothismeow : here add from phisata ONLY
 # mergeconflictavoiddothismeow : here add from phisata ONLY
 
 
