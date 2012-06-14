@@ -1752,6 +1752,12 @@ $ # '--strip-components=1' says to strip the one (1) leading component (the top-
 $ for curr in *.tar.gz ; do echo $curr; i="${curr%.tar.gz}" ; mkdir "$i" ; cd "$i" ; tar -z -x --strip-components=1 -f "../$curr" ;  cd - ; rar a -m5 -r -rr4p -t -tsmca "${i}.rar"  "${i}"  ;       echo ; done
 __envHEREDOC__
 }
+helpcatfish(){
+cat <<'__envHEREDOC__'
+A handy file search tool using different backends which is configurable via the command line.
+__envHEREDOC__
+}
+# mergeconflictavoiddothismeow : here add from phisata ONLY
 
 
 
@@ -1791,6 +1797,11 @@ Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udi
 == Mount NTFS volume with full user write permission ==
   sudo mkdir /media/mraid0a2244_ad/  &&  \
   sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
+
+== Various mount options ==
+=== options-set-1 (man ntfs-3g) ===
+Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
+          umask=, fmask=, dmask=, streams_interface=.
 __envHEREDOC__
 }
 
