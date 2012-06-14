@@ -1759,7 +1759,12 @@ __envHEREDOC__
 }
 helplocate(){
 cat <<'__envHEREDOC__'
-locate --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
+locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
+
+for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do
+ echo rm $i blah 
+done
+
 __envHEREDOC__
 }
 # mergeconflictavoiddothismeow : here add from phisata ONLY
