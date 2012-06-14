@@ -1793,6 +1793,15 @@ cat <<'__envHEREDOC__'
 == sshfs /etc/fstab ==
 sshfs#t@phisata:/mnt/a14-h/h/  /mnt/phisata   fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
 sshfs#b@demoportal:/usr/local/tomcat/  /home/b/mnt/demoportal  fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
+==== sshfs use pre-requirements ====
+* need package
+$ <package manager> install sshfs
+* if want to mount without root priviledges, add user to fuse group
+$ sudo usermod --groups fuse --append USER
+* set 'user_allow_other' in /etc/fuse.conf
+* mount resource by specifying the absolute path.
+* unmount the resource using
+$ fusermount -u $absolute_path
 
 == ext4 default mount opts ==
 Jun  7 21:07:26 intelduo ntfs-3g[15480]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
