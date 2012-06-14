@@ -419,25 +419,32 @@ createSymlinkTogms_pvobCCView(){
 ## ### #### ###################################################################
 
 helpmd5(){
+	# consider RENAME helpchecksumming, helpdigest, helphashdigest, etc
 	cat <<'__envHEREDOC__'
-CREATE1:: filenames (from find)  may not be sorted! # cd $DIR
- find . -type f -exec md5sum '{}' \; > md5sum.md5
- # it may then be desirable to have hashes sorted by filename:
- sort -k2 md5sum.md5  >  md5sum.md5.sorted
+CREATE1:: Filenames (from find)  may not be sorted! # cd $DIR
+$ find . -type f -exec md5sum '{}' \; > md5sum.md5
+$ # it may then be desirable to have hashes sorted by filename:
+$ sort -k2 md5sum.md5  >  md5sum.md5.sorted
 
-CREATE2:: have hashes sorted by filename from the start # cd $DIR
- find .  -type f | sort | xargs md5sum > md5sum.md5
+CREATE2:: Have hashes sorted by filename from the start # cd $DIR
+$ find .  -type f | sort | xargs md5sum > md5sum.md5
+
+CREATE3::
+$ # cd $DIR
+$ find GOTS -depth -type f -name '*.jar' -print0 | xargs -0 sha256sum >> /tmp/sha256sumGOTS.txt
+$ find . -depth -path '*config/*' -type f -name '*.ttl' -print0 | xargs -0 sha256sum >> /tmp/sha256sumConfig.txt
+
+CREATE4:: Handy when checking Linux distros that have CHECKSUM files
+$ find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
 
 VALIDATE:: (shows only failures) # cd $DIR
- md5sum --check md5sum.md5 | grep ' FAILED'
+$ md5sum --check md5sum.md5 | grep ' FAILED'
 __envHEREDOC__
 }
-helpshasum(){
-	cat <<'__envHEREDOC__'
-		  Handy when checking Linux distros that have CHECKSUM files
-find . -name \*CHECKSUM -execdir sha256sum --check '{}' \;
-__envHEREDOC__
-}
+#helpshasum(){
+#	cat <<'__envHEREDOC__'
+#__envHEREDOC__
+#}
 helpsynergy(){
 	cat <<'__envHEREDOC__'
 renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
