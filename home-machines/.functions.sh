@@ -1546,6 +1546,13 @@ __envHEREDOC__
 }
 helpgrep(){
 cat <<'__envHEREDOC__'
+== bash: /bin/grep: Argument list too long ==
+# I wanted to grep through a pretty good count of files. However, grep 
+# had other plans, apparently.  Here's the original:
+$ grep --null-data --files-with-match "lolwut" $( find . -type f ! -executable -print0 )
+# ...which will fail if `find` gives a lot of results. Here's an alternative:
+$ find . -type f ! -executable -print0 | xargs -0 grep --null-data --files-with-match "lolwut" 
+
 == Examples ==
 # Find files that contain "dependency" pattern, while specifying a filename pattern:
 $ grep dependency $( find . -name pom.xml )
