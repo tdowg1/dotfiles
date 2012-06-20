@@ -1782,7 +1782,6 @@ done
 __envHEREDOC__
 }
 # mergeconflictavoiddothismeow : here add from phisata ONLY
-# mergeconflictavoiddothismeow : here add from phisata ONLY
 
 
 
@@ -1842,6 +1841,14 @@ __envHEREDOC__
 
 # mergeconflictavoiddothismeow : here add from lap ONLY
 #
+helpsudo(){
+cat <<'__envHEREDOC__'
+$ sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; 
+i.e.
+# sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
+__envHEREDOC__
+}
+
 
 
 _help6(){
