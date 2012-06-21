@@ -605,6 +605,10 @@ WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
 WRITE-rewrite entire disk (trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18))
    dd if=/dev/sdk of=/dev/sdk bs=4096 oflag=direct conv=notrunc,noerror
+ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
+   smartctl --test offline /dev/sda
+ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
+
 MISC ----
 MONITORING progress
    dd ... & pid=$! ; watch kill -USR1 $pid
@@ -635,6 +639,9 @@ __envHEREDOC__
 helpdd2(){
       cat <<'__envHEREDOC__'
 See Also
+* hdrecover.sf.net
+** 
+* 
 * ddrescue tries hard to rescue data in case of read errors
 ** see also : gddrescue 
 * safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
