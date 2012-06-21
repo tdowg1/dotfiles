@@ -29,6 +29,7 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 ##
 ## misc
 alias epwd='echo `pwd`/'
+alias grep >/dev/null 2>&1  ||  alias grep='grep --color'
 alias kill9='kill -9'
 alias k9='kill -9'
 alias kn='kill -9'
