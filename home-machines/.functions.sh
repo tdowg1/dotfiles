@@ -1308,13 +1308,14 @@ $ echo /etc/sysconfig/rsyslog | \
 
 == FIND/REPLACE ==
 PREVIEW find/replace on files:
- sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
+$ sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
 . . . ^. . . . . . . . . . . . ^
 DO find/replace on files:
- sed -i "s/192.168.8.3/bryn-pc/g" file1 [fileN]
+$ sed -i "s/192.168.8.3/bryn-pc/g" file1 [fileN]
 . . . ^
 HELPFUL for changing all the [fileN]'s:
- grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
+$ grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
+$ sed -n "s/frommmmmm/tooooooo/gp" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
 __envHEREDOC__
 }
 helpaptitude(){
