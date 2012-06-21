@@ -1788,7 +1788,16 @@ done
 $ locate -r home.*aesop-rock.*bash_history
 __envHEREDOC__
 }
-# mergeconflictavoiddothismeow : here add from phisata ONLY
+helpapplekeyboard(){
+cat <<'__envHEREDOC__'
+== F1-F12 KEYS VIA F{1-12} (typical keyboard) ==
+sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
+
+== F1-F12 KEYS VIA fn+F{1-12} (apple keyboard default) ==
+sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
+__envHEREDOC__
+}
+
 
 
 
@@ -1799,6 +1808,7 @@ cat <<'__envHEREDOC__'
 
 __envHEREDOC__
 }
+
 # mergeconflictavoiddothismeow : here add from phisata ONLY
 #
 
