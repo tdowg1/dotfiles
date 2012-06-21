@@ -1780,12 +1780,12 @@ __envHEREDOC__
 }
 helplocate(){
 cat <<'__envHEREDOC__'
-locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
-
-for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do
+EXAMPLES
+$ locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
+$ for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do
  echo rm $i blah 
 done
-
+$ locate -r home.*aesop-rock.*bash_history
 __envHEREDOC__
 }
 # mergeconflictavoiddothismeow : here add from phisata ONLY
