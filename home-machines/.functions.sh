@@ -597,14 +597,21 @@ EXAMPLES --------
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
 *  dd if=/dev/zero of=/some/path/to/the.img bs=1M count=600  # **create 600 Meg image file**
-rewrite disk (with itself)
+rewrite entire disk (with itself)
    dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
 
 EXAMPLES hdd-REMAPPING ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
-WRITE-rewrite entire disk (trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18))
-   dd if=/dev/sdk of=/dev/sdk bs=4096 oflag=direct conv=notrunc,noerror
+WRITE-rewrite entire disk.1-trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18)
+   dd if=/dev/sdk of=/dev/sdk bs=4096 [oflag=direct] conv=notrunc,noerror   # I
+	                # would reconsider the oflag usage of "direct"... this will
+						 # make execution extremely slow... slow like ~5MiB/s for
+						 # typical magnetic disk (1TB hdd, in fact).
+WRITE-rewrite entire disk.2-dcfldd
+$ dcfldd if=/dev/sda of=/dev/sda bs=4096 conv=notrunc,noerror  status=on sizeprobe=if
+WRITE-rewrite entire disk.3-dc3dd
+$ 
 ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
    smartctl --test offline /dev/sda
 ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
@@ -638,22 +645,32 @@ __envHEREDOC__
 }
 helpdd2(){
       cat <<'__envHEREDOC__'
-See Also
+== See Also ==
 * hdrecover.sf.net
-** 
-* 
-* ddrescue tries hard to rescue data in case of read errors
-** see also : gddrescue 
+
+* ddrescue tries hard to rescue data in case of read errors. (Similarly, gddrescue)
+
 * safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
+
 * ??? ddclac 	?? 
+
 * dcfldd based on the dd program but with additional features...
-** on-the-fly hashing (to help ensure data integrity)
-** status outputs its progress to user and gives ETA
-** flexible disk wipes
-** image/wipe verify that a target drive is a bit-for-bit match of the specified input file or pattern
-** Multiple outputs, dcfldd can output to multiple files or disks at the same time
-** Split output, dcfldd can split output to multiple file
-** Piped output and logs, dcfldd can send all its log data and output to commands as well as files natively.
+** (hashing) Hashing on-the-fly - dcfldd can hash the input data as it is being transferred, helping to ensure data integrity.
+** (eta status) Status output - dcfldd can update the user of its progress in terms of the amount of data transferred and how much longer operation will take.
+** (pattern writing) Flexible disk wipes - dcfldd can be used to wipe disks quickly and with a known pattern if desired.
+** (integrity verif) Image/wipe Verify - dcfldd can verify that a target drive is a bit-for-bit match of the specified input file or pattern.
+** Multiple outputs - dcfldd can output to multiple files or disks at the same time.
+** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
+** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
+
+* dc3dd inspired by the dcfldd, also based on dd, with addl. features...
+** (pattern writing) Pattern writes. The program can write a single hexadecimal value or a text string to the output device for wiping purposes.
+** (hashing) Piecewise and overall hashing with multiple algorithms and variable size windows. Supports MD5, SHA-1, SHA-256, and SHA-512. Hashes can be computed before or after conversions are made.
+** (eta status) Progress meter with automatic input/output file size probing
+** (logging) Combined log for hashes and errors
+** Error grouping. Produces one error message for identical sequential errors
+** (integrity verif) Verify mode. Able to repeat any transformations done to the input file and compare it to an output.
+** (split output) Ability to split the output into chunks with numerical or alphabetic extensions
 __envHEREDOC__
 }
 
@@ -673,6 +690,7 @@ helpdate(){
 	echo -e "$(eval $cmdln)\t$cmdln"
 
 cat <<'__envHEREDOC__'
+$ date  --rfc-3339 seconds          # GIVE ME FREAKING ISO-FORMATTED DATE
 $ date  --reference=file-to-reference
 TIMEZONES
 $ export TZ=Europe/Stockholm; echo "Stockholm:    `date +\"%F %R (%Z)\"`"
