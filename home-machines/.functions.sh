@@ -1591,6 +1591,9 @@ $ grep dependency $( find . -name pom.xml )
 $ vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
 # Find files that contain an IP address:
 $ grep -P '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' $( find . -type f )
+# Find (potentially *many*) files that are less than 10M, for case-insensitive
+# search of "lolumad" (useful for targeting text files):
+$ find . -type f -size -10M  -print0 | xargs -0 grep --null-data --files-with-match -i "lolumad"
 
 == Syntax ==
 $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # grep with regex
