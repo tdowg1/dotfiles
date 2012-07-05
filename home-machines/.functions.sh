@@ -1077,6 +1077,11 @@ ssh
 
 FINGERPRINTs
 	ssh-keygen -l -f  private-open-ssh-key
+
+AGENTs
+$ exec ssh-agent bash
+$ env | grep ^SSH           # Ensure SSH_AUTH_SOCK defined?
+$ ssh-add ~/.ssh/some-key   # If so, then can add keys!
 __envHEREDOC__
 }
 helpuseradd(){
