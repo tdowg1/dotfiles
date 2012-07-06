@@ -47,6 +47,13 @@ alias sshsvn='ssh -2XC tyler@svn'
 #alias less='less --quit-if-one-screen --no-init --tabs=3'   # no-init sometimes prevents clearing of display
 alias less='less --quit-if-one-screen --tabs=3'
 #alias le=' ... '
+
+# Quickly change behaviour of the Apple keyboard's [F]unction keys:
+# TODO STUB: I'm pretty ignorant about this shtuff... methinks there's another,
+#   perhaps better, way to do this with "modifiers" and "levels" and all diff
+#   sorts of keyboard black magical hackerys... Investigate.
+alias keyboardBeNormal="sudo su -c \"echo '2' > /sys/module/hid_apple/parameters/fnmode\""
+alias keyboardBeFruity="sudo su -c \"echo '1' > /sys/module/hid_apple/parameters/fnmode\""
 ## /misc
 ##
 
