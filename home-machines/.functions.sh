@@ -1817,10 +1817,10 @@ __envHEREDOC__
 }
 helpapplekeyboard(){
 cat <<'__envHEREDOC__'
-== F1-F12 KEYS VIA F{1-12} (typical keyboard) ==
-sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
+== F1-F12 KEYS VIA F{1-12} (typical keyboard behaviour) ==
+sudo su -c "echo '2' > /sys/module/hid_apple/parameters/fnmode"
 
-== F1-F12 KEYS VIA fn+F{1-12} (apple keyboard default) ==
+== F1-F12 KEYS VIA fn+F{1-12} (Apple keyboard default) ==
 sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
 __envHEREDOC__
 }
