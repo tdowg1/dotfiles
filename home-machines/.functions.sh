@@ -467,6 +467,15 @@ sudo du -hs $d
 echo ; date --rfc-3339 seconds
 sudo du -hs --count-links $d
 echo ; date --rfc-3339 seconds
+
+[bdavies@magnificent r]$ for i in hourly.1/* ; do ib=$(basename $i) ; for j in ${i}/* ; do jb=$(basename $j); echo sudo rnapshot-diff hourly.1/$ib/$jb hourly.2/$ib/$jb; done; done
+sudo rsnapshot-diff hourly.1/perm/home hourly.2/perm/home
+sudo rsnapshot-diff hourly.1/perm/misc hourly.2/perm/misc
+sudo rsnapshot-diff hourly.1/perm/opt hourly.2/perm/opt
+sudo rsnapshot-diff hourly.1/ubu1010/etc hourly.2/ubu1010/etc
+sudo rsnapshot-diff hourly.1/ubu1010/usr hourly.2/ubu1010/usr
+sudo rsnapshot-diff hourly.1/ubu1010/var hourly.2/ubu1010/var
+
 __envHEREDOC__
 }
 pssynergy(){
