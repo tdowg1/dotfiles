@@ -5,6 +5,7 @@ syntax on
 se nu
 set tabstop=3
 
+" Prevent vim from replacing spaces with tabs whenever autoindent is on:
 " set expandtab
 set smarttab
 set shiftwidth=3
