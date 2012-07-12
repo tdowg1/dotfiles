@@ -273,6 +273,7 @@ alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd
 ## [com.spryinc.]MAGNIFICENT-specific
 # ... I'm thinking I might like these. So, at least for now, define
 # for all host machines.
+alias cddev='cd $HOME/dev'
 alias cdgit='cd $HOME/dev/git'
 alias cdsvn='cd $HOME/dev/svn'
 alias cdmisc='cd $HOME/dev/misc'
