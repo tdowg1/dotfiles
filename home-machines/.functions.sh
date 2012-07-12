@@ -1744,6 +1744,12 @@ cat <<'__envHEREDOC__'
 shred [--interations=3] --remove --verbose --zero  file
 __envHEREDOC__
 }
+helpjava(){
+cat <<'__envHEREDOC__'
+bsh - Java scripting environment (BeanShell) Version 2
+__envHEREDOC__
+}
+
 
 
 _help6(){
