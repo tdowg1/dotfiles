@@ -1679,7 +1679,9 @@ $ cat /proc/partitions
 ==== misc ====
 findfs {LABEL=label | UUID=uuid}               # identify device that matches query
 blkid                                          # locate/print block device attributes like UUID and LABEL
-sfdisk                                         # Partition table manipulator for Linux
+lsblk                                          # **list block devices
+cfdisk                                         # display or manipulate disk partition table
+sfdisk                                         # partition table manipulator for Linux
 blockdev                                       # call block device ioctls from the command line
 __envHEREDOC__
 }
