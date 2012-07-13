@@ -800,7 +800,7 @@ rename "$disk" "$disk"0 "$disk"?
 [[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
 
 == rename v2 (regex) ==
-rename 's/REGEX/REPLACE' files
+rename 's/REGEX/REPLACE/' files
 __envHEREDOC__
 }
 helprenameexamples(){
