@@ -25,14 +25,16 @@ export dbpub="$HOME/Dropbox/Public"
 
 # PATH modifications
 PATH=$PATH:/sbin:/usr/sbin
+_pathupdates=""
 
 # add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )
 if [[ -d "$HOME/bin" ]] ; then
-	PATH=$PATH:$HOME/bin
+	_pathupdates=$HOME/bin
 	if [[ -d "$HOME/bin/$HOSTNAME" ]] ; then
-		PATH=$PATH:$HOME/bin/$HOSTNAME
+		_pathupdates=$_pathupdates:$HOME/bin/$HOSTNAME
 	fi
 fi
+PATH=$PATH:$_pathupdates
 
 
 # Less Colors for Man Pages
@@ -74,6 +76,10 @@ if [[ -f ~/.pystartup ]] ; then
 	PYTHONSTARTUP=~/.pystartup
 fi
 
+
+# Stringish
+#$ echo $_scp_path_esc 
+#[][(){}<>",:;^&!$=?`|\\'[:space:]]
 
 
 

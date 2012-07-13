@@ -6,6 +6,13 @@
 ##
 ## ### #### ###################################################################
 
+## 
+## TEMPORARY
+alias vibo='vim $dbi/collection-of-essential-packages/ongoing.txt'
+##
+
+
+
 ##
 ## rc, config, dotfile-related
 alias vib='vim "$ZOMG_DOTFILES/.mainly.sh"'

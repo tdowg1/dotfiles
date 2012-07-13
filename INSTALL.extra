@@ -1,6 +1,7 @@
 
 == extra cmdln operations performed to get extra tweaks, personals into env ==
-* install Dropbox && sync Dropbox
+* install && sync Dropbox
+
 * create symlink to ~/bin directory within Dropbox
 >>>
 cd
@@ -8,8 +9,8 @@ ln -s Dropbox/linux/bin
 <<<
 
 
-== allow for other users to execute scripts, but linking to them from /usr/local/bin ==
-* create symlink to some ~/bin scripts
+== allow for others to execute scripts ==
+* REFUSED create symlink to some ~/bin scripts
 >>>
 cd /usr/local/bin
 for i in hdd-dump-ext-filesystem.sh hdd-dump-ext-filesystem-rsnapshot.sh getfullpath.sh ; do
@@ -17,22 +18,17 @@ for i in hdd-dump-ext-filesystem.sh hdd-dump-ext-filesystem-rsnapshot.sh getfull
 done
 <<<
 
-* update sudoers file : "secure_path" directive
+* update the sudoers "secure_path" directive...
 >>>
-Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 <<<
-
-* 
+... to include the custom script paths.
 >>>
+OBSOLETE Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 <<<
-* 
+Suggest to append the value of dotfiles/home-machines/.variables.sh : $_pathupdates 
 >>>
-<<<
-* 
->>>
-<<<
-* 
->>>
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:**$_pathupdates**
 <<<
 
 

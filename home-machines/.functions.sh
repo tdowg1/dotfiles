@@ -1504,6 +1504,11 @@ Apply / Install any config changes made:
 
 vbeinfo         # nfo about display capabilities (for grub, that is)
 
+(ubu1204)
+Reinstall of grub + RECHECK
+	sudo grub-install --no-floppy --recheck /dev/sda
+	sudo update-grub
+
 == misc ==
 set pager=1     # /really/ grub guys? this couldn't have been enabled by default?
 __envHEREDOC__
@@ -1704,11 +1709,29 @@ __envHEREDOC__
 }
 helpchkconfig(){
 cat <<'__envHEREDOC__'
-== ubuntu-related ==
-chkconfig /seems/ to be workable, but isn't exactly like rhel... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
+== Ubuntu-related ==
+----
+chkconfig /seems/ to be workable, but isn't exactly like rhel (also, I think its just a convenience program... and probably shouldnt really be used--USE the deb shtuff instead!)... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
 
-see also : insserve
+see also : insserve update-rc.d
 other keywords : lsb upstart lsb-header
+
+see also2 : 
+* REFUSED(buggy or obsolete) rcconf(must also manually install 'dialog') - displays a menu of all the services which could be started at boot
+* sysv-rc-conf(or ksysv for KDE)
+* sysvconfig
+
+==== upstart commands ====
+initctl - can use in place of "service" with the commands bellow. Run initctl help. 
+start - start a service
+stop - stop a service
+reload - sends a SIGHUP signal to running process
+restart - restarts a service without reloading its job config file
+status - requests status of service 
+
+
+== See also ==
+* https://help.ubuntu.com/community/UbuntuBootupHowto
 __envHEREDOC__
 }
 helprenice(){
