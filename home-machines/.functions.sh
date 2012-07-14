@@ -762,30 +762,29 @@ helprsync(){
 	echo "--checksum : used this to detect xls differences that weren't detected, ow"
 
 cat <<'__envHEREDOC__'
-ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?'::
+== ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?' ==
 COPY FOLDER
 	rsync -av /opt/muzik /mnt/rsnapshot/
 COPY FOLDER's CONTENTS
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
-COPY wrt HARDLINKS
-	rsync -a --hard-links --delete "${src}/" "${dest}/"
-
-GIVE SSH OPTIONS
-	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
-		--stats  --human-readable --progress
-
-DATA INTEGRITY (at expense of : time increase, i/o increase)
-	--checksum
-DATA INTEGRITY (cont.) (SEE ALSO)
-	 --inplace --ignore-times
 __envHEREDOC__
 }
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
-BU an rsnapshot root (or "repository")
+Misc:
+	--stats  --human-readable --progress
+Opts to capture *as much as possible* (acls, hard, xatt,...):
+	rsync --archive --xattrs --acls --hard-links --progress --compress    \
+		/home/mydir/data/ /backups/data-20080810/
+Data Integrity, at expense of: time increase, i/o increase:
+	--checksum
+Data Integrity:
+	--inplace --ignore-times
+BU an rsnapshot root/repo (hard links):
 	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
-rsync using public-private openssh keys
+Opts to specify OpenSSH, login:
 	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
+	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
 __envHEREDOC__
 }
 helprename(){
