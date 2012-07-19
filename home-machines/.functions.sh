@@ -1576,7 +1576,7 @@ __envHEREDOC__
 }
 helpdropbox(){
 cat <<'__envHEREDOC__'
-INSTALL
+== INSTALL ==
 The Dropbox daemon works fine on all 32-bit and 64-bit Linux servers. To install, run the following command in your Linux terminal.
 32-bit:
 cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86 | tar xzf -
@@ -1586,6 +1586,9 @@ cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86_64 | tar xzf -
 
 Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
 ~/.dropbox-dist/dropboxd
+
+== CMDLN ==
+$ while true ; do dropbox status | xargs echo `date` ; sleep 4s ; done
 __envHEREDOC__
 }
 helpgrep(){
@@ -1846,11 +1849,13 @@ __envHEREDOC__
 }
 helplocate(){
 cat <<'__envHEREDOC__'
-EXAMPLES
+== OPTIONS ==
+--existing
+
+== EXAMPLES ==
 $ locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
-$ for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do
- echo rm $i blah 
-done
+$ for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do   echo rm $i blah; done 
+$ for i in `locate -r /mnt/rsnapshot/.*/Downloads/NVIDIA-Linux-x86_64-295.33.run` ; do   echo rm $i blah; done
 $ locate -r home.*aesop-rock.*bash_history
 __envHEREDOC__
 }
