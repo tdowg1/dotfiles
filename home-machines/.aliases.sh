@@ -134,8 +134,19 @@ alias dbm='cd "$dbm"'
 alias dbs='cd "$dbs"'
 alias dbpub='cd "$dbpub"'
 
+# misc
+alias x11='cd "$x11"'
+alias cdx='cd "$x11"'
 ## /Places (`cd'-related)
 ##
+
+
+## 
+## Things (`vim'-file-editing-related)
+alias vibx='sudo vim "$xorg"'
+
+## /Things (`vim'-file-editing-related)
+## 
 
 
 ##

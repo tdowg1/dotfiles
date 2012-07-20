@@ -14,13 +14,14 @@ export PAGER="less"
 
 
 # Places
-# dropbox folders
-export db="$HOME/Dropbox"
+export db="$HOME/Dropbox"				# dropbox
 export dbi="$HOME/Dropbox/db.inst-and-sys-config-linux"
 export dbl="$HOME/Dropbox/linux"
 export dbm="$HOME/Dropbox/db.misc-linuxish"
 export dbs="$HOME/Dropbox/db.scripts-snippets"
 export dbpub="$HOME/Dropbox/Public"
+export x11="/etc/X11"					# misc
+export xorg="$x11/xorg.conf"
 
 
 # PATH modifications
