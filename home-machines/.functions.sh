@@ -1748,8 +1748,10 @@ $ sudo renice 9 23871      # decrease scheduling favorability
    `--> 23871: old priority 2, new priority 9
 $ sudo renice 11 23871     # decrease scheduling favorability
    `--> 23871: old priority 9, new priority 11
-SEE ALSO
-getprocesspriority() slowdown() unslowdown()
+
+== See also ==
+* getprocesspriority() slowdown() unslowdown() helpsudo()
+** sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
 __envHEREDOC__
 }
 helppasswd(){
@@ -1921,6 +1923,9 @@ Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udi
   sudo mkdir /media/mraid0a2244_ad/  &&  \
   sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
 
+== Mount FAT* volume with full user write permission ==
+  sudo mount -t vfat /dev/sdb1 /media/external -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
+
 == Various mount options ==
 === options-set-1 (man ntfs-3g) ===
 Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
@@ -1932,10 +1937,19 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 #
 helpsudo(){
+	local pathToFunctionsDotfile="$( echo $ZOMG_DOTFILES/.functions.sh )"
+	if [[ ! -f "$pathToFunctionsDotfile" ]] ; then
+		# just set a default. it doesnt really matter since this is just example
+		pathToFunctionsDotfile="/home/bdavies/dotfiles/home-machines/.functions.sh"
+	fi
+
+#$ sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; 
+#i.e.
+## sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
 cat <<'__envHEREDOC__'
-$ sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; 
+sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; <insert name of function to call>
 i.e.
-# sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
+sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
 __envHEREDOC__
 }
 
