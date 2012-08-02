@@ -1530,8 +1530,11 @@ __envHEREDOC__
 }
 helpmvn(){
 cat <<'__envHEREDOC__'
-SKIP TESTS
+== SKIP TESTS ==
 * -Dmaven.test.skip=true
+
+== Out of memory PermGen error ==
+MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
 __envHEREDOC__
 }
 helprsnapshot(){
