@@ -1159,9 +1159,11 @@ $ git log master...test # commits reachable from either test or
 * Delete remote branch
 ** git push origin :my_branch
 == branching example (create new branch, push upstream and track) ==
-* git co -b  Environment--DEMO
-* git push origin  Environment--DEMO
-* git branch --set-upstream Environment--DEMO origin/Environment--DEMO
+$ newBranchName=Environment--DEMO
+newBranchName=environment--
+git co -b  "${newBranchName}" \
+ && git push origin  "${newBranchName}" \
+ && git branch --set-upstream  "${newBranchName}"  origin/"${newBranchName}"
 === branching example example :) ===
 for i in Environment--DEMO environment--dev ; do
  git co -b $i
