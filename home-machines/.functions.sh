@@ -536,6 +536,7 @@ for i in $devicelist ; do   sudo smartctl --all  /dev/sd${i} | less ; done
 for i in $devicelist ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
 for i in $devicelist ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
 for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m; 
+for i in $devicelist ; do   sudo smartctl --test=offline /dev/sd${i};  done; sleep 300m; 
 
    # STUPID SNIPPET
 	# dd overwrite self with self, all smart tests x2, dd again, all smart tests (x1)
