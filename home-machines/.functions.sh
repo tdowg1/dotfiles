@@ -1386,6 +1386,8 @@ bash-completion: /etc/bash_completion
 $ dpkg --search `which gethostip`
 syslinux: /usr/bin/gethostip
 
+== Misc. Snippets ==
+$ aptitude search .*-desktop
 __envHEREDOC__
 }
 helpbash(){
