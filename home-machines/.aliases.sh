@@ -35,7 +35,7 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 
 ##
 ## misc
-alias epwd='echo `pwd`/'
+#alias epwd='echo `pwd`/'
 alias grep >/dev/null 2>&1  ||  alias grep='grep --color'
 alias kill9='kill -9'
 alias k9='kill -9'
@@ -50,6 +50,7 @@ alias sshsvn='ssh -2XC tyler@svn'
 # dont need this any more:; is in /etc/fstab.  just say sudo mount /mnt/sshfssvn
 #alias sshfssvn='sshfs root@svn:/ /mnt/svn ; echo "mounted host[svn] at[/mnt/svn]"'
 
+alias Less='less'
 #alias less='less -FX --tabs=3'
 #alias less='less --quit-if-one-screen --no-init --tabs=3'   # no-init sometimes prevents clearing of display
 alias less='less --quit-if-one-screen --tabs=3'
