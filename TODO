@@ -55,7 +55,8 @@ odd printing of functions to stdout.
 * add phisata's ~/.vimrc/ contents (has a neat little bash thinggy), and more
 * copy /etc/bash_completion* shtuff from an appropriate box, into here.  alternatively, a more appropriate technique may be provided at
 ** http://bash-completion.alioth.debian.org/
-
+* add license
+** http://licence.visualidiot.com/
 
 
 
