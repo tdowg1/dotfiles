@@ -1,17 +1,14 @@
-I am designating the .vim/plugin/vimrc.vim dotfile to be for LOCAL-only 
-configs,
+I am designating .vim/plugin/vimrc.vim dotfile to be for LOCAL-only 
+configs and is *never* tracked.  In fact, it's gitignore'd.
 
-This means, the .vim/plugin/vimrc.vim file shouldn't be tracked.
-Diff environments may have diff requirements for how the vim is to be 
-tweekr'ed.
+Global (and hence *tracked*) vimrc content should be kept in the 
+.vim/vimrc and .vim/vimrc-* dotfile as usual.
 
-Global (and hence *tracked*) vimrc content should be kept in the .vimrc
-dotfile as usual.
+Use .vim/vimrc-$HOSTNAME for host-specific configs.
+
 
 So, here's how a 'vim environment' might get configured from scratch:
 $ cd  ;  ln -s $ZOMG_DOTFILES/.vimrc
 $ ln -s $ZOMG_DOTFILES/.vim
-$ vim .vim/plugin/vimrc.vim    # EDIT IN ORDER TO HAVE LOCAL-ONLY CONFIGS.
-
-If its not already obvious, .vim/plugin/vimrc.vim is .gitignore'd.
+$ vim .vim/plugin/vimrc.vim    # STORE CUSTOM CONFIGS THAT ARE OK TO LOSE
 

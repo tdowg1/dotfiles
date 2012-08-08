@@ -51,3 +51,10 @@ if has("autocmd")
 endif
 " /2012-03-02 from /etc/vim/vimrc
 
+" src : http://effectif.com/vim/host-specific-vim-config
+"let hostfile = $HOME . '/.vim/gvimrc-' . substitute(hostname(), "\\..*", "", "")
+let hostfile = $HOME . '/.vim/vimrc-' . substitute(hostname(), "\\..*", "", "")
+if filereadable(hostfile)
+  exe 'source ' . hostfile
+endif
+
