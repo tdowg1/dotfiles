@@ -1836,6 +1836,8 @@ __envHEREDOC__
 helptar(){
 cat <<'__envHEREDOC__'
 $ tar zcfW a.tar.gz  a/    # -W attempt to verify the archive after writing it
+# Exclude the file "snoop-lion" and/or anything within "snoop-lion" directory:
+$ tar zcfv a.tar.gz  /home/calvin-broadus/  --exclude=/home/calvin-broadus/snoop-lion
 __envHEREDOC__
 }
 helparchive(){
