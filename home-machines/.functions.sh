@@ -1759,7 +1759,14 @@ $ sudo renice 11 23871     # decrease scheduling favorability
 
 == See also ==
 * getprocesspriority() slowdown() unslowdown() helpsudo()
-** sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
+__envHEREDOC__
+#$ sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; 
+#i.e.
+## sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
+cat <<'__envHEREDOC__'
+sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; <insert name of function to call>
+i.e.
+sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
 __envHEREDOC__
 }
 helppasswd(){
