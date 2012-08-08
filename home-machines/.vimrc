@@ -14,7 +14,13 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 
-"" My Bundles here:
+"
+" tdowg1's Bundles here:
+" Solarized : http://ethanschoonover.com/solarized/vim-colors-solarized
+Bundle 'Solarized'
+
+
+"" [Vundle Developer's] Bundles here:
 ""
 "" original repos on github
 "Bundle 'tpope/vim-fugitive'
