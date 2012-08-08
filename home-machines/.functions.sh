@@ -1324,6 +1324,7 @@ __envHEREDOC__
 helpsed(){
 cat <<'__envHEREDOC__'
 == MISC ==
+* http://austinmatzko.com/2008/04/26/sed-multi-line-search-and-replace/
 $ sed -n -e "<LINE NUMBER>p"        # print a specific line
 $ sed -n -e "3p" -e "3p" /etc/hosts # print /etc/hosts:ln3, twice
 $ sed 's/[ \t]*$//'         # trim trailing whitespace
