@@ -10,4 +10,14 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
+#TOMCAT_HOME="/usr/local/tomcat"
+#export TOMCAT_HOME
+#tc="$TOMCAT_HOME"
+
+if [[ -f ~/.whereami ]]; then
+	where="$(cat ~/.whereami)"
+	TITLEBAR='\[\e]0;\u@'${where}'\a\]'
+	PS1="${TITLEBAR}[\u@${where} \W] "
+fi
+
 
