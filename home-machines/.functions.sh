@@ -823,8 +823,12 @@ helpe2fsck(){
 }
 helprpm(){
 cat <<'__envHEREDOC__'
-	rpm -qa --last # gives pkg and date modified
-	    --filesbypkg # List all the files in package 
+$ rpm -ihv --nodeps rpmfile # forces an rpm installation (I think)
+$ rpm -qa *PACKAGE_NAME*    # search installed rpm packages for PACKAGE_NAME
+$ rpm -qa --last            # gives packge & date modified
+$ rpm -qip rpmfile          # display details for the rpm file rpmfile
+
+--filesbypkg                # list all the files in package 
 __envHEREDOC__
 }
 helpvim(){
@@ -1390,6 +1394,7 @@ syslinux: /usr/bin/gethostip
 
 == Misc. Snippets ==
 $ aptitude search .*-desktop
+$ dpkg -i --force-all debfile   # forces an installation (I think)
 __envHEREDOC__
 }
 helpbash(){
@@ -1694,6 +1699,9 @@ lsblk                                          # **list block devices
 cfdisk                                         # display or manipulate disk partition table
 sfdisk                                         # partition table manipulator for Linux
 blockdev                                       # call block device ioctls from the command line
+dmsetup                                        # low level logical volume management
+fsfreeze                                       # suspend access to a filesystem (Linux Ext3/4, 
+                                               # ReiserFS, JFS, XFS) (intended for hw RAID devices)
 __envHEREDOC__
 }
 helphdd2(){
@@ -1794,6 +1802,23 @@ cat <<'__envHEREDOC__'
 bsh - Java scripting environment (BeanShell) Version 2
 __envHEREDOC__
 }
+helpenv(){
+cat <<'__envHEREDOC__'
+/calling helpgetconf()/
+__envHEREDOC__
+	helpgetconf
+}
+helpgetconf(){
+cat <<'__envHEREDOC__'
+getconf (1)          - Query system configuration variables
+env (1)              - run a program in a modified environment
+
+== See also ==
+$ apropos getconf env   # gives a bunch of interesting env, variable, etc. programs
+__envHEREDOC__
+}
+
+
 
 
 
@@ -1812,6 +1837,7 @@ __envHEREDOC__
 #
 # mergeconflictavoiddothismeow : here add from phisata ONLY
 helpwHOA_wtf_cmd__u_blow_my_mind(){
+	# whoa
 cat <<'__envHEREDOC__'
 List of cmds I just happen to randomly come across and make me say "WHOA! WTF!! :) cmd, u blow my mind..."
 smbtar backup/restore a Windows PC directories to a local tape file
