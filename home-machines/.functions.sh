@@ -544,6 +544,9 @@ DEVICE=/dev/sdb  ;  sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror  ;  s
 
    # STUPID SNIPPET2
 sudo smartctl --test conveyance /dev/sda  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short /dev/sda  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long /dev/sda  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 110m
+
+== See also ==
+smart-notifierdbus service and graphical disk health notifier
 __envHEREDOC__
 }
 helpsvn(){
@@ -1817,6 +1820,14 @@ env (1)              - run a program in a modified environment
 $ apropos getconf env   # gives a bunch of interesting env, variable, etc. programs
 __envHEREDOC__
 }
+helpnotify-send(){
+	# helpnotify-send alert gnome popup pop up message
+cat <<'__envHEREDOC__'
+notify-send (1)      - a program to send desktop notifications
+notify-send [OPTION...] <SUMMARY> [BODY] - create a notification
+__envHEREDOC__
+}
+
 
 
 
