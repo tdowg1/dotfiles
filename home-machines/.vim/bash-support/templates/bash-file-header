@@ -13,8 +13,11 @@
 #       CREATED:  |DATETIME|
 #      REVISION:  ---
 #===============================================================================
-
+#PS4='[${LINENO}]+'
+#typeset -ft $(typeset +f)
+#set -o errexit
 set -o nounset                              # Treat unset variables as an error
+#set -o xtrace
 
 f_usage(){
 	local scriptname="$( basename "$0" )"
@@ -52,6 +55,46 @@ fi
 
 # ===================================================================
 # PARSE CMDLN, VARIABLE DEFINITIONS, SANITY CHECKS && META GENERATION
+ARGC="$#"
+while [[ "$1" = -* ]] ; do
+   case $1 in
+      --pidfile) # specified like: --pidfile /tmp/mypidfile
+         pid_file=$2
+         shift 2
+         ;;  
+      --pidfile=?*) # specified like: --pidfile=/tmp/mypidfile
+         pid_file=${1#--pidfile=}
+         shift
+         ;;  
+      --force) # no-value arg / flag
+         force="force"
+         shift
+         ;;  
+      *)  
+        echo "ERROR case matched wildcard"
+        f_usage
+        ;;  
+   esac
+done
+
+while [ "$#" -gt "0" ] ; do
+   case $1 in
+      --force) # specified like: --key
+         ISFORCED="TRUE"
+         ;;
+      --path-to-runner-script=?*) # specified like: --key=value
+         PATH_TO_RUNNER_SCRIPT="${1#--path-to-runner-script=}"
+         ;;
+      -u|--usage|-h|--help) # specified like: --key
+         f_usage_long
+         ;;
+      *)
+         echo "ERROR: invalid cmdln arguments $1"
+         f_usage
+         ;;
+   esac
+   shift
+done
 
 #some test condition
 
@@ -60,6 +103,20 @@ if [[ $? != 0 ]] ; then
    f_usage
 fi
 
+
+
+: ${ISFORCED:="FALSE"}
+# required to be defined by now; think "<cfparam=* required=yes..."
+: ${TEMPDIR2:?ERROR: not specified}
+: ${HOME:?ERROR: HOME variable must be set}
+
+# vars to set if not set; think "<cfparam=*..."
+: ${TEMPDIR:=/tmp}
+
+
+# e.g. ../amazondev/runsparqlizerODSE.sh
+: ${PATH_TO_RUNNER_SCRIPT:? "ERROR: --path-to-runner-script is required"}
+fullPathToRunnerScript="$( f_getfullpath "${PATH_TO_RUNNER_SCRIPT}" )"
 
 
 # ===================================================================
