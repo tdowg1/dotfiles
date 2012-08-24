@@ -25,7 +25,7 @@ export xorg="$x11/xorg.conf"
 
 
 # PATH modifications
-PATH=$PATH:/sbin:/usr/sbin
+PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
 _pathupdates=""
 
 # add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )

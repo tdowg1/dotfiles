@@ -2,22 +2,16 @@
 == extra cmdln operations performed to get extra tweaks, personals into env ==
 * install && sync Dropbox
 
-* create symlink to ~/bin directory within Dropbox
+* create various symlinks to things kept in Dropbox
 >>>
 cd
 ln -s Dropbox/linux/bin
+ln -s Dropbox/linux/teelah-binutils/bin bin.teelah-utils
+ln -s Dropbox/db.scripts-snippets/bin.contrib
 <<<
 
 
 == allow for others to execute scripts ==
-* REFUSED create symlink to some ~/bin scripts
->>>
-cd /usr/local/bin
-for i in hdd-dump-ext-filesystem.sh hdd-dump-ext-filesystem-rsnapshot.sh getfullpath.sh ; do
- sudo ln -s ~/bin/${i}
-done
-<<<
-
 * update the sudoers "secure_path" directive...
 >>>
 Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
