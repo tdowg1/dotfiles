@@ -1959,8 +1959,9 @@ $ <package manager> install sshfs
 * if want to mount without root priviledges, add user to fuse group
 $ sudo usermod --groups fuse --append USER
 * set 'user_allow_other' in /etc/fuse.conf
-* mount resource by specifying the absolute path.
-* unmount the resource using
+* mount resource by specifying the absolute path. e.g.
+$ sshfs phisata:/mnt/a14-h/h/ /home/teelah/rsnapshot-ignore/phisata/ -o allow_other -o follow_symlinks
+* unmount the resource using:
 $ fusermount -u $absolute_path
 
 == ext4 default mount opts ==
