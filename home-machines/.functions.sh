@@ -1925,6 +1925,17 @@ $ sudo su -c "echo '2' > /sys/module/hid_apple/parameters/fnmode"
 == F1-F12 KEYS VIA fn+F{1-12} (Apple keyboard default) ==
 # alias: keyboardBeFruity
 $ sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
+
+== Swapping (LHS) Alt with Win keys ==
+from /usr/share/X11/xkb/rules/xorg.lst ...
+	altwin:swap_lalt_lwin Left Alt is swapped with Left Win
+... and to have this applied automatically, add ...
+	setxkbmap -option   altwin:swap_lalt_lwin
+... to ...
+	~/.xinitrc
+... for user-specific configuration. For system-wide configuration, probably
+need to edit some file within ...
+	/etc/X11/Default
 __envHEREDOC__
 }
 
