@@ -29,6 +29,11 @@ done
 
 * open a new terminal and ensure env gets set up OK.
 
+* setup Vundle bundler (for vim)
+>>>
+git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
+<<<
+
 * optionally, get a diff: determine which dotfiles were not installed to home directory:
 >>>
 cdd
