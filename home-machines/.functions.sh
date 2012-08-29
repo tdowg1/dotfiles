@@ -1705,6 +1705,8 @@ blockdev                                       # call block device ioctls from t
 dmsetup                                        # low level logical volume management
 fsfreeze                                       # suspend access to a filesystem (Linux Ext3/4, 
                                                # ReiserFS, JFS, XFS) (intended for hw RAID devices)
+di                                 # disk information util, displays more than df
+disktype                           # detect && display nfo about FS's, partition's and tables,...
 __envHEREDOC__
 }
 helphdd2(){
