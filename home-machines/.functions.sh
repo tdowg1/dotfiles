@@ -1431,6 +1431,56 @@ $ echo "${kv##database_hostname=}"
 asdf
 __envHEREDOC__
 }
+helpbashcheats(){
+cat <<'__envHEREDOC__'
+''src : Parted Magic 2012_05_14 / file:///usr/share/doc/bash_cheats.txt''
+
+Control Key combinations (CTRL+KEY)
+   Ctrl + a : jump to the start of the line
+   Ctrl + b : move back a char
+   Ctrl + c : terminate the command
+   Ctrl + d : delete from under the cursor
+   Ctrl + e : jump to the end of the line
+   Ctrl + f : move forward a char
+   Ctrl + k : delete to EOL
+   Ctrl + l : clear the screen
+   Ctrl + r : search the history backwards
+   Ctrl + R : search the history backwards with multi-occurrence
+   Ctrl + u : delete backward from cursor
+   Ctrl + w : delete backward a word
+   Ctrl + xx : move between EOL and current cursor position
+   Ctrl + z : suspend/stop the command
+
+Alt Key combinations (ALT+KEY)
+   Alt + < : move to the first line in the history
+   Alt + > : move to the last line in the history
+   Alt + ? : show current completion list
+   Alt + * : insert all possible completions
+   Alt + / : attempt to complete filename
+   Alt + . : yank last argument to previous command
+   Alt + b : move backward
+   Alt + c : capitalize the word
+   Alt + d : delete word
+   Alt + f : move forward
+   Alt + l : make word lowercase
+   Alt + n : search the history forwards non-incremental
+   Alt + p : search the history backwards non-incremental
+   Alt + r : recall command
+   Alt + t : move words around
+   Alt + u : make word uppercase
+   Alt + Backspace : delete backward from cursor
+
+Escape Key combinations (ESC+KEY)
+   Esc + d : delete from cursor position to end of the word
+   Esc + f : move forward a word
+   Esc + b : move backward a word
+   Esc + t : transpose two adjacent words
+
+------------------------------------------------
+http://cheat.errtheblog.com/s/bash
+http://www.shell-tips.com
+__envHEREDOC__
+}
 helpsort(){
 cat <<'__envHEREDOC__'
 SORT A FILE OF FILE HASHES (md5sum output)
