@@ -1433,7 +1433,7 @@ __envHEREDOC__
 }
 helpbashcheats(){
 cat <<'__envHEREDOC__'
-''src : Parted Magic 2012_05_14 / file:///usr/share/doc/bash_cheats.txt''
+''src : Parted Magic 2012_05_14 / file:///usr/share/doc/bash_cheats.txt with modifications and personal contribs''
 
 Control Key combinations (CTRL+KEY)
    Ctrl + a : jump to the start of the line
@@ -1449,6 +1449,7 @@ Control Key combinations (CTRL+KEY)
    Ctrl + u : delete backward from cursor
    Ctrl + w : delete backward a word
    Ctrl + xx : move between EOL and current cursor position
+	Ctrl + y : undo just deleted string (inserts most recently deleted string (e.g. alt+backspace or something) at curr cursor position
    Ctrl + z : suspend/stop the command
 
 Alt Key combinations (ALT+KEY)
