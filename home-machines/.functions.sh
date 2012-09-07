@@ -1107,7 +1107,7 @@ sudo useradd --home=/home/<username> --create-home --password=<passwd>  <usernam
 	NOTE value for SHELL in /etc/default/useradd
 __envHEREDOC__
 }
-_help6(){
+helpnetwork(){
 cat <<'__envHEREDOC__'
 helpnetstat
 helpnslookup
@@ -1130,6 +1130,7 @@ cat <<'__envHEREDOC__'
 nslookup - query Internet name servers interactively
 nslookup( hostname ) : ipaddr
 nslookup some-host.example.com    # get ip address for some-host.example.com
+nslookup ip-address               # get hostname from ip address
 
 == See also ==
 ==== From man Page ====
