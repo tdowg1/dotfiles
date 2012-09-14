@@ -10,6 +10,18 @@
 #get that echoandexec method I wrote
 
 
+findwildiname(){
+	local path="."
+	local name="$1"
+	if [[ $# = 2 ]] ; then
+		path="$1"
+		name="$2"
+	fi
+
+	find "$path" -iname \*${name}\*
+}
+
+
 ## WARNING!  these 2 functions NOT tested
 slowdown(){
 	local pid=$1
