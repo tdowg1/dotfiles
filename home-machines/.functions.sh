@@ -1371,7 +1371,10 @@ $ sed -i "s/192.168.8.3/bryn-pc/g" file1 [fileN]
 . . . ^
 HELPFUL for changing all the [fileN]'s:
 $ grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
+PREVIEW:
 $ sed -n "s/frommmmmm/tooooooo/gp" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
+DO:
+$ sed -i "s/frommmmmm/tooooooo/g" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
 __envHEREDOC__
 }
 helpaptitude(){
