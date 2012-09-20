@@ -646,6 +646,10 @@ ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
    smartctl --test offline /dev/sda
 ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
 
+
+$ dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
+
+
 MISC ----
 MONITORING progress
    dd ... & pid=$! ; watch kill -USR1 $pid
