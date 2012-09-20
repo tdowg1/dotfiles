@@ -11,6 +11,10 @@
 
 
 findwildiname(){
+	if [[ $# = 0 ]] ; then
+		echo "findwildiname() [path] wildcarded_searchstring"
+		return
+	fi
 	local path="."
 	local name="$1"
 	if [[ $# = 2 ]] ; then
@@ -1953,8 +1957,13 @@ __envHEREDOC__
 }
 helparchive(){
 cat <<'__envHEREDOC__'
-HELP     helptar helprar help7zip helpzip helpunzip helparchivesnippets
+HELP     helptar helpgunzip helprar help7zip helpzip helpunzip helparchivesnippets
 SEE ALSO dtrx
+__envHEREDOC__
+}
+helpgunzip(){
+cat <<'__envHEREDOC__'
+gunzip --stdout 2012-05-17.gz > some-file
 __envHEREDOC__
 }
 helparchivesnippets(){
