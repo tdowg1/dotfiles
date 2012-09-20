@@ -2105,6 +2105,20 @@ i.e.
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
 __envHEREDOC__
 }
+helpusermod(){
+cat <<'__envHEREDOC__'
+$ usermod -a -G GROUPNAME USER
+$ usermod -a -G ilike devborrat
+
+Now, can just put entry into sudoers file that allows the 'ilike' 
+group to do shtuffs...  e.g.
+## Allows people in group wheel to run all commands
+# %wheel        ALL=(ALL)       ALL
+## Same thing without a password
+%ilike ALL=(ALL)      NOPASSWD: ALL
+__envHEREDOC__
+}
+
 
 
 
