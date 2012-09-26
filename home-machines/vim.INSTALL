@@ -12,3 +12,7 @@ $ cd  ;  ln -s $ZOMG_DOTFILES/.vimrc
 $ ln -s $ZOMG_DOTFILES/.vim
 $ vim .vim/plugin/vimrc.vim    # STORE CUSTOM CONFIGS THAT ARE OK TO LOSE
 
+
+Then to initialize vim plugin modules, do (from anywhere)
+$ git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
+
