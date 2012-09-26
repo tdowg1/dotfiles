@@ -1624,7 +1624,11 @@ cat <<'__envHEREDOC__'
 * -Dmaven.test.skip=true
 
 == Out of memory PermGen error ==
-MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+(maven seems to pull in this maven opts. variable definition and *applies
+it to its executing shell environment*!!! ugh, so prepend garbage
+text "asdf_maven_pulls_this_in_smh_" to the variable that should /really/
+be used--so that it does not get pulled in during my own mvn executions)
+asdf_maven_pulls_this_in_smh_MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
 __envHEREDOC__
 }
 helprsnapshot(){
