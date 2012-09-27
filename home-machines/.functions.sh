@@ -1182,9 +1182,7 @@ $ git log master...test # commits reachable from either test or
 ** git push origin e1999eternal-branch
 * Make local branch track an upstream branch
 ** git branch --set-upstream e1999eternal-branch origin/e1999eternal-branch
-* Create a branch based on an upstream branch (v1) (and check it out):
-** git checkout --track origin/e1999eternal-branch
-* Create a branch based on an upstream branch (v2):
+* Create a branch based on an upstream branch:
 ** git branch --track my_branch origin/my_branch
 * Delete remote branch
 ** git push origin :my_branch
