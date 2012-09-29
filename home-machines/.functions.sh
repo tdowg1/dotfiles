@@ -1447,11 +1447,26 @@ __envHEREDOC__
 }
 helpbashstrings(){
 cat <<'__envHEREDOC__'
-$ kv='database_hostname=asdf'
-$ echo "${kv%%asdf}"
+# Assuming the following variable is set...:
+$ kv='database_hostname=The-Hive-RRRROLOLOLOOOL'
+
+# ...this will be the output:
+#      (for more nfo::`man bash'-->'Parameter Expansion')
+$ echo "${kv%%The-Hive-RRRROLOLOLOOOL}"   # get the LHS of the string, get the key
 database_hostname=
-$ echo "${kv##database_hostname=}"
-asdf
+$ echo "${kv##database_hostname=}"        # get the RHS of the string, get the value
+The-Hive-RRRROLOLOLOOOL
+$ echo ${#kv}       # ->41                # get the string length
+$ echo ${kv:0: $(( ${#kv} - 1 )) }        # remove 1 char from the end
+database_hostname=The-Hive-RRRROLOLOLOOO
+$ echo ${kv::-1}                          # remove 1 char from the end
+database_hostname=The-Hive-RRRROLOLOLOOO
+$ echo ${kv:1}                            # remove 1 char from the beginning
+atabase_hostname=The-Hive-RRRROLOLOLOOOL
+$ echo ${kv:1: $(( ${#kv} - 1 )) }        # remove 1 char from the beginning
+atabase_hostname=The-Hive-RRRROLOLOLOOOL
+$ echo ${kv:1: ${#kv} }                   # remove 1 char from the beginning
+atabase_hostname=The-Hive-RRRROLOLOLOOOL
 __envHEREDOC__
 }
 helpbashcheats(){
