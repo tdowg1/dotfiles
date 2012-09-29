@@ -27,25 +27,29 @@ done
 # then do it without the echo (above) if you're satisfied or want to run a command individually
 <<<
 
-* open a new terminal and ensure env gets set up OK.
+* open a new terminal.  Ensure env gets set up OK by checking for any errors messages.
 
 * setup Vundle bundler (for vim)
 >>>
 git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
 <<<
 
-* optionally, get a diff: determine which dotfiles were not installed to home directory:
+* (NOT RECOMMENDED) optionally, get a diff: determine which dotfiles were not installed to home directory:
 >>>
 cdd
 ./dotfiles.sh diff
+# or simply:
+$ZOMG_DOTFILES/dotfiles.sh diff
 <<<
 
-* optionally, install: copy the other dotfiles to home directory by executing
+* (NOT RECOMMENDED) optionally, install: copy the other dotfiles to home directory by executing
 >>>
 cdd
 ./dotfiles.sh install
+# or simply:
+$ZOMG_DOTFILES/dotfiles.sh install
 <<<
 
-* optionally, follow INSTALL.extra
+* optionally, continue on with INSTALL.extra
 
 
