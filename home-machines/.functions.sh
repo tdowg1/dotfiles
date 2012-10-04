@@ -723,6 +723,9 @@ helpdate(){
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 
+	cmdln="date +\"%Y-%m-%d_%H.%M.%S\"  --date=\"$(eval echo ${useThisDate})\""
+	echo -e "$(eval $cmdln)\t$cmdln"
+
 cat <<'__envHEREDOC__'
 $ date  --rfc-3339 seconds          # GIVE ME FREAKING ISO-FORMATTED DATE
 $ date  --reference=file-to-reference
