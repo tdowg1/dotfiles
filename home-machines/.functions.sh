@@ -882,28 +882,14 @@ ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * c-X  ; where X is the desired control character
 ** e.g. c-v  ; to insert
 
-[RE-]FORMATTING TEXT
-* make length of each line auto-trimmed to fit
-** :se textwidth=72
-* reformat too long and too short lines according to curr textwidth
-** globally: gggqG
-** curr paragraph: gqap
-** {VISUAL}gq
-* reformat src code
-** :se filetype=xml
-** gg=G
-** {VISUAL} STUB-----------WANTED 
-* tab/un-tab??? (witnessed in a shell script that was indented once, and was within if-stmt)
-** (insert mode)
-** un-tabs curr line: c-d
-** tabs curr line: c-f
-
 VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
 * I - Insert Text
 ** I
 ** type in text want to enter
 ** ESC (or c-c) to apply
 * d - Delete Text
+* D - Cuts text... in an Overwrite-kind of mode... (lines are not deleted)
+** similarly, when time to paste, it does so like Overwrite
 * > - Shift right / Indent Text
 ** indent once: >
 ** indent thrice: 3>
@@ -926,6 +912,32 @@ SHTUFF
 * delete from cursor to end of line: D
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
+__envHEREDOC__
+}
+helpvim2(){
+      cat <<'__envHEREDOC__'
+[RE-]FORMATTING TEXT
+* make length of each line auto-trimmed to fit
+** :se textwidth=72
+* reformat too long and too short lines according to curr textwidth
+** globally: gggqG
+** curr paragraph: gqap
+** {VISUAL}gq
+* reformat src code
+** :se filetype=xml
+** gg=G
+** {VISUAL} STUB-----------WANTED 
+* tab/un-tab??? (witnessed in a shell script that was indented once, and was within if-stmt)
+** (insert mode)
+** un-tabs curr line: c-d
+** tabs curr line: c-f
+__envHEREDOC__
+}
+helpvim3(){
+      cat <<'__envHEREDOC__'
+* ~/dotfiles/home-machines/.vim/bundle/.vundle/script-names.vim-scripts.org.json
+** JYE-NOR-MUS list (JSON) of what looks like various COOL functionality enabling vim scripts!
+** ( calling `grepdotfiles collection' will dump it to the screen hhehe... took screenshot ~/Dropbox/db.misc-linuxish/2012-10-05_script-names.vim* )
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -1817,6 +1829,7 @@ tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d)
 tune2fs -e remount-ro device                   # change errors behaviour
 
 mkntfs [-v] --label label --quick device       # create ntfs filesystem
+mkfs.vfat -n label device          # create fat32 filesystem; useful for reformat thumb drive
 
 mkfs -t btrfs HELP STUB            # create btrfs filesystem
 __envHEREDOC__

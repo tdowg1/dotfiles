@@ -8,7 +8,9 @@
 
 ## 
 ## TEMPORARY
-alias vibo='vim $dbi/collection-of-essential-packages/ongoing.txt'
+#alias vibo='vim $dbi/collection-of-essential-packages/ongoing.txt'
+alias dbiceo='vim $dbi/collection-of-essential-packages/ongoing.txt'
+alias dbicio='vim $dbi/collection-of-interesting-packages/ongoing.txt'
 ##
 
 
@@ -128,7 +130,7 @@ alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
 alias tmp='cd /tmp ; echo "cd "`pwd`'
 
 # dropbox folders
-alias db='cd "$db"'
+alias db='cd "$db"'        # TODO STUB : all of these alias defs could be defined dynamically... e.g. in variables defn area, define a variable containing all variables to be dynamically aliased out-to give the equivalent of these:
 alias dbi='cd "$dbi"'
 alias dbl='cd "$dbl"'
 alias dbm='cd "$dbm"'
