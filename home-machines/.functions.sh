@@ -1393,23 +1393,24 @@ __envHEREDOC__
 helppatch(){
       cat <<'__envHEREDOC__'
 = v1 =
-# create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
-diff -c START_FILE END_FILE > patch
-diff -c INITIAL_FILE FINAL_FILE > patch
-diff -c OLD_FILE NEW_FILE > patch
+# Create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
+$ diff -c START_FILE END_FILE > patch
+$ diff -c INITIAL_FILE FINAL_FILE > patch
+$ diff -c OLD_FILE NEW_FILE > patch
 	diff -c bash_user_dev.env.production bash_user_dev.env > bash_user_dev.env.patch
-
-# apply patch
-patch --input=patch
-	patch --input=bash_user_dev.env.patch
-	patch --verbose --input web.xml.patch $TOMCAT_HOME/webapps/portal/WEB-INF/web.xml
+# Apply patch
+$ patch --input=patch
+ 	patch --input=bash_user_dev.env.patch
+ 	patch --verbose --input web.xml.patch $TOMCAT_HOME/webapps/portal/WEB-INF/web.xml
 
 = v2 (svn) =
 (src: http://incubator.apache.org/jena/getting_involved/index.html)
-# create patch
-svn diff > JENA-XYZ.patch
-# apply patch
-patch -p0 < JENA-XYZ.patch
+# Create patch
+$ svn diff > JENA-XYZ.patch
+# Apply patch (MAXIMUM compatibility, doesn't seem to allow line numbers to differ)
+$ patch -p0 < JENA-XYZ.patch
+# Apply patch ((slightly less) MAXIMUM compatibility, allows line numbers to differ)
+$ patch -p1 < JENA-XYZ.patch
 __envHEREDOC__
 }
 helpsed(){
