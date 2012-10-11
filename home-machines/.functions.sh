@@ -708,6 +708,9 @@ helpdd2(){
 __envHEREDOC__
 }
 
+
+
+
 helpdate(){
 	#local useThisDate="2010/06/05 16:15:15"
 	local useThisDate=`date`
@@ -841,6 +844,9 @@ intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12
 intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
 __envHEREDOC__
 }
+
+
+
 helpe2fsck(){
 	echo "gParted uses:"
 	echo "	e2fsck -f -y -v /dev/DEV"
@@ -848,6 +854,9 @@ helpe2fsck(){
 	echo "	e2fsck -f -y -v -C 0 -c /dev/DEV"
 	echo "		Force, assume Yes, Verbosity, C=progress bar, c=badblock check+add"
 }
+
+
+
 helprpm(){
 cat <<'__envHEREDOC__'
 $ rpm -ihv --nodeps rpmfile # forces an rpm installation (I think)
@@ -1112,12 +1121,18 @@ helpless(){
 ** ex: ln88 : 88g
 __envHEREDOC__
 }
+
+
+
 helptune2fs(){
       cat <<'__envHEREDOC__'
 MOUNT COUNTS && CHECKS
 	tune2fs -l /dev/sda4 | grep -iP 'mount|check'
 __envHEREDOC__
 }
+
+
+
 helpssh(){
 	cat <<'__envHEREDOC__'
 ssh
@@ -1762,6 +1777,10 @@ cat <<'__envHEREDOC__'
 * -p       # preserve times
 __envHEREDOC__
 }
+
+
+
+
 helphdd(){
 cat <<'__envHEREDOC__'
 == Lesser Known hdd-related cmds ==
@@ -1834,6 +1853,9 @@ mkfs.vfat -n label device          # create fat32 filesystem; useful for reforma
 mkfs -t btrfs HELP STUB            # create btrfs filesystem
 __envHEREDOC__
 }
+
+
+
 helpdevices(){
 cat <<'__envHEREDOC__'
 == Device and Driver and Hardware-related commands ==
@@ -2118,6 +2140,9 @@ Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
           umask=, fmask=, dmask=, streams_interface=.
 __envHEREDOC__
 }
+
+
+
 
 
 # mergeconflictavoiddothismeow : here add from lap ONLY
