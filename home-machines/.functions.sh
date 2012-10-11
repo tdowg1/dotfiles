@@ -1663,8 +1663,9 @@ __envHEREDOC__
 }
 helpmvn(){
 cat <<'__envHEREDOC__'
-== SKIP TESTS ==
-* -Dmaven.test.skip=true
+== MISC ==
+$ -Dmaven.test.skip=true          # SKIP TESTS
+$ mvn archetype:generate          # Generates a new project from an archetype.
 
 == Out of memory PermGen error ==
 (maven seems to pull in this maven opts. variable definition and *applies
