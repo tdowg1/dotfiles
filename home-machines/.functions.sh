@@ -1664,8 +1664,20 @@ __envHEREDOC__
 helpmvn(){
 cat <<'__envHEREDOC__'
 == MISC ==
-$ -Dmaven.test.skip=true          # SKIP TESTS
-$ mvn archetype:generate          # Generates a new project from an archetype.
+$ mvn [options] [<goal(s)>] [<phase(s)>]   # default.
+$ mvn -Dmaven.test.skip=true [<goal(s)>] [<phase(s)>]   # SKIP TESTS
+  $ mvn -Dmaven.test.skip=true  -Pfast  deploy
+$ mvn archetype:generate                   # Generates a new project from an archetype.
+
+$ mvn --update-plugins --update-snapshots clean install
+
+== Using the Release plugin ==
+$ mvn release:clean 
+$ mvn release:prepare
+$ mvn release:perform
+
+== Using other MISC plugins ==
+$ mvn clean compile assembly:single
 
 == Out of memory PermGen error ==
 (maven seems to pull in this maven opts. variable definition and *applies
