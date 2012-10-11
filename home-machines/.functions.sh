@@ -2142,7 +2142,11 @@ Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
           umask=, fmask=, dmask=, streams_interface=.
 __envHEREDOC__
 }
-
+helpeject(){
+cat <<'__envHEREDOC__'
+sync ; sudo umount /dev/sdj1 ; sudo eject /dev/sdj ; sync
+__envHEREDOC__
+}
 
 
 
