@@ -1664,10 +1664,12 @@ __envHEREDOC__
 helpmvn(){
 cat <<'__envHEREDOC__'
 == MISC ==
-$ mvn [options] [<goal(s)>] [<phase(s)>]   # default.
-$ mvn -Dmaven.test.skip=true [<goal(s)>] [<phase(s)>]   # SKIP TESTS
+$ mvn [options] [<goal(s)>] [<phase(s)>]  # Default.
+$ mvn clean verify                        # Cleans, compiles, tests, zips, documents (at
+                                          # least for jena-fuseki; not sure what "default" is).
+$ mvn -Dmaven.test.skip=true [<goal(s)>] [<phase(s)>]  # SKIP TESTS
   $ mvn -Dmaven.test.skip=true  -Pfast  deploy
-$ mvn archetype:generate                   # Generates a new project from an archetype.
+$ mvn archetype:generate                  # Generates a new project from an archetype.
 
 $ mvn --update-plugins --update-snapshots clean install
 
