@@ -1334,6 +1334,35 @@ g2. ELSE finished
 * $ git checkout --patch [<tree-ish>] [--] [<paths>...]
 __envHEREDOC__
 }
+helpgit4(){
+      cat <<'__envHEREDOC__'
+http://stackoverflow.com/q/1161609  get diff b/w all the commits that occured b/w two dates?
+
+$ git diff-tree -p HEAD           # INCORRECT get diff (in patch format) between unstaged and HEAD commit
+$ git diff-tree -p HEAD           # get diff (in patch format) between HEAD^ and HEAD (and in that order)
+__envHEREDOC__
+}
+helpgitsvn(){
+cat <<'__envHEREDOC__'
+Creates (new git repo) folder: trunk
+$ git svn clone svn://svn/de/trunk/ -T proj/mvin -b proj-branches/mvin -t proj-tags/mvin
+__envHEREDOC__
+}
+helptree(){
+      cat <<'__envHEREDOC__'
+tree --charset=${LANG} # works
+tree --charset=en_US.UTF-8 # perhaps more portable?  idk both have worked when tree is exec'd via putty (wo '--charset', putty displays garbage)
+__envHEREDOC__
+}
+helpps(){
+	cat <<'__envHEREDOC__'
+== Misc ==
+$ ps L | sort -k2       # list format codes, sorted by rhs (rhs
+                        # has many dupes, lhs has none)
+== Examples ==
+$ ps axfww              # exec str nfo, in tree form
+$ ps -f -p PID...       # nfo for PID(s)
+                        # nfo in user-defined formats
 helpgitsvn(){
 cat <<'__envHEREDOC__'
 Creates (new git repo) folder: trunk
