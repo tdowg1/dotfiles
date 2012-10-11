@@ -196,19 +196,22 @@ __HEREDOC__
 greptxtfiles(){
 	# SYNOPSYS greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
 	# ENHANCEMENTS LIST
-	#  asdf 
-	#   
-	#   
+	#  - ability to optionally pass standard grep option(s)
 	#   
 	#   
 	local searchquery="$1"
 	local searchpath="$2"
-	echo "TODO STUB make me into a file so can sudo use ; implement greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH"
+
+	echo "greptxtfiles() -> TODO STUB make me into a file so can sudo use ; implement greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH"
+	local specialignorecase="--exclude=script-names.vim-scripts.org.json"
+	echo "greptxtfiles() -> NOTICE! the following is being passed to grep: $specialignorecase"
+
+
 	for i in $( find "$searchpath" -type f ) ; do
 		file --brief  "$i"  | grep ASCII >/dev/null 2>&1
 		
 		if [[ $? = 0 ]] ; then
-			grep --with-filename "$searchquery" "$i"
+			grep --with-filename $specialignorecase "$searchquery" "$i"
 		fi
 	done
 }
@@ -216,8 +219,10 @@ grepdotfiles(){
 	# SYNOPSYS grepdotfiles SINGLE-STRING-SEARCH-QUERY
 	local searchquery="$1"
 	local searchpath="$ZOMG_DOTFILES"
+
 	#greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
-	greptxtfiles "$searchquery" "$searchpath"
+	greptxtfiles "$searchquery" "$searchpath" 
+	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
 }
 
 
