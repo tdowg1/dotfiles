@@ -1841,6 +1841,8 @@ __envHEREDOC__
 }
 helphdd2(){
 cat <<'__envHEREDOC__'
+Linux_disk_management wiki page    # See also : Linux_disk_management wiki page /
+
 parted                             # manage partitions
 
 mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem
