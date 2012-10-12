@@ -825,28 +825,40 @@ __envHEREDOC__
 }
 helprename(){
 cat <<'__envHEREDOC__'
-== rename v1 (non-regex) ==
-GENERAL USAGE
-rename "intel_duo" "intelduo" intel*
+GENERAL USAGE : rename [ -v|--verbose ] [ -n|--no-act ] [ -f|--force ] perlexpr [ files ]
 
-PAD CERTAIN DIRECTORIES WITH ZEROS
-disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
-rename "$disk" "$disk"0 "$disk"?
-[[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
+== rename v1 (non-regex) ==
+$ rename "intel_duo" "intelduo" intel*
 
 == rename v2 (regex) ==
-rename 's/REGEX/REPLACE/' files
+$ rename 's/REGEX/REPLACE/' files
 __envHEREDOC__
 }
 helprenameexamples(){
 cat <<'__envHEREDOC__'
+EXAMPLES
+
 == rename v1 (non-regex) ==
+=== Insert at the beginning--pad with zero ===
 $ rename "" 0"" [0-9]     # desired behaviour: mv [0, 1, 2] => [00, 01, 02]
+
+$ disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
+$ rename "$disk" "$disk"0 "$disk"?
+$ [[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
+
 
 == rename v2 (regex) ==
 $ rename -n  's/\ HEAD//'  intelduo\ bookmarks-201*
 intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
 intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
+
+$ rename --verbose 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf 
+book of eli 2005.pdf renamed as book of eli 2005 [ISBN 159159159X].pdf
+
+$ rename -v 's/\.bak$//' *.bak    # Strips the extension from all "*.bak" files.
+le-file.txt.bak renamed as le-file.txt
+
+$ rename 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
 __envHEREDOC__
 }
 
