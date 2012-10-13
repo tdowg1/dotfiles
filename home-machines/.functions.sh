@@ -2166,6 +2166,10 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
+== swap /etc/fstab ==
+# pri is priority E [0,32767]; higher num -> higher priority
+LABEL=linux-swap     none     swap     sw,pri=9    0 0
+
 == sshfs /etc/fstab ==
 sshfs#t@phisata:/mnt/a14-h/h/  /mnt/phisata   fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
 sshfs#b@demoportal:/usr/local/tomcat/  /home/b/mnt/demoportal  fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
