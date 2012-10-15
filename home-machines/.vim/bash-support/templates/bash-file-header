@@ -20,23 +20,25 @@ set -o nounset                              # Treat unset variables as an error
 #set -o xtrace
 
 f_usage(){
-	local scriptname="$( basename "$0" )"
-	cat <<__usageHEREDOC__
-Usage: $scriptname a b c
+   local scriptname="$( basename "$0" )"
+   cat <<__usageHEREDOC__
+Usage: $scriptname <-a|--long-arg-a> [-b|--long-opt-b]
 
-This script 
+This script le-blah-bladdie-bladdie-blah.
 
---long-arg
-                Option
-and continues to next line
-
-a               a1
-and continues to next line
+-a|--long-arg-a
+                Argument --long-arg is for le long-arg arg. Or
+can be specified with le -a short-arg arg and it
+blah's with bazz's meme, if you're lucky, and is also
+required.  Takes no arguments
+-b|--long-opt-b
+                Option --long-opt is for le long-opt opt. Or
+can be specified with le -b short-opt and it blah's and
+is optional unless you're a vegetable.
 
 Examples
-  $scriptname a b c
-
-  $scriptname c d e
+  $scriptname -a
+  $scriptname -a --long-opt-b
 
 Enhancement Ideas
 force           Simply 
