@@ -2166,6 +2166,9 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
+== Extended Attributes (ext2? ext3 ext4) ==
+use mount option "user_xattr"
+
 == swap /etc/fstab ==
 # pri is priority E [0,32767]; higher num -> higher priority
 LABEL=linux-swap     none     swap     sw,pri=9    0 0
@@ -2248,6 +2251,14 @@ group to do shtuffs...  e.g.
 %ilike ALL=(ALL)      NOPASSWD: ALL
 __envHEREDOC__
 }
+helptypeset(){
+cat <<'__envHEREDOC__'
+$ typeset -p VARIABLE     # displays definition
+
+how to get the same for function???
+__envHEREDOC__
+}
+
 
 
 
