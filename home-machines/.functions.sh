@@ -1238,10 +1238,15 @@ $ git log master...test # commits reachable from either test or
 = BRANCHes =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin e1999eternal-branch
+
+
 * Make local branch track an upstream branch
 ** git branch --set-upstream e1999eternal-branch origin/e1999eternal-branch
-* Create a branch based on an upstream branch:
+
+* Create a local branch based on an upstream branch:
 ** git branch --track my_branch origin/my_branch
+
+
 * Delete remote branch
 ** git push origin :my_branch
 == branching example (create new branch, push upstream and track) ==
