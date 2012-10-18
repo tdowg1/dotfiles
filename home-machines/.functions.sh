@@ -228,6 +228,15 @@ grepdotfiles(){
 
 
 
+fddBadLbaAndSurrounding1000Sectors(){
+	local device=$1
+	local lba=$2
+	local plusorminusamount=1000
+	for i in `seq $( clac.py "$lba - $plusorminusamount" ) $( clac.py "$lba + $plusorminusamount" )` ; do
+		sudo dd if=/dev/zero of=$device count=1 seek=$i conv=notrunc,noerror oflag=direct | xargs echo $i;
+	done
+}
+
 # make svn help paginate politely
 svnhelp(){
 	svn help $* | less -FX
@@ -566,6 +575,8 @@ sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=notrunc,noerror  ;  date ; sleep 
 
    # REALLY STUPID SNIPPET2
 sudo smartctl --test conveyance /dev/sda  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short /dev/sda  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long /dev/sda  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 110m
+
+$ sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest
 
 == See also ==
 smart-notifierdbus service and graphical disk health notifier
@@ -1495,7 +1506,8 @@ bash-completion: /etc/bash_completion
 $ dpkg --search `which gethostip`
 syslinux: /usr/bin/gethostip
 
-== Misc. Snippets ==
+== Misc ==
+$ aptitude --disable-columns search zfs
 $ aptitude search .*-desktop
 $ dpkg -i --force-all debfile   # forces an installation (I think)
 __envHEREDOC__

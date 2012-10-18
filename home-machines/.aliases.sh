@@ -154,6 +154,8 @@ alias vibx='sudo vim "$xorg"'
 
 ##
 ## git-related
+alias gitcommitauto='git commit -m "auto commit"'
+alias gitcommitautoa='git commit -m -a "auto commit"'
 alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
 alias gitcommitmisca='git commit -m -a "misc dotfile changes ($HOSTNAME)"'
 alias gitupstreamUrl='git config --list | grep remote.origin.url'
