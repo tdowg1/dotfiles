@@ -1863,6 +1863,12 @@ hdparm : A utility for displaying and/or setting hard disk parameters,
  `--> can be used to benchmark *AN UNMOUNTED* device : hdparm -t /dev/md0
 sdparm : List or change SCSI/SATA disk parameters
 
+== Is ISO File Bootable? (whether the ISO is an isohybrid) ==
+# Check for the string 'Hidden HPFS/NTFS' in fdisk:
+$ fdisk -l debian-testing-i386-netinst.iso
+Device                          Boot      Start         End      Blocks Id  System
+debian-testing-i386-netinst.iso   *           1         249      254944 17  Hidden HPFS/NTFS
+
 == Partition-related ==
 === What kind of partition is it? ===
 ==== EXTENDED ('logical' in the stupid windows realm) ====
@@ -1889,14 +1895,14 @@ $ tune2fs -l <device> | grep name
 	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
 	^^alternatively, COULD JUST LOOK HERE : /dev/disk/by-label
 
-=== Get Nfo (intelduo machine) ===
-==== which devices are seen? ====
-$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"
+=== Get Nfo ===
+==== Which devices are seen? ====
+$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # host=intelduo
 
-==== what are block sizes? ====
+==== What are block sizes? ====
 $ cat /proc/partitions
 
-==== misc ====
+== Misc ==
 findfs {LABEL=label | UUID=uuid}   # identify device that matches query
 blkid                              # locate/print block device attributes like UUID and LABEL
 lsblk                              # **list block devices
