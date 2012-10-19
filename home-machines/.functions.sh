@@ -2080,6 +2080,9 @@ smbget - wget-like utility for download files over SMB
 
 fuser - identify processes using files or sockets (similar to lsof)
    fuser -v -m /
+
+smbclient - ftp-like client to access SMB/CIFS resources on servers
+smbmount  ???
 __envHEREDOC__
 }
 helpfdupes(){
@@ -2276,11 +2279,42 @@ __envHEREDOC__
 }
 helptypeset(){
 cat <<'__envHEREDOC__'
-$ typeset -p VARIABLE     # displays definition
+$ typeset -p VARIABLE     # Displays definition.
+$ alias ALIAS             # Similarly, displays alias definition.
 
-how to get the same for function???
+
+how to get the definition for a function displayed???
+ANSWER: type
+$ type FUNCTION_NAME
+
 __envHEREDOC__
 }
+helpcommand(){
+cat <<'__envHEREDOC__'
+
+== See also ==
+$ 
+$ command $ help command
+
+helpenv
+helptypeset
+which
+
+== Related ==
+* http://www.cyberciti.biz/faq/unix-linux-shell-find-out-posixcommand-exists-or-not/
+$ apropos cmd             # Search the manual page names and descriptions.
+$ man -k cmd              # === to apropos
+$ whatis cmd              # Display manual page descriptions.
+$ help                    # Display information about builtin commands.
+$ type [-afptP] name [name ...]   # Display information about command type.
+#       -a display all locations
+#       -f suppress function lookup
+#       -P
+#       -p
+#       -t output a single word, E[`alias', `keyword',`function', `builtin', `file', `']
+__envHEREDOC__
+}
+
 
 
 

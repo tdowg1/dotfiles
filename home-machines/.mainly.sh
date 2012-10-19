@@ -58,13 +58,6 @@ svnloghead(){
 
 
 
-#mansearch
-#       whatis
-#       apropos
-## smbclient -L bdavies522276
-# smbmount
-
-
 
 
 
