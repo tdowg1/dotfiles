@@ -21,7 +21,7 @@ source ~/.mainly.sh
 
 * create symlinks to main bash configs, assuming they live under dotfiles/home-machines/, do
 >>>
-for i in .aliases.sh .functions.sh .gitconfig .gitignore_core.excludesfile  .gitk .htoprc .mainly.sh .pystartup  .screenrc .variables.sh .vim .vimrc .zshrc ; do test -e dotfiles/home-machines/${i} || echo "DNE $i"
+for i in .aliases.sh .functions.sh .gitconfig .gitignore_core.excludesfile  .gitk .htoprc .mainly.sh .pystartup  .screenrc .screenrc-system-monitor  .variables.sh .vim .vimrc .zshrc ; do test -e dotfiles/home-machines/${i} || echo "DNE $i"
  echo ln -s "dotfiles/home-machines/${i}"; 
 done
 # then do it without the echo (above) if you're satisfied or want to run a command individually
