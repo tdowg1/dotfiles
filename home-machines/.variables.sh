@@ -24,6 +24,14 @@ export x11="/etc/X11"					# misc
 export xorg="$x11/xorg.conf"
 
 
+
+# TODO STUB:
+#dswww_rt_base="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
+#dswww_rt_base="/mnt/a14-h/h/" # if on phi
+#hddsmart="$dswww_rt_base/root/LIFE/hdd/smartctl.logs/"  # common
+
+
+
 # PATH modifications
 PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
 _pathupdates=""

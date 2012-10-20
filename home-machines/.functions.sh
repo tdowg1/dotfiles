@@ -1908,36 +1908,38 @@ $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # host=intelduo
 $ cat /proc/partitions
 
 == Misc ==
-findfs {LABEL=label | UUID=uuid}   # identify device that matches query
-blkid                              # locate/print block device attributes like UUID and LABEL
-lsblk                              # **list block devices
-cfdisk                             # display or manipulate disk partition table
-sfdisk                             # partition table manipulator for Linux
-blockdev                           # call block device ioctls from the command line
-dmsetup                            # low level logical volume management
-fsfreeze                           # suspend access to a filesystem (Linux Ext3/4, 
-                                   # ReiserFS, JFS, XFS) (intended for hw RAID devices)
-di                                 # disk information util, displays more than df
-disktype                           # detect && display nfo about FS's, partition's and tables,...
-hdparm - tune hard disk parameters for high performance.  Get/set device parameters for Linux SATA/IDE drives. Primary use is for enabling irq-unmasking and IDE multiplemode.
-sdparm - List or change SCSI/SATA/ATAPI/CD/DVD disk parameters
-gpart  - Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
+findfs {LABEL=label | UUID=uuid}  # identify device that matches query.
+blkid                             # locate/print block device attributes like UUID and LABEL.
+lsblk                             # **list block devices.
+cfdisk                            # display or manipulate disk partition table.
+sfdisk                            # partition table manipulator for Linux.
+blockdev                          # call block device ioctls from the command line.
+dmsetup                           # low level logical volume management.
+fsfreeze                          # suspend access to a filesystem (Linux Ext3/4, 
+                                  # ReiserFS, JFS, XFS) (intended for hw RAID devices).
+di                                # disk information util, displays more than df.
+disktype                          # detect && display nfo about FS's, partitions, tables, etc.
+hdparm          # tune hard disk parameters for high performance.  Get/set device parameters for Linux SATA/IDE drives. Primary use is for enabling irq-unmasking and IDE multiplemode.
+sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
+gpart           # Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
 __envHEREDOC__
 }
 helphdd2(){
 cat <<'__envHEREDOC__'
-Linux_disk_management wiki page    # See also : Linux_disk_management wiki page /
+Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
-parted                             # manage partitions
+parted                             # manage partitions.
 
-mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem
-tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d)
-tune2fs -e remount-ro device                   # change errors behaviour
-
-mkntfs [-v] --label label --quick device       # create ntfs filesystem
-mkfs.vfat -n label device          # create fat32 filesystem; useful for reformat thumb drive
-
-mkfs -t btrfs HELP STUB            # create btrfs filesystem
+$ mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem.
+$ tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d).
+$ tune2fs -e remount-ro device                   # change errors behaviour.
+$ mkfs -t btrfs HELP STUB          # create btrfs filesystem.
+$ mkntfs [-v] --label label --quick device       # create ntfs filesystem.
+$ mkfs.vfat -n label device        # create fat32 filesystem; useful for reformat thumb drive.
+$ cfdisk -P {r|s|t} device         # Print partition table in 3 formats:
+                                   #   r Raw data format (exactly what would be written to disk)
+                                   #   s Partition table in sector order format
+                                   #   t Partition table in raw format.
 __envHEREDOC__
 }
 
