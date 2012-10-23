@@ -15,11 +15,12 @@ export PAGER="less"
 
 # Places
 export db="$HOME/Dropbox"				# dropbox
+export dbbkmks="$HOME/Dropbox/rLIFE/bookmarks"
 export dbi="$HOME/Dropbox/db.inst-and-sys-config-linux"
 export dbl="$HOME/Dropbox/linux"
 export dbm="$HOME/Dropbox/db.misc-linuxish"
-export dbs="$HOME/Dropbox/db.scripts-snippets"
 export dbpub="$HOME/Dropbox/Public"
+export dbs="$HOME/Dropbox/db.scripts-snippets"
 export x11="/etc/X11"					# misc
 export xorg="$x11/xorg.conf"
 

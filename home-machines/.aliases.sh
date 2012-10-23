@@ -131,11 +131,12 @@ alias tmp='cd /tmp ; echo "cd "`pwd`'
 
 # dropbox folders
 alias db='cd "$db"'        # TODO STUB : all of these alias defs could be defined dynamically... e.g. in variables defn area, define a variable containing all variables to be dynamically aliased out-to give the equivalent of these:
+alias dbbkmks='cd "$dbbkmks"'
 alias dbi='cd "$dbi"'
 alias dbl='cd "$dbl"'
 alias dbm='cd "$dbm"'
-alias dbs='cd "$dbs"'
 alias dbpub='cd "$dbpub"'
+alias dbs='cd "$dbs"'
 
 # misc
 alias x11='cd "$x11"'
