@@ -876,11 +876,11 @@ __envHEREDOC__
 
 
 helpe2fsck(){
-	echo "gParted uses:"
-	echo "	e2fsck -f -y -v /dev/DEV"
-	echo "others:"
-	echo "	e2fsck -f -y -v -C 0 -c /dev/DEV"
-	echo "		Force, assume Yes, Verbosity, C=progress bar, c=badblock check+add"
+	cat <<'__envHEREDOC__'
+$ e2fsck -f -y -v /dev/DEV        # what gParted uses.
+$ e2fsck -f -y -v -C 0 -c device  #	Force, assume Yes, Verbosity, C=progress bar, c=badblock check+add
+$ e2fsck -f -y -v -C 0 -D device  # Optimize directories in filesystem.
+__envHEREDOC__
 }
 
 
