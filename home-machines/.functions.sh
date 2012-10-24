@@ -1940,6 +1940,7 @@ $ cfdisk -P {r|s|t} device         # Print partition table in 3 formats:
                                    #   r Raw data format (exactly what would be written to disk)
                                    #   s Partition table in sector order format
                                    #   t Partition table in raw format.
+$ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
 __envHEREDOC__
 }
 
