@@ -1143,7 +1143,7 @@ UPDATE EXAMPLE3 (N+3)
 __envHEREDOC__
 }
 helpless(){
-      cat <<'__envHEREDOC__'
+	cat <<'__envHEREDOC__'
 * show nfo: ^G
 * jump to line number, "N", with: Ng
 ** ex: ln88 : 88g
@@ -1153,9 +1153,9 @@ __envHEREDOC__
 
 
 helptune2fs(){
-      cat <<'__envHEREDOC__'
-MOUNT COUNTS && CHECKS
-	tune2fs -l /dev/sda4 | grep -iP 'mount|check'
+	cat <<'__envHEREDOC__'
+$ tune2fs -l /dev/sda4 | grep -iP 'mount|check'  # MOUNT COUNTS && CHECKS
+$ tune2fs device -m 0             # Set %'age of reserved FS space to 0 (default=5)
 __envHEREDOC__
 }
 
