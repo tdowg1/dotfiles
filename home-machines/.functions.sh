@@ -935,12 +935,12 @@ VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where wa
 ** indent thrice: 3>
 * < - Shift left / UnIndent Text
 * ~ - Switch Case
+* U - toUpper convert visual selection: gU
+* u - toLower convert visual selection: gu
 
 INSTANT MANPAGE DOCUMENTATION FOR CURR CMD CURSOR IS ON
 	K
 UPPER && LOWER CASING
-* toUpper convert visual selection: gU
-* toLower convert visual selection: gu
 * toUpper until the end of the word: gUw
 * toUpper until the end of 2 words: gU2w
 * toUpper until the end of the line: gU$
