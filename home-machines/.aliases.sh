@@ -136,6 +136,7 @@ alias db='cd "$db"'        # TODO STUB : all of these alias defs could be define
 alias dbbkmks='cd "$dbbkmks"'
 alias dbi='cd "$dbi"'
 alias dbl='cd "$dbl"'
+alias dblkde='cd "$dbl/.kde/share/"'
 alias dbm='cd "$dbm"'
 alias dbpub='cd "$dbpub"'
 alias dbs='cd "$dbs"'
