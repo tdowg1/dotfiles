@@ -870,6 +870,9 @@ $ rename -v 's/\.bak$//' *.bak    # Strips the extension from all "*.bak" files.
 le-file.txt.bak renamed as le-file.txt
 
 $ rename 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
+
+$ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/'  le-file.txt 
+le-file.txt renamed as le-file__insert-txt-at-4-positions-from-the-end__.txt
 __envHEREDOC__
 }
 
