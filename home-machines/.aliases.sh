@@ -9,6 +9,8 @@
 ## 
 ## TEMPORARY
 #alias vibo='vim $dbi/collection-of-essential-packages/ongoing.txt'
+alias dbdnb='vim $db/db.dox/next.Buy.txt'
+alias dbdnba='vim $db/db.dox/next.Buy.txt.archive.txt'
 alias dbiceo='vim $dbi/collection-of-essential-packages/ongoing.txt'
 alias dbicio='vim $dbi/collection-of-interesting-packages/ongoing.txt'
 ##
