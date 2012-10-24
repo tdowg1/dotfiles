@@ -2322,6 +2322,12 @@ $ type [-afptP] name [name ...]   # Display information about command type.
 #       -t output a single word, E[`alias', `keyword',`function', `builtin', `file', `']
 __envHEREDOC__
 }
+helpinotify(){
+cat <<'__envHEREDOC__'
+$ inotifywait --monitor --recursive .kde/
+__envHEREDOC__
+}
+
 
 
 
