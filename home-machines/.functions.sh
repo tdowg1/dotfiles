@@ -1911,17 +1911,19 @@ $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # host=intelduo
 $ cat /proc/partitions
 
 == Misc ==
-findfs {LABEL=label | UUID=uuid}  # identify device that matches query.
-blkid                             # locate/print block device attributes like UUID and LABEL.
-lsblk                             # **list block devices.
-cfdisk                            # display or manipulate disk partition table.
-sfdisk                            # partition table manipulator for Linux.
-blockdev                          # call block device ioctls from the command line.
-dmsetup                           # low level logical volume management.
-fsfreeze                          # suspend access to a filesystem (Linux Ext3/4, 
-                                  # ReiserFS, JFS, XFS) (intended for hw RAID devices).
-di                                # disk information util, displays more than df.
-disktype                          # detect && display nfo about FS's, partitions, tables, etc.
+findfs {LABEL=label | UUID=uuid}  # Identify device that matches query.
+cfdisk          # Display or manipulate disk partition table.
+sfdisk          # Partition table manipulator for Linux.
+blockdev        # Call block device ioctls from the command line.
+dmsetup         # Low level logical volume management.
+fsfreeze        # Suspend access to a filesystem (Linux Ext3/4, 
+                # ReiserFS, JFS, XFS) (intended for hw RAID devices).
+
+blkid           # Locate/print block device attributes like UUID and LABEL.
+lsblk           # !!! List Block Devices. !!!!!!!!!!!!!!!!!!!!!!!!!
+findmnt         # !!! Prints all mounted FS's in tree-format by default. !!!!!!!
+di              # Disk information util, displays more than df.
+disktype        # Detect && display nfo about FS's, partitions, tables, etc.
 hdparm          # tune hard disk parameters for high performance.  Get/set device parameters for Linux SATA/IDE drives. Primary use is for enabling irq-unmasking and IDE multiplemode.
 sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
 gpart           # Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
