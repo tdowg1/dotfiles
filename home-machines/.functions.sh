@@ -1564,6 +1564,10 @@ $ echo ${kv:1: $(( ${#kv} - 1 )) }        # remove 1 char from the beginning
 atabase_hostname=The-Hive-RRRROLOLOLOOOL
 $ echo ${kv:1: ${#kv} }                   # remove 1 char from the beginning
 atabase_hostname=The-Hive-RRRROLOLOLOOOL
+$ echo ${kv::1}                           # get the first character
+d
+$ echo ${kv: $(( ${#kv} - 1 )) : 1 }      # get the last character
+L
 __envHEREDOC__
 }
 helpbashcheats(){
