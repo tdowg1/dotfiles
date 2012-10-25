@@ -513,6 +513,9 @@ pssynergy(){
 	echo '  PID TTY          TIME  NI COMMAND'
 	ps -eo "%p %y %x %n %c" | grep synergy
 }
+
+
+
 helphardinfo(){
 	echo 'hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20'
 }
@@ -520,6 +523,8 @@ helphardinfo(){
 helphardinfo2(){
 	echo 'while [ true ] ; do hardinfo --load-module devices.so --load-module computer.so --report-format text --generate-report | grep Sensors --after-context=20; date; sleep 30; echo ; echo ; done'
 }
+
+
 
 helppar2(){
 	echo 'par2 create -v -v -r5 -l -f0 -- BASEname.par2 BASEname.part*  > ../par2-create.log'
@@ -1967,9 +1972,13 @@ cat <<'__envHEREDOC__'
 $ udevadm trigger --verbose --dry-run
 $ modprobe --list
 $ lsusb --verbose ; lspci, lscpu, etc.
+$ lsdev         # display information about installed hardware (pkg:procinfo)
 
 # Find all mounted USB CD-ROM's
-awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
+$ awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
+
+== See also ==
+* helphardinfo
 __envHEREDOC__
 }
 helpchkconfig(){
