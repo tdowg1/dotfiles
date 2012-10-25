@@ -1952,6 +1952,12 @@ $ cfdisk -P {r|s|t} device         # Print partition table in 3 formats:
 $ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
 __envHEREDOC__
 }
+helphdd3(){
+cat <<'__envHEREDOC__'
+# _disk_ block device type        vs.
+# _partition_ block device type
+__envHEREDOC__
+}
 
 
 
