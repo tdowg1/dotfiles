@@ -1942,7 +1942,7 @@ helphdd2(){
 cat <<'__envHEREDOC__'
 Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
-parted                             # manage partitions.
+$ parted                           # manage partitions.
 
 $ mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem.
 $ tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d).
@@ -1955,6 +1955,9 @@ $ cfdisk -P {r|s|t} device         # Print partition table in 3 formats:
                                    #   s Partition table in sector order format
                                    #   t Partition table in raw format.
 $ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
+$ partprobe  -s                    # Informs OS kernel of partition table changes, by requesting
+                                   # that the OS re-read the partition table.
+                                   #   -s Show a summary of devices and their partitions.
 __envHEREDOC__
 }
 helphdd3(){
