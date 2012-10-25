@@ -1,5 +1,6 @@
 # custom screenrc 'execute stuff' help src:
 # 
+# screen -c ~/.screenrc-system-monitor -S monitor1
 #
 # source default/base screenrc config
 source $HOME/.screenrc
