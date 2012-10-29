@@ -27,9 +27,12 @@ export xorg="$x11/xorg.conf"
 
 
 # TODO STUB: create variables like...
-#dswww_rt_base="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
-#dswww_rt_base="/mnt/a14-h/h/" # if on phi
-#hddsmart="$dswww_rt_base/root/LIFE/hdd/smartctl.logs/"  # common
+# top-level of "dswww":
+#~~~dswww_rt_base="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
+#dswww="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
+#dswww="/mnt/a14-h/h/" # if on phi
+
+#hddsmart="$dswww/root/LIFE/hdd/smartctl.logs/"  # common
 # ... to help make this more automatable:
 #$ sudo su -c "smartctl --xall $d > /home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/root/LIFE/hdd/smartctl.logs/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
 

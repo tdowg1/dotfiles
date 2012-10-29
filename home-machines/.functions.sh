@@ -1964,6 +1964,15 @@ helphdd3(){
 cat <<'__envHEREDOC__'
 # _disk_ block device type        vs.
 # _partition_ block device type
+
+== Device Labels Management ==
+dosfslabel (8)       - set or get MS-DOS filesystem label
+e2label (8)          - Change the label on an ext2/ext3/ext4 filesystem
+findfs (8)           - find a filesystem by label or UUID
+mlabel (1)           - make an MSDOS volume label
+ntfslabel (8)        - display/change the label on an ntfs file system
+ppmlabel (1)         - add text to a portable pixmap
+swaplabel (8)        - print or change the label or UUID of a swap area
 __envHEREDOC__
 }
 
