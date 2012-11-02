@@ -55,8 +55,10 @@ fi
 
 
 
-# ===================================================================
+#
 # PARSE CMDLN, VARIABLE DEFINITIONS, SANITY CHECKS && META GENERATION
+#====================================================================
+#
 ARGC="$#"
 while [[ "$1" = -* ]] ; do
    case $1 in
@@ -106,7 +108,10 @@ if [[ $? != 0 ]] ; then
 fi
 
 
-
+#
+# VARIABLE PARAMS/INITIALIZATION AND SANITY CHECKING
+#====================================================================
+#
 : ${ISFORCED:="FALSE"}
 # required to be defined by now; think "<cfparam=* required=yes..."
 : ${TEMPDIR2:?ERROR: not specified}
@@ -121,7 +126,22 @@ fi
 fullPathToRunnerScript="$( f_getfullpath "${PATH_TO_RUNNER_SCRIPT}" )"
 
 
-# ===================================================================
-# FINALLY (!) DO WORK
+#
+# FUNCTIONS
+#====================================================================
+#
+fIsIgnored(){
+   file="$1"
+   grep "$file" ignore  >/dev/null  2>&1
+   [[ $? = 0 ]] && echo 'true' && return
+   echo 'false'
+}
+
+
+
+#
+# MAIN
+#====================================================================
+#
 
 
