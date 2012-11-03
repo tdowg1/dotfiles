@@ -1508,7 +1508,10 @@ package and its configuration files will be removed.
 If the third character is 
 A, the package was automatically installed.
 
-== NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
+
+== NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/tips/linux-debian-package-management-cheat-sheet.html
+
+== MOAR NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
  remove        - Remove packages.
  purge         - Remove packages and their configuration files.
  search ~ahold - Show held packages
@@ -1723,7 +1726,7 @@ __envHEREDOC__
 }
 helpaptitude2(){
 cat <<'__envHEREDOC__'
-SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
+== SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 
 == Package file info ( http://serverfault.com/a/96965 ) ==
