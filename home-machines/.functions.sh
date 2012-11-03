@@ -1725,6 +1725,17 @@ helpaptitude2(){
 cat <<'__envHEREDOC__'
 SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING
 aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+
+== Package file info ( http://serverfault.com/a/96965 ) ==
+List files installed by a given package:
+$ dpkg -L package
+$ dpkg --contents package.deb
+
+Find which package provides a file that is already on system:
+$ dpkg -S /path/to/file
+
+Find which package provides a file that is not currently on system:
+$ apt-file search /path/to/file
 __envHEREDOC__
 }
 helpionice(){
