@@ -2284,6 +2284,13 @@ Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udi
 == Mount FAT* volume with full user write permission ==
   sudo mount -t vfat /dev/sdb1 /media/external -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
 
+== Mount/Create ramdisk / tmpfs ==
+#RAMDISK=/tmp/ramdisk
+#mkdir $RAMDISK
+#chmod 777 $RAMDISK
+sudo mount -t tmpfs -o size=256m tmpfs $RAMDISK
+#chown -R user:group $RAMDISK
+
 == Various mount options ==
 === options-set-1 (man ntfs-3g) ===
 Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
