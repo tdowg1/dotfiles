@@ -66,6 +66,10 @@ alias less='less --quit-if-one-screen --tabs=3'
 #   sorts of keyboard black magical hackerys... Investigate.
 alias keyboardBenormal="sudo su -c \"echo '2' > /sys/module/hid_apple/parameters/fnmode\""
 alias keyboardBefruity="sudo su -c \"echo '1' > /sys/module/hid_apple/parameters/fnmode\""
+
+
+alias runvmware="vmware-gksu  --user root  --preserve-env  vmware"
+alias vmwarerunvmware="vmware-gksu  --user root  --preserve-env  vmware"
 ## /misc
 ##
 
