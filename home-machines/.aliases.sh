@@ -132,10 +132,15 @@ alias trll='ls -ltr'    # same as ltr
 alias cdb='cd ~/bin ; pwd'
 #alias cdt='cd ~/tmp ; ls -l'
 alias cdt='cd ~/tmp ; pwd'
-alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
 alias tmp='cd /tmp ; echo "cd "`pwd`'
 
-# dropbox folders
+
+# TODO STUB convert to the $variable scheme way:
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
+alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
+
+
+# dropbox places
 alias db='cd "$db"'        # TODO STUB : all of these alias defs could be defined dynamically... e.g. in variables defn area, define a variable containing all variables to be dynamically aliased out-to give the equivalent of these:
 alias dbbkmks='cd "$dbbkmks"'
 alias dbi='cd "$dbi"'
@@ -143,11 +148,23 @@ alias dbl='cd "$dbl"'
 alias dblkde='cd "$dbl/.kde/share/"'
 alias dbm='cd "$dbm"'
 alias dbpub='cd "$dbpub"'
+# TODO STUB need dbpubpics
 alias dbs='cd "$dbs"'
 
-# misc
+# misc places
 alias x11='cd "$x11"'
 alias cdx='cd "$x11"'
+
+# dswww places
+alias dswww='cd "$dswww" ; pwd'
+alias hdd='cd "$hdd" ; pwd'
+alias hddsmart='cd $hddsmart ; pwd'
+#PULLED FROM PHISATA SECTION-remove from that section once generic version works good here:
+# cdr to become... dswwwr ?
+alias cdr='cd "$dswww/root" ; pwd'
+alias life='cd "$dswww"/root/LIFE" ; pwd'
+alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
+alias proj='cd "$dswww"/root/proj" ; pwd'
 ## /Places (`cd'-related)
 ##
 
@@ -211,20 +228,28 @@ alias taga='git tag -l -n'
 ## 
 ## PHISATA-specific
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
-	#alias cdh='cd /mnt/a14-h/hA4-465 ; pwd'
-	alias cdp='cd /mnt/a14-h/hA4-465 ; pwd'
-	alias cdr='cd /mnt/a14-h/hA4-465/root ; pwd'
+	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
 
-	alias life='cd /mnt/a14-h/hA4-465/root/LIFE ; pwd'
-	alias dork='cd /mnt/a14-h/hA4-465/root/LIFE.dork ; pwd'
-	alias hdd='cd /mnt/a14-h/hA4-465/root/LIFE/hdd ; pwd'
-	alias hddsmart='cd /mnt/a14-h/hA4-465/root/LIFE/hdd/smartctl.logs ; pwd'
-	alias proj='cd /mnt/a14-h/hA4-465/root/proj ; pwd'
+
+
+	# cd to top-level of dswww:
+	#alias dswww='cd "$dswww" ; pwd'
+
+	# same as dswww (above) just really old! (keep temporarily 
+	# for backwards compat).
+	#alias cdh='cd "$dswww" ; pwd'
+	alias cdp='cd "$dswww" ; pwd'
+	
+	# cdr to become... dswwwr ?
+	alias cdr='cd "$dswww/root" ; pwd'
+	alias life='cd "$dswww"/root/LIFE" ; pwd'
+	alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
+	alias proj='cd "$dswww"/root/proj" ; pwd'
+
+
 
 	alias a32='cd /mnt/a32-555 ; pwd'
-
 	alias t='cd /mnt/a32-555/t ; pwd'
-	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
 	
 	alias tu='$TUTILS'
 	alias cdtu='cd /opt/teelah-utils/bin/; pwd'

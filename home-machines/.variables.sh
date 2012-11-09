@@ -22,19 +22,22 @@ export dbm="$HOME/Dropbox/db.misc-linuxish"
 export dbpub="$HOME/Dropbox/Public"
 export dbs="$HOME/Dropbox/db.scripts-snippets"
 export x11="/etc/X11"					# misc
-export xorg="$x11/xorg.conf"
+export xorg="${x11}/xorg.conf"
 
 
 
 # TODO STUB: create variables like...
-# top-level of "dswww":
-#~~~dswww_rt_base="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
-#dswww="/home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/" # if on intelduo
+# top-level of dswww:
+export dswww="$HOME/rsnapshot-ignore/mnt/smb-dswww-rt/"
 #dswww="/mnt/a14-h/h/" # if on phi
 
-#hddsmart="$dswww/root/LIFE/hdd/smartctl.logs/"  # common
+# and now since $dswww is defined, these are common!!! hooray!
+export hdd="${dswww}/root/LIFE/hdd/"
+export hddsmart="${dswww}/root/LIFE/hdd/smartctl.logs/"  # common
 # ... to help make this more automatable:
 #$ sudo su -c "smartctl --xall $d > /home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/root/LIFE/hdd/smartctl.logs/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
+#$ sudo su -c "smartctl --xall $d > ${hddsmart}/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
+
 
 
 # PATH modifications
@@ -107,11 +110,19 @@ fi
 ## 
 ## PHISATA-specific ...........................................................
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
+	# Re-defining these because they are special on this host:
+	export dswww="/mnt/a14-h/h/"
+
+
+
+	# TODO STUB remove this garbage.
 	[[ -f /etc/teelah-utils.conf ]] && source /etc/teelah-utils.conf
 	tu="$TUTILS"
-	# ya, se que esta es muy muy muy muy horribleyyy
+	# ya, se que esta es muy muy muy muy horribleyyy !! ! !! !
 	update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
 	export PATH=${PATH}:${update_PATH_with_teelah_utils}
+	# /TODO STUB remove this garbage.
+
 
 	export PYTHON_EXTERNALS_PATH=/opt/python-externals
 	export PYTHONPATH=/opt/teelah-utils/bin:$PYTHON_EXTERNALS_PATH
@@ -140,6 +151,8 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	#unset HISTFILESIZE
 	#export HISTFILESIZE=$(( 10000 * 2 ))
 	HISTFILESIZE=100000
+
+
 fi
 
 
