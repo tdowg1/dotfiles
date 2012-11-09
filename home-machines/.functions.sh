@@ -1727,7 +1727,12 @@ __envHEREDOC__
 helpaptitude2(){
 cat <<'__envHEREDOC__'
 == SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
-aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+$ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+
+==== See also ====
+* Search Term Reference : http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html
+* Cool aptitude search patterns : http://lwn.net/Articles/179754/
+
 
 == Package file info ( http://serverfault.com/a/96965 ) ==
 List files installed by a given package:
