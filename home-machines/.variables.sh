@@ -1,5 +1,8 @@
 # .variables.sh
 
+# TODO STUB: move host-specific variable definitions if-statments ABOVE this block!
+
+
 ## ### #### ###################################################################
 ##
 ## misc.
@@ -26,21 +29,20 @@ export xorg="${x11}/xorg.conf"
 
 
 
-# TODO STUB: create variables like...
-# top-level of dswww:
-export dswww="$HOME/rsnapshot-ignore/mnt/smb-dswww-rt/"
+# set default top-level of dswww:
+: ${dswww:="$HOME/rsnapshot-ignore/mnt/smb-dswww-rt/"}
 #dswww="/mnt/a14-h/h/" # if on phi
 
 # and now since $dswww is defined, these are common!!! hooray!
-export hdd="${dswww}/root/LIFE/hdd/"
-export hddsmart="${dswww}/root/LIFE/hdd/smartctl.logs/"  # common
+hdd="${dswww}/root/LIFE/hdd/"
+hddsmart="${dswww}/root/LIFE/hdd/smartctl.logs/"  # common
 # ... to help make this more automatable:
 #$ sudo su -c "smartctl --xall $d > /home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/root/LIFE/hdd/smartctl.logs/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
 #$ sudo su -c "smartctl --xall $d > ${hddsmart}/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
-export life="${dswww}/root/LIFE/"
-export lifedork="${dswww}/root/LIFE.dork/"
-export dork="${dswww}/root/LIFE.dork/"
-export proj="${dswww}/root/proj/"
+life="${dswww}/root/LIFE/"
+lifedork="${dswww}/root/LIFE.dork/"
+dork="${dswww}/root/LIFE.dork/"
+proj="${dswww}/root/proj/"
 
 
 
@@ -115,7 +117,7 @@ fi
 ## PHISATA-specific ...........................................................
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	# Re-defining these because they are special on this host:
-	export dswww="/mnt/a14-h/h/"
+	dswww="/mnt/a14-h/h/"
 
 
 
@@ -293,4 +295,5 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	##
 
 fi # /IS_I_ON_MAGNIFICENT
+
 
