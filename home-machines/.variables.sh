@@ -29,13 +29,13 @@ export xorg="${x11}/xorg.conf"
 
 
 
-# set default top-level of dswww:
+# set default top-level of dswww...
 : ${dswww:="$HOME/rsnapshot-ignore/mnt/smb-dswww-rt/"}
-#dswww="/mnt/a14-h/h/" # if on phi
 
-# and now since $dswww is defined, these are common!!! hooray!
+# ...and now since $dswww is parameterized, these are common!!! hooray!
 hdd="${dswww}/root/LIFE/hdd/"
 hddsmart="${dswww}/root/LIFE/hdd/smartctl.logs/"  # common
+# TODO STUB:
 # ... to help make this more automatable:
 #$ sudo su -c "smartctl --xall $d > /home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/root/LIFE/hdd/smartctl.logs/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
 #$ sudo su -c "smartctl --xall $d > ${hddsmart}/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
@@ -116,7 +116,7 @@ fi
 ## 
 ## PHISATA-specific ...........................................................
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
-	# Re-defining these because they are special on this host:
+	# Override default bc special on this host.
 	dswww="/mnt/a14-h/h/"
 
 
@@ -157,8 +157,6 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	#unset HISTFILESIZE
 	#export HISTFILESIZE=$(( 10000 * 2 ))
 	HISTFILESIZE=100000
-
-
 fi
 
 

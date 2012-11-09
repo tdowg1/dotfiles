@@ -155,8 +155,6 @@ alias dbs='cd "$dbs"'
 alias x11='cd "$x11"'
 alias cdx='cd "$x11"'
 
-
-
 # dswww places
 alias dswww='cd "$dswww" ; pwd'
 alias hdd='cd "$hdd" ; pwd'
@@ -232,26 +230,6 @@ alias taga='git tag -l -n'
 ## 
 ## PHISATA-specific
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
-	#alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
-
-
-
-	# cd to top-level of dswww:
-	#alias dswww='cd "$dswww" ; pwd'
-
-	# same as dswww (above) just really old! (keep temporarily 
-	# for backwards compat).
-	#alias cdh='cd "$dswww" ; pwd'
-	#alias cdp='cd "$dswww" ; pwd'
-	
-	## cdr to become... dswwwr ?
-	#alias cdr='cd "$dswww/root" ; pwd'
-	#alias life='cd "$dswww"/root/LIFE" ; pwd'
-	#alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
-	#alias proj='cd "$dswww"/root/proj" ; pwd'
-
-
-
 	alias a32='cd /mnt/a32-555 ; pwd'
 	alias t='cd /mnt/a32-555/t ; pwd'
 	
