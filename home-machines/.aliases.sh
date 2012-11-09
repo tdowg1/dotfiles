@@ -136,7 +136,7 @@ alias tmp='cd /tmp ; echo "cd "`pwd`'
 
 
 # TODO STUB convert to the $variable scheme way:
-alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
+#alias cdrsnapshot='cd /mnt/rsnapshot/r ; ltra'
 alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
 
 
@@ -155,16 +155,20 @@ alias dbs='cd "$dbs"'
 alias x11='cd "$x11"'
 alias cdx='cd "$x11"'
 
+
+
 # dswww places
 alias dswww='cd "$dswww" ; pwd'
 alias hdd='cd "$hdd" ; pwd'
 alias hddsmart='cd $hddsmart ; pwd'
-#PULLED FROM PHISATA SECTION-remove from that section once generic version works good here:
-# cdr to become... dswwwr ?
+
+alias dswwwr='cd "$dswww/root" ; pwd'
 alias cdr='cd "$dswww/root" ; pwd'
-alias life='cd "$dswww"/root/LIFE" ; pwd'
-alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
-alias proj='cd "$dswww"/root/proj" ; pwd'
+
+alias life='cd "$life" ; pwd'
+alias lifedork='cd "$lifedork" ; pwd'
+alias dork='cd "$lifedork" ; pwd'
+alias proj='cd "$proj" ; pwd'
 ## /Places (`cd'-related)
 ##
 
@@ -228,7 +232,7 @@ alias taga='git tag -l -n'
 ## 
 ## PHISATA-specific
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
-	alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
+	#alias cdrsnapshot='cd /mnt/rsnapshot/r ; ls -ltra && date'
 
 
 
@@ -238,13 +242,13 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	# same as dswww (above) just really old! (keep temporarily 
 	# for backwards compat).
 	#alias cdh='cd "$dswww" ; pwd'
-	alias cdp='cd "$dswww" ; pwd'
+	#alias cdp='cd "$dswww" ; pwd'
 	
-	# cdr to become... dswwwr ?
-	alias cdr='cd "$dswww/root" ; pwd'
-	alias life='cd "$dswww"/root/LIFE" ; pwd'
-	alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
-	alias proj='cd "$dswww"/root/proj" ; pwd'
+	## cdr to become... dswwwr ?
+	#alias cdr='cd "$dswww/root" ; pwd'
+	#alias life='cd "$dswww"/root/LIFE" ; pwd'
+	#alias dork='cd "$dswww"/root/LIFE.dork" ; pwd'
+	#alias proj='cd "$dswww"/root/proj" ; pwd'
 
 
 

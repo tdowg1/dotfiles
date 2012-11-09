@@ -37,6 +37,10 @@ export hddsmart="${dswww}/root/LIFE/hdd/smartctl.logs/"  # common
 # ... to help make this more automatable:
 #$ sudo su -c "smartctl --xall $d > /home/teelah/rsnapshot-ignore/mnt/smb-dswww-rt/root/LIFE/hdd/smartctl.logs/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
 #$ sudo su -c "smartctl --xall $d > ${hddsmart}/a65-1818_2012-10-19_cmd-smartctl_--xall.log"
+export life="${dswww}/root/LIFE/"
+export lifedork="${dswww}/root/LIFE.dork/"
+export dork="${dswww}/root/LIFE.dork/"
+export proj="${dswww}/root/proj/"
 
 
 
