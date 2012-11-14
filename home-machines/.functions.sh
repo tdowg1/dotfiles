@@ -985,6 +985,13 @@ helpvim3(){
 ** ( calling `grepdotfiles collection' will dump it to the screen hhehe... took screenshot ~/Dropbox/db.misc-linuxish/2012-10-05_script-names.vim* )
 __envHEREDOC__
 }
+helpvim4(){
+      cat <<'__envHEREDOC__'
+* Trim trailing whitespace
+** :%s/\s\+$//
+** :%s/\s\+$     (substitution text can be imitted if blank)
+__envHEREDOC__
+}
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
