@@ -156,6 +156,22 @@ fi
 
 
 ##
+## [com.spryinc.]SHAZAM-specific .........................................
+if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
+	
+	# Git-preferences:
+	# If (this script) executing on work machine, use work email.
+	# Else use the personal email which is specified in my .gitconfig.
+	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+	GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+	#if [[ $( tty -s ) = 0 ]] ; then
+	if tty -s ; then
+		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
+	fi
+fi
+
+
+##
 ## [com.spryinc.]MAGNIFICENT-specific .........................................
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	
@@ -176,13 +192,11 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# Git-preferences:
 	# If (this script) executing on work machine, use work email.
 	# Else use the personal email which is specified in my .gitconfig.
-	if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
-		GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
-		GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
-		#if [[ $( tty -s ) = 0 ]] ; then
-		if tty -s ; then
-			echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
-		fi
+	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+	GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+	#if [[ $( tty -s ) = 0 ]] ; then
+	if tty -s ; then
+		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
 	fi
 
 

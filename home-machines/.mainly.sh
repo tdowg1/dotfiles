@@ -131,6 +131,7 @@ IS_I_ON_INTELDUO='false'
 IS_I_ON_LAPTOP='false'
 IS_I_ON_MAGNIFICENT='false'
 IS_I_ON_PHISATA='false'
+IS_I_ON_SHAZAM='false'
 IS_I_ON_SVN='false'
 #
 #if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
@@ -146,6 +147,9 @@ elif [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home"
 
 elif [ x"${HOSTNAME}" = x"phisata"  -o  x"${HOSTNAME}" = x"phisata.home" ] ; then
 	IS_I_ON_PHISATA='true'
+
+elif [ x"${HOSTNAME}" = x"shazam"  -o  x"${HOSTNAME}" = x"shazam.home" ] ; then
+	IS_I_ON_SHAZAM='true'
 
 elif [ x"${HOSTNAME}" = x"svn"  -o  x"${HOSTNAME}" = x"svn.home" ] ; then
 	IS_I_ON_SVN='true'
