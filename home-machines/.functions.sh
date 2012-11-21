@@ -2201,11 +2201,14 @@ __envHEREDOC__
 helpapplekeyboard(){
 cat <<'__envHEREDOC__'
 == F1-F12 KEYS VIA F{1-12} (typical keyboard behaviour) ==
-# alias: keyboardBeNormal
+# bash alias: keyboardBeNormal
 $ sudo su -c "echo '2' > /sys/module/hid_apple/parameters/fnmode"
 
+# Can also add this snippet to /etc/rc.local :
+echo '2' > /sys/module/hid_apple/parameters/fnmode
+
 == F1-F12 KEYS VIA fn+F{1-12} (Apple keyboard default) ==
-# alias: keyboardBeFruity
+# bash alias: keyboardBeFruity
 $ sudo su -c "echo '1' > /sys/module/hid_apple/parameters/fnmode"
 
 == Swapping (LHS) Alt with Win keys ==
