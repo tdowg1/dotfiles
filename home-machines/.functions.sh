@@ -905,6 +905,10 @@ __envHEREDOC__
 }
 helpvim(){
 	cat <<'__envHEREDOC__'
+STOP IT, NANO!
+$ select-editor
+
+NOTES
 http://vim.wikia.com
 :set nonu                           # disable line numbering
 :%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar'
