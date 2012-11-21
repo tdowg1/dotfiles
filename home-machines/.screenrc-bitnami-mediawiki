@@ -1,0 +1,40 @@
+# custom screenrc 'execute stuff' help src:
+# 
+# screen -c ~/.screenrc-system-monitor -S monitor1
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+#source /home/$HOME/.screenrc
+
+
+#
+# (NOTE: the c-M character says to execute statement):
+#stuff "echo executioner<exclamation-point>"
+
+screen -t "h lg"
+stuff "cd /opt/bitnami/apache2/logs/"
+stuff "tail -F *_log"
+
+screen -t "m lg"
+stuff "cd /opt/bitnami/mysql/data/"
+stuff "tail -F mysqld.log"
+#stuff "tail -F mysqld.log"
+
+screen -t "h htdocs"
+stuff "cd /opt/bitnami/apache2/htdocs/"
+
+screen -t "m htdocs"
+stuff "cd /opt/bitnami/apps/mediawiki/htdocs/"
+
+screen -t "m htdocs"
+stuff "cd /opt/bitnami/apps/mediawiki/htdocs/"
+
+screen -t "/o/b"
+stuff "cd /opt/bitnami/"
+
+#stuff "tail -F /var/log/messages"
+
+select 2
+
+#screen -t ""
+#stuff ""
