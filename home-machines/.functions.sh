@@ -1541,8 +1541,7 @@ cat <<'__envHEREDOC__'
 TODO STUB pretty cool... lots of options... should spend some time playing with this.
 
 == typeset ==
--f [function name] : display [specific] function(s) and its defn
--F [function name] : display [specific] function(s)
+SEE helptypeset()
 
 == Misc ==
 -n   : Syntax Check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
@@ -1555,6 +1554,7 @@ TODO STUB pretty cool... lots of options... should spend some time playing with 
 * ~ln3900: buildin cmd:: set
 * ~ln4400: end section:: SHELL BUILTIN COMMANDS
 * ~ln
+== See also ==
 __envHEREDOC__
 }
 helpbashstrings(){
@@ -2353,9 +2353,17 @@ __envHEREDOC__
 }
 helptypeset(){
 cat <<'__envHEREDOC__'
-$ typeset -p VARIABLE     # Displays definition.
-$ alias ALIAS             # Similarly, displays alias definition.
+-f [function name] : display [specific] function(s) and its defn
+-F [function name] : display [specific] function(s)
 
+$ typeset -p VARIABLE     # Displays definition.
+$ set   # Without options, the name and value of each shell variable are 
+        # displayed in a format that can  be reused as input for setting 
+		  # or resetting the currently-set variables.
+$ alias ALIAS             # Similarly, displays alias definition.
+$ export -p               # If no names are given, or if the -p option is 
+                          # supplied, a list of all names that are 
+								  # exported in this shell is printed.
 
 how to get the definition for a function displayed???
 ANSWER: type
