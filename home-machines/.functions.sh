@@ -2417,6 +2417,14 @@ cat <<'__envHEREDOC__'
 $ inotifywait --monitor --recursive .kde/
 __envHEREDOC__
 }
+helpvmware(){
+#cat <<'__envHEREDOC__'
+#__envHEREDOC__
+set -x
+alias | grep vmware
+set +x
+}
+
 
 
 
