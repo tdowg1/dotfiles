@@ -2210,11 +2210,6 @@ $ # '--strip-components=1' says to strip the one (1) leading component (the top-
 $ for curr in *.tar.gz ; do echo $curr; i="${curr%.tar.gz}" ; mkdir "$i" ; cd "$i" ; tar -z -x --strip-components=1 -f "../$curr" ;  cd - ; rar a -m5 -r -rr4p -t -tsmca "${i}.rar"  "${i}"  ;       echo ; done
 __envHEREDOC__
 }
-helpcatfish(){
-cat <<'__envHEREDOC__'
-A handy file search tool using different backends which is configurable via the command line.
-__envHEREDOC__
-}
 helplocate(){
 cat <<'__envHEREDOC__'
 == OPTIONS ==
