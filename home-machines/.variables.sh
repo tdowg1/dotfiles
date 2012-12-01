@@ -83,6 +83,46 @@ if [[ -f ~/.pystartup ]] ; then
 fi
 
 
+
+# %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
+# %T     The time in 24-hour notation (%H:%M:%S). (SU)
+#
+# this variable assignment makes `history' output be like
+#:space::space:182:space::space:2012-03-20_19:15:06____pwd
+HISTTIMEFORMAT="%F_%T____"
+
+#HISTCONTROL=ignoreboth
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# 2011-06-17: tweak bash history
+# 2011-08-24: OK, IDK why these aren't working...
+### trying without using bash math operators and without 'exporting'
+### if /that/ doesn't even seem to work, maybe these are special? for 
+### some reason?? =---maybe they ACTUALLY HAVE TO BE set in the .bashrc
+### and/or /etc/bash.bashrc file?...
+# 2011-08-25: ZOMFG: .bashrc (the default that was installed to my
+### home by ubu, is diff than fedora's.  HIST*SIZE's are all set there!
+### freak me.
+
+#unset HISTSIZE  # the number of commands to save in a history list.
+#export HISTSIZE=$(( 5000 * 20 ))
+HISTSIZE=50000
+
+# The maximum number of lines contained in the history file.
+# If HISTFILESIZE is not set, no truncation is performed.
+#unset HISTFILESIZE
+#export HISTFILESIZE=$(( 10000 * 2 ))
+HISTFILESIZE=100000
+
+
+
+
+
+
+
 # Stringish
 #$ echo $_scp_path_esc 
 #[][(){}<>",:;^&!$=?`|\\'[:space:]]
@@ -168,6 +208,13 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	if tty -s ; then
 		echo "NOTE: global git config variable 'user.email' is overridden: ${GIT_COMMITTER_EMAIL}"
 	fi
+
+
+
+	# 2012-11-26 TEMPORARY VARIABLES
+	CDH=/home/bdavies/cdh3
+	HADOOP=$CDH/hadoop
+	HADOOP_TUTORIAL=$CDH/hadoop-tutorial
 fi
 
 
@@ -222,41 +269,6 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 
 	# 2011-10-05: move PATH update for JAVA_HOME into /etc/profile
 	#PATH=$JAVA_HOME/bin:$PATH
-
-
-	# %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
-	# %T     The time in 24-hour notation (%H:%M:%S). (SU)
-	#
-	# this variable assignment makes `history' output be like
-	#:space::space:182:space::space:2012-03-20_19:15:06____pwd
-	HISTTIMEFORMAT="%F_%T____"
-
-	#HISTCONTROL=ignoreboth
-	HISTCONTROL=ignoredups:ignorespace
-
-	# append to the history file, don't overwrite it
-	shopt -s histappend
-
-	# 2011-06-17: tweak bash history
-	# 2011-08-24: OK, IDK why these aren't working...
-	### trying without using bash math operators and without 'exporting'
-	### if /that/ doesn't even seem to work, maybe these are special? for 
-	### some reason?? =---maybe they ACTUALLY HAVE TO BE set in the .bashrc
-	### and/or /etc/bash.bashrc file?...
-	# 2011-08-25: ZOMFG: .bashrc (the default that was installed to my
-	### home by ubu, is diff than fedora's.  HIST*SIZE's are all set there!
-	### freak me.
-
-	#unset HISTSIZE  # the number of commands to save in a history list.
-	#export HISTSIZE=$(( 5000 * 20 ))
-	HISTSIZE=50000
-
-	# The maximum number of lines contained in the history file.
-	# If HISTFILESIZE is not set, no truncation is performed.
-	#unset HISTFILESIZE
-	#export HISTFILESIZE=$(( 10000 * 2 ))
-	HISTFILESIZE=100000
-
 
 
 
