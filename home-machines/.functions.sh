@@ -1983,13 +1983,14 @@ Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
 $ parted                           # manage partitions.
 
-$ mke2fs -L label -t ext4 [-v] [-c [-c]] device  # create ext4 filesystem.
-$ tune2fs -c 5 -i 5d device                      # check every MIN(5 mounts or 5d).
-$ tune2fs -e remount-ro device                   # change errors behaviour.
-$ mkfs -t btrfs HELP STUB          # create btrfs filesystem.
-$ mkntfs [-v] --label label --quick device       # create ntfs filesystem.
-$ mkfs.vfat -n label device        # create fat32 filesystem; useful for reformat thumb drive.
-$ cfdisk -P {r|s|t} device         # Print partition table in 3 formats:
+$ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
+$ tune2fs -c 5 -i 5d DEVICE                      # check every MIN(5 mounts or 5d).
+$ tune2fs -e remount-ro DEVICE                   # change errors behaviour.
+$ tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL DEVICE
+TODO STUB $ mkfs -t btrfs                    # create btrfs filesystem.
+$ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
+$ mkfs.vfat -n label DEVICE        # create fat32 filesystem; useful for reformat thumb drive.
+$ cfdisk -P {r|s|t} DEVICE         # Print partition table in 3 formats:
                                    #   r Raw data format (exactly what would be written to disk)
                                    #   s Partition table in sector order format
                                    #   t Partition table in raw format.
