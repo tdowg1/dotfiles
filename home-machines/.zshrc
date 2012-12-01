@@ -36,3 +36,5 @@ setopt SHARE_HISTORY
 
 # autoload -U colors
 #colors
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
