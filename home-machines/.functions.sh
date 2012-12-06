@@ -2494,6 +2494,18 @@ $ dig @server name
 $ dig @dnsserver hostname
 __envHEREDOC__
 }
+helpidentify(){
+cat <<'__envHEREDOC__'
+identify is ImageMagick's image info tool.
+# get all information possible:
+$ identify -verbose image
+# get x-dimensions:
+$ identify -format %G image | awk --field-separator x '{ print $1 }'
+# get y-dimensions:
+$ identify -format %G image | awk --field-separator x '{ print $2 }'
+__envHEREDOC__
+}
+
 
 
 
