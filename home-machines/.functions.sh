@@ -1975,6 +1975,7 @@ disktype        # Detect && display nfo about FS's, partitions, tables, etc.
 hdparm          # tune hard disk parameters for high performance.  Get/set device parameters for Linux SATA/IDE drives. Primary use is for enabling irq-unmasking and IDE multiplemode.
 sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
 gpart           # Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
+pv              # Shell pipeline element to meter data passing though.
 __envHEREDOC__
 }
 helphdd2(){
@@ -2420,6 +2421,13 @@ set -x
 alias | grep vmware
 set +x
 }
+helppv(){
+cat <<'__envHEREDOC__'
+(2012-12-05 19:05:39) Tim C.
+$ dd if=/dev/sdb bs=4M | pv -eprb -s 466g > /dev/null
+__envHEREDOC__
+}
+
 
 
 
