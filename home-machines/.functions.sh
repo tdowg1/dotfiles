@@ -994,6 +994,9 @@ helpvim4(){
 * Trim trailing whitespace
 ** :%s/\s\+$//
 ** :%s/\s\+$     (substitution text can be imitted if blank)
+* zz - center vim display about the cursor
+* Search[/Replace]: show more context when reviewing matches
+** :se scrolloff=5 - prior to searching or put to vimrc
 __envHEREDOC__
 }
 helpvimdiff(){

@@ -85,6 +85,9 @@ set gfn=Terminus\ 13
 
 set bg=light
 
+" 2012-12-06 Search[/Replace]: show more context when reviewing matches:
+se scrolloff=5
+
 
 " 2012-04-04 phisata comment this out, it was preventing autoindent and such
 "set paste
