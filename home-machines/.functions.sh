@@ -1988,6 +1988,7 @@ $ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
 $ tune2fs -c 5 -i 5d DEVICE                      # check every MIN(5 mounts or 5d).
 $ tune2fs -e remount-ro DEVICE                   # change errors behaviour.
 $ tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL DEVICE
+$ resize2fs -p DEVICE              # expands device to max, -p shows progress.
 TODO STUB $ mkfs -t btrfs                    # create btrfs filesystem.
 $ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
 $ mkfs.vfat -n label DEVICE        # create fat32 filesystem; useful for reformat thumb drive.
@@ -2427,9 +2428,72 @@ cat <<'__envHEREDOC__'
 $ dd if=/dev/sdb bs=4M | pv -eprb -s 466g > /dev/null
 __envHEREDOC__
 }
+helpvlc(){
+cat <<'__envHEREDOC__'
+== VLC cmdln --help, various invocations of ==
+$ vlc-wrapper [--help]
+...
+  -h, --help, --no-help          print help for VLC (can be combined with --advanced and --help-verbose) (default disabled)
+  -H, --full-help, --no-full-help
+                                 Exhaustive help for VLC and its modules (default disabled)
+      --longhelp, --no-longhelp  print help for VLC and all its modules (can be combined with --advanced and --help-verbose) (default disabled)
+      --help-verbose, --no-help-verbose
+                                 ask for extra verbosity when displaying help (default disabled)
+x
 
+== Playlist-related: repeating ==
+  -Z, --random, --no-random      Play files randomly forever (default enabled)
+  -L, --loop, --no-loop          Repeat all (default disabled)
+  -R, --repeat, --no-repeat      Repeat current item
 
+== Notable others ==
+      --advanced, --no-advanced  Show advanced options (default disabled)
 
+  -l, --list, --no-list          print a list of available modules (default disabled)
+      --list-verbose, --no-list-verbose
+                                 print a list of available modules with extra detail (default disabled)
+      --config <string>          use alternate config file
+
+__envHEREDOC__
+}
+helplame(){
+cat <<'__envHEREDOC__'
+== Examples Configurations ==
+$ lame  -V 0       --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "-V 0"  input.wav  output.1-v0.mp3
+$ lame  -V 2       --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2014"  --tc "-V 2"  input.wav  output.2-v2.mp3
+$ lame  --abr 192  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--abr 192"  input.wav  output.3-abr192.mp3
+$ lame  --preset standard  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--preset standard (vbr)"  input.wav  output.4-preset-standard.vbr.mp3
+$ lame  --preset 192  --verbose --tt "TITLE"  --tl "album"  --ty "2012"  --tc "--preset 192 (abr)"  input.wav  output.5-preset-192.abr.mp3
+
+==== ...And some actual numbers: ====
+NOTE the flac file was encoded using maximum compression options and is 
+included here just for comparison.
+$ flac  --verify --padding --compression-level-8  input.wav -o 2012-11-28-BBC-1Xtra-DJ-Nihal.flac
+
+$ ls -lh
+762M 12-02 04:17 2012-11-28-BBC-1Xtra-DJ-Nihal.flac
+201M 12-02 04:27 2012-11-28-BBC-1Xtra-DJ-Nihal.1-v0.mp3
+153M 12-02 04:32 2012-11-28-BBC-1Xtra-DJ-Nihal.2-v2.mp3
+160M 12-02 04:36 2012-11-28-BBC-1Xtra-DJ-Nihal.3-abr192.mp3
+153M 12-02 04:41 2012-11-28-BBC-1Xtra-DJ-Nihal.4-preset-standard.vbr.mp3
+160M 12-02 04:46 2012-11-28-BBC-1Xtra-DJ-Nihal.5-preset-192.abr.mp3
+1.2G 12-02 03:16 2012-11-28-BBC-1Xtra-DJ-Nihal.wav
+__envHEREDOC__
+}
+helpflac(){
+cat <<'__envHEREDOC__'
+== Example Configurations ==
+$ flac  --verify --padding --compression-level-8 --picture=picturefile.jpg   input.wav -o output.flac
+$ flac  --verify --padding --compression-level-8 --qlp-coeff-precision-search --picture=picturefile.jpg   input.wav -o output.flac
+__envHEREDOC__
+}
+helpdig(){
+cat <<'__envHEREDOC__'
+how to say to the dig command to determine an ip address of a hostname, and specify which dns server to use:
+$ dig @server name
+$ dig @dnsserver hostname
+__envHEREDOC__
+}
 
 
 
