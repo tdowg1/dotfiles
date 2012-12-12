@@ -824,9 +824,9 @@ __envHEREDOC__
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
 Misc:
-	--stats  --human-readable --progress
+	--stats --human-readable --progress
 Opts to capture *as much as possible* (acls, hard, xatt,...):
-	rsync --archive --xattrs --acls --hard-links --progress --compress    \
+	rsync --archive --xattrs --acls --hard-links --devices --specials    \
 		/home/mydir/data/ /backups/data-20080810/
 Data Integrity, at expense of: time increase, i/o increase:
 	--checksum
@@ -836,7 +836,7 @@ BU an rsnapshot root/repo (hard links):
 	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
 Opts to specify OpenSSH, login:
 	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
-	rsync -av  -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
+	rsync -av -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
 __envHEREDOC__
 }
 helprename(){
