@@ -1244,6 +1244,9 @@ __envHEREDOC__
 helpgit(){
 	cat <<'__envHEREDOC__'
 = LOGs =
+* There are separate fields for ppl...
+** "Author" - the person who created the change, and 
+** "Committer" - the person who committed the change into the repository.
 $ git log --format=oneline
 $ git log v2.5..        # commits since (not reachable from) v2.5
 $ git log test..master  # commits reachable from master but not test
@@ -1386,16 +1389,23 @@ __envHEREDOC__
 }
 helpgit4(){
       cat <<'__envHEREDOC__'
-http://stackoverflow.com/q/1161609  get diff b/w all the commits that occured b/w two dates?
-
+= get diff b/w all the commits that occured b/w two dates? =
+	http://stackoverflow.com/q/1161609
 $ git diff-tree -p HEAD           # INCORRECT get diff (in patch format) between unstaged and HEAD commit
 $ git diff-tree -p HEAD           # get diff (in patch format) between HEAD^ and HEAD (and in that order)
+
+= How to retrieve the last modification date of all files in a git repository? =
+	http://serverfault.com/q/401437
+$ git ls-tree -r --name-only HEAD | while read filename; do
+  echo "$(git log -1 --format="%ad" -- $filename) $filename"
+  # echo "$(git log -1 --format="%Cgreen(%ci)%Creset %d" -- $filename) $filename"  # alternative format--iso
+done
 __envHEREDOC__
 }
 helpgit5(){
       cat <<'__envHEREDOC__'
-Fix "non-bare" upstream repo.  For instance, may be receiving this when trying
-to push changes upstream:
+= Fix "non-bare" upstream repo =
+For instance, may be receiving this when trying to push changes upstream:
 	http://stackoverflow.com/questions/2199897/how-to-convert-a-git-repository-from-normal-to-bare
 		remote: error: refusing to update checked out branch: refs/heads/master
 		remote: error: By default, updating the current branch in a non-bare repository
