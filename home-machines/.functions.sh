@@ -878,6 +878,10 @@ $ rename 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
 
 $ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/'  le-file.txt 
 le-file.txt renamed as le-file__insert-txt-at-4-positions-from-the-end__.txt
+
+Zero-pad image files:
+$ rename -v  's/-(\d)-/-00$1-/' *.jpg
+wasacomadago232-9-lg.jpg renamed as wasacomadago232-009-lg.jpg
 __envHEREDOC__
 }
 
@@ -2508,6 +2512,23 @@ $ identify -format %G image | awk --field-separator x '{ print $1 }'
 $ identify -format %G image | awk --field-separator x '{ print $2 }'
 __envHEREDOC__
 }
+helpwodim(){
+cat <<'__envHEREDOC__'
+$ wodim --devices
+Erase rewritable medium using /dev/sr0:
+$ wodim dev=/dev/sr0 [-eject] -v blank=all
+Burn ISO image using /dev/sr0:
+$ wodim dev=/dev/sr0 [-eject] -v -tao speed=0 -data /path/to/iso
+  If you get an error mesage saying /wodim: trying to use a high speed medium on low writer/ 
+  try use higher burninng speed such us speed=1 or speed=2.
+Burn without making ISO:
+$ genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
+
+SEE ALSO
+goog"wodim write iso image"
+__envHEREDOC__
+}
+
 
 
 
