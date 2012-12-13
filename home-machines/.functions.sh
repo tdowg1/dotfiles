@@ -1968,6 +1968,10 @@ $ cat /proc/partitions
 findfs {LABEL=label | UUID=uuid}  # Identify device that matches query.
 cfdisk          # Display or manipulate disk partition table.
 sfdisk          # Partition table manipulator for Linux.
+fdisk           # Manipulate disk partition table.
+gnu-fdisk       # Linux fdisk replacement based on libparted.
+gdisk           # GPT fdisk text-mode partitioning tool.
+parted          # Disk partition manipulator.
 blockdev        # Call block device ioctls from the command line.
 dmsetup         # Low level logical volume management.
 fsfreeze        # Suspend access to a filesystem (Linux Ext3/4, 
@@ -1988,7 +1992,6 @@ helphdd2(){
 cat <<'__envHEREDOC__'
 Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
-$ parted                           # manage partitions.
 
 $ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
 $ tune2fs -c 5 -i 5d DEVICE                      # check every MIN(5 mounts or 5d).
@@ -2021,6 +2024,207 @@ mlabel (1)           - make an MSDOS volume label
 ntfslabel (8)        - display/change the label on an ntfs file system
 ppmlabel (1)         - add text to a portable pixmap
 swaplabel (8)        - print or change the label or UUID of a swap area
+__envHEREDOC__
+}
+helphdd4(){
+cat <<'__envHEREDOC__'
+== HDD Initialization Steps ==
+
+ Important: If hdd will potentially be used on any special controller(s), IT
+    MUST BE INITIALIZED NOW-on one of the controllers!!
+
+=== Initialize / Create a Partition Table ===
+==== using GPT / GUID ====
+
+
+
+==== alternatively, using MBR ====
+$ sudo fdisk $d
+Command (m for help): o
+Building a new DOS disklabel with disk identifier 0xc2df6527.
+Changes will remain in memory only, until you decide to write them.
+After that, of course, the previous content won't be recoverable.
+
+Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+$
+
+=== Create small ~30 || 39MiB partition+FS for label / disk identification 
+                  after about ~10 || 19MiB OR SO from the beginning of hdd ===
+===== Typical Sizes of Disk Identification partition=====
+30MiB: disktype and parted executions:
+  Block device, size 30 MiB (31457280 bytes)
+  Volume size 30.00 MiB (31456768 bytes, 61439 sectors)
+ Number  Start           End             Size            File system  Name                          Flags
+  3      2995701940224B  2995733397503B  31457280B       ntfs         Basic data partition /dev/sdg a71
+  2      1997109460992B  1997140918271B  31457280B       primary  ntfs /dev/sde a81
+  2      1997126238208B  1997157695487B  31457280B       primary  ntfs /dev/sdf a66
+39MiB: disktype and parted executions:
+  Block device, size 39 MiB (40894464 bytes)
+  Volume size 39.00 MiB (40893952 bytes, 79871 sectors)
+ Number  Start         End            Size           Type     File system  Flags
+  1      19922944B     60817407B      40894464B      primary  ntfs /dev/sdd a21
+  1      19922944B  60817407B      40894464B      primary  ntfs /dev/sdc a35
+39MiB: `fdisk -l $device` execution:
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sdd1           38912      118783       39936    7  HPFS/NTFS/exFAT
+
+===== Typical Sizes of 'beginning of the hdd' skippage =====
+Number  Start         End            Size           Type     File system  Flags
+19.00MiB: parted executions:
+ 1      19922944B  60817407B      40894464B      primary  ntfs    /dev/sdc a35
+ 1      19922944B     60817407B      40894464B      primary  ntfs /dev/sdd a21
+1.00MiB: parted executions:
+ 1      1048576B        1997109460991B  1997108412416B  primary /dev/sde a81
+ 1      1048576B        1997126238207B  1997125189632B  primary  ext4 /dev/sdf a66
+ 1      1048576B       749990838271B  749989789696B  primary  ntfs /dev/sdh a17
+ 1      1048576B   41943039B   40894464B   primary  ntfs /dev/sdj sraid10
+ 1      1048576B       999604355071B  999603306496B  primary  ntfs /dev/sdk a49
+ 1      1048576B        1499251867647B  1499250819072B  primary  ntfs /dev/sdm a64
+0.03MiB: parted executions:
+ 1      32256B         999601827839B  999601795584B  primary  ext4 /dev/sdl a42
+ 1      32256B          1999318809599B  1999318777344B  primary /dev/sdo a93
+ 1      1048576B       749418315775B  749417267200B  primary  ntfs /dev/sdq a69
+
+===== Create (finally) =====
+$ sudo fdisk $d
+Command (m for help): p
+
+Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0xc2df6527
+
+   Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): 
+Using default response p
+Partition number (1-4, default 1): 
+Using default value 1
+First sector (2048-3907029167, default 2048): 38912
+Last sector, +sectors or +size{K,M,G} (38912-3907029167, default 3907029167): 118783
+
+Command (m for help): p
+
+Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0xc2df6527
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdr1           38912      118783       39936   83  Linux
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[teelah@intelduo ~]$ sudo mkntfs -v --label $diskId_nomnt ${d}1
+Cluster size has been automatically set to 4096 bytes.
+Initializing device with zeroes: 100% - Done.
+
+
+=== Create partition (for usage) ===
+--> SEE `helphdd2` --> mke2fs
+$ sudo fdisk $d
+Command (m for help): p
+
+Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0xc2df6527
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdr1           38912      118783       39936   83  Linux
+
+Command (m for help): n
+Partition type:
+   p   primary (1 primary, 0 extended, 3 free)
+   e   extended
+Select (default p): 
+Using default response p
+Partition number (1-4, default 2): 
+Using default value 2
+First sector (2048-3907029167, default 2048): 118784
+Last sector, +sectors or +size{K,M,G} (118784-3907029167, default 3907029167): 
+Using default value 3907029167
+
+Command (m for help): p
+
+Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0xc2df6527
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdr1           38912      118783       39936   83  Linux
+/dev/sdr2          118784  3907029167  1953455192   83  Linux
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+
+==== Optionally, create Truecrypt-encrypted FS ====
+# Follow prompts:
+$ truecrypt --create
+
+# All at once:
+$ truecrypt --create=/dev/sdr2  \  # --create=VOLUME_PATH \
+--volume-type=normal  \
+--encryption=AES  \  # --encryption=ENCRYPTION_ALGORITHM
+--hash=ripemd-160  \  # --hash=HASH
+--filesystem=none  \
+-p ""  \  # --password=""
+-k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
+# --random-source
+
+
+==== Create ext FS ====
+$ sudo mke2fs -L $diskId -t ext4 -v ${d}2
+$ sudo tune2fs -c 5 -i 5d -e remount-ro -m 1 ${d}2
+
+
+== Update fstab, any other mounting scripts ==
+__envHEREDOC__
+}
+helpfdisk(){
+cat <<'__envHEREDOC__'
+Default fdisk output has...
+~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
+	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
+	NOT CYLINDERS!!!!!!!
+	lol... aw boy. and the confusion never ends.
+* the Start and End columns show the starting and ending __SECTORS__
+** hint: just run the 'u' command and it will toggle+display the unit being used.
+
+* the Blocks column shows the number of 1K (1024 byte) blocks in the partition
+__envHEREDOC__
+}
+helptruecrypt(){
+cat <<'__envHEREDOC__'
+$ truecrypt --list -v
+
+SEE ALSO `helphdd4`
 __envHEREDOC__
 }
 
