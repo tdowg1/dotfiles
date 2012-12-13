@@ -215,6 +215,7 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	CDH=/home/bdavies/cdh3
 	HADOOP=$CDH/hadoop
 	HADOOP_TUTORIAL=$CDH/hadoop-tutorial
+	PATH=${PATH}:/home/bdavies/cdh3/hadoop/bin/
 fi
 
 
