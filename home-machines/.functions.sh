@@ -2200,13 +2200,31 @@ $ truecrypt --create
 
 # All at once:
 $ truecrypt --create=/dev/sdr2  \  # --create=VOLUME_PATH \
---volume-type=normal  \
---encryption=AES  \  # --encryption=ENCRYPTION_ALGORITHM
---hash=ripemd-160  \  # --hash=HASH
---filesystem=none  \
--p ""  \  # --password=""
--k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
-# --random-source
+	--volume-type=normal  \
+	--encryption=AES  \  # --encryption=ENCRYPTION_ALGORITHM
+	--hash=ripemd-160  \  # --hash=HASH
+	--filesystem=none  \
+	-p ""  \  # --password=""
+	-k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
+	# --random-source
+
+# Get the /dev/mapper device created... so we can mkfs on it:
+$ truecrypt --mount=/dev/sdr2  \  # --mount[=VOLUME_PATH]
+	--keyfiles=/path/to/key(s)  \
+	--filesystem=none  \  # --filesystem=TYPE ; TYPE can only be (FAT|none)
+	/path/to/mountpoint
+
+# Determine which /dev/mapper/truecrypt[N] device was created for
+# VOLUME_PATH (device) specified (/dev/sdr2):
+$ truecrypt --list -v
+# e.g. /dev/mapper/truecrypt4 is the device i need.
+
+# FINALLY: mkfs on it!
+$ mke2fs /dev/mapper/truecrypt4 -L LE_LABEL -t ext4 -v
+
+# Tell truecrypt to forget about everything so can perform full mount from scratch:
+$ truecrypt -d /dev/sdr2
+# Now, just do a normal truecrypt mount.
 
 
 ==== Create ext FS ====
