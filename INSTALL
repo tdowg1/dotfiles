@@ -21,10 +21,15 @@ source ~/.mainly.sh
 
 * create symlinks to main bash configs, assuming they live under dotfiles/home-machines/, do
 >>>
-for i in .aliases.sh .functions.sh .gitconfig .gitignore_core.excludesfile  .gitk .htoprc .mainly.sh .pystartup  .screenrc .screenrc-system-monitor  .variables.sh .vim .vimrc .zshrc ; do test -e ~/${i} || echo "DNE ~/$i"
+for i in .aliases.sh .functions.sh .gitconfig .gitignore_core.excludesfile  .gitk  .mainly.sh .pystartup  .screenrc .screenrc-system-monitor  .variables.sh .vim .vimrc .zshrc ; do test -e ~/${i} || echo "DNE ~/$i"
  echo ln -s "dotfiles/home-machines/${i}"; 
 done
-# then do it without the echo (above) if you're satisfied or want to run a command individually
+# then do it without the echo (above) if you're satisfied or want to run a command individually.
+
+# And handle special cases:
+mkdir -p ~/.config/htop/   # if necessary.
+cd ~/.config/htop/
+ln -s ../../dotfiles/home-machines/htoprc
 <<<
 
 * open a new terminal.  Ensure env gets set up OK by checking for any errors messages.
