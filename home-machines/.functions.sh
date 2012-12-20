@@ -2136,15 +2136,21 @@ Command (m for help): p
     Device Boot      Start         End      Blocks   Id  System
  /dev/sdr1           38912      118783       39936   83  Linux
 
+Command (m for help): t
+ Selected partition 1
+Hex code (type L to list codes): 7
+ Changed system type of partition 1 to 7 (HPFS/NTFS/exFAT)
+
 Command (m for help): w
  The partition table has been altered!
  
  Calling ioctl() to re-read partition table.
  Syncing disks.
 
-[teelah@intelduo ~]$ sudo mkntfs -v --label $diskId_nomnt ${d}1
+$ sudo mkntfs -v --label $diskId_nomnt ${d}1
 Cluster size has been automatically set to 4096 bytes.
 Initializing device with zeroes: 100% - Done.
+
 
 
 === Create partition (for usage) ===
@@ -2193,23 +2199,23 @@ Command (m for help): w
 
 
 ==== Create Truecrypt-encrypted FS ====
-# Follow prompts...:
+# Follow prompts... (CREATE):
 $ truecrypt --create
 
-# ... or perform all at once:
-$ truecrypt --create=/dev/sdr2  \  # --create=VOLUME_PATH \
-	--volume-type=normal  \
-	--encryption=AES  \  # --encryption=ENCRYPTION_ALGORITHM
-	--hash=ripemd-160  \  # --hash=HASH
-	--filesystem=none  \
+# ... or perform all at once (CREATE):
+$ truecrypt --create /dev/sdr2  \  # --create=VOLUME_PATH
+$ truecrypt --create ${d}2  \
+	--volume-type=normal  --encryption=AES  \
+	--hash=ripemd-160   --filesystem=none  \
 	-p ""  \  # --password=""
 	-k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
 	# --random-source
 
+# (MOUNT)
 $ truecrypt --non-interactive --password= --protect-hidden=no  \
-	--keyfiles=/path/to/key(s)  \
 	--filesystem=none  \  # --filesystem=TYPE ; TYPE can only be (FAT|none)
-	/dev/sdr2
+	--keyfiles=/path/to/key(s)  \
+	${d}2
 	/path/to/mountpoint
 
 # Determine which /dev/mapper/truecrypt[N] device was created for
