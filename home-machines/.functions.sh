@@ -2048,20 +2048,21 @@ cat <<'__envHEREDOC__'
 
 
 
-==== alternatively, using MBR ====
+==== using MBR ====
+  //NOTE: if also create partition, skip to next section//
 $ sudo fdisk $d
 Command (m for help): o
-Building a new DOS disklabel with disk identifier 0xc2df6527.
-Changes will remain in memory only, until you decide to write them.
-After that, of course, the previous content won't be recoverable.
-
-Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+ Building a new DOS disklabel with disk identifier 0xc2df6527.
+ Changes will remain in memory only, until you decide to write them.
+ After that, of course, the previous content won't be recoverable.
+ 
+ Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
 
 Command (m for help): w
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-Syncing disks.
+ The partition table has been altered!
+ 
+ Calling ioctl() to re-read partition table.
+ Syncing disks.
 $
 
 === Create small ~30 || 39MiB partition+FS for label / disk identification 
@@ -2104,44 +2105,43 @@ Number  Start         End            Size           Type     File system  Flags
 ===== Create (finally) =====
 $ sudo fdisk $d
 Command (m for help): p
-
-Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
-255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xc2df6527
-
-   Device Boot      Start         End      Blocks   Id  System
-
+ Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+ 255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk identifier: 0xc2df6527
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ 
 Command (m for help): n
-Partition type:
-   p   primary (0 primary, 0 extended, 4 free)
-   e   extended
+ Partition type:
+    p   primary (0 primary, 0 extended, 4 free)
+    e   extended
 Select (default p): 
-Using default response p
+ Using default response p
 Partition number (1-4, default 1): 
-Using default value 1
+ Using default value 1
 First sector (2048-3907029167, default 2048): 38912
 Last sector, +sectors or +size{K,M,G} (38912-3907029167, default 3907029167): 118783
 
 Command (m for help): p
-
-Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
-255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xc2df6527
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sdr1           38912      118783       39936   83  Linux
+ Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+ 255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk identifier: 0xc2df6527
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sdr1           38912      118783       39936   83  Linux
 
 Command (m for help): w
-The partition table has been altered!
+ The partition table has been altered!
+ 
+ Calling ioctl() to re-read partition table.
+ Syncing disks.
 
-Calling ioctl() to re-read partition table.
-Syncing disks.
 [teelah@intelduo ~]$ sudo mkntfs -v --label $diskId_nomnt ${d}1
 Cluster size has been automatically set to 4096 bytes.
 Initializing device with zeroes: 100% - Done.
@@ -2151,54 +2151,52 @@ Initializing device with zeroes: 100% - Done.
 --> SEE `helphdd2` --> mke2fs
 $ sudo fdisk $d
 Command (m for help): p
-
-Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
-101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xc2df6527
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sdr1           38912      118783       39936   83  Linux
-
+ Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+ 101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk identifier: 0xc2df6527
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sdr1           38912      118783       39936   83  Linux
+ 
 Command (m for help): n
-Partition type:
-   p   primary (1 primary, 0 extended, 3 free)
-   e   extended
+ Partition type:
+    p   primary (1 primary, 0 extended, 3 free)
+    e   extended
 Select (default p): 
-Using default response p
+ Using default response p
 Partition number (1-4, default 2): 
-Using default value 2
+ Using default value 2
 First sector (2048-3907029167, default 2048): 118784
 Last sector, +sectors or +size{K,M,G} (118784-3907029167, default 3907029167): 
-Using default value 3907029167
+ Using default value 3907029167
 
 Command (m for help): p
-
-Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
-101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0xc2df6527
-
-   Device Boot      Start         End      Blocks   Id  System
-/dev/sdr1           38912      118783       39936   83  Linux
-/dev/sdr2          118784  3907029167  1953455192   83  Linux
-
+ Disk /dev/sdr: 2000.4 GB, 2000398934016 bytes
+ 101 heads, 29 sectors/track, 1333912 cylinders, total 3907029168 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk identifier: 0xc2df6527
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sdr1           38912      118783       39936   83  Linux
+ /dev/sdr2          118784  3907029167  1953455192   83  Linux
+ 
 Command (m for help): w
-The partition table has been altered!
+ The partition table has been altered!
+ 
+ Calling ioctl() to re-read partition table.
+ Syncing disks.
 
-Calling ioctl() to re-read partition table.
-Syncing disks.
 
-
-==== Optionally, create Truecrypt-encrypted FS ====
-# Follow prompts:
+==== Create Truecrypt-encrypted FS ====
+# Follow prompts...:
 $ truecrypt --create
 
-# All at once:
+# ... or perform all at once:
 $ truecrypt --create=/dev/sdr2  \  # --create=VOLUME_PATH \
 	--volume-type=normal  \
 	--encryption=AES  \  # --encryption=ENCRYPTION_ALGORITHM
@@ -2208,10 +2206,10 @@ $ truecrypt --create=/dev/sdr2  \  # --create=VOLUME_PATH \
 	-k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
 	# --random-source
 
-# Get the /dev/mapper device created... so we can mkfs on it:
-$ truecrypt --mount=/dev/sdr2  \  # --mount[=VOLUME_PATH]
+$ truecrypt --non-interactive --password= --protect-hidden=no  \
 	--keyfiles=/path/to/key(s)  \
 	--filesystem=none  \  # --filesystem=TYPE ; TYPE can only be (FAT|none)
+	/dev/sdr2
 	/path/to/mountpoint
 
 # Determine which /dev/mapper/truecrypt[N] device was created for
@@ -2224,7 +2222,9 @@ $ mke2fs /dev/mapper/truecrypt4 -L LE_LABEL -t ext4 -v
 
 # Tell truecrypt to forget about everything so can perform full mount from scratch:
 $ truecrypt -d /dev/sdr2
-# Now, just do a normal truecrypt mount.
+$ truecrypt -d ${d}2
+
+# Now, just do a normal truecrypt mount to test everything went ok.
 
 
 ==== Create ext FS ====
