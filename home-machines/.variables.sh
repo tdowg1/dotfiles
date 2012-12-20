@@ -26,6 +26,10 @@ export dbpub="$HOME/Dropbox/Public"
 export dbs="$HOME/Dropbox/db.scripts-snippets"
 export x11="/etc/X11"					# misc
 export xorg="${x11}/xorg.conf"
+export ri="$HOME/rsnapshot-ignore/"
+export rim="$HOME/rsnapshot-ignore/mnt/"
+
+
 
 
 

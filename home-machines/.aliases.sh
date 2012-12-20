@@ -167,6 +167,9 @@ alias life='cd "$life" ; pwd'
 alias lifedork='cd "$lifedork" ; pwd'
 alias dork='cd "$lifedork" ; pwd'
 alias proj='cd "$proj" ; pwd'
+
+alias ri='cd "$ri"'
+alias rim='cd "$rim"'
 ## /Places (`cd'-related)
 ##
 
