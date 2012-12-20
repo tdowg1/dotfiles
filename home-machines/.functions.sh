@@ -2002,7 +2002,7 @@ helphdd2(){
 cat <<'__envHEREDOC__'
 Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
-
+$ mkswap -L linuxswap DEVICE       # create linux swap device.
 $ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
 $ tune2fs -c 5 -i 5d DEVICE                      # check every MIN(5 mounts or 5d).
 $ tune2fs -e remount-ro DEVICE                   # change errors behaviour.
