@@ -1434,6 +1434,10 @@ helpgitsvn(){
 cat <<'__envHEREDOC__'
 Creates (new git repo) folder: trunk
 $ git svn clone svn://svn/de/trunk/ -T proj/mvin -b proj-branches/mvin -t proj-tags/mvin
+
+Creates (new git repo):
+$ git svn init https://yohai.example.com/svn/Project/trunk/subproject.....
+$ git svn fetch
 __envHEREDOC__
 }
 
