@@ -224,7 +224,15 @@ grepdotfiles(){
 	greptxtfiles "$searchquery" "$searchpath" 
 	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
 }
-
+function grepbylabel(){
+   # bylabelgrep, or...
+   # grepbylabel
+   # grepbylbl
+   # grepbylbl
+   # grepbylabl
+   local greppattern="$1"
+   ll /dev/disk/by-label/ | grep -i "$greppattern"
+}
 
 
 
