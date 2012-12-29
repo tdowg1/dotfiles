@@ -224,7 +224,15 @@ grepdotfiles(){
 	greptxtfiles "$searchquery" "$searchpath" 
 	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
 }
-
+function grepbylabel(){
+   # bylabelgrep, or...
+   # grepbylabel
+   # grepbylbl
+   # grepbylbl
+   # grepbylabl
+   local greppattern="$1"
+   ll /dev/disk/by-label/ | grep -i "$greppattern"
+}
 
 
 
@@ -648,6 +656,9 @@ EXAMPLES --------
    dd if=/dev/sda | hexdump -C | grep [^00]   # to ensure device is really zeroed
    dd if=/dev/urandom of=/tmp/quickly-generated-random-file.dd bs=1M count=1
 *  dd if=/dev/zero of=/some/path/to/the.img bs=1M count=600  # **create 600 Meg image file**
+     600+0 records in
+     600+0 records out
+     629145600 bytes (629 MB) copied, 15.4169 s, 40.8 MB/s
 rewrite entire disk (with itself)
    dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
 
