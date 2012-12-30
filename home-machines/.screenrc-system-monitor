@@ -13,14 +13,30 @@ source $HOME/.screenrc
 
 screen -t "by-lbl"
 stuff "ll /dev/disk/by-label/"
+stuff "ll /dev/disk/by-label/"
+stuff "ll /dev/disk/by-label/"
 
 screen -t "mnt-l"
-stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run'"
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep ^/"
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep ^/"
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep ^/"
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep ^/"
 
 screen -t "df"
 stuff "df -hT"
+stuff "df -hT"
+stuff "df -hT"
+stuff "df -hT"
+stuff "df -hT"
+stuff "df -hT"
 
 screen -t "mem"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
 stuff "swapon -s ; free -m"
 
 screen -t "syslg"
