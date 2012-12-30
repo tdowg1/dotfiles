@@ -2383,6 +2383,7 @@ env (1)              - run a program in a modified environment
 $ apropos getconf env   # gives a bunch of interesting env, variable, etc. programs
 __envHEREDOC__
 }
+
 helpnotify-send(){
 	# helpnotify-send alert gnome popup pop up message
 cat <<'__envHEREDOC__'
@@ -2390,6 +2391,13 @@ notify-send (1)      - a program to send desktop notifications
 notify-send [OPTION...] <SUMMARY> [BODY] - create a notification
 __envHEREDOC__
 }
+helppopup(){
+cat <<'__envHEREDOC__'
+echo "calling helpnotify-send()."
+__envHEREDOC__
+helpnotify-send
+}
+
 
 
 
@@ -2671,6 +2679,7 @@ __envHEREDOC__
 }
 helpinotify(){
 cat <<'__envHEREDOC__'
+Monitor for filesystem changes beginning from some top-level path (inotify):
 $ inotifywait --monitor --recursive .kde/
 __envHEREDOC__
 }
@@ -2780,7 +2789,64 @@ SEE ALSO
 goog"wodim write iso image"
 __envHEREDOC__
 }
+helpscan0(){
+cat <<'__envHEREDOC__'
+Notes on my Scanning Devices
+----
+$ lsusb | grep -i epson
+Bus 001 Device 008: ID 04b8:0103 Seiko Epson Corp. Perfection 610
 
+__envHEREDOC__
+}
+helpscan(){
+cat <<'__envHEREDOC__'
+Notes on how to Scan artifacts in Linux
+----
+
+TODO STUB---ROOT OUT BADS, IDENTIFY GOODS.
+* gscan2pdf : GNOME-based prog
+** not bad
+
+* simple-scan : GNOME-based prog
+* xsane.i686 : X Window System front-end for the SANE scanner interface
+* xsane-gimp.i686 : GIMP plug-in providing the SANE scanner interface
+* XSane can easily create a book scan from a series of individual scans
+* libsane-hpaio.i686 : SANE driver for scanners in HP's multi-function devices
+* sane-backends.i686 : Scanner access software
+* sane-frontends.i686 : Graphical frontend to SANE
+* python-imaging-sane.i686 : Python Module for using scanners
+* gnome-scan.i686 : Gnome solution for scanning in the desktop on top of libsane
+* 
+* papras - Manage of electronic documents.  Pap'rass is an application that will interface with your scanner to save documents and index, annotate, classify, and search them.
+* scantailor - Interactive post-processing tool for scanned pages.  Scan Tailor is an interactive post-processing tool for scanned pages. It performs operations such as page splitting, deskewing, adding/removing borders, and others. You give it raw scans, and you get pages ready to be printed or assembled into a PDF or DJVU file. Scanning, optical character recognition, and assembling multi-page documents are out of scope of this project.
+
+/TODO STUB
+
+
+$ sane-find-scanner
+
+$ simple-scan
+
+$ xsane
+__envHEREDOC__
+}
+helpscan2(){
+cat <<'__envHEREDOC__'
+Tips on how to Scan artifacts in Linux
+----
+* For optimum OCR results, its good to scan text with a resolution of no less than 300dpi 
+PROGRAMS:
+* unpaper : Post-processing of scanned and photocopied book pages.
+__envHEREDOC__
+}
+helppdf(){
+cat <<'__envHEREDOC__'
+pdfunite pdfseparate pdfimages tiff2pdf tiff2ps
+
+PDF files too large? Try this and adjust -quality value:
+$ convert *tif -compress jpeg -quality 1 pdf.pdf
+__envHEREDOC__
+}
 
 
 
