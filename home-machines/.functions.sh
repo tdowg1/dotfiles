@@ -2753,6 +2753,19 @@ cat <<'__envHEREDOC__'
 == Example Configurations ==
 $ flac  --verify --padding --compression-level-8 --picture=picturefile.jpg   input.wav -o output.flac
 $ flac  --verify --padding --compression-level-8 --qlp-coeff-precision-search --picture=picturefile.jpg   input.wav -o output.flac
+
+* Get info
+metaflac --list infile.flac
+
+* Split 1 flac file into 2 wav files (*straight up!* without cuefile crap!)
+# first, must determine number of samples in track.  One way:
+file infile.flac
+# which outputs something like
+#  2012-11-28-BBC-1Xtra-DJ-Nihal.flac: FLAC audio bitstream data, 16 bit, stereo, 44.1 kHz, 317667328 samples
+# second, do the split by dividing samples by 2:
+samples=317667328
+flac --decode --until=$( clac.py "${samples} / 2" ) infile.flac -o 1of2.wav   
+flac --decode --skip=$( clac.py "${samples} / 2" )  infile.flac -o 2of2.wav
 __envHEREDOC__
 }
 helpdig(){
