@@ -2768,6 +2768,11 @@ flac --decode --until=$( clac.py "${samples} / 2" ) infile.flac -o 1of2.wav
 flac --decode --skip=$( clac.py "${samples} / 2" )  infile.flac -o 2of2.wav
 __envHEREDOC__
 }
+helpmuzik(){
+cat <<'__envHEREDOC__'
+abcde: Command Line Music CD Ripping for Linux
+__envHEREDOC__
+}
 helpdig(){
 cat <<'__envHEREDOC__'
 how to say to the dig command to determine an ip address of a hostname, and specify which dns server to use:
