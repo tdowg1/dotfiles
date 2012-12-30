@@ -2863,6 +2863,8 @@ pdfunite pdfseparate pdfimages tiff2pdf tiff2ps
 
 PDF files too large? Try this and adjust -quality value:
 $ convert *tif -compress jpeg -quality 1 pdf.pdf
+$ convert *png -compress jpeg -quality 1 pdf.pdf
+$ convert *[pretty much most image formats, AWESOMELY!] -compress jpeg -quality 1 pdf.pdf
 __envHEREDOC__
 }
 
