@@ -2733,6 +2733,10 @@ $ lame  --abr 192  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--ab
 $ lame  --preset standard  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--preset standard (vbr)"  input.wav  output.4-preset-standard.vbr.mp3
 $ lame  --preset 192  --verbose --tt "TITLE"  --tl "album"  --ty "2012"  --tc "--preset 192 (abr)"  input.wav  output.5-preset-192.abr.mp3
 
+Actual cmdln used by K3b to encode audio (2nd line has hints):
+$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt %t --ta %a --tl %m --ty %y --tc %c --tn %n - output.mp3
+$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt "TITLE" --ta "ARTIST" --tl "ALBUM TITLE" --ty "RELEASE YR" --tc "COMMENT" --tn "TRACK #" - output.mp3
+
 ==== ...And some actual numbers: ====
 NOTE the flac file was encoded using maximum compression options and is 
 included here just for comparison.
@@ -2753,6 +2757,9 @@ cat <<'__envHEREDOC__'
 == Example Configurations ==
 $ flac  --verify --padding --compression-level-8 --picture=picturefile.jpg   input.wav -o output.flac
 $ flac  --verify --padding --compression-level-8 --qlp-coeff-precision-search --picture=picturefile.jpg   input.wav -o output.flac
+
+Actual cmdln used by K3b to encode audio:
+$ flac -V -o %f --force-raw-format --endian=little --channels=2 --sample-rate=44100 --sign=signed --bps=16 -T ARTIST=%a -T TITLE=%t -T TRACKNUMBER=%n -T DATE=%y -T ALBUM=%m -
 
 * Get info
 metaflac --list infile.flac
