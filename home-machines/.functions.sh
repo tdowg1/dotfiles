@@ -709,7 +709,12 @@ TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
 __envHEREDOC__
 }
 helpdd2(){
-      cat <<'__envHEREDOC__'
+cat <<'__envHEREDOC__'
+== Examples ==
+Ripping bootable knoppix disk to iso file:
+$ dcfldd if=/dev/sr0 of=knoppix.iso   md5log=md5sum status=on sizeprobe=if
+
+
 == See Also ==
 * hdrecover.sf.net
 
@@ -720,6 +725,7 @@ helpdd2(){
 * ??? ddclac 	?? 
 
 * dcfldd based on the dd program but with additional features...
+** "enhanced version of dd for forensics and security"
 ** (hashing) Hashing on-the-fly - dcfldd can hash the input data as it is being transferred, helping to ensure data integrity.
 ** (eta status) Status output - dcfldd can update the user of its progress in terms of the amount of data transferred and how much longer operation will take.
 ** (pattern writing) Flexible disk wipes - dcfldd can be used to wipe disks quickly and with a known pattern if desired.
@@ -729,6 +735,7 @@ helpdd2(){
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
+** "patched version of GNU dd with forensic features"
 ** (pattern writing) Pattern writes. The program can write a single hexadecimal value or a text string to the output device for wiping purposes.
 ** (hashing) Piecewise and overall hashing with multiple algorithms and variable size windows. Supports MD5, SHA-1, SHA-256, and SHA-512. Hashes can be computed before or after conversions are made.
 ** (eta status) Progress meter with automatic input/output file size probing
@@ -2590,6 +2597,12 @@ sudo mount -t tmpfs -o size=256m tmpfs $RAMDISK
 === options-set-1 (man ntfs-3g) ===
 Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
           umask=, fmask=, dmask=, streams_interface=.
+== yyp
+== Mount ISO image ==
+$ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
+
+== Mount CD-ROM (or some other optical media) ==
+$ mount -t iso9660 -o ro /dev/sr0 /mnt/mountpoint
 __envHEREDOC__
 }
 helpeject(){
@@ -2816,10 +2829,22 @@ $ dvd+rw-format -force /dev/sr0
 ** 3.  ^mmk. Perhaps I just haz bad anomoly?  The above cmdln worked on the next dvd+rw I needed to quick-clear.
 $ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0 
 
-Tips
+Generate ISO of non-audio, optical medium
 ----
-* wodim says: HINT: use dvd+rw-mediainfo from dvd+rw-tools for information extraction.
-$ dvd+rw-mediainfo /dev/sr0
+dd duh-duh-duh-duh-duh-DUMB ass
+$ dd if=/dev/sr0 of=/path/to/output/file.iso
+$ dcfldd if=/dev/sr0 of=knoppix.iso
+
+Burn ISO
+----
+-> see helpwodim
+
+General Tips
+----
+* wodim says: HINT: use dvd+rw-mediainfo from dvd+rw-tools for information extraction:
+** $ dvd+rw-mediainfo /dev/sr0
+* How to find out the device that your DVD/CD rom is attached to:
+** $ cat /proc/sys/dev/cdrom/info
 
 See Also
 ----
@@ -2830,7 +2855,9 @@ helpwodim(){
 cat <<'__envHEREDOC__'
 $ wodim --devices
 
-Erase rewritable medium using /dev/sr0 ( blank=help ) (for DVD's see helpburn):
+* If dev=device is omitted and only 1 optical device exists, by default wodim will use the device.
+
+Erase rewritable medium using ( blank=help ) (for DVD's see helpburn):
 ----
 $ wodim dev=/dev/sr0 -v blank=all  [-eject]   # Blank the entire disk. This may take a long time.
 $ wodim dev=/dev/sr0 -v blank=fast [-eject]   # Minimally blank the disk. This results in erasing the PMA, the TOC and the pregap.
@@ -2842,16 +2869,19 @@ $ wodim dev=/dev/sr0 -v -format [-eject] # RARE: Format  a  CD-RW/DVD-RW/DVD+RW 
   auto formats the medium before it starts  writing,  the  -format  option  is  only
   needed if you like to forcibly reformat a DVD+RW medium.
 
-Burn ISO image using /dev/sr0:
-$ wodim dev=/dev/sr0 [-eject] -v -tao speed=0 -data /path/to/iso
-  If you get an error mesage saying /wodim: trying to use a high speed medium on low writer/ 
-  try use higher burninng speed such us speed=1 or speed=2.
+Burn ISO image
+----
+$ wodim dev=/dev/sr0 -v -tao -data /path/to/iso speed=0  [-eject]
+* Re: "speed=0":: If you get an error mesage saying /wodim: trying to use a high speed medium on low writer/, try use higher burninng speed such us speed=1 or speed=2.
+* If speed=N is omitted, by default wodim will try the max.
 
-Burn without making ISO:
+Burn fil[es|e tree] without making ISO
+----
 $ genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
 
-SEE ALSO
-goog"wodim write iso image"
+See Also
+----
+* goog"wodim write iso image"
 __envHEREDOC__
 }
 helpwodim2audio(){
@@ -2937,6 +2967,12 @@ $ convert *png -compress jpeg -quality 1 pdf.pdf
 $ convert *[pretty much most image formats, AWESOMELY!] -compress jpeg -quality 1 pdf.pdf
 __envHEREDOC__
 }
+helppv(){
+cat <<'__envHEREDOC__'
+pv -pterab
+__envHEREDOC__
+}
+
 
 
 
