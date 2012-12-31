@@ -2771,6 +2771,7 @@ __envHEREDOC__
 helpmuzik(){
 cat <<'__envHEREDOC__'
 abcde: Command Line Music CD Ripping for Linux
+icedax: stands for InCrEdible Digital Audio eXtractor. It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
 __envHEREDOC__
 }
 helpdig(){
@@ -2794,17 +2795,51 @@ __envHEREDOC__
 helpwodim(){
 cat <<'__envHEREDOC__'
 $ wodim --devices
-Erase rewritable medium using /dev/sr0:
-$ wodim dev=/dev/sr0 [-eject] -v blank=all
+
+Erase rewritable medium using /dev/sr0 ( blank=help ):
+$ wodim dev=/dev/sr0 -v blank=all  [-eject]   # Blank the entire disk. This may take a long time.
+$ wodim dev=/dev/sr0 -v blank=fast [-eject]   # Minimally blank the disk. This results in erasing the PMA, the TOC and the pregap.
+$ wodim dev=/dev/sr0 -v blank={type} [-force] # The -force option may be used to blank CD-RW disks that otherwise cannot be blanked.
+$ wodim dev=/dev/sr0 -v -format [-eject] # RARE: Format  a  CD-RW/DVD-RW/DVD+RW disc.
+  Formatting is currently only implemented for
+  DVD+RW media.  A 'maiden' DVD+RW media needs to be formatted before you may  write
+  to  it.   However,  as  wodim autodetects the need for formatting in this case and
+  auto formats the medium before it starts  writing,  the  -format  option  is  only
+  needed if you like to forcibly reformat a DVD+RW medium.
+
 Burn ISO image using /dev/sr0:
 $ wodim dev=/dev/sr0 [-eject] -v -tao speed=0 -data /path/to/iso
   If you get an error mesage saying /wodim: trying to use a high speed medium on low writer/ 
   try use higher burninng speed such us speed=1 or speed=2.
+
 Burn without making ISO:
 $ genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
 
 SEE ALSO
 goog"wodim write iso image"
+__envHEREDOC__
+}
+helpwodim2audio(){
+cat <<'__envHEREDOC__'
+Burn Audio CDR using input.wav
+----
+* -audio
+** (defaults to -audio for  all filenames that end in .au or .wav and to -data for all other files.)
+
+* -text Write CD-Text information based on information taken from a file that contains ascii information for  the  text  strings. Requires 1 of:
+** -useinfo (req) tells wodim to read the *.inf (related to icedax)
+** -cuefile=filename
+***  If a CUE sheet file contains both (binary CDTEXTFILE and text based SONGWRITER) entries, then the information based on the CDTEXTFILE entry will win.
+
+* -textfile=filename Write CD-Text based on information  found  in  the  binary  file filename.
+** (To  get  data in a format suitable for this option use `wodim -vv -toc'  to  extract  the  information   from   disk.)
+
+Examples:
+$ wodim dev=/dev/sr0 -v -pad infile.wav
+$ wodim dev=/dev/sr0 -v -pad -text -cuefile=infile.cue infile.wav
+
+Actual cmdln used by K3b to burn audio CD:
+$ wodim -v gracetime=2 dev=/dev/sr0 speed=24 -sao driveropts=burnfree -useinfo -audio /path/to/k3b_audio_0_01.inf
 __envHEREDOC__
 }
 helpscan0(){
