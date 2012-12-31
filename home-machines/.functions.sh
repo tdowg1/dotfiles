@@ -2803,14 +2803,23 @@ helpburn(){
 cat <<'__envHEREDOC__'
 Erase rewritable medium
 ----
+* In general, try these 2 cmdln's in this order:
+$ cdrecord -v blank=fast dev=/dev/sr0 
+$ cdrecord -v blank=all -force dev=/dev/sr0 
 * cdrw -> see helpwodim
 * dvdrw
 $ dvd+rw-format -force /dev/sr0
-$ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0
+** 1.  ^just ran this and it seems to never come back!! just chillin at 100% :( (got locked to infinity).
+** 2.  ^So then i go to K3b and do: format and erase:: everything set to Auto, except-Settings( Force=Checked, Quick_Format=Unchecked ).
+*** Then I look at the cmdln that resulted in success... THE SAME AS THE ONE I RAN!  And did NOT result in getting locked to infinity!... uhg
+*** Actual cmdln: /usr/bin/dvd+rw-format -gui -force /dev/sr0
+** 3.  ^mmk. Perhaps I just haz bad anomoly?  The above cmdln worked on the next dvd+rw I needed to quick-clear.
+$ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0 
 
 Tips
 ----
 * wodim says: HINT: use dvd+rw-mediainfo from dvd+rw-tools for information extraction.
+$ dvd+rw-mediainfo /dev/sr0
 
 See Also
 ----
