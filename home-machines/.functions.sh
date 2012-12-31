@@ -2792,11 +2792,30 @@ $ identify -format %G image | awk --field-separator x '{ print $1 }'
 $ identify -format %G image | awk --field-separator x '{ print $2 }'
 __envHEREDOC__
 }
+helpburn(){
+cat <<'__envHEREDOC__'
+Erase rewritable medium
+----
+* cdrw -> see helpwodim
+* dvdrw
+$ dvd+rw-format -force /dev/sr0
+$ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0
+
+Tips
+----
+* wodim says: HINT: use dvd+rw-mediainfo from dvd+rw-tools for information extraction.
+
+See Also
+----
+* helpwodim*
+__envHEREDOC__
+}
 helpwodim(){
 cat <<'__envHEREDOC__'
 $ wodim --devices
 
-Erase rewritable medium using /dev/sr0 ( blank=help ):
+Erase rewritable medium using /dev/sr0 ( blank=help ) (for DVD's see helpburn):
+----
 $ wodim dev=/dev/sr0 -v blank=all  [-eject]   # Blank the entire disk. This may take a long time.
 $ wodim dev=/dev/sr0 -v blank=fast [-eject]   # Minimally blank the disk. This results in erasing the PMA, the TOC and the pregap.
 $ wodim dev=/dev/sr0 -v blank={type} [-force] # The -force option may be used to blank CD-RW disks that otherwise cannot be blanked.
