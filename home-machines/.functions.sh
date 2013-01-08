@@ -1784,6 +1784,15 @@ __envHEREDOC__
 }
 helpaptitude2(){
 cat <<'__envHEREDOC__'
+== [un]hold a Package ==
+$ echo synergy hold | sudo dpkg --set-selections  # this will get applied to apt-get's db too.
+$ aptitude [un]hold synergy
+=== More (aptitude-related) ==
+Run aptitude with no parameters, then limit the list (Ctrl-l) to those
+packages on hold (~ahold). Then select the header of all packages on
+hold and hit "+" to mark them for install. This removes the hold. Then
+do an update to get the current version.
+
 == SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
 $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 
