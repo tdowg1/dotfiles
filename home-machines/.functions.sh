@@ -2050,9 +2050,9 @@ $ resize2fs -p DEVICE              # expands device to max, -p shows progress.
 TODO STUB $ mkfs -t btrfs                    # create btrfs filesystem.
 $ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
 $ mkfs.vfat -n label DEVICE        # create fat32 filesystem; useful for reformat thumb drive.
-$ cfdisk -P {r|s|t} DEVICE         # Print partition table in 3 formats:
+$ cfdisk -P {r|s|t} DEVICE         # Print partition table/layout in 3 formats:
                                    #   r Raw data format (exactly what would be written to disk)
-                                   #   s Partition table in sector order format
+                                   #   s Partition table in sector order format (YOULL PROBABLY WANT THIS!)
                                    #   t Partition table in raw format.
 $ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
 $ partprobe  -s                    # Informs OS kernel of partition table changes, by requesting
