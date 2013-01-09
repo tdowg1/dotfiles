@@ -713,6 +713,9 @@ cat <<'__envHEREDOC__'
 == Examples ==
 Ripping bootable knoppix disk to iso file:
 $ dcfldd if=/dev/sr0 of=knoppix.iso   md5log=md5sum status=on sizeprobe=if
+Hexdump of first 64 sectors of DEVICE (this is relevant to grub shtuffs):
+$ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
+  ^^and after running grub-install, for instance, the contents of this area will be modified.
 
 
 == See Also ==
