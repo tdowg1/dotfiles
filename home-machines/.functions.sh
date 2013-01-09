@@ -1961,10 +1961,6 @@ __envHEREDOC__
 helphdd(){
 cat <<'__envHEREDOC__'
 == Lesser Known hdd-related cmds ==
-hdparm : A utility for displaying and/or setting hard disk parameters,
-       : for instance, to spin down hard drives, tweak performance.
- `--> can be used to benchmark *AN UNMOUNTED* device : hdparm -t /dev/md0
-sdparm : List or change SCSI/SATA disk parameters
 
 == Is ISO File Bootable? (whether the ISO is an isohybrid) ==
 # Check for the string 'Hidden HPFS/NTFS' in fdisk:
@@ -1972,8 +1968,7 @@ $ fdisk -l debian-testing-i386-netinst.iso
 Device                          Boot      Start         End      Blocks Id  System
 debian-testing-i386-netinst.iso   *           1         249      254944 17  Hidden HPFS/NTFS
 
-== Partition-related ==
-=== What kind of partition is it? ===
+== What kind of partition is it? (using tune2fs,ntfslabel) ==
 ==== EXTENDED ('logical' in the stupid windows realm) ====
 $ sudo tune2fs -l /dev/sdc2    # /dev/sdc2 is an extended partition
 tune2fs 1.41.12 (17-May-2010)
@@ -2020,9 +2015,17 @@ lsblk           # !!! List Block Devices. !!!!!!!!!!!!!!!!!!!!!!!!!
 findmnt         # !!! Prints all mounted FS's in tree-format by default. !!!!!!!
 di              # Disk information util, displays more than df.
 disktype        # Detect && display nfo about FS's, partitions, tables, etc.
-hdparm          # tune hard disk parameters for high performance.  Get/set device parameters for Linux SATA/IDE drives. Primary use is for enabling irq-unmasking and IDE multiplemode.
+hdparm          # Tune hard disk parameters for high performance.
+                #   Get/set device parameters for Linux SATA/IDE drives.
+                #   Primary use is for enabling irq-unmasking and IDE multiplemode.
+                #   A utility for displaying and/or setting hard disk parameters, for instance, to spin down hard drives, tweak performance.
+                #   Can be used to benchmark *AN UNMOUNTED* device : hdparm -t /dev/md0
 sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
-gpart           # Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
+gpart           # Guess PC disk partition table, find lost partitions.
+                #   Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.
+                #   It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical.
+                #   It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).
+                #   The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
 pv              # Shell pipeline element to meter data passing though.
 
 ==== What are block sizes? ====
