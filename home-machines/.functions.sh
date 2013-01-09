@@ -2405,6 +2405,7 @@ helpnotify-send(){
 cat <<'__envHEREDOC__'
 notify-send (1)      - a program to send desktop notifications
 notify-send [OPTION...] <SUMMARY> [BODY] - create a notification
+$ notify-send  "dry-run COMPLETE" "dry-run COMPLETE"
 __envHEREDOC__
 }
 helppopup(){
