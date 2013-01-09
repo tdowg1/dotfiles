@@ -2002,9 +2002,6 @@ $ tune2fs -l <device> | grep name
 ==== Which devices are seen? ====
 $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # host=intelduo
 
-==== What are block sizes? ====
-$ cat /proc/partitions
-
 == Misc ==
 findfs {LABEL=label | UUID=uuid}  # Identify device that matches query.
 cfdisk          # Display or manipulate disk partition table.
@@ -2027,6 +2024,9 @@ hdparm          # tune hard disk parameters for high performance.  Get/set devic
 sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
 gpart           # Guess PC disk partition table, find lost partitions. Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.  It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical. It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).  The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
 pv              # Shell pipeline element to meter data passing though.
+
+==== What are block sizes? ====
+$ cat /proc/partitions
 __envHEREDOC__
 }
 helphdd2(){
