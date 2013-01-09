@@ -2041,6 +2041,8 @@ $ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
 $ tune2fs -c 5 -i 5d DEVICE                      # check every MIN(5 mounts or 5d).
 $ tune2fs -e remount-ro DEVICE                   # change errors behaviour.
 $ tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL DEVICE
+$ tune2fs -l DEVICE                # display info about filesystem.
+$ dumpe2fs -h DEVICE                # display info about filesystem (same as tune2fs -l).
 $ resize2fs -p DEVICE              # expands device to max, -p shows progress.
 TODO STUB $ mkfs -t btrfs                    # create btrfs filesystem.
 $ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
