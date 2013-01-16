@@ -1021,6 +1021,8 @@ helpvim4(){
 * zz - center vim display about the cursor
 * Search[/Replace]: show more context when reviewing matches
 ** :se scrolloff=5 - prior to searching or put to vimrc
+* Effectively insert "|-" in between every other line:
+** :%s/\n/\r|-\r/gc
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -2990,6 +2992,13 @@ cat <<'__envHEREDOC__'
 pv -pterab
 __envHEREDOC__
 }
+helpwget(){
+cat <<'__envHEREDOC__'
+Limit download bandwidth to 750 kilobytes (768000 bytes):
+$ wget --limit-rate 768000 url
+__envHEREDOC__
+}
+
 
 
 
