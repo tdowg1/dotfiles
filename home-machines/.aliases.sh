@@ -150,6 +150,7 @@ alias dbm='cd "$dbm"'
 alias dbpub='cd "$dbpub"'
 # TODO STUB need dbpubpics
 alias dbs='cd "$dbs"'
+alias dbsedu='cd "$dbsedu"'
 
 # misc places
 alias x11='cd "$x11"'

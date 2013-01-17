@@ -24,6 +24,7 @@ export dbl="$HOME/Dropbox/linux"
 export dbm="$HOME/Dropbox/db.misc-linuxish"
 export dbpub="$HOME/Dropbox/Public"
 export dbs="$HOME/Dropbox/db.scripts-snippets"
+export dbsedu="$HOME/Dropbox/db.scripts-snippets/edu.by-example-,learn"
 export x11="/etc/X11"					# misc
 export xorg="${x11}/xorg.conf"
 export ri="$HOME/rsnapshot-ignore/"
