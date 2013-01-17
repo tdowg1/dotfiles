@@ -1702,6 +1702,9 @@ SORT A SINGLE LINE
  echo "b t n h" | sort                              # invalid.
  echo "n y a n" | tr ' ' '\n' | sort                # get sorted characters, 1-per-line
  echo "n y a n" | tr ' ' '\n' | sort | xargs echo   # get sorted characters, SINGLE line
+
+List device labels according to device name:
+$ ll /dev/disk/by-label/ | sort -k10
 __envHEREDOC__
 }
 helpzip(){
