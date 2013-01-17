@@ -2998,6 +2998,22 @@ Limit download bandwidth to 750 kilobytes (768000 bytes):
 $ wget --limit-rate 768000 url
 __envHEREDOC__
 }
+helplogrotate-of-files(){
+cat <<'__envHEREDOC__'
+filename-and-file-extension.N.`date +"%Y-%m-%d"`
+^^prefer
+filename-and-file-extension.`date +"%Y-%m-%d"`.N
+
+filename-and-file-extension.`date +"%Y-%m-%d"`
+
+filename.`date +"%Y-%m-%d"`.file-extension
+filename.`date +"%Y-%m-%d"`.N.file-extension
+filename.N.`date +"%Y-%m-%d"`.file-extension
+
+filename-and-file-extension.`date +"%Y-%m-%d.%H-%M`
+__envHEREDOC__
+}
+
 
 
 
