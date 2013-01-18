@@ -835,10 +835,15 @@ helprsync(){
 
 cat <<'__envHEREDOC__'
 == ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?' ==
-COPY FOLDER
+COPY FOLDER (into destination folder):
 	rsync -av /opt/muzik /mnt/rsnapshot/
-COPY FOLDER's CONTENTS
+SYNC FOLDER's CONTENTS with that of the destination:
 	rsync -av /opt/muzik/ /mnt/rsnapshot/
+
+== YET ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?' ==
+?do NOT create extra directory?
+TRUEcheck this to clone src to destination (both paths contain trailing slash)
+FALSEleave unchecked to create an extra directory inside destination (first path does NOT contain trailing slash)
 __envHEREDOC__
 }
 helprsyncexamples(){

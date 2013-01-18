@@ -16,20 +16,26 @@ export SVN_EDITOR=vim
 export PAGER="less"
 
 
-# Places
+## 
+## Places (`cd'-related) 1of2
 export db="$HOME/Dropbox"				# dropbox
 export dbbkmks="$HOME/Dropbox/rLIFE/bookmarks"
 export dbi="$HOME/Dropbox/db.inst-and-sys-config-linux"
 export dbl="$HOME/Dropbox/linux"
 export dbm="$HOME/Dropbox/db.misc-linuxish"
 export dbpub="$HOME/Dropbox/Public"
+export dbpubpics="$HOME/Dropbox/Public/pics"
 export dbs="$HOME/Dropbox/db.scripts-snippets"
 export dbsedu="$HOME/Dropbox/db.scripts-snippets/edu.by-example-,learn"
 export x11="/etc/X11"					# misc
 export xorg="${x11}/xorg.conf"
 export ri="$HOME/rsnapshot-ignore/"
 export rim="$HOME/rsnapshot-ignore/mnt/"
-
+export installsoft="/mnt/va49/"
+export installsoftos="${installsoft}/os"
+export installsoftos2="${installsoft}/os2"
+## /Places (`cd'-related) 1of2
+## 
 
 
 
@@ -315,6 +321,13 @@ fi # /IS_I_ON_MAGNIFICENT
 
 
 
+## 
+## Places (`cd'-related) 2of2
+## (NOTE as to why the 'Places' variable defn.'s require 2 different sections:
+##    There's prob a better way to do it, but...: there
+##    are dependecies introduced with the above host-specific variable defn
+##    blocks and in order for variables to get defined correctly in all cases, 2
+##    different sections were required.)
 
 # set default top-level of dswww...
 : ${dswww:="$HOME/rsnapshot-ignore/mnt/smb-dswww-rt/"}
@@ -331,6 +344,8 @@ lifedork="${dswww}/root/LIFE.dork/"
 dork="${dswww}/root/LIFE.dork/"
 proj="${dswww}/root/proj/"
 
+## /Places (`cd'-related) 2of2
+## 
 
 
 

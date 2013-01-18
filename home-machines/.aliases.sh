@@ -148,7 +148,7 @@ alias dbl='cd "$dbl"'
 alias dblkde='cd "$dbl/.kde/share/"'
 alias dbm='cd "$dbm"'
 alias dbpub='cd "$dbpub"'
-# TODO STUB need dbpubpics
+alias dbpubpics='cd "$dbpubpics"'
 alias dbs='cd "$dbs"'
 alias dbsedu='cd "$dbsedu"'
 
@@ -171,6 +171,10 @@ alias proj='cd "$proj" ; pwd'
 
 alias ri='cd "$ri"'
 alias rim='cd "$rim"'
+
+alias installsoft='cd "$installsoft"'
+alias installsoftos='cd "$installsoftos"'
+alias installsoftos2='cd "$installsoftos2"'
 ## /Places (`cd'-related)
 ##
 
