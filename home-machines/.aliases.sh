@@ -182,7 +182,8 @@ alias installsoftos2='cd "$installsoftos2"'
 ## 
 ## Things (`vim'-file-editing-related)
 alias vibx='sudo vim "$xorg"'
-
+alias vibuy='vim "$db/db.dox/next.Buy.txt"'
+alias vibuyarchive='vim "$db/db.dox/next.Buy.txt.archive.txt"'
 ## /Things (`vim'-file-editing-related)
 ## 
 
