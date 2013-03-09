@@ -2735,6 +2735,11 @@ helppv(){
 cat <<'__envHEREDOC__'
 (2012-12-05 19:05:39) Tim C.
 $ dd if=/dev/sdb bs=4M | pv -eprb -s 466g > /dev/null
+
+$ pv -pterab
+
+Parted Magic's pv does not support the -a option:
+$ pv -pterb
 __envHEREDOC__
 }
 helpvlc(){
@@ -2993,11 +2998,6 @@ PDF files too large? Try this and adjust -quality value:
 $ convert *tif -compress jpeg -quality 1 pdf.pdf
 $ convert *png -compress jpeg -quality 1 pdf.pdf
 $ convert *[pretty much most image formats, AWESOMELY!] -compress jpeg -quality 1 pdf.pdf
-__envHEREDOC__
-}
-helppv(){
-cat <<'__envHEREDOC__'
-pv -pterab
 __envHEREDOC__
 }
 helpwget(){
