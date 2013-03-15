@@ -2330,17 +2330,20 @@ __envHEREDOC__
 }
 helpchkconfig(){
 cat <<'__envHEREDOC__'
+== RHEL-related ==
+<no notes for this section since I'm pretty familiar>
+
 == Ubuntu-related ==
-----
 chkconfig /seems/ to be workable, but isn't exactly like rhel (also, I think its just a convenience program... and probably shouldnt really be used--USE the deb shtuff instead!)... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
 
-see also : insserve update-rc.d
-other keywords : lsb upstart lsb-header
+see also : insserve update-rc.d helpupdatercd
 
 see also2 : 
 * REFUSED(buggy or obsolete) rcconf(must also manually install 'dialog') - displays a menu of all the services which could be started at boot
 * sysv-rc-conf(or ksysv for KDE)
 * sysvconfig
+
+other keywords : lsb upstart lsb-header
 
 ==== upstart commands ====
 initctl - can use in place of "service" with the commands bellow. Run initctl help. 
@@ -2353,6 +2356,7 @@ status - requests status of service
 
 == See also ==
 * https://help.ubuntu.com/community/UbuntuBootupHowto
+* http://wiki.debian.org/LSBInitScripts
 __envHEREDOC__
 }
 helprenice(){
@@ -3021,6 +3025,17 @@ filename.N.`date +"%Y-%m-%d"`.file-extension
 filename-and-file-extension.`date +"%Y-%m-%d.%H-%M`
 __envHEREDOC__
 }
+helpupdatercd(){
+cat <<'__envHEREDOC__'
+update-rc.d - install and remove System-V style init script links
+
+update-rc.d SERVICE disable|enable [ S|2|3|4|5 ]
+
+== See also ==
+helpchkconfig
+__envHEREDOC__
+}
+
 
 
 
