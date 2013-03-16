@@ -17,10 +17,15 @@ stuff "ll /dev/disk/by-label/"
 stuff "ll /dev/disk/by-label/"
 
 screen -t "mnt-l"
-stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
-stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
-stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
-stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
+#stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
+#stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
+#stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
+#stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep '\^/' "
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep -P '\[|\]' "
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep -P '\[|\]' "
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep -P '\[|\]' "
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep -P '\[|\]' "
+stuff "mount -l | grep -v '/sys/kernel/' | grep -v 'none on /run' | grep -P '\[|\]' "
 
 screen -t "df"
 stuff "df -hT"
