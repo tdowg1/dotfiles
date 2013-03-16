@@ -2346,12 +2346,13 @@ see also2 :
 other keywords : lsb upstart lsb-header
 
 ==== upstart commands ====
-initctl - can use in place of "service" with the commands bellow. Run initctl help. 
-start - start a service
-stop - stop a service
-reload - sends a SIGHUP signal to running process
-restart - restarts a service without reloading its job config file
-status - requests status of service 
+* initctl - can use in place of "service" with the commands bellow. Run initctl help. 
+** initctl list === `service --status-all' in RHEL
+* start - start a service
+* stop - stop a service
+* reload - sends a SIGHUP signal to running process
+* restart - restarts a service without reloading its job config file
+* status - requests status of service 
 
 
 == See also ==
