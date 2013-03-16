@@ -3025,6 +3025,14 @@ filename.N.`date +"%Y-%m-%d"`.file-extension
 filename-and-file-extension.`date +"%Y-%m-%d.%H-%M`
 __envHEREDOC__
 }
+helpadaptec(){
+cat <<'__envHEREDOC__'
+/usr/StorMan/StorMan.sh
+__envHEREDOC__
+}
+helpstormanager(){
+       helpadaptec
+}
 helpupdatercd(){
 cat <<'__envHEREDOC__'
 update-rc.d - install and remove System-V style init script links
