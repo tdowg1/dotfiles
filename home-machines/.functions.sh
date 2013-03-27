@@ -2913,9 +2913,10 @@ $ wodim dev=/dev/sr0 -v -tao -data /path/to/iso speed=0  [-eject]
 * Re: "speed=0":: If you get an error mesage saying /wodim: trying to use a high speed medium on low writer/, try use higher burninng speed such us speed=1 or speed=2.
 * If speed=N is omitted, by default wodim will try the max.
 
-Burn fil[es|e tree] without making ISO
+Burn file[s| tree] without making ISO
 ----
 $ genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
+$ genisoimage [-V workstation] -R workstation/* | wodim dev=/dev/sr0 -v speed=2 -
 
 See Also
 ----
