@@ -460,7 +460,8 @@ helpmd5(){
 	# consider RENAME helpchecksumming, helpdigest, helphashdigest, etc
 	cat <<'__envHEREDOC__'
 CREATE1:: Filenames (from find)  may not be sorted! # cd $DIR
-$ find . -type f -exec md5sum '{}' \; > md5sum.md5
+~~$ find . -type f -exec md5sum '{}' \; > md5sum.md5~~
+$ find . -type f ! -name md5sum.md5  -exec md5sum '{}' \; > md5sum.md5
 $ # it may then be desirable to have hashes sorted by filename:
 $ sort -k2 md5sum.md5  >  md5sum.md5.sorted
 
