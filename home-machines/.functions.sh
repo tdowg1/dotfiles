@@ -1831,7 +1831,9 @@ cat <<'__envHEREDOC__'
 EXAMPLES
 * nice ionice -c 3 svn up
 ** run svn with low priority (+10 (`nice -10') is default (+20 being lowest priority)) and as an idle io process.
+
 * nice -12 ionice -c 3 svn up
+
 * ionice -c 3 -p 89
 ** Sets process with PID 89 as an idle io process.
 __envHEREDOC__
@@ -2370,10 +2372,8 @@ $ sudo renice 9 23871      # decrease scheduling favorability
    `--> 23871: old priority 2, new priority 9
 $ sudo renice 11 23871     # decrease scheduling favorability
    `--> 23871: old priority 9, new priority 11
-
-== See also ==
-* getprocesspriority() slowdown() unslowdown() helpsudo()
 __envHEREDOC__
+
 #$ sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; 
 #i.e.
 ## sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
@@ -2381,6 +2381,18 @@ cat <<'__envHEREDOC__'
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; <insert name of function to call>
 i.e.
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
+__envHEREDOC__
+
+cat <<'__envHEREDOC__'
+* nice --18 process
+** runs process in the real time class (one of the most favorable classes)
+* renice -18 23871
+** changes process priority (to be in one of the most favorable scheduling classes)
+__envHEREDOC__
+
+cat <<'__envHEREDOC__'
+== See also ==
+* getprocesspriority() slowdown() unslowdown() helpsudo()
 __envHEREDOC__
 }
 helppasswd(){
