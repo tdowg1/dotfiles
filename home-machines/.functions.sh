@@ -2437,6 +2437,14 @@ echo "calling helpnotify-send()."
 __envHEREDOC__
 helpnotify-send
 }
+helpalert(){
+cat <<'__envHEREDOC__'
+== See also ==
+* helpnotify-send()
+* growlnotify (OSX app only)
+** http://superuser.com/questions/235417/whats-the-linux-equivalent-of-os-xs-growl
+__envHEREDOC__
+}
 
 
 
