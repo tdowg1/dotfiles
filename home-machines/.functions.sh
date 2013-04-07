@@ -2872,6 +2872,10 @@ $ cdrecord -v blank=fast dev=/dev/sr0
 $ cdrecord -v blank=all -force dev=/dev/sr0 
 * cdrw -> see helpwodim
 * dvdrw
+$ /usr/bin/dvd+rw-format -gui -force /dev/sr0
+** ^this is what K3b executes (if, for instance, told it to burn an .iso file and it didn't like the state of the optical media...)
+*** yeah, well... BUT DID IT ACTUALLY WORK?  AND BURN THE .iso TO THE MEDIA???
+**** .
 $ dvd+rw-format -force /dev/sr0
 ** 1.  ^just ran this and it seems to never come back!! just chillin at 100% :( (got locked to infinity).
 ** 2.  ^So then i go to K3b and do: format and erase:: everything set to Auto, except-Settings( Force=Checked, Quick_Format=Unchecked ).
@@ -2879,6 +2883,7 @@ $ dvd+rw-format -force /dev/sr0
 *** Actual cmdln: /usr/bin/dvd+rw-format -gui -force /dev/sr0
 ** 3.  ^mmk. Perhaps I just haz bad anomoly?  The above cmdln worked on the next dvd+rw I needed to quick-clear.
 $ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0 
+* https://bugs.launchpad.net/ubuntu/+source/cdrkit/+bug/15424/comments/77
 
 Generate ISO of non-audio, optical medium
 ----
@@ -2888,7 +2893,9 @@ $ dcfldd if=/dev/sr0 of=knoppix.iso
 
 Burn ISO
 ----
--> see helpwodim
+* -> see helpwodim
+* growisofs -dvd-compat -Z /dev/dvd=image.iso
+* growisofs -dvd-compat -Z /dev/dvd -l -r -V "volume-name" "directory-to-burn"
 
 General Tips
 ----
@@ -2896,10 +2903,13 @@ General Tips
 ** $ dvd+rw-mediainfo /dev/sr0
 * How to find out the device that your DVD/CD rom is attached to:
 ** $ cat /proc/sys/dev/cdrom/info
+* If errors are received (esp when burning re-writables) try specifying different speeds
+** speed=6
 
 See Also
 ----
 * helpwodim*
+* devdump, isoinfo, isovfy, isodump - Utility programs for dumping and verifying iso9660 images.
 __envHEREDOC__
 }
 helpwodim(){
@@ -2929,7 +2939,16 @@ $ wodim dev=/dev/sr0 -v -tao -data /path/to/iso speed=0  [-eject]
 Burn file[s| tree] without making ISO
 ----
 $ genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
+If your system is loaded, you should run genisoimage in the real time class too:
+$ sudo nice --18 genisoimage -R /master/tree | wodim dev=2,0 -v fs=6m speed=2 -
+
 $ genisoimage [-V workstation] -R workstation/* | wodim dev=/dev/sr0 -v speed=2 -
+
+~~Some snippets and scratch notes while zero'ing in on the right cmdln to use for optical backups:
+~~cd disk01 ; 
+~~nice --18 genisoimage -V disk01 -R . | wodim dev=/dev/sr0 -v -eject
+~~/Some snippets and scratch notes while zero'ing in on the right cmdln to use for optical backups:
+
 
 See Also
 ----
@@ -3021,6 +3040,7 @@ __envHEREDOC__
 }
 helpwget(){
 cat <<'__envHEREDOC__'
+$ wget -i links.txt --wait=15 --random-wait
 Limit download bandwidth to 750 kilobytes (768000 bytes):
 $ wget --limit-rate 768000 url
 __envHEREDOC__

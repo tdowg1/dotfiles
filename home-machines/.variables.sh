@@ -88,6 +88,8 @@ if [[ -f /etc/bash_completion.d/git ]] ; then
 fi
 
 
+# Python
+PYTHONPATH=$PATH
 # Python interpreter tweaks
 if [[ -f ~/.pystartup ]] ; then
 	PYTHONSTARTUP=~/.pystartup
