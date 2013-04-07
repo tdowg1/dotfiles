@@ -663,7 +663,7 @@ EXAMPLES --------
 rewrite entire disk (with itself)
    dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
 
-EXAMPLES hdd-REMAPPING ----------------------
+EXAMPLES hdd-REMAPPING.1 ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
 WRITE-rewrite entire disk.1-trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18)
@@ -678,6 +678,12 @@ $
 ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
    smartctl --test offline /dev/sda
 ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
+
+EXAMPLES hdd-REMAPPING.2 ----------------------
+ http://smartmontools.sourceforge.net/badblockhowto.html
+
+See also
+* fddBadLbaAndSurrounding1000Sectors
 
 
 $ dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
@@ -2449,6 +2455,14 @@ cat <<'__envHEREDOC__'
 echo "calling helpnotify-send()."
 __envHEREDOC__
 helpnotify-send
+}
+helpalert(){
+cat <<'__envHEREDOC__'
+== See also ==
+* helpnotify-send()
+* growlnotify (OSX app only)
+** http://superuser.com/questions/235417/whats-the-linux-equivalent-of-os-xs-growl
+__envHEREDOC__
 }
 
 
