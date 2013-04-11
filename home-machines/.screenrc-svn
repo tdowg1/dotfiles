@@ -1,0 +1,48 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+
+
+#
+# begin .screenrc-gitdevel-all specific shtuff
+# (NOTE: the c-M character says to execute statement (presses ENTER))
+screen -t "~"
+stuff "cd "
+
+screen -t "im"
+stuff "cd /home/bdavies/dev/svn-wc/ec2-account-instance-management"
+screen -t "im"
+stuff "cd /home/bdavies/dev/svn-wc/ec2-account-instance-management"
+
+screen -t "~"
+stuff "cd "
+
+
+screen -t "e-i-s"
+stuff "cd $HOME/dev/svn-wc/endpoint-init-script.2-reorg-fixes/src/eiw-middleware"
+#screen -t ""
+#stuff "cd "
+
+screen -t "s/E/t"
+stuff "cd /home/bdavies/dev/svn/EIW/trunk"
+screen -t "svn-M"
+stuff "cd /mnt/misc/svn-wc/com.spryinc/EIW/trunk/EIW-DocsInfo/EIW-Middleware/"
+screen -t "opt"
+stuff "cd /opt"
+
+
+#screen -t ""
+#stuff "cd "
+#screen -t ""
+#stuff "cd "
+
+#screen -t ""
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+select 3
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""

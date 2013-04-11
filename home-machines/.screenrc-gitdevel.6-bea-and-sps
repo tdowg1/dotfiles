@@ -1,0 +1,49 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+
+
+#
+# begin .screenrc-gitdevel-all specific shtuff
+# (NOTE: the c-M character says to execute statement (presses ENTER))
+screen -t "man"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "be"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/gadgets-bea/"
+
+screen -t "~"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+screen -t "SPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+
+screen -t "SPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+
+screen -t "SPS"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/SparqlProxyService"
+
+screen -t "~"
+stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+#screen -t ""
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+
+
+select 3
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""

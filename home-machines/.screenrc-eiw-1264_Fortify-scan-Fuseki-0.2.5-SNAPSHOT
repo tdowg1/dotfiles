@@ -1,0 +1,49 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+
+
+#
+# begin .screenrc-gitdevel-all specific shtuff
+# (NOTE: the c-M character says to execute statement (presses ENTER))
+screen -t "cdw"
+stuff "cdw "
+
+screen -t "gitsvnTr"
+stuff "cd $HOME/dev/git/jena-fuseki-trunk-git-svn"
+#screen -t "gitsvnTr"
+#stuff "cd $HOME/dev/git/jena-fuseki-trunk-git-svn"
+
+screen -t "svnTr"
+stuff "cd $HOME/dev/jena-fuseki-trunk"
+
+
+screen -t "021"
+stuff "cd $HOME/dev/git/fortifyscan-jena-fuseki-0.2.1"
+#screen -t "021"
+#stuff "cd $HOME/dev/git/fortifyscan-jena-fuseki-0.2.1"
+
+screen -t "025"
+stuff "cd $HOME/dev/git/fortifyscan-jena-fuseki-0.2.5-SNAPSHOT"
+screen -t "025"
+stuff "cd $HOME/dev/git/fortifyscan-jena-fuseki-0.2.5-SNAPSHOT"
+
+
+select 3
+
+#screen -t ""
+#stuff "cd "
+#screen -t ""
+#stuff "cd "
+
+#screen -t ""
+#stuff "cd $HOME/dev/git/sprySuperGitRepo/"
+#stuff "cd $HOME/"
+#stuff "cd $HOME"
+
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""

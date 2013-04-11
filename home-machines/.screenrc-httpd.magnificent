@@ -1,0 +1,42 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+#source /home/$HOME/.screenrc
+
+
+#
+# begin .screenrc-httpd specific shtuff
+# (NOTE: the c-M character says to execute statement)
+screen -t "ht"
+stuff "cd /etc/apache2"
+stuff "ll"
+#stuff "bin/shutdown.sh ; sleep 3; bin/startup.sh"
+stuff "echo 'IS /etc/hosts OK with magnificent.com?'"
+#stuff "_bin/my-tomcat-bouncer.sh"
+
+screen -t "log"
+#stuff "cd /etc/apache2"
+#stuff "sleep 4s"
+stuff "echo ;  echo ;"
+stuff "tail -f /var/log/apache2/*log"
+
+screen -t "conf"
+stuff "cd /etc/apache2"
+stuff "sudo vim apache2.conf"
+
+
+screen -t "x"
+stuff "cd /etc/apache2/"
+stuff ""
+
+screen -t "y"
+stuff "cd /etc/apache2/"
+stuff ""
+
+select 1
+
+#screen -t ""
+#stuff "cd /etc/apache2"
+#stuff ""
