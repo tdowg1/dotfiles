@@ -2458,7 +2458,7 @@ __envHEREDOC__
 }
 helppopup(){
 cat <<'__envHEREDOC__'
-echo "calling helpnotify-send()."
+calling helpnotify-send().
 __envHEREDOC__
 helpnotify-send
 }
@@ -2470,6 +2470,22 @@ cat <<'__envHEREDOC__'
 ** http://superuser.com/questions/235417/whats-the-linux-equivalent-of-os-xs-growl
 __envHEREDOC__
 }
+helpreadlink(){
+cat <<'__envHEREDOC__'
+$ readlink `which java`
+/etc/alternatives/java
+
+$ readlink -e `which java`
+/usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java
+__envHEREDOC__
+}
+helplinks(){
+cat <<'__envHEREDOC__'
+calling helpreadlink().
+__envHEREDOC__
+helpreadlink
+}
+
 
 
 
