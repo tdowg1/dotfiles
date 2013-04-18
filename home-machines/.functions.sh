@@ -1241,8 +1241,14 @@ __envHEREDOC__
 }
 helpuseradd(){
 	cat <<'__envHEREDOC__'
-sudo useradd --home=/home/<username> --create-home --password=<passwd>  <username>
+sudo useradd [--home=/home/<username>] --create-home [--password=<passwd>]  <username>
 	NOTE value for SHELL in /etc/default/useradd
+
+Create users on a machine with pre-defined uid, gids (esp. useful if restoring
+files from a tar backup or need to explicitly define such things):
+# assume uid=gid=1003 and login is mfdoom::
+$ sudo groupadd --gid 1003 mfdoom
+$ sudo useradd --create-home --uid 1003 --gid 1003 mfdoom
 __envHEREDOC__
 }
 helpnetwork(){
