@@ -1035,6 +1035,11 @@ helpvim4(){
 ** :se scrolloff=5 - prior to searching or put to vimrc
 * Effectively insert "|-" in between every other line:
 ** :%s/\n/\r|-\r/gc
+* Misc regex
+** escapes some commas and does stuff with quotes (csv-related):
+*** :%s/^\(.[^,]*\),\(.[^,]*\)/\1,"\2"/gc
+** joins a line onto the previous one if it doesnt start with a pipe (mediawiki table-related):
+*** :%s/\n\([^|].*\)\+$/\; \1/gc
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -2485,6 +2490,13 @@ calling helpreadlink().
 __envHEREDOC__
 helpreadlink
 }
+helpssh(){
+cat <<'__envHEREDOC__'
+ssh -o "ForwardAgent=yes" remote.local
+cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
+__envHEREDOC__
+}
+
 
 
 
