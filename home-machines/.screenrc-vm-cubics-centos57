@@ -1,0 +1,46 @@
+# custom screenrc 'execute stuff' help src:
+# 
+#
+# source default/base screenrc config
+source $HOME/.screenrc
+
+
+#
+# (NOTE: the c-M character says to execute statement (presses ENTER))
+#screen -t "~"
+#stuff "cd "
+
+screen -t "a1"
+stuff "ssh -A vm-cubics-centos57-image-a1"
+screen -t "a1"
+stuff "ssh -A vm-cubics-centos57-image-a1"
+screen -t "a1"
+stuff "ssh -A vm-cubics-centos57-image-a1"
+
+screen -t "a2"
+stuff "ssh -A vm-cubics-centos57-image-a2"
+screen -t "a2"
+stuff "ssh -A vm-cubics-centos57-image-a2"
+screen -t "a2"
+stuff "ssh -A vm-cubics-centos57-image-a2"
+
+screen -t "a3"
+stuff "ssh -A vm-cubics-centos57-image-a3"
+screen -t "a3"
+stuff "ssh -A vm-cubics-centos57-image-a3"
+#screen -t "a3"
+#stuff "ssh -A vm-cubics-centos57-image-a3"
+
+#screen -t "~"
+#stuff "cd "
+
+#screen -t ""
+#stuff "cd "
+#screen -t ""
+#stuff "cd "
+
+select 3
+
+#screen -t ""
+#stuff "cd $TOMCAT_HOME"
+#stuff ""
