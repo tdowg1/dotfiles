@@ -2424,7 +2424,8 @@ __envHEREDOC__
 }
 helpshred(){
 cat <<'__envHEREDOC__'
-shred [--interations=3] --remove --verbose --zero  file
+shred [--interations=N] --remove --verbose --zero  file
+shred [-n N]            -u       -v        -z      f
 __envHEREDOC__
 }
 helpjava(){
@@ -3030,7 +3031,9 @@ Notes on how to Scan artifacts in Linux
 
 TODO STUB---ROOT OUT BADS, IDENTIFY GOODS.
 * gscan2pdf : GNOME-based prog
-** not bad
+** not bad!
+** Edit > Preferences > Default filename for PDF's:
+*** %Y-%M-%D_%t--%a_%y-%m-%d
 
 * simple-scan : GNOME-based prog
 * xsane.i686 : X Window System front-end for the SANE scanner interface
