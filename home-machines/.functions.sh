@@ -2491,9 +2491,10 @@ calling helpreadlink().
 __envHEREDOC__
 helpreadlink
 }
-helpssh(){
+helpssh2(){
 cat <<'__envHEREDOC__'
 ssh -o "ForwardAgent=yes" remote.local
+ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
 cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
 __envHEREDOC__
 }
