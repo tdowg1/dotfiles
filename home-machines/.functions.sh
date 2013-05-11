@@ -2051,14 +2051,20 @@ disktype        # Detect && display nfo about FS's, partitions, tables, etc.
 hdparm          # Tune hard disk parameters for high performance.
                 #   Get/set device parameters for Linux SATA/IDE drives.
                 #   Primary use is for enabling irq-unmasking and IDE multiplemode.
-                #   A utility for displaying and/or setting hard disk parameters, for instance, to spin down hard drives, tweak performance.
+                #   A utility for displaying and/or setting hard disk parameters, 
+                #   for instance, to spin down hard drives, tweak performance.
                 #   Can be used to benchmark *AN UNMOUNTED* device : hdparm -t /dev/md0
 sdparm          # List or change SCSI/SATA/ATAPI/CD/DVD disk parameters.
 gpart           # Guess PC disk partition table, find lost partitions.
-                #   Gpart is a tool which tries to guess the primary partition table of a PC-type disk in case the primary partition table in sector 0 is damaged, incorrect or deleted.
-                #   It is also good at finding and listing the types, locations, and sizes of inadvertently-deleted partitions, both primary and logical.
-                #   It gives you the information you need to manually re-create them (using fdisk, cfdisk, sfdisk, etc.).
-                #   The guessed table can also be written to a file or (if you firmly believe the guessed table is entirely correct) directly to a disk device.
+                #   Gpart is a tool which tries to guess the primary partition table 
+                #   of a PC-type disk in case the primary partition table in sector 0 
+                #   is damaged, incorrect or deleted.
+                #   It is also good at finding and listing the types, locations, and 
+                #   sizes of inadvertently-deleted partitions, both primary and logical.
+                #   It gives you the information you need to manually re-create 
+                #   them (using fdisk, cfdisk, sfdisk, etc.).
+                #   The guessed table can also be written to a file or (if you firmly 
+                #    believe the guessed table is entirely correct) directly to a disk device.
 pv              # Shell pipeline element to meter data passing though.
 
 ==== What are block sizes? ====
