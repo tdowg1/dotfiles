@@ -2498,6 +2498,13 @@ ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
 cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
 __envHEREDOC__
 }
+helpXephyr(){
+cat <<'__envHEREDOC__'
+Xephyr -query vega2 :1
+~~Xephyr -query remote-vega2 :1~~ # cannot do this due to... port issue.
+__envHEREDOC__
+}
+
 
 
 
