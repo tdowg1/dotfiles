@@ -2067,6 +2067,8 @@ gpart           # Guess PC disk partition table, find lost partitions.
                 #    believe the guessed table is entirely correct) directly to a disk device.
 pv              # Shell pipeline element to meter data passing though.
 
+SEE ALSO `helplstopo`
+
 ==== What are block sizes? ====
 $ cat /proc/partitions
 __envHEREDOC__
@@ -2351,7 +2353,8 @@ $ lsdev         # display information about installed hardware (pkg:procinfo)
 $ awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
 
 == See also ==
-* helphardinfo
+* helphardinfo[2]
+* helplstopo
 __envHEREDOC__
 }
 helpchkconfig(){
@@ -3143,6 +3146,24 @@ update-rc.d SERVICE disable|enable [ S|2|3|4|5 ]
 helpchkconfig
 __envHEREDOC__
 }
+helplstopo(){
+cat <<'__envHEREDOC__'
+lstopo is apart of the Portable Hardware Locality (hwloc) project.
+
+# These 2 options print locality of I/O devices (Breaks down 
+# which hardware controls which device),
+# in a hierarchical manner. For example, this is especially useful if trying to 
+# find out which controller a particular hdd is connected to, etc.
+$ lstopo --taskset
+$ lstopo --cpuset
+#/These 2 options
+
+$ lstopo --logical
+$ lstopo --physical
+$ lstopo --whole-io
+__envHEREDOC__
+}
+
 
 
 
