@@ -935,8 +935,7 @@ $ rpm -ihv --nodeps rpmfile # forces an rpm installation (I think)
 $ rpm -qa *PACKAGE_NAME*    # search installed rpm packages for PACKAGE_NAME
 $ rpm -qa --last            # gives packge & date modified
 $ rpm -qip rpmfile          # display details for the rpm file rpmfile
-
---filesbypkg                # list all the files in package 
+      --filesbypkg          # list all the files in package 
 __envHEREDOC__
 }
 helpvim(){
