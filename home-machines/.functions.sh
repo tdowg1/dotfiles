@@ -237,7 +237,7 @@ function grepbylabel(){
    ll /dev/disk/by-label/ | grep -i "$greppattern"
 }
 
-fddBadLbaAndSurrounding1000Sectors(){
+function ddBadLbaAndSurrounding1000Sectors(){
 	local device=$1
 	local lba=$2
 	local plusorminusamount=1000
@@ -245,6 +245,26 @@ fddBadLbaAndSurrounding1000Sectors(){
 		sudo dd if=/dev/zero of=$device count=1 seek=$i conv=notrunc,noerror oflag=direct | xargs echo $i;
 	done
 }
+
+function smartctllogger(){
+	# Example: $0 /dev/sdb a96-931
+	#
+	# What does this function do?
+	# - smartctl option '--all' and '--xall' will be called.
+	# - log file generated to CWD.
+
+	local devicepath=$1
+	local devicename=$2
+
+	local nextcmd="smartctl_--all"
+	local logfilename="${devicename}_$( date +"%Y-%m-%d_%H.%M.%S" )_cmd-${nextcmd}.log"
+	smartctl --all "${devicepath}"  >  "${logfilename}"
+
+	nextcmd="smartctl_--xall"
+	logfilename="${devicename}_$( date +"%Y-%m-%d_%H.%M.%S" )_cmd-${nextcmd}.log"
+	smartctl --all "${devicepath}"  >  "${logfilename}"
+}
+
 ## /HDD-related
 ##
 
