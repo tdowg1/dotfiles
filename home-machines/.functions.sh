@@ -224,6 +224,9 @@ grepdotfiles(){
 	greptxtfiles "$searchquery" "$searchpath" 
 	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
 }
+
+## 
+## HDD-related
 function grepbylabel(){
    # bylabelgrep, or...
    # grepbylabel
@@ -234,8 +237,6 @@ function grepbylabel(){
    ll /dev/disk/by-label/ | grep -i "$greppattern"
 }
 
-
-
 fddBadLbaAndSurrounding1000Sectors(){
 	local device=$1
 	local lba=$2
@@ -244,19 +245,29 @@ fddBadLbaAndSurrounding1000Sectors(){
 		sudo dd if=/dev/zero of=$device count=1 seek=$i conv=notrunc,noerror oflag=direct | xargs echo $i;
 	done
 }
+## /HDD-related
+##
 
-# make svn help paginate politely
+
 svnhelp(){
+	# Make svn help paginate politely.
 	svn help $* | less -FX
 }
-# make accurev help paginate politely
 achelp(){
+	# Make accurev help paginate politely.
 	accurev help $* | less -FX
 }
 
-aptitudesns(){
-	aptitude search "$1" | awk '{ print $2 }' | xargs --verbose  aptitude show | less -FX
+#aptitudesns(){
+aptitudesearchandshow(){
+	# Foreach package returned from the `aptitude search` user-specified query, 
+	# perform an `aptitude show`.  Note that the actual `aptitude show` cmdln 
+	# that gets executed will be printed out to the very first line prior 
+	# to any subsequent output coming from `aptitude show`.
+   local aptitudeSearchPattern="$1"
+	aptitude -F "%p" search "$aptitudeSearchPattern" | xargs --verbose  aptitude show
 }
+
 
 ##
 ## CLEARCASE-RELATED
@@ -414,6 +425,7 @@ createSymlinkTogms_pvobCCView(){
 	cd "${OLDPWD}"
 }
 ## /CLEARCASE-RELATED
+##
 
 
 #fixvimrc(){
@@ -935,8 +947,7 @@ $ rpm -ihv --nodeps rpmfile # forces an rpm installation (I think)
 $ rpm -qa *PACKAGE_NAME*    # search installed rpm packages for PACKAGE_NAME
 $ rpm -qa --last            # gives packge & date modified
 $ rpm -qip rpmfile          # display details for the rpm file rpmfile
-
---filesbypkg                # list all the files in package 
+      --filesbypkg          # list all the files in package 
 __envHEREDOC__
 }
 helpvim(){
