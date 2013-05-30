@@ -547,6 +547,8 @@ sudo rsnapshot-diff hourly.1/ubu1010/etc hourly.2/ubu1010/etc
 sudo rsnapshot-diff hourly.1/ubu1010/usr hourly.2/ubu1010/usr
 sudo rsnapshot-diff hourly.1/ubu1010/var hourly.2/ubu1010/var
 
+File count of each rsnapshot, from oldest to newest:
+$ for i in $(ls -trd ./*) ; do  echo $i $( sudo find $i | wc -l); done
 __envHEREDOC__
 }
 pssynergy(){
