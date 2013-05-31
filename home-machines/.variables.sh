@@ -227,6 +227,7 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	# 2012-11-26 TEMPORARY VARIABLES
 	CDH=/home/bdavies/cdh3
 	HADOOP=$CDH/hadoop
+	HADOOP_HOME=$CDH/hadoop
 	HADOOP_TUTORIAL=$CDH/hadoop-tutorial
 	PATH=${PATH}:/home/bdavies/cdh3/hadoop/bin/
 fi
