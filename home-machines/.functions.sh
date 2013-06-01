@@ -918,10 +918,9 @@ __envHEREDOC__
 }
 helprenameexamples(){
 cat <<'__envHEREDOC__'
-EXAMPLES
-
-== rename v1 (non-regex) ==
-=== Insert at the beginning--pad with zero ===
+== Rename v1 (non-regex) ==
+---------------------------
+# Insert to the beginning: zero padding::
 $ rename "" 0"" [0-9]     # desired behaviour: mv [0, 1, 2] => [00, 01, 02]
 
 $ disk="${TOP_LEVEL_DIRECTORY}/${CHILD_DIR_PREFIX}"
@@ -929,25 +928,36 @@ $ rename "$disk" "$disk"0 "$disk"?
 $ [[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
 
 
-== rename v2 (regex) ==
-$ rename -n  's/\ HEAD//'  intelduo\ bookmarks-201*
+== Rename v2 (regex) ==
+-----------------------
+$ rename -v 's/\ HEAD//' intelduo\ bookmarks-201*
 intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
 intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
 
-$ rename --verbose 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf 
+$ rename -v 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf 
 book of eli 2005.pdf renamed as book of eli 2005 [ISBN 159159159X].pdf
 
 $ rename -v 's/\.bak$//' *.bak    # Strips the extension from all "*.bak" files.
 le-file.txt.bak renamed as le-file.txt
 
-$ rename 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
+$ rename -v 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
 
-$ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/'  le-file.txt 
+$ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/' le-file.txt 
 le-file.txt renamed as le-file__insert-txt-at-4-positions-from-the-end__.txt
 
-Zero-pad image files:
-$ rename -v  's/-(\d)-/-00$1-/' *.jpg
+# Zero-pad image files:
+$ rename -v 's/-(\d)-/-00$1-/' *.jpg
 wasacomadago232-9-lg.jpg renamed as wasacomadago232-009-lg.jpg
+
+# Insert todays (ISO) date to the beginning (of all matching file names):
+$ rename -v "s//$( date +'%Y-%m-%d' ) /" [0-9]*.*
+127.18 renamed as 2013-05-31 127.18                                                                                    
+17.94 renamed as 2013-05-31 17.94
+
+# Append '.pdf' to the end (of all matching file names):
+$ rename -v 's/(.*)/$1.pdf/' [0-9]*.*
+2013-05-31 127.18 renamed as 2013-05-31 127.18.pdf                                                                     
+2013-05-31 17.94 renamed as 2013-05-31 17.94.pdf
 __envHEREDOC__
 }
 
