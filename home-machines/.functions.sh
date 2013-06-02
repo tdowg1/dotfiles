@@ -3206,13 +3206,22 @@ $ lstopo --physical
 $ lstopo --whole-io
 __envHEREDOC__
 }
+helpchromium(){
+	case $1 in
+		google-chrome) local whichbrowser="$1" ;;
+		*) local whichbrowser="chromium" ;;
+	esac
 
-
-
-
-
-
-
+	heredocWithVariables=$(cat <<__envHEREDOC__
+${whichbrowser} URL
+${whichbrowser} --incognito URL
+__envHEREDOC__
+	)
+	echo "$heredocWithVariables"
+}
+helpgooglechrome(){
+   helpchromium "google-chrome"
+}
 
 
 
@@ -3224,7 +3233,15 @@ cat <<'__envHEREDOC__'
 __envHEREDOC__
 }
 
+_help7_vars_interpretted(){
+	heredocWithVariables=$(cat <<__envHEREDOC__
 
+__envHEREDOC__
+)
+	echo "$heredocWithVariables"
+}
+
+unset -f _help6 _help7_vars_interpretted
 ## ### #### ###################################################################
 ##
 ## /help text functions
