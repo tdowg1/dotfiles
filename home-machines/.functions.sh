@@ -2757,7 +2757,8 @@ Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
 $ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
 
 == Mount CD-ROM (or some other optical media) ==
-$ mount -t iso9660 -o ro /dev/sr0 /mnt/mountpoint
+$ mkdir /media/cdrom
+$ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
 __envHEREDOC__
 }
 helpeject(){
