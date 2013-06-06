@@ -2735,11 +2735,12 @@ Jan 31 21:02:53 laptop ntfs-3g[3689]: Cmdline options: rw,nosuid,nodev,uhelper=u
 Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,fsname=/dev/sdc1,blkdev,blksize=4096,default_permissions
 
 == Mount NTFS volume with full user write permission ==
-  sudo mkdir /media/mraid0a2244_ad/  &&  \
-  sudo mount -v /dev/sdg1 /media/mraid0a2244_ad/ -t ntfs o rw,allow_other,blocksize=4096,default_permissions
+$ mount -v /dev/sdg1 /media/mountpoint -t ntfs -o rw,allow_other,blocksize=4096,default_permissions
 
 == Mount FAT* volume with full user write permission ==
-  sudo mount -t vfat /dev/sdb1 /media/external -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
+$ mount -v /dev/sdb1 /media/mountpoint -t vfat -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
+
+$ mount -v /dev/sdb1 /media/mountpoint -t vfat -o rw,nosuid,nodev,uid=$( id -u ),gid=$( id -g ),shortname=mixed,dmask=0077,utf8=1,showexec,flush
 
 == Mount/Create ramdisk / tmpfs ==
 #RAMDISK=/tmp/ramdisk
