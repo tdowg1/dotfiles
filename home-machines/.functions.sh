@@ -10,6 +10,17 @@
 #get that echoandexec method I wrote
 
 
+mkdosurlfrominputurlstring(){
+	local inputurlstring="$1"
+
+   #[InternetShortcut]
+   #URL=http://www.altavista.com/
+   cat <<__HEREDOC__
+[InternetShortcut]
+URL=$inputurlstring
+__HEREDOC__
+}
+
 findwildiname(){
 	if [[ $# = 0 ]] ; then
 		echo "findwildiname() [path] wildcarded_searchstring"
