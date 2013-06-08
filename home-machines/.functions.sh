@@ -2989,15 +2989,14 @@ helpburn(){
 cat <<'__envHEREDOC__'
 Erase rewritable medium
 ----
-* In general, try these 2 cmdln's in this order:
+* In general -> try these 2 cmdln's in this order:
 $ cdrecord -v blank=fast dev=/dev/sr0 
 $ cdrecord -v blank=all -force dev=/dev/sr0 
-* cdrw -> see helpwodim
-* dvdrw
+* cdrw -> see `helpwodim`
+* dvdrw -> continue:
 $ /usr/bin/dvd+rw-format -gui -force /dev/sr0
 ** ^this is what K3b executes (if, for instance, told it to burn an .iso file and it didn't like the state of the optical media...)
-*** yeah, well... BUT DID IT ACTUALLY WORK?  AND BURN THE .iso TO THE MEDIA???
-**** .
+*** yeah, but the actual outcome was that prob didn't actually work.
 $ dvd+rw-format -force /dev/sr0
 ** 1.  ^just ran this and it seems to never come back!! just chillin at 100% :( (got locked to infinity).
 ** 2.  ^So then i go to K3b and do: format and erase:: everything set to Auto, except-Settings( Force=Checked, Quick_Format=Unchecked ).
@@ -3015,9 +3014,11 @@ $ dcfldd if=/dev/sr0 of=knoppix.iso
 
 Burn ISO
 ----
-* -> see helpwodim
-* growisofs -dvd-compat -Z /dev/dvd=image.iso
-* growisofs -dvd-compat -Z /dev/dvd -l -r -V "volume-name" "directory-to-burn"
+* cdrw -> see `helpwodim`
+* dvdrw -> continue:
+** growisofs -dvd-compat -Z /dev/dvd=image.iso
+** growisofs -dvd-compat -Z /dev/sr0=image.iso   # <- YES! finally! something works!
+** growisofs -dvd-compat -Z /dev/dvd -l -r -V "volume-name" "directory-to-burn"
 
 General Tips
 ----
@@ -3031,6 +3032,7 @@ General Tips
 See Also
 ----
 * helpwodim*
+* helpgrowisofs
 * devdump, isoinfo, isovfy, isodump - Utility programs for dumping and verifying iso9660 images.
 __envHEREDOC__
 }
@@ -3235,6 +3237,46 @@ __envHEREDOC__
 helpgooglechrome(){
    helpchromium "google-chrome"
 }
+helpgrowisofs(){
+cat <<'__envHEREDOC__'
+* This worked perfectly (or not???) on a known good, previously used dvd+rw medium:
+growisofs -dvd-compat -Z /dev/sr0=kubuntu-13.04-desktop-amd64.iso
+
+* Here's a snippet of output:
+Executing 'builtin_dd if=kubuntu-13.04-desktop-amd64.iso of=/dev/sr0 obs=32k seek=0'
+/dev/sr0: pre-formatting blank DVD+RW...
+/dev/sr0: "Current Write Speed" is 2.5x1352KBps.
+   14614528/973078528 ( 1.5%) @2.4x, remaining 5:27 RBU  99.9% UBU   1.9%
+   25690112/973078528 ( 2.6%) @2.4x, remaining 4:55 RBU  99.9% UBU  94.4%
+   36765696/973078528 ( 3.8%) @2.4x, remaining 4:40 RBU  99.9% UBU  94.4%
+<SNIP!>
+  941686784/973078528 (96.8%) @2.4x, remaining 0:09 RBU  93.6% UBU  94.4%
+  952762368/973078528 (97.9%) @2.4x, remaining 0:06 RBU  60.5% UBU  94.4%
+  963837952/973078528 (99.1%) @2.4x, remaining 0:02 RBU  27.5% UBU  94.4%
+builtin_dd: 475136*2KB out @ average 2.4x1352KBps
+/dev/sr0: flushing cache
+/dev/sr0: writing lead-out
+/dev/sr0: reloading tray
+
+* Note that /var/log/syslog displayed this during the above exec:
+Jun  7 23:42:50 intelduo kernel: [772304.792033] warning: `growisofs' uses 32-bit capabilities (legacy support in use)
+
+
+
+Or Not??? (didn't work perfectly?)
+----
+* appears to have burned OK, however, the resulting medium would not boot!
+** I tried multiple drives on multiple computers and also even tested that I could boot a different dvd+rw medium that was laying around, so it's not a drive issue.
+** next:
+*** FAILS tried: sudo !! 
+*** FAILS trying totally different dvdrw media
+*** FAILS trying dvdr-9 (dual layer) (used that crappy white media tho...)
+*** trying dvdr-5, but via k3b or whatever.. here is the cmdln that is running:
+**** /usr/bin/wodim -v gracetime=2 dev=/dev/sr0 speed=8 -sao driveropts=burnfree -data -tsize=475136s -
+**** ^^so prob calculated the size (tsize; which is easy) and then is piping over the .iso file, i assume.
+__envHEREDOC__
+}
+
 
 
 
