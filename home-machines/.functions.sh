@@ -1869,6 +1869,11 @@ __envHEREDOC__
 }
 helpaptitude2(){
 cat <<'__envHEREDOC__'
+== Removing packages ==
+The following package was automatically installed and is no longer required:
+  linux-image-3.2.0-34-generic
+Use 'apt-get autoremove' to remove them.
+
 == [un]hold a Package ==
 $ echo synergy hold | sudo dpkg --set-selections  # this will get applied to apt-get's db too.
 $ aptitude [un]hold synergy
