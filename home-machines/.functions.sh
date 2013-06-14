@@ -1123,7 +1123,6 @@ helpvim5(){
 
 __envHEREDOC__
 }
-* Trim trailing whitespace
 helpxargs(){
 	cat <<'__envHEREDOC__'
 ex:
