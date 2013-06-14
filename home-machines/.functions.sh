@@ -1115,6 +1115,15 @@ MISC
 * C-w= - make window width equal
 __envHEREDOC__
 }
+helpvim5(){
+      cat <<'__envHEREDOC__'
+* Select all and then put into OS's clipboard (copy) (this also puts content into the "yank" buffer--as if you said 'y' instead of '"+y'):
+** ggVG
+** "+y
+
+__envHEREDOC__
+}
+* Trim trailing whitespace
 helpxargs(){
 	cat <<'__envHEREDOC__'
 ex:
