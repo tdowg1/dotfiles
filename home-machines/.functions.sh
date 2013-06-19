@@ -1548,6 +1548,15 @@ $ git svn init https://yohai.example.com/svn/Project/trunk/subproject.....
 $ git svn fetch
 __envHEREDOC__
 }
+helpgit6(){
+cat <<'__envHEREDOC__'
+? How to get tags from upstream repo, so I can (e.g.) check it out, if have a clean clone of (upstream) master?
+List available tags:
+$ git tag [-l -n]
+Checkout one of the available tags
+$ git checkout [TAB-TAB] <one of the tag names>
+__envHEREDOC__
+}
 
 
 helptree(){
