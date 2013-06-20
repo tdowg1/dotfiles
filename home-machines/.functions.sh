@@ -11,6 +11,10 @@
 
 
 mkdosurlfrominputurlstring(){
+	if [[ $# = 0 ]] ; then
+		echo "Example: mkdosurlfrominputurlstring() http://example.org/ > link-to-example.org.URL"
+		return
+	fi
 	local inputurlstring="$1"
 
    #[InternetShortcut]
@@ -19,6 +23,12 @@ mkdosurlfrominputurlstring(){
 [InternetShortcut]
 URL=$inputurlstring
 __HEREDOC__
+}
+createurl(){
+	mkdosurlfrominputurlstring "$@"
+}
+mkurl(){
+	mkdosurlfrominputurlstring "$@"
 }
 
 findwildiname(){
