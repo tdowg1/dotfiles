@@ -3055,7 +3055,7 @@ $ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0
 
 Generate ISO of non-audio, optical medium
 ----
-dd duh-duh-duh-duh-duh-DUMB ass
+dd duh-duh-duh-duh-duh-DUMB arss
 $ dd if=/dev/sr0 of=/path/to/output/file.iso
 $ dcfldd if=/dev/sr0 of=knoppix.iso
 
@@ -3066,6 +3066,14 @@ Burn ISO
 ** growisofs -dvd-compat -Z /dev/dvd=image.iso
 ** growisofs -dvd-compat -Z /dev/sr0=image.iso   # <- YES! finally! something works!
 ** growisofs -dvd-compat -Z /dev/dvd -l -r -V "volume-name" "directory-to-burn"
+
+dd to ISO (e.g.) for Speed Reports (context=Debian Other mailing list "USB Port speeds")
+----
+$ dd if=/dev/zero bs=1M count=1000 | \
+  xorriso -as cdrecord -v dev=/dev/sr0 -
+
+$ dd if=/dev/zero bs=1M count=1000 | \
+  xorriso -as cdrecord -v dev=/dev/sr0 stream_recording=on -
 
 General Tips
 ----
