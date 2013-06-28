@@ -2419,9 +2419,23 @@ __envHEREDOC__
 }
 helptruecrypt(){
 cat <<'__envHEREDOC__'
+== In general ==
 $ truecrypt --list -v
 
-SEE ALSO `helphdd4`
+== Unmount and Mount ==
+If the truecrypt device is already mounted and needs to be dis-mounted, determine the /dev/mapper/truecryptX device associated with the volume:
+$ truecrypt --list  # e.g.
+3: /dev/sde2 /dev/mapper/truecrypt4 /peanut/butter/truecrypt/time
+
+$ sudo umount /peanut/butter/truecrypt/time
+$ sudo mount /dev/mapper/truecrypt4 /peanut/butter/truecrypt/time
+
+== Checking underlying file system ==
+If the truecrypt device is mounted, dismount it.
+$ sudo e2fsck -f -y -v /dev/mapper/truecrypt4
+
+== See also ==
+* helphdd4
 __envHEREDOC__
 }
 
