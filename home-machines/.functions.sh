@@ -1330,6 +1330,9 @@ __envHEREDOC__
 }
 helpnetwork(){
 cat <<'__envHEREDOC__'
+arp                               # get mac address from ip address
+
+== See also ==
 helpnetstat
 helpnslookup
 __envHEREDOC__
