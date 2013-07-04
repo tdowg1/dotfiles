@@ -1135,11 +1135,22 @@ __envHEREDOC__
 }
 helpxargs(){
 	cat <<'__envHEREDOC__'
-ex:
-   echo bluetooth iscsi iscsid lvm2-monitor notExecuted |\
+== Examples ==
+Execute chkconfig for a bunch of services at once:
+$ echo bluetooth iscsi iscsid lvm2-monitor notExecuted |\
 	xargs --verbose -n 1 -i{} --delimiter=' ' chkconfig --levels 123456 {} off
-EXECUTE LINES FROM A FILE
-	cat /some/FILE | xargs --verbose -L 1 -i{} bash -c {} --another-optional-arg
+
+Execute lines from a file:
+$ cat /some/FILE | xargs --verbose -L 1 -i{} bash -c {} --another-optional-arg
+
+Join a BUNCH of lines together that has new lines, leading spaces, etc. to a SINGLE line:
+$ echo "
+  mtr combines the functionality of the 'traceroute' and 'ping' programs 
+  in a single network diagnostic tool.
+
+  As mtr starts, it investigates the network connection between the host
+  mtr runs on and a user-specified destination host." | xargs echo
+mtr combines the functionality of the traceroute and ping programs in a single network diagnostic tool. As mtr starts, it investigates the network connection between the host mtr runs on and a user-specified destination host.
 __envHEREDOC__
 }
 helpirb(){
