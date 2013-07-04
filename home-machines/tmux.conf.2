@@ -1,0 +1,59 @@
+# 2013-07-03: copied from https://raw.github.com/msekletar/dotfiles/master/tmux.conf
+# act like vim
+setw -g mode-keys vi
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind-key -r C-h select-window -t :-
+bind-key -r C-l select-window -t :+
+
+# act like GNU screen
+unbind C-b
+set -g prefix C-a
+
+# look good
+set -g default-terminal "screen-256color"
+
+# Set status bar
+set -g status-bg colour236
+set -g status-fg colour250
+set -g status-left '#[fg=colour235,bg=colour149,bold] + '
+set -g status-right '#[fg=colour250,bg=colour238] %H:%M #[fg=colour235,bg=colour149,bold] + '
+
+# Highlight active window
+set -g window-status-format "#[fg=colour250,bg=colour237] #I #W "
+set -g window-status-current-format "#[fg=colour232,bg=colour190,noreverse,bold] #I. #W "
+setw -g window-status-bg colour236
+setw -g window-status-current-bg colour190
+setw -g window-status-current-fg colour232
+
+# Message appearance
+set-option -g message-fg colour232
+set-option -g message-bg colour190
+
+# Pane
+set-option -g pane-active-border-fg colour149
+set-option -g pane-border-fg colour236
+
+# Start numbering from 0
+set -g base-index 1
+
+# Faster command sequences
+set -s escape-time 0
+
+# choose window (bufexplorer like)
+bind b choose-window
+
+# window notifications
+setw -g monitor-activity on
+set -g visual-activity on
+
+# UTF-8
+setw -g utf8 on
+
+# Automatically set window title
+setw -g automatic-rename on
+
+# Allow to use mouse
+setw -g mode-mouse on
