@@ -3360,6 +3360,13 @@ It's important to note a few things with the above config.
 There is an argument to pam_unix.so called nullok_secure.  Changing this to nullok may allow for login via `su - guest` when using a random X Terminal or remote shell, however it's recommended to not do. http://unix.stackexchange.com/a/10872
 __envHEREDOC__
 }
+helptmux(){
+cat <<'__envHEREDOC__'
+http://www.dayid.org/os/notes/tm.html
+https://gist.github.com/MohamedAlaa/2961058
+__envHEREDOC__
+}
+
 
 
 
