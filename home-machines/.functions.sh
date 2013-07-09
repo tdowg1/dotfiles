@@ -3366,6 +3366,28 @@ http://www.dayid.org/os/notes/tm.html
 https://gist.github.com/MohamedAlaa/2961058
 __envHEREDOC__
 }
+helphadoop(){
+cat <<'__envHEREDOC__'
+$ sudo -u hdfs hadoop dfsadmin -safemode leave
+$ sudo -u hdfs hadoop dfsadmin -report
+__envHEREDOC__
+}
+helphadoop1(){
+cat <<'__envHEREDOC__'
+== Create HDFS home directory for curr $USER ==
+NOTE: if hdfs permissions are disabled, you can omit the 'sudo -u hdfs':
+sudo -u hdfs hadoop fs -mkdir /user/$USER
+sudo -u hdfs hadoop fs -chown $USER:$USER /user/$USER
+
+NOTE: if using MapR, you should use the mapr user instead of hdfs above:
+sudo -u mapr hadoop fs -mkdir /user/$USER
+sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
+__envHEREDOC__
+}
+
+
+
+
 
 
 
