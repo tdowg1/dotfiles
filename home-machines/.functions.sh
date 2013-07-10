@@ -1327,6 +1327,13 @@ $ env | grep ^SSH           # Ensure SSH_AUTH_SOCK defined?
 $ ssh-add ~/.ssh/some-key   # If so, then can add keys!
 __envHEREDOC__
 }
+helpssh2(){
+cat <<'__envHEREDOC__'
+ssh -o "ForwardAgent=yes" remote.local
+ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
+cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
+__envHEREDOC__
+}
 helpuseradd(){
 	cat <<'__envHEREDOC__'
 sudo useradd [--home=/home/<username>] --create-home [--password=<passwd>]  <username>
@@ -2614,13 +2621,6 @@ cat <<'__envHEREDOC__'
 calling helpreadlink().
 __envHEREDOC__
 helpreadlink
-}
-helpssh2(){
-cat <<'__envHEREDOC__'
-ssh -o "ForwardAgent=yes" remote.local
-ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
-cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
-__envHEREDOC__
 }
 helpXephyr(){
 cat <<'__envHEREDOC__'
