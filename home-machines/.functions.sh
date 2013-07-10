@@ -1311,17 +1311,17 @@ __envHEREDOC__
 
 helpssh(){
 	cat <<'__envHEREDOC__'
-ssh
-	[-N (Do not execute a remote command; useful when forwarding ports)]
+$ ssh
+	[-D localhost-proxy-port-to-use]
+	[-N] # Do not execute a remote command; useful when forwarding ports; use with -D
 	[-p ssh-server-port-to-connect-with]
-	[-D localhost-SOCKS-proxy-to-use]
-	[-i identity_file (NOTE:should be 400)]
-	[user@]ssh-server
+	[-i identity_file]   # NOTE: file mode bits should be 400
+	[user@]host1
 
-FINGERPRINTs
-	ssh-keygen -l -f  private-open-ssh-key
+== FINGERPRINTs ==
+$ ssh-keygen -l -f  private-open-ssh-key
 
-AGENTs
+== AGENTs ==
 $ exec ssh-agent bash
 $ env | grep ^SSH           # Ensure SSH_AUTH_SOCK defined?
 $ ssh-add ~/.ssh/some-key   # If so, then can add keys!
@@ -1329,9 +1329,9 @@ __envHEREDOC__
 }
 helpssh2(){
 cat <<'__envHEREDOC__'
-ssh -o "ForwardAgent=yes" remote.local
-ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
-cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
+$ ssh -o "ForwardAgent=yes" remote.local
+$ ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
+$ cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
 __envHEREDOC__
 }
 helpuseradd(){
