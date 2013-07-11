@@ -1736,12 +1736,17 @@ SEE helptypeset()
 -o option-name : enable option-name, e.g. `set -o xtrace'
 +o option-name : disable option-name, e.g. `set +o xtrace'
 
+== Shell Variables (built-in's) ==
+FUNCNAME :  An array variable containing the names of all shell functions currently in the execution call stack.  The element with index 0 is the name of any currently-executing shell function.
+
 == man-Page-Massiveness Shortcuts (GNU Bash-4.1) ==
 * ~ln3050: section:: SHELL BUILTIN COMMANDS
 * ~ln3900: buildin cmd:: set
 * ~ln4400: end section:: SHELL BUILTIN COMMANDS
 * ~ln
+
 == See also ==
+* [[Shell bash]]
 __envHEREDOC__
 }
 helpbashstrings(){
