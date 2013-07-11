@@ -282,13 +282,14 @@ function smartctllogger(){
 
 	local devicepath=$1
 	local devicename=$2
+	local commontime="$( date +"%Y-%m-%d_%H.%M.%S" )"
 
 	local nextcmd="smartctl_--all"
-	local logfilename="${devicename}_$( date +"%Y-%m-%d_%H.%M.%S" )_cmd-${nextcmd}.log"
+	local logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
 	smartctl --all "${devicepath}"  >  "${logfilename}"
 
 	nextcmd="smartctl_--xall"
-	logfilename="${devicename}_$( date +"%Y-%m-%d_%H.%M.%S" )_cmd-${nextcmd}.log"
+	logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
 	smartctl --all "${devicepath}"  >  "${logfilename}"
 }
 
