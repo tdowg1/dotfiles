@@ -290,7 +290,7 @@ function smartctllogger(){
 
 	nextcmd="smartctl_--xall"
 	logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	smartctl --all "${devicepath}"  >  "${logfilename}"
+	smartctl --xall "${devicepath}"  >  "${logfilename}"
 }
 
 ## /HDD-related
