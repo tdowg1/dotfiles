@@ -271,8 +271,14 @@ function smartctllogger(){
 	# Example: $0 /dev/sdb a96-931
 	#
 	# What does this function do?
-	# - smartctl option '--all' and '--xall' will be called.
-	# - log file generated to CWD.
+	# 1. smartctl option '--all' and '--xall' will be called.
+	# 2. log file generated to CWD.
+	if [[ $# != 2 ]] || [[ x"$1" = x"--help" ]] ; then
+		echo "$FUNCNAME - logs 'smartctl --(x)all' for device to a consistenly named log file."
+		echo "Usage:   $FUNCNAME device   volume-name"
+		echo "Example: $FUNCNAME /dev/sdb a96-931"
+		return 1
+	fi
 
 	local devicepath=$1
 	local devicename=$2
