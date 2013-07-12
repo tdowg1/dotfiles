@@ -677,6 +677,12 @@ helpsvnadmin(){
 }
 helpsamba(){
 cat <<'__envHEREDOC__'
+== Misc ==
+$ smbtar backup/restore a Windows PC directories to a local tape file
+$ smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
+$ smbget - wget-like utility for download files over SMB
+$ smbclient - ftp-like client to access SMB/CIFS resources on servers
+$ smbmount  ???
 $ nmblookup HOSTNAME
 querying HOSTNAME on w.x.y.255
 __envHEREDOC__
@@ -2669,15 +2675,8 @@ helpwHOA_wtf_cmd__u_blow_my_mind(){
 	# whoa
 cat <<'__envHEREDOC__'
 List of cmds I just happen to randomly come across and make me say "WHOA! WTF!! :) cmd, u blow my mind..."
-smbtar backup/restore a Windows PC directories to a local tape file
-smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
-smbget - wget-like utility for download files over SMB
-
 fuser - identify processes using files or sockets (similar to lsof)
    fuser -v -m /
-
-smbclient - ftp-like client to access SMB/CIFS resources on servers
-smbmount  ???
 __envHEREDOC__
 }
 helpfdupes(){
