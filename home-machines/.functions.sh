@@ -2786,66 +2786,90 @@ __envHEREDOC__
 # mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
-== Extended Attributes (ext2? ext3 ext4) ==
-use mount option "user_xattr"
-
+= /etc/fstab Entry Examples =
+-----------------------------
 == swap /etc/fstab ==
-# pri is priority E [0,32767]; higher num -> higher priority
+# pri is priority E [0,32767]; higher num -> higher priority; devices with higher priority are used first before any device with a lower priority.
 LABEL=linux-swap     none     swap     sw,pri=9    0 0
 
 == sshfs /etc/fstab ==
-sshfs#t@phisata:/mnt/a14-h/h/  /mnt/phisata   fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
+sshfs#t@phi:/mnt/h/  /mnt/phi   fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
 sshfs#b@demoportal:/usr/local/tomcat/  /home/b/mnt/demoportal  fuse  user,allow_other,nonempty,follow_symlinks,noauto   0 0
-==== sshfs use pre-requirements ====
-* need package
-$ <package manager> install sshfs
-* if want to mount without root priviledges, add user to fuse group
-$ sudo usermod --groups fuse --append USER
-* set 'user_allow_other' in /etc/fuse.conf
-* mount resource by specifying the absolute path. e.g.
-$ sshfs phisata:/mnt/a14-h/h/ /home/teelah/rsnapshot-ignore/phisata/ -o allow_other -o follow_symlinks
-* unmount the resource using:
-$ fusermount -u $absolute_path
 
-== ext4 default mount opts ==
-Jun  7 21:07:26 intelduo ntfs-3g[15480]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
-Jun  7 21:07:26 intelduo ntfs-3g[15480]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,default_permissions,fsname=/dev/sdg3,blkdev,blksize=4096
+== cifs /etc/fstab ==
+<.. it's probably not complicated>
 
-== NTFS default mount opts ==
-~~Jan 31 21:02:52 laptop kernel: [86704.202069] sd 4:0:0:0: [sdc] Attached SCSI disk
-~~Jan 31 21:02:53 laptop ntfs-3g[3689]: Version 2010.8.8 external FUSE 28
-~~Jan 31 21:02:53 laptop ntfs-3g[3689]: Mounted /dev/sdc1 (Read-Write, label "a58-458", NTFS 3.1)
-Jan 31 21:02:53 laptop ntfs-3g[3689]: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
-Jan 31 21:02:53 laptop ntfs-3g[3689]: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,fsname=/dev/sdc1,blkdev,blksize=4096,default_permissions
-
-== Mount NTFS volume with full user write permission ==
+= Mount Via Cmdln Examples =
+----------------------------
+== NTFS-3g : Mount NTFS volume with full user write permission ==
 $ mount -v /dev/sdg1 /media/mountpoint -t ntfs -o rw,allow_other,blocksize=4096,default_permissions
 
-== Mount FAT* volume with full user write permission ==
+== fat : Mount FAT* volume with full user write permission ==
 $ mount -v /dev/sdb1 /media/mountpoint -t vfat -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
-
 $ mount -v /dev/sdb1 /media/mountpoint -t vfat -o rw,nosuid,nodev,uid=$( id -u ),gid=$( id -g ),shortname=mixed,dmask=0077,utf8=1,showexec,flush
 
-== Mount/Create ramdisk / tmpfs ==
+== tmpfs : Mount/Create ramdisk/tmpfs ==
 #RAMDISK=/tmp/ramdisk
 #mkdir $RAMDISK
 #chmod 777 $RAMDISK
 sudo mount -t tmpfs -o size=256m tmpfs $RAMDISK
 #chown -R user:group $RAMDISK
 
-== Various mount options ==
-=== options-set-1 (man ntfs-3g) ===
-Options:  ro (read-only mount), remove_hiberfile, uid=, gid=,
-          umask=, fmask=, dmask=, streams_interface=.
-== yyp
-== Mount ISO image ==
+== iso9660 : Mount ISO image file ==
 $ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
 
-== Mount CD-ROM (or some other optical media) ==
+== iso9660 : Mount CD-ROM (or some other optical media) ==
 $ mkdir /media/cdrom
 $ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
+
+== cifs : Mount samba/smb/cifs share ==
+sudo mount -v -t cifs //le-sambaing-server/$USER /mnt/tmp -o user=$USER
+
+= See also =
+------------
+helpmount*()
 __envHEREDOC__
 }
+helpmount2-mountoptions(){
+cat <<'__envHEREDOC__'
+== Various mount options ==
+=== ext[43] (ext2?) Extended Attributes ===
+user_xattr
+
+=== ext4 Default mount opts ===
+* If the `defaults' option specifies: rw, suid, dev, exec, auto, nouser, and async.
+* If contradicting options are used (e.g.) like `defaults,noexec', the later will take precedence.
+* If no options are specified, the default options in ubu are: rw, relatime.
+
+=== NTFS-3g Other misc mount opts ===
+remove_hiberfile, umask=, fmask=, dmask=, streams_interface=.
+
+=== NTFS-3g Default mount opts (originally copied from syslog) ===
+ntfs-3g: Version 2010.8.8 external FUSE 28 ; ntfs-3g: Mounted /dev/sdc1 (Read-Write, NTFS 3.1)
+ntfs-3g: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
+ntfs-3g: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,fsname=/dev/sdc1,blkdev,blksize=4096,default_permissions
+__envHEREDOC__
+}
+helpmount3-sshfs-from-scratch(){
+cat <<'__envHEREDOC__'
+== sshfs : use pre-requirements ====
+* need package
+$ <package manager> install sshfs
+
+* if want to mount without root priviledges, add user to fuse group
+$ sudo usermod --groups fuse --append $USER
+
+* set 'user_allow_other' in /etc/fuse.conf
+
+* mount resource by specifying the absolute path. e.g.
+$ sshfs phi:/mnt/h/ /home/t/ri/m/phi/ -o allow_other -o follow_symlinks
+
+* unmount the resource using:
+$ fusermount -u $absolute_path
+__envHEREDOC__
+}
+
+
 helpeject(){
 cat <<'__envHEREDOC__'
 sync ; sudo umount /dev/sdj1 ; sudo eject /dev/sdj ; sync
