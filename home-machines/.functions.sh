@@ -857,6 +857,7 @@ $ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08
 
 SEE ALSO
 $ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
+helplogrotate-of-files()
 __envHEREDOC__
 }
 helpawk(){
@@ -3256,6 +3257,9 @@ helplogrotate-of-files(){
 cat <<'__envHEREDOC__'
 filename-and-file-extension.N.`date +"%Y-%m-%d"`
 ^^prefer
+filename-and-file-extension.N.`date +"%Y-%m-%d-%H-%M"`
+^^prefer (by extension)
+
 filename-and-file-extension.`date +"%Y-%m-%d"`.N
 
 filename-and-file-extension.`date +"%Y-%m-%d"`
