@@ -683,8 +683,10 @@ $ smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape dri
 $ smbget - wget-like utility for download files over SMB
 $ smbclient - ftp-like client to access SMB/CIFS resources on servers
 $ smbmount  ???
-$ nmblookup HOSTNAME
-querying HOSTNAME on w.x.y.255
+$ nmblookup HOSTNAME - querying HOSTNAME on w.x.y.255
+
+== See also ==
+helpmount()
 __envHEREDOC__
 }
 
@@ -2823,7 +2825,15 @@ $ mkdir /media/cdrom
 $ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
 
 == cifs : Mount samba/smb/cifs share ==
-sudo mount -v -t cifs //le-sambaing-server/$USER /mnt/tmp -o user=$USER
+sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
+
+=== Failed mount cmdln's... ===
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/tellah /mnt/tmp
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes/tellah /mnt/tmp
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes/ /mnt/tmp
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes /mnt/tmp
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/ /mnt/tmp
+sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/tellah /mnt/tmp
 
 = See also =
 ------------
