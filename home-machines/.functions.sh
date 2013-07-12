@@ -2827,13 +2827,17 @@ $ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
 == cifs : Mount samba/smb/cifs share ==
 sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
 
-=== Failed mount cmdln's... ===
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/tellah /mnt/tmp
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes/tellah /mnt/tmp
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes/ /mnt/tmp
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/homes /mnt/tmp
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/ /mnt/tmp
-sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //le-simba-server/tellah /mnt/tmp
+=== Notice this `mount' cmdln works for one samba server, but not the other :( ===
+Performed on id-9-ubu1204 to mount local samba share (ALL FAIL):
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/tellah /mnt/tmp
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/homes/tellah /mnt/tmp
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/homes/ /mnt/tmp
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/homes /mnt/tmp
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/ /mnt/tmp
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/tellah /mnt/tmp
+
+Performed on id-9-ubu1204 to mount p-8-f13 samba share (SUCCESS):
+$ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //p-8-f13/the-thing
 
 = See also =
 ------------
