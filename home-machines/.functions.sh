@@ -3286,8 +3286,9 @@ __envHEREDOC__
 helpwget(){
 cat <<'__envHEREDOC__'
 $ wget -i links.txt --wait=15 --random-wait
-Limit download bandwidth to 750 kilobytes (768000 bytes):
-$ wget --limit-rate 768000 url
+$ wget --limit-rate 768000 url  # Limit download bandwidth to 750kibibytes (768000 bytes).
+$ wget --limit-rate 409600 url  # Similarly, 400KiB.
+$ wget --limit-rate $(( desired-KiB-amount  *  1024 )) url
 __envHEREDOC__
 }
 helplogrotate-of-files(){
