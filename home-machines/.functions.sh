@@ -1027,6 +1027,17 @@ $ rpm -qip rpmfile          # display details for the rpm file rpmfile
       --filesbypkg          # list all the files in package 
 __envHEREDOC__
 }
+helpyum(){
+cat <<'__envHEREDOC__'
+$ yum deplist package       # returns what is needed by package.
+
+If have list of packages/rpms and want to know the dependencies of each package,
+$ echo 'list-of-packages.rpm
+some-other-package.rpm
+another-rpm-package.rpm' | sed 's/.rpm//' | xargs --verbose -n 1 -I {} yum deplist {} [>> deplist.log 2>&1]
+__envHEREDOC__
+}
+
 helpvim(){
 	cat <<'__envHEREDOC__'
 STOP IT, NANO!
