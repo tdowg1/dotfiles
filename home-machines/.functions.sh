@@ -929,7 +929,7 @@ cat <<'__envHEREDOC__'
 Misc:
 	--stats --human-readable --progress
 Opts to capture *as much as possible* (acls, hard, xatt,...):
-	rsync --archive --xattrs --acls --hard-links --devices --specials    \
+	rsync --archive --xattrs --acls --hard-links  \
 		/home/mydir/data/ /backups/data-20080810/
 Data Integrity, at expense of: time increase, i/o increase:
 	--checksum
@@ -940,6 +940,14 @@ BU an rsnapshot root/repo (hard links):
 Opts to specify OpenSSH, login:
 	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
 	rsync -av -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
+Common; useful for diff'ing:
+ Slow. Use when want to be sure data is exact, bit for bit.
+	rsync -av --delete --stats --progress --human-readable --xattrs --hard-links /le/src/ /and/dest/ --checksum    --dry-run 
+Common-2; useful for diff'ing;
+ Fast. Use when want quick results.
+ When permissions (own,grp,access) and modification times can be ignored.
+ Rsync basically just looks at file sizes.
+	rsync -av --delete --stats --progress --human-readable --xattrs --hard-links /le/src/ /and/dest/ --no-checksum --dry-run --no-owner --no-group --no-perms --no-times
 __envHEREDOC__
 }
 helprename(){
@@ -3437,6 +3445,21 @@ sudo -u mapr hadoop fs -mkdir /user/$USER
 sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
 __envHEREDOC__
 }
+helpstat(){
+cat <<'__envHEREDOC__'
+find path -type f -exec stat --format '%Y :%y %n' {} \;
+__envHEREDOC__
+}
+helpfind(){
+cat <<'__envHEREDOC__'
+== Examples ==
+Pretty sure this lists the 10 most recently modified files. Probably even lists ALL files in most recently modified first, order:
+find $a -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f2- | head
+
+__envHEREDOC__
+}
+
+
 
 
 
