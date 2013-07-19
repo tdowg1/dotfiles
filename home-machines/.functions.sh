@@ -274,7 +274,7 @@ function smartctllogger(){
 	# 1. smartctl option '--all' and '--xall' will be called.
 	# 2. log file generated to CWD.
 	if [[ $# != 2 ]] || [[ x"$1" = x"--help" ]] ; then
-		echo "$FUNCNAME - logs 'smartctl --(x)all' for device to a consistenly named log file."
+		echo "$FUNCNAME - logs 'smartctl --(x)all' for device to a consistenly named log file. (invokes sudo)"
 		echo "Usage:   $FUNCNAME device   volume-name"
 		echo "Example: $FUNCNAME /dev/sdb a96-931"
 		return 1
@@ -286,11 +286,11 @@ function smartctllogger(){
 
 	local nextcmd="smartctl_--all"
 	local logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	smartctl --all "${devicepath}"  >  "${logfilename}"
+	sudo smartctl --all "${devicepath}"  >  "${logfilename}"
 
 	nextcmd="smartctl_--xall"
 	logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	smartctl --xall "${devicepath}"  >  "${logfilename}"
+	sudo smartctl --xall "${devicepath}"  >  "${logfilename}"
 }
 
 ## /HDD-related
@@ -2203,7 +2203,7 @@ gpart           # Guess PC disk partition table, find lost partitions.
                 #    believe the guessed table is entirely correct) directly to a disk device.
 pv              # Shell pipeline element to meter data passing though.
 
-SEE ALSO `helplstopo`
+SEE ALSO `helplstopo`, helpblkid
 
 ==== What are block sizes? ====
 $ cat /proc/partitions
@@ -2488,6 +2488,15 @@ $ sudo e2fsck -f -y -v /dev/mapper/truecrypt4
 * helphdd4
 __envHEREDOC__
 }
+helpblkid(){
+cat <<'__envHEREDOC__'
+Upon inserting a failing hdd, syslog displayed:
+  timeout '/sbin/blkid -o udev -p /dev/sdd2'
+  timeout: killing '/sbin/blkid -o udev -p /dev/sdd2' [23144]
+  '/sbin/blkid -o udev -p /dev/sdd2' [23144] terminated by signal 9 (Killed)
+__envHEREDOC__
+}
+
 
 
 
