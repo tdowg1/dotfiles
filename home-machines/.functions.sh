@@ -28,6 +28,7 @@ decimal2characterTODO(){
 	#and have it do similarly what it does for decimal numbers... so would give:
 	# a b c d.
 	#i havent found a program to do this. shouldnt be hard to write. just use ascii table.
+	echo
 }
 
 mkdosurlfrominputurlstring(){
