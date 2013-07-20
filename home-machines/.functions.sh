@@ -942,6 +942,11 @@ SYNC FOLDER's CONTENTS with that of the destination:
 ?do NOT create extra directory?
 TRUEcheck this to clone src to destination (both paths contain trailing slash)
 FALSEleave unchecked to create an extra directory inside destination (first path does NOT contain trailing slash)
+
+== Don't Forget... ==
+AFAIK, when --stats, --human-readable are reported, it is done so using SI-notation (base-10) (uses powers of 1000).
+as opposed to (e.g.)
+how the _du_ command measures and reports --human-readable, which is in base-2 (uses powers of 1024).
 __envHEREDOC__
 }
 helprsyncexamples(){
