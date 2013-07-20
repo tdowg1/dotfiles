@@ -10,6 +10,26 @@
 #get that echoandexec method I wrote
 
 
+decimal2characterTODO(){
+	#in; out
+	#-------
+	#0; nil
+	#1; a
+	#2; b
+	#3; c
+	#...
+
+	#create function to go the other way too.
+	#for documentation verbage and ideas on improved naming, vars, etc. check out
+	#the `seq' program.
+
+	#somewhat related--basically, want to be able to say something like:
+	# seq a d
+	#and have it do similarly what it does for decimal numbers... so would give:
+	# a b c d.
+	#i havent found a program to do this. shouldnt be hard to write. just use ascii table.
+}
+
 mkdosurlfrominputurlstring(){
 	if [[ $# = 0 ]] ; then
 		echo "Example: mkdosurlfrominputurlstring() http://example.org/ > link-to-example.org.URL"
