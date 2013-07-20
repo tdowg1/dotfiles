@@ -1413,6 +1413,7 @@ arp                               # get mac address from ip address
 == See also ==
 helpnetstat
 helpnslookup
+helpnmap
 __envHEREDOC__
 }
 helpnetstat(){
@@ -1442,6 +1443,15 @@ host(1)
 named(8)
 __envHEREDOC__
 }
+helpnmap(){
+cat <<'__envHEREDOC__'
+Listing all Linux servers which are up in a network:
+$ nmap -v -sP <Network info>  # <nw nfo> can be a whole network (say 10.10.22.0/24) or range (say 10.10.22.1-40).
+NOTE: this cmdln didn't seem to pick up my Fedora machine... is RHEL set to not respond or something?
+__envHEREDOC__
+}
+
+
 
 helpgit(){
 	cat <<'__envHEREDOC__'
