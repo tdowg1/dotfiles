@@ -699,12 +699,33 @@ helpsvnadmin(){
 helpsamba(){
 cat <<'__envHEREDOC__'
 == Misc ==
-$ smbtar backup/restore a Windows PC directories to a local tape file
-$ smbtar - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
-$ smbget - wget-like utility for download files over SMB
-$ smbclient - ftp-like client to access SMB/CIFS resources on servers
-$ smbmount  ???
 $ nmblookup HOSTNAME - querying HOSTNAME on w.x.y.255
+
+# `apropos smb' : 
+$ cupsaddsmb (8)       - export printers to samba for windows clients
+$ findsmb (1)          - list info about machines that respond to SMB name queries on a subnet
+$ mksmbpasswd (8)      - formats a /etc/passwd entry for a smbpasswd file
+$ mount.smbfs (8)      - mount using the Common Internet File System (CIFS)
+$ samba (7)            - A Windows SMB/CIFS fileserver for UNIX
+$ smb.conf (5)         - The configuration file for the Samba suite
+$ smbcacls (1)         - Set or get ACLs on an NT file or directory names
+$ smbclient (1)        - ftp-like client to access SMB/CIFS resources on servers
+$ smbcontrol (1)       - send messages to smbd, nmbd or winbindd processes
+$ smbcquotas (1)       - Set or get QUOTAs of NTFS 5 shares
+$ smbd (8)             - server to provide SMB/CIFS services to clients
+$ smbget (1)           - wget-like utility for download files over SMB
+$ smbgetrc (5)         - configuration file for smbget
+$ smbmount (8)         - mount using the Common Internet File System (CIFS)
+$ smbpasswd (5)        - The Samba encrypted password file
+$ smbpasswd (8)        - change a user's SMB password
+$ smbspool (8)         - send a print file to an SMB printer
+$ smbstatus (1)        - report on current Samba connections
+$ smbstatus.samba3 (1) - report on current Samba connections
+$ smbtar (1)           - shell script for backing up SMB/CIFS shares directly to UNIX tape drives
+$ smbtar backup/restore a Windows PC directories to a local tape file
+$ smbtree (1)          - A text based smb network browser
+$ testparm (1)         - check an smb.conf configuration file for internal correctness
+$ testparm.samba3 (1)  - check an smb.conf configuration file for internal correctness
 
 == See also ==
 helpmount()
