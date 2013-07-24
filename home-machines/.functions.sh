@@ -3532,8 +3532,11 @@ helpfind(){
 cat <<'__envHEREDOC__'
 == Examples ==
 Pretty sure this lists the 10 most recently modified files. Probably even lists ALL files in most recently modified first, order:
-find $a -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f2- | head
+$ find $a -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f2- | head
 
+Both of the next 2 cmdln's will find the same number of files, but in order to use '-exec' *MUST* wrap within parens or else the '-exec' will only operate on the file that match the last '-name':
+$ find ark.*    -name \*.rar -o -name \*.par2
+$ find ark.* \( -name \*.rar -o -name \*.par2 \) -exec ls '{}' \;
 __envHEREDOC__
 }
 
