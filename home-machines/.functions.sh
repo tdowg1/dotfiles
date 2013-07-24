@@ -19,11 +19,13 @@ decimal2characterTODO(){
 	#3; c
 	#...
 
-	#create function to go the other way too.
-	#for documentation verbage and ideas on improved naming, vars, etc. check out
+	#Create function to go the other way too.
+	#For documentation verbage and ideas on improved naming, vars, etc. check out
 	#the `seq' program.
+	#Actually, I've showed how to use printf to use ascii chart to get ascii characters in a bash loop on [[Shell ASCII]]
 
-	#somewhat related--basically, want to be able to say something like:
+
+	#Somewhat related--basically, want to be able to say something like:
 	# seq a d
 	#and have it do similarly what it does for decimal numbers... so would give:
 	# a b c d.
