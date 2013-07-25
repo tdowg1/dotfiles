@@ -840,6 +840,8 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 
 
 == See Also ==
+* truncate
+
 * hdrecover.sf.net
 
 * ddrescue tries hard to rescue data in case of read errors. (Similarly, gddrescue)
