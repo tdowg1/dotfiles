@@ -10,6 +10,20 @@
 #get that echoandexec method I wrote
 
 
+timevariouslyformattedtoseconds(){
+	#in; out
+	#-------
+	# 80m51.230s
+	# 7m51.030s
+	# 4hrs, 35mins, 39sec
+	# 4h19m17s
+	# 8mins, 59sec
+
+	# Create function that can take the human-readable form of time measurments
+	# and convert to seconds.
+
+
+}
 decimal2characterTODO(){
 	#in; out
 	#-------
