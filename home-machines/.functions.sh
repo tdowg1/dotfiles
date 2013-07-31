@@ -2432,7 +2432,7 @@ Command (m for help): w
  Calling ioctl() to re-read partition table.
  Syncing disks.
 
-$ sudo mkntfs -v --label $diskId_nomnt ${d}1
+$ sudo mkntfs -v ${d}1 --label $diskId_nomnt
 Cluster size has been automatically set to 4096 bytes.
 Initializing device with zeroes: 100% - Done.
 
