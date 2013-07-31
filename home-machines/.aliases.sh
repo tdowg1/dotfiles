@@ -48,6 +48,7 @@ alias kn='kill -9'
 alias psaxfww='ps axfww'
 alias df='df --human-readable --print-type'
 alias du='du --human-readable --summarize'
+# how about also including sshfs and cifs mounts?
 alias mountdev='mount -l | grep -P "\/dev|\[|\]"'
 alias mountdev2='mount -l | sort | grep -P "^\/dev|\[|\]"'
 alias mdstat='more /proc/mdstat'
