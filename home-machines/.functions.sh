@@ -21,8 +21,7 @@ timevariouslyformattedtoseconds(){
 
 	# Create function that can take the human-readable form of time measurments
 	# and convert to seconds.
-
-
+	echo
 }
 decimal2characterTODO(){
 	#in; out
