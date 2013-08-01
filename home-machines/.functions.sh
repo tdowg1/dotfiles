@@ -2591,11 +2591,31 @@ cat <<'__envHEREDOC__'
 == Device and Driver and Hardware-related commands ==
 $ udevadm trigger --verbose --dry-run
 $ modprobe --list
-$ lsusb --verbose ; lspci, lscpu, etc.
-$ lsdev         # display information about installed hardware (pkg:procinfo)
 
 # Find all mounted USB CD-ROM's
 $ awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
+
+
+== The ls's ==
+lsattr (1)           - list file attributes on a Linux second extended file system
+lsb_release (1)      - print distribution-specific information
+lsblk (8)            - list block devices
+lscpu (1)            - display information on CPU architecture
+lsdev (8)            - display information about installed hardware
+lshw (1)             - list hardware
+lsinitramfs (8)      - list content of an initramfs image
+lsmod (8)            - program to show the status of modules in the Linux Kernel
+lsof (8)             - list open files
+lspci (8)            - list all PCI devices
+lspcmcia (8)         - display extended PCMCIA debugging information
+lspgpot (1)          - extracts the ownertrust values from PGP keyrings and list them in GnuPG ownertrust format.
+lss16toppm (1)       - Convert an LSS-16 image to PPM
+lstopo (1)           - Show the topology of the system (note that hwloc-bind(1) provides a detailed explanation of the hwloc system; it should be read before reading this man page).
+lsusb (8)            - list USB devices
+
+Example:
+$ lsusb --verbose ; lspci, lscpu, etc.
+
 
 == See also ==
 * helphardinfo[2]
