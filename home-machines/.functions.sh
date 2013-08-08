@@ -3587,6 +3587,20 @@ $ find ark.*    -name \*.rar -o -name \*.par2
 $ find ark.* \( -name \*.rar -o -name \*.par2 \) -exec ls '{}' \;
 __envHEREDOC__
 }
+helpxclip(){
+cat <<'__envHEREDOC__'
+to copy contents of a file or output of some command to clipboard use:
+cat ./myfile.txt | xclip -i
+the text can be then pasted somewhere using middle mouse button (this is called "primary selection buffer").
+
+If you want to copy data to the "clipboard" selection, so it can be pasted into an application with Ctrl-V, you can do:
+cat ./myfile.txt | xclip -i -selection clipboard
+
+== SEE ALSO ==
+* Linux command xclip wiki page
+__envHEREDOC__
+}
+
 
 
 
