@@ -2338,6 +2338,10 @@ __envHEREDOC__
 }
 helphdd4(){
 cat <<'__envHEREDOC__'
+d=/dev/sd_
+dname=a123-456
+diskId=$dname
+
 == HDD Initialization Steps ==
 
  Important: If hdd will potentially be used on any special controller(s), IT
@@ -2447,7 +2451,7 @@ Command (m for help): w
  Calling ioctl() to re-read partition table.
  Syncing disks.
 
-$ sudo mkntfs -v ${d}1 --label $diskId_nomnt
+$ sudo mkntfs -v ${d}1 --label ${dname}_nomnt
 Cluster size has been automatically set to 4096 bytes.
 Initializing device with zeroes: 100% - Done.
 
@@ -2498,24 +2502,25 @@ Command (m for help): w
  Syncing disks.
 
 
-==== Create Truecrypt-encrypted FS ====
-# Follow prompts... (CREATE):
-$ truecrypt --create
+==== Create, Mount, and Find Truecrypt-encrypted FS ====
+$ truecrypt --create              # Follow prompts... or perform all at once:
 
-# ... or perform all at once (CREATE):
-$ truecrypt --create /dev/sdr2  \  # --create=VOLUME_PATH
+$ truecrypt --create /dev/sdr2  \ # e.g. --create=VOLUME_PATH
+	-p ""  \                       # e.g. --password=""
+	-k /path/to/key(s)  \          # e.g. --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
+	--random-source=/dev/urandom \ # Use specified file for entropy instead of prompting user for keyboard input.
+	--quick  \                     # Quick format. Use if plan on immediately filling up entire filesystem. Does not encrypt free space when creating a new volume.
+
 $ truecrypt --create ${d}2  \
-	--volume-type=normal  --encryption=AES  \
-	--hash=ripemd-160   --filesystem=none  \
-	-p ""  \  # --password=""
-	-k /path/to/key(s)  # --keyfiles=KEYFILE1[,KEYFILE2,KEYFILE3,...]
-	# --random-source
+	--volume-type=normal --encryption=AES --hash=ripemd-160 --filesystem=none  \
+	-p ""  -k /path/to/key(s)
 
-# (MOUNT)
+
+# (MOUNT *without filesystem*)
 $ truecrypt --non-interactive --password= --protect-hidden=no  \
 	--filesystem=none  \  # --filesystem=TYPE ; TYPE can only be (FAT|none)
 	--keyfiles=/path/to/key(s)  \
-	${d}2
+	${d}2  \
 	/path/to/mountpoint
 
 # Determine which /dev/mapper/truecrypt[N] device was created for
@@ -2524,7 +2529,7 @@ $ truecrypt --list -v
 # e.g. /dev/mapper/truecrypt4 is the device i need.
 
 # FINALLY: mkfs on it!
-$ mke2fs /dev/mapper/truecrypt4 -L LE_LABEL -t ext4 -v
+$ mke2fs -L ${dname} -t ext4 -v /dev/mapper/truecrypt_
 
 # Tell truecrypt to forget about everything so can perform full mount from scratch:
 $ truecrypt -d /dev/sdr2
@@ -2534,7 +2539,7 @@ $ truecrypt -d ${d}2
 
 
 ==== Create ext FS ====
-$ sudo mke2fs -L $diskId -t ext4 -v ${d}2
+$ sudo mke2fs -L ${dname} -t ext4 -v ${d}2
 $ sudo tune2fs -c 5 -i 5d -e remount-ro -m 1 ${d}2
 
 
@@ -3435,7 +3440,11 @@ __envHEREDOC__
 }
 helpadaptec(){
 cat <<'__envHEREDOC__'
-/usr/StorMan/StorMan.sh
+== Run the java-based Storage Manager ==
+sudo /usr/StorMan/StorMan.sh
+
+=== NOTES ===
+* For new/blank physical devices, the "Clear" option goes over the entire disk, is not _quick_.
 __envHEREDOC__
 }
 helpstormanager(){
