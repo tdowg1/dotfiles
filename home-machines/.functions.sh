@@ -2741,6 +2741,10 @@ cat <<'__envHEREDOC__'
 notify-send (1)      - a program to send desktop notifications
 notify-send [OPTION...] <SUMMARY> [BODY] - create a notification
 $ notify-send  "dry-run COMPLETE" "dry-run COMPLETE"
+
+== EXAMPLE ==
+Keep displaying message until loop is aborted:
+$ while [[ 1 ]] ; do notify-send "TIMER TIMED OUT!! GO RUN HIDE!! RUN HIDE!! RUN HIDE!!"; sleep 10s; done
 __envHEREDOC__
 }
 helppopup(){
