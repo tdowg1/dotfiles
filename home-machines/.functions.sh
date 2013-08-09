@@ -674,6 +674,10 @@ helpsmartctl(){
    echo 'echo "sleep for 175 minutes" && sleep 175m'
 
 cat <<'__envHEREDOC__'
+
+d=${DEVICE}
+DEVICE=${d}
+
    # LOOPS
 devicelist="a b c"
 for i in $devicelist ; do   sudo smartctl --all  /dev/sd${i} | less ; done
@@ -688,11 +692,11 @@ DEVICE=/dev/sdb   # e.g.
 sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=notrunc,noerror  ;  date ; sleep 15m ; sudo smartctl ${DEVICE} --test=short ; sleep 5m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 5m ; sudo smartctl ${DEVICE} --test=long ; sleep 250m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; date ; sleep 5h ;             sudo smartctl ${DEVICE} --test=short ; sleep 5m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 5m ; sudo smartctl ${DEVICE} --test=long ; sleep 250m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; sleep 7h ;               date ; sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=noerror ;               sudo smartctl ${DEVICE} --test=short ; sleep 5m ; sudo smartctl ${DEVICE} --test=conveyance ; sleep 5m ; sudo smartctl ${DEVICE} --test=long ; sleep 250m ; sudo smartctl ${DEVICE} --test=offline ; echo "sleep 7h or 25200s" ; date ; sleep 7h
 
    # REALLY STUPID SNIPPET2
-sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short ${DEVICE}  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long ${DEVICE}  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 110m
+sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short ${DEVICE}  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long ${DEVICE}  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 255m ; sleep 9m ;    sudo smartctl --test offline ${DEVICE}   ;  sleep 10000s
 
 $ sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
 
-== See also ==
+== SEE ALSO ==
 smart-notifierdbus service and graphical disk health notifier
 __envHEREDOC__
 }
