@@ -3555,8 +3555,16 @@ __envHEREDOC__
 }
 helphadoop(){
 cat <<'__envHEREDOC__'
+== CDH4 (Hadoop 2) ==
 $ sudo -u hdfs hadoop dfsadmin -safemode leave
 $ sudo -u hdfs hadoop dfsadmin -report
+== HDP v1.3.0 (Hadoop 1) ==
+== MapR v2.1.3 M3,M5 (Hadoop 1) ==
+$ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
+
+Pretty cool feature if using Hadoop examples jar: you can set a lot of the job parameters from the cmdln that you may have had to set manually within the mapred-site.xml file. E.g.:
+$ hadoop jar hadoop-examples.jar terasort -Dmapred.map.child.java.opts="-Xmx1000m"
+
 __envHEREDOC__
 }
 helphadoop1(){
