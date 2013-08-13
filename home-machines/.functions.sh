@@ -2353,10 +2353,25 @@ diskId=$dname
 
 === Initialize / Create a Partition Table ===
 ==== using GPT / GUID ====
+$ sudo parted $d
+
+(parted) mktable gpt
+(parted) mkpart primary ntfs 38912s 118783s
+
+# Normally, use entire rest of hdd:
+(parted) mkpart primary ext4 118784s 100%
+# Alternatively, if you know there is hdd controller meta at tail end of drive:
+(parted) mkpart primary ext4 118784s -5G
 
 
 
-==== using MBR ====
+=== Create small ~30 || 39MiB partition+FS for label / disk identification 
+                  after about ~10 || 19MiB OR SO from the beginning of hdd 
+						                         to assist in hdd identification ===
+
+
+
+==== using MBR ( <=2GiB ONLY ) ====
   //NOTE: if also create partition, skip to next section//
 $ sudo fdisk $d
 Command (m for help): o
@@ -2374,7 +2389,8 @@ Command (m for help): w
 $
 
 === Create small ~30 || 39MiB partition+FS for label / disk identification 
-                  after about ~10 || 19MiB OR SO from the beginning of hdd ===
+                  after about ~10 || 19MiB OR SO from the beginning of hdd 
+						                         to assist in hdd identification ===
 ===== Typical Sizes of Disk Identification partition=====
 30MiB: disktype and parted executions:
   Block device, size 30 MiB (31457280 bytes)
