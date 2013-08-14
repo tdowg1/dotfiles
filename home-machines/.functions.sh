@@ -1937,6 +1937,24 @@ http://cheat.errtheblog.com/s/bash
 http://www.shell-tips.com
 __envHEREDOC__
 }
+helpbashexamples(){
+cat <<'__envHEREDOC__'
+[doctor-doom@slum-village ~]$ ll vpn*.png
+-rw------- 1 doctor-doom doctor-doom 311713 06-12 17:08 vpn1.png
+-rw------- 1 doctor-doom doctor-doom 279958 06-12 17:08 vpn2.png
+-rw------- 1 doctor-doom doctor-doom 278065 06-12 17:08 vpn3.png
+-rw------- 1 doctor-doom doctor-doom 312449 06-12 17:09 vpn4.png
+-rw------- 1 doctor-doom doctor-doom 312425 06-12 17:09 vpn5.png
+-rw------- 1 doctor-doom doctor-doom 322594 06-12 17:09 vpn.png
+[doctor-doom@slum-village ~]$ ll vpn{,1,2,3,4,5}.png
+-rw------- 1 doctor-doom doctor-doom 311713 06-12 17:08 vpn1.png
+-rw------- 1 doctor-doom doctor-doom 279958 06-12 17:08 vpn2.png
+-rw------- 1 doctor-doom doctor-doom 278065 06-12 17:08 vpn3.png
+-rw------- 1 doctor-doom doctor-doom 312449 06-12 17:09 vpn4.png
+-rw------- 1 doctor-doom doctor-doom 312425 06-12 17:09 vpn5.png
+-rw------- 1 doctor-doom doctor-doom 322594 06-12 17:09 vpn.png
+__envHEREDOC__
+}
 helpsort(){
 cat <<'__envHEREDOC__'
 SORT A FILE OF FILE HASHES (md5sum output)
