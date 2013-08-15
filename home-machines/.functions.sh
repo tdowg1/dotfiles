@@ -1225,6 +1225,32 @@ helpvim4(){
 *** :%s/\n\([^|].*\)\+$/\; \1/gc
 __envHEREDOC__
 }
+helpvim5(){
+      cat <<'__envHEREDOC__'
+* Select all and then put into OS's clipboard (copy) (this also puts content into the "yank" buffer--as if you said 'y' instead of '"+y'):
+** ggVG
+** "+y
+__envHEREDOC__
+}
+helpvim6(){
+      cat <<'__envHEREDOC__'
+Tim:  fancy
+was making a list in vim, wanted to prefix a bunch of items with a nice number
+like
+1. Blah
+...
+then i got to 10
+now i want it to do nice spacing like
+9.  Blah
+10. Barf
+turns out vim can do variable and function interpolation in its commands
+so say you want to number the visually higlighted region, can do
+:let i=1
+:'<'>g/^/s//\=printf('%-4s',printf('%d. ',i))/ | let i+=1
+not exactly "simple"
+liek it's a bit lengthy but not too tough if you do it only once in a while
+__envHEREDOC__
+}
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
@@ -1242,14 +1268,6 @@ MISC
 * zo - open folded text
 * zc - close folded text
 * C-w= - make window width equal
-__envHEREDOC__
-}
-helpvim5(){
-      cat <<'__envHEREDOC__'
-* Select all and then put into OS's clipboard (copy) (this also puts content into the "yank" buffer--as if you said 'y' instead of '"+y'):
-** ggVG
-** "+y
-
 __envHEREDOC__
 }
 helpxargs(){
