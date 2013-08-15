@@ -48,6 +48,20 @@ decimal2characterTODO(){
 	echo
 }
 
+getReservedblockcount(){
+	if [[ $# != 1 ]] || [[ x"$1" = x"--help" ]] ; then
+		echo "$FUNCNAME - too lazy to look at tune2fs output? Call me now for your free analysis!"
+		# future unknown: default to using "$d" if it's non-empty and no argument passed.
+		echo "Usage: $FUNCNAME ext4-device"
+		return 1
+	fi
+	
+	local device="$1"
+	# example tune2fs output:
+	#Block count:              487579392
+	#Reserved block count:     0
+}
+
 mkdosurlfrominputurlstring(){
 	if [[ $# = 0 ]] ; then
 		echo "Example: mkdosurlfrominputurlstring() http://example.org/ > link-to-example.org.URL"
