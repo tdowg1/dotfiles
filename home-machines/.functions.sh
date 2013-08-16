@@ -629,6 +629,14 @@ sudo rsnapshot-diff hourly.1/ubu1010/var hourly.2/ubu1010/var
 
 File count of each rsnapshot, from oldest to newest:
 $ for i in $(ls -trd ./*) ; do  echo $i $( sudo find $i | wc -l); done
+
+Delete a directory within all snapshots (or some, but want to test all):
+# within rsnapshot directory, you can see where it exists:
+$ for i in *  ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && echo ' ->^^EXISTS' ; done
+$ for i in .* ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && echo ' ->^^EXISTS' ; done
+# and then do the deletion:
+$ for i in *  ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && sudo rm -rf $toremove ; done
+$ for i in .* ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && sudo rm -rf $toremove ; done
 __envHEREDOC__
 }
 pssynergy(){
