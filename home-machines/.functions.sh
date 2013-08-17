@@ -2828,6 +2828,10 @@ $ notify-send  "dry-run COMPLETE" "dry-run COMPLETE"
 == EXAMPLE ==
 Keep displaying message until loop is aborted:
 $ while [[ 1 ]] ; do notify-send "TIMER TIMED OUT!! GO RUN HIDE!! RUN HIDE!! RUN HIDE!!"; sleep 10s; done
+
+== TROUBLESHOOTING ==
+Problem: Swear I had this working on my KDE4 desktop just the other day.  Now I go to do it, exactly as it is above and it doesn't work.
+Solution: Turns out I need to be in a non-multiplexed terminal.  :/ Can't just do it in any ol' xterminal I guess.  I was trying within a tmux session but opened a brand new Konsole and it worked.
 __envHEREDOC__
 }
 helppopup(){
