@@ -3648,8 +3648,11 @@ helphadoop(){
 cat <<'__envHEREDOC__'
 == CDH4 (Hadoop 2) ==
 $ sudo -u hdfs hadoop dfsadmin -safemode leave
-$ sudo -u hdfs hadoop dfsadmin -report
+$ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
+$ sudo -u hdfs hdfs dfsadmin -report
+
 == HDP v1.3.0 (Hadoop 1) ==
+
 == MapR v2.1.3 M3,M5 (Hadoop 1) ==
 $ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
 
