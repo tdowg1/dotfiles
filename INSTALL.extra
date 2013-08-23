@@ -1,6 +1,19 @@
 
 == extra cmdln operations performed to get extra tweaks, personals into env ==
-* install && sync Dropbox
+* install && sync Dropbox. Here's one way...
+>>>
+wget dl.theon.com/u/2628735/dropbox.py
+python dropbox.py start
+python dropbox.py start -i
+<<<
+
+* next, log in to their website, authorize the machines access using the url provided in last step.
+
+* once dropbox is up and running:
+>>>
+python dropbox.py lansync y
+python dropbox.py autostart y
+<<<
 
 * create various symlinks to things kept in Dropbox
 >>>
@@ -8,6 +21,11 @@ cd
 ln -s Dropbox/linux/bin
 ln -s Dropbox/linux/teelah-binutils/bin bin.teelah-utils
 ln -s Dropbox/db.scripts-snippets/bin.contrib
+<<<
+
+* since a dropbox.py is already in ~/bin/, can delete this temporary one just downloaded:
+>>>
+rm dropbox.py
 <<<
 
 
