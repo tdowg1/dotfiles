@@ -2678,6 +2678,7 @@ __envHEREDOC__
 helpdevices(){
 cat <<'__envHEREDOC__'
 == Device and Driver and Hardware-related commands ==
+$ dmidecode
 $ udevadm trigger --verbose --dry-run
 $ modprobe --list
 
