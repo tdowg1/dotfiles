@@ -3703,6 +3703,33 @@ cat ./myfile.txt | xclip -i -selection clipboard
 * Linux command xclip wiki page
 __envHEREDOC__
 }
+helpcomparingdirectories(){
+	# for DIR in a b c ; do  curr=$( eval echo "\$$( echo "$DIR" )" );  
+cat <<'__envHEREDOC__'
+== Setup some variables ==
+e.g.
+a=/mnt/theon-grayjoy/files/
+b=/path/to/dir/with/similar/shtuff/to/compare/
+c=/mnt/khal-drogo/files/
+<...>
+
+== Get Comparison Statistics ==
+# Disk Usages:
+$ for DIR in a b c ; do  curr=$( eval echo "\$$( echo "$DIR" )" );  /usr/bin/du --exclude=lost+found -s $curr ; done
+for DIR in a b c ; do  curr=$( eval echo "\$$( echo "$DIR" )" );  /usr/bin/du --exclude=lost+found -s --apparent-size $curr ; done
+
+# File Counts:
+for DIR in a b c ; do  curr=$( eval echo "\$$( echo "$DIR" )" );  find $curr -type f | wc -l ; done
+
+# Pretty sure this lists the 10 most recently modified files. Probably even lists ALL files in most recently modified first, order:
+for DIR in a b c ; do  curr=$( eval echo "\$$( echo "$DIR" )" );  echo "-> le $curr";   find $curr -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f2- | head ;  echo "->/le $curr";  echo;  echo; done
+
+# Perform a quick diff--basically just a file existance and file size comparison:
+rsync -av --delete --stats --progress --human-readable --xattrs --hard-links --devices  --dry-run --no-owner --no-group --no-perms --no-times --exclude=lost+found/  $a  $b
+
+# Perform a long diff--same as previous but just add the --checksum option.
+__envHEREDOC__
+}
 
 
 
