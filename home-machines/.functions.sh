@@ -3510,6 +3510,8 @@ $ wget -i links.txt --wait=15 --random-wait
 $ wget --limit-rate 768000 url  # Limit download bandwidth to 750kibibytes (768000 bytes).
 $ wget --limit-rate 409600 url  # Similarly, 400KiB.
 $ wget --limit-rate $(( desired-KiB-amount  *  1024 )) url
+$ wget url -O filename          # Download url target to filename.
+$ wget url -O -                 # Download url target to stdout.
 __envHEREDOC__
 }
 helplogrotate-of-files(){
