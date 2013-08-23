@@ -16,3 +16,10 @@ $ vim .vim/plugin/vimrc.vim    # STORE CUSTOM CONFIGS THAT ARE OK TO LOSE
 Then to initialize vim plugin modules, do (from anywhere)
 $ git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
 
+Upon initialization in the previous step (i.e.) on a fresh install,
+other machines already configured will see:
+#       modified:   .vim/bundle/vundle (new commits)
+following their next pull.  This can be addressed by simply updating
+the subproject/submodule:
+$ cd ~/.vim/bundle/vundle/  &&  git pull
+
