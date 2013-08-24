@@ -3656,6 +3656,7 @@ c-a &   - kill curr tmux window
 c-a ??  - kill curr tmux session
 == Figure out's ==
 * tmux copy to OS system clipboard? (KDE)
+** http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard
 __envHEREDOC__
 }
 helphadoop(){
