@@ -3643,8 +3643,19 @@ __envHEREDOC__
 }
 helptmux(){
 cat <<'__envHEREDOC__'
+== CheatSheets ==
 http://www.dayid.org/os/notes/tm.html
 https://gist.github.com/MohamedAlaa/2961058
+== cmdln ==
+tmux ls
+tmux attach [-t session-number-index] - attach to tmux session.
+== tmux's ==
+c-a d   - unattach curr tmux session
+c-a ,   - rename curr tmux window
+c-a &   - kill curr tmux window
+c-a ??  - kill curr tmux session
+== Figure out's ==
+* tmux copy to OS system clipboard? (KDE)
 __envHEREDOC__
 }
 helphadoop(){
