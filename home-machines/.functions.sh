@@ -3680,6 +3680,18 @@ __envHEREDOC__
 }
 helphadoop1(){
 cat <<'__envHEREDOC__'
+== Initiate the Checkpointing process (fsimage, edits, etc.) ==
+$ hadoop dfsadmin -saveNamespace
+
+== Find the blocks for a file ==
+Find out which blocks are in any particular file, e.g.
+$ hadoop fsck /user/tainted/rubbish -files -blocks -racks
+
+== DataNode block scanner ==
+* http://datanode:50075/blockScannerReport
+* http://datanode:50075/blockScannerReport?listblocks
+** list of all blocks on the datanode along with their latest verification status.
+
 == Create HDFS home directory for curr $USER ==
 NOTE: if hdfs permissions are disabled, you can omit the 'sudo -u hdfs':
 sudo -u hdfs hadoop fs -mkdir /user/$USER
