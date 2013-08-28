@@ -1218,10 +1218,12 @@ __envHEREDOC__
 }
 helpvim4(){
       cat <<'__envHEREDOC__'
+* zz  - center vim display about the cursor
+* c-y - scroll up 1 line without moving the cursor
+
 * Trim trailing whitespace
 ** :%s/\s\+$//
 ** :%s/\s\+$     (substitution text can be imitted if blank)
-* zz - center vim display about the cursor
 * Search[/Replace]: show more context when reviewing matches
 ** :se scrolloff=5 - prior to searching or put to vimrc
 * Effectively insert "|-" in between every other line:
