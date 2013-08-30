@@ -3210,9 +3210,11 @@ cat <<'__envHEREDOC__'
 (2012-12-05 19:05:39) Tim C.
 $ dd if=/dev/sdb bs=4M | pv -eprb -s 466g > /dev/null
 
+Cmdln I generated from somewhere... (apparently I must've been using a special version because
+none of the other "pv" binaries allow "-a" option lol:
 $ pv -pterab
 
-Parted Magic's pv does not support the -a option:
+Parted Magic's pv does not support the -a option, nor does ubu1204/debian:
 $ pv -pterb
 __envHEREDOC__
 }
