@@ -3085,6 +3085,19 @@ remove_hiberfile, umask=, fmask=, dmask=, streams_interface=.
 ntfs-3g: Version 2010.8.8 external FUSE 28 ; ntfs-3g: Mounted /dev/sdc1 (Read-Write, NTFS 3.1)
 ntfs-3g: Cmdline options: rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,dmask=0077,fmask=0177
 ntfs-3g: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,relatime,fsname=/dev/sdc1,blkdev,blksize=4096,default_permissions
+
+=== Command line options ===
+-r, --read-only
+       Mount the filesystem read-only. A synonym is -o ro.
+
+       Note that, depending on the filesystem type, state and kernel behavior, the system may  still  write
+       to the device. For example, Ext3 or ext4 will replay its journal if the filesystem is dirty. To pre‐
+       vent this kind of write access, you may want to mount ext3 or ext4 filesystem with "ro,noload" mount
+       options or set the block device to read-only mode, see command blockdev(8).
+
+=== Filesystem independent mount options ===
+* noatime - do not update inode access times on this fs.
+* nodiratime - do not update directory inode access times on this fs.
 __envHEREDOC__
 }
 helpmount3-sshfs-from-scratch(){
@@ -3760,6 +3773,26 @@ rsync -av --delete --stats --progress --human-readable --xattrs --hard-links --d
 # Perform a long diff--same as previous but just add the --checksum option.
 __envHEREDOC__
 }
+helpxattrs(){
+cat <<'__envHEREDOC__'
+== e2fsprogs: /usr/bin/lsattr ==
+^^? (is this *really* what i was looking for? not sure...)
+  lsattr - list file attributes on a Linux second extended file system
+
+== attr: /usr/bin/getfattr ==
+Package Description: Utilities for manipulating filesystem extended attributes
+ A set of tools for manipulating extended attributes on filesystem objects, in particular getfattr(1) and setfattr(1). An attr(1) command is also provided which is largely compatible with the SGI IRIX tool of the same name.
+  getfattr - get extended attributes of filesystem objects
+  setfattr - set extended attributes of filesystem objects
+  attr - extended attributes on XFS filesystem objects     (lol, k... XFS, huh?...)
+
+== python-xattr: /usr/bin/xattr ==
+Package Description: module for manipulating filesystem extended attributes
+ This module allows manipulation of the filesystem extended attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these attributes.
+  xattr - sets or lists extended attributes on a file or directory
+__envHEREDOC__
+}
+
 
 
 
