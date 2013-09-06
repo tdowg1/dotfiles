@@ -917,10 +917,27 @@ __envHEREDOC__
 
 
 helpdate(){
-	#local useThisDate="2010/06/05 16:15:15"
 	local useThisDate=`date`
 	echo "using date $useThisDate"
 	echo -e "[OUTPUT]\t\t[CMDLN]"
+	
+	# Stupid F%^&*(! "day light savings" crap.
+# TZ=GMT+0
+# TZ=UTC
+# TZ=EST
+# TZ=EST5EDT
+	cmdln="TZ=GMT+0;         date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+	cmdln="TZ=UTC;           date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+	cmdln="TZ=EST;           date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+	cmdln="TZ=EST5EDT;       date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+
+	echo
+# TZ=Europe/London
+# TZ=US/Eastern
+	cmdln="TZ=Europe/London; date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+	cmdln="TZ=US/Eastern;    date +\"%Y-%m-%d %H-%M-%S\" --date=\"$(eval echo ${useThisDate})\"" ; echo -e "$(eval $cmdln)\t$cmdln"
+	echo 
+
 	
 	cmdln="date +\"%Y-%m-%d %H-%M-%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
@@ -935,13 +952,22 @@ helpdate(){
 	echo -e "$(eval $cmdln)\t$cmdln"
 
 cat <<'__envHEREDOC__'
-$ date  --rfc-3339 seconds          # GIVE ME FREAKING ISO-FORMATTED DATE
+
+$ date  --rfc-3339 seconds          # GIVE ME ISO-FORMATTED DATE
 $ date  --reference=file-to-reference
-TIMEZONES
+
+TIMEZONES | /usr/share/zoneinfo
 $ export TZ=Europe/Stockholm; echo "Stockholm:    `date +\"%F %R (%Z)\"`"
 # `--> Stockholm:    2012-05-18 20:31 (CEST)
 $ export TZ=US/Central; echo "Dallas:             `date +\"%F %R (%Z)\"`"
 # `--> Dallas:       2012-05-18 13:32 (CDT)
+#
+# TZ=Europe/London
+# TZ=GMT+0
+# TZ=UTC
+# TZ=EST
+# TZ=EST5EDT
+# TZ=US/Eastern
 
 CONVERT a given locale-->to the current (iow: convert a diff-TZ into curr-TZ):
 $ date --date="2012-05-24 18:08:56 UTC"   # current locale is EDT
