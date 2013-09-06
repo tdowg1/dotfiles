@@ -252,7 +252,7 @@ gitbranchcREATEpushupstreamandtrack(){
 
 # TODO STUB
 # this function helps w/ searching through a same set of files
-grepdotfiles-original(){
+grepdotfiles_original(){
 	local filesToGrep=$(cat <<__HEREDOC__
 		$HOME/.bash_[pu]*
 		$HOME/.bashrc
@@ -978,7 +978,7 @@ $ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08
 
 SEE ALSO
 $ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
-helplogrotate-of-files()
+helplogrotate_of_files()
 __envHEREDOC__
 }
 helpawk(){
@@ -2858,7 +2858,7 @@ $ apropos getconf env   # gives a bunch of interesting env, variable, etc. progr
 __envHEREDOC__
 }
 
-helpnotify-send(){
+helpnotify_send(){
 	# helpnotify-send alert gnome popup pop up message
 cat <<'__envHEREDOC__'
 notify-send (1)      - a program to send desktop notifications
@@ -2876,14 +2876,14 @@ __envHEREDOC__
 }
 helppopup(){
 cat <<'__envHEREDOC__'
-calling helpnotify-send().
+calling helpnotify_send().
 __envHEREDOC__
-helpnotify-send
+helpnotify_send
 }
 helpalert(){
 cat <<'__envHEREDOC__'
 == See also ==
-* helpnotify-send()
+* helpnotify_send()
 * growlnotify (OSX app only)
 ** http://superuser.com/questions/235417/whats-the-linux-equivalent-of-os-xs-growl
 __envHEREDOC__
@@ -3117,7 +3117,7 @@ $ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //p-8-
 helpmount*()
 __envHEREDOC__
 }
-helpmount2-mountoptions(){
+helpmount2mountoptions(){
 cat <<'__envHEREDOC__'
 == Various mount options ==
 === ext[43] (ext2?) Extended Attributes ===
@@ -3150,7 +3150,7 @@ ntfs-3g: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,rela
 * nodiratime - do not update directory inode access times on this fs.
 __envHEREDOC__
 }
-helpmount3-sshfs-from-scratch(){
+helpmount3sshfsfromscratch(){
 cat <<'__envHEREDOC__'
 == sshfs : use pre-requirements ====
 * need package
@@ -3581,7 +3581,7 @@ $ wget url -O filename          # Download url target to filename.
 $ wget url -O -                 # Download url target to stdout.
 __envHEREDOC__
 }
-helplogrotate-of-files(){
+helplogrotate_of_files(){
 cat <<'__envHEREDOC__'
 filename-and-file-extension.N.`date +"%Y-%m-%d"`
 ^^prefer
