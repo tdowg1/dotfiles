@@ -2918,11 +2918,17 @@ __envHEREDOC__
 }
 helptar(){
 cat <<'__envHEREDOC__'
+tar (single-threaded tar)
+-------------------------
 $ tar zcfW a.tar.gz  a/    # -W attempt to verify the archive after writing it
 ### Exclude the file "snoop-lion" and/or anything within "snoop-lion" directory:
 $ tar zcfv a.tar.gz  /home/calvin-broadus/  --exclude=/home/calvin-broadus/snoop-lion
 ### Extract to...:
 $ tar xf tarfile.tar  -C /path/to/pre-existing/directory/to/extract/into/
+
+mtar (multi-threaded tar)
+-------------------------
+$ bsdtar zcfY a.tar.gz /path/to/some/de/lah  # -Y indicates to run multi-threaded
 __envHEREDOC__
 }
 helparchive(){
