@@ -3083,10 +3083,13 @@ $ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
 $ mkdir /media/cdrom
 $ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
 
-== cifs : Mount samba/smb/cifs share ==
-sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
+== loop : Mount dd partition image ==
+$ sudo mount -t ext4  -o ro,loop /path/to/fsimg.dd /mnt/tmp
 
-=== Notice this `mount' cmdln works for one samba server, but not the other :( ===
+== cifs : Mount samba/smb/cifs share ==
+$ sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
+
+=== Notice this `mount' cmdln works for one samba server, but not the other :( ... ya but no. ===
 Performed on id-9-ubu1204 to mount local samba share (ALL FAIL):
 $ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/tellah /mnt/tmp
 $ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //id-9-ubu1204/homes/tellah /mnt/tmp
