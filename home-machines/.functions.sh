@@ -1429,13 +1429,24 @@ xxxMODIFY ARCHIVE1
 
 xxxADD/MODIFY ARCHIVE2
    By setting the path inside archive
-	  rar a -apDOCS\ENG release.rar readme.txt   # add readme.txt to the directory 'DOCS\ENG'.
-     rar x -apDOCS release DOCS\ENG\*.*         # extract 'ENG' to the current directory.
+	  rar a -apDOCS\ENG release.rar readme.txt   # Add readme.txt to the directory 'DOCS\ENG'.
+     rar x -apDOCS release DOCS\ENG\*.*         # Extract 'ENG' to the current directory.
 
 EXTRACT
    -kb keep broken extracted files
 	-ad append archive name to destination path
    rar x archive.rar
+
+EXTRACT TO STDOUT
+   rar p archive.rar                            # "Print file to stdout".
+
+EXTRACT EXAMPLE0
+Generate checksum based on rarchive's contents.  by default, rar prints out bunch of other cruft, so simply doing the following will result in an invalid checksum:
+   rar p fsimg.ext4.dd.rar | pv -pterab | sha1sum         # BAD.
+Here's some ways to get the checksum you probably intend to get (i.e. `tar zxfO x.tar.gz | sha1sum'):
+	rar p -ierr fsimg.ext4.dd.rar | pv -pterab | sha1sum   # Send all msgs to stderr (actual archive content goes to stdout).
+   rar p -idcdpq fsimg.ext4.dd.rar | pv -pterab | sha1sum # Disables all types of messages ; -id[c,d,p,q].
+   rar p -inul fsimg.ext4.dd.rar | pv -pterab | sha1sum   # Disables all messages.
 
 TEST EXAMPLE0 (base case)
    rar t [v[t|b]] [-pPASSWD] archive.rar
@@ -1447,7 +1458,7 @@ TEST EXAMPLE2 (N+2) with auto-repair exec upon test failure
    for i in *.rar ; do echo $i; sudo su -c "time rar t $i > $i.test.log"; rc=$? ; if [[ $rc != 0 ]] ; then echo "WARNING rc[$rc] was non-zero for rar test. calling rar repair."; sudo su -c "time rar r -y $i > $i.repair.log"; rc=$?; if [[ $rc != 0 ]] ; then  echo "ERROR rc[$rc] was non-zero for rar repair <exclamation>"; fi; fi; echo; done
 
 REPAIR EXAMPLE0 (base case)
-   rar r -y archive.rar                         # the -y(es) is important!
+   rar r -y archive.rar                         # The -y(es) is important!
 REPAIR EXAMPLE1 (N+1)
 
 UPDATE EXAMPLE0 (base case)
