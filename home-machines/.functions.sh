@@ -3725,9 +3725,10 @@ tmux ls
 tmux attach [-t session-number-index] - attach to tmux session.
 == tmux's ==
 c-a d   - unattach curr tmux session
-c-a ,   - rename curr tmux window
-c-a &   - kill curr tmux window
-c-a ??  - kill curr tmux session
+c-a ,   - rename curr tmux window/pane
+c-a x   - kill curr tmux window/pane
+c-a &   - kill curr tmux window/pane
+c-a ??   - kill entire curr tmux session
 == Figure out's ==
 * tmux copy to OS system clipboard? (KDE)
 ** http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard
