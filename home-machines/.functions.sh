@@ -3850,6 +3850,17 @@ Package Description: module for manipulating filesystem extended attributes
   xattr - sets or lists extended attributes on a file or directory
 __envHEREDOC__
 }
+helpxpra(){
+cat <<'__envHEREDOC__'
+host1 HAS a window thats desired to be viewed.
+host2 is WHERE its desired to view the window.
+
+host1~ sleep 7s ; tail -F ~/.xpra/*.log
+host1~ xpra {start|upgrade} :100 --start-child=konsole
+host2~ xpra attach ssh:host1:100
+__envHEREDOC__
+}
+
 
 
 
