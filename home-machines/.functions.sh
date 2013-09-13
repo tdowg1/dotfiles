@@ -3860,6 +3860,12 @@ host1~ xpra {start|upgrade} :100 --start-child=konsole
 host2~ xpra attach ssh:host1:100
 __envHEREDOC__
 }
+helpkde(){
+cat <<'__envHEREDOC__'
+kde4-config  --kde-version
+__envHEREDOC__
+}
+
 
 
 
