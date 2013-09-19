@@ -1266,6 +1266,12 @@ helpvim5(){
 * Select all and then put into OS's clipboard (copy) (this also puts content into the "yank" buffer--as if you said 'y' instead of '"+y'):
 ** ggVG
 ** "+y
+* Macro Recording:
+** qq   	- start recording to register q
+** ...   - your complex series of commands
+** q     - stop recording
+** @q    - execute your macro
+** @@    - execute your macro again 
 __envHEREDOC__
 }
 helpvim6(){
