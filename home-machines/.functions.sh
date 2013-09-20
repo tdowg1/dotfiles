@@ -3161,6 +3161,8 @@ ntfs-3g: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,rela
 === Filesystem independent mount options ===
 * noatime - do not update inode access times on this fs.
 * nodiratime - do not update directory inode access times on this fs.
+* nobootwait - ?useful for mountpoints that may prevent system fully booting?
+* nofail - ?useful for mountpoints that may prevent system fully booting?
 __envHEREDOC__
 }
 helpmount3sshfsfromscratch(){
