@@ -2471,6 +2471,9 @@ diskId=$dname
 $ sudo parted $d
 
 (parted) mktable gpt
+# Alternatively, make an mbr/dos/msdos partition table:
+(parted) mktable msdos
+
 (parted) mkpart primary ntfs 38912s 118783s
 
 # Normally, use entire rest of hdd:
@@ -2681,6 +2684,16 @@ $ sudo tune2fs -c 5 -i 5d -e remount-ro -m 1 ${d}2
 == Update fstab, any other mounting scripts ==
 __envHEREDOC__
 }
+helphdd5(){
+cat <<'__envHEREDOC__'
+== HDD Burn in ==
+src : https://wiki.archlinux.org/index.php/Badblocks#read-write_Test
+   This test is primarily for testing new drives and is a read-write test. As the pattern is written to every accesible block the device effectively gets wiped. Default is an extensive test with four passes using four different patterns: 0xaa (10101010), 0x55 (01010101), 0xff (11111111) and 0x00 (00000000). For some devices this will take a couple of days to complete.
+
+badblocks writes and then verifies, read-write Test:
+# badblocks -wsv /dev/<device>
+__envHEREDOC__
+}
 helpfdisk(){
 cat <<'__envHEREDOC__'
 Default fdisk output has...
@@ -2692,6 +2705,13 @@ Default fdisk output has...
 ** hint: just run the 'u' command and it will toggle+display the unit being used.
 
 * the Blocks column shows the number of 1K (1024 byte) blocks in the partition
+__envHEREDOC__
+}
+helpsfdisk(){
+cat <<'__envHEREDOC__'
+sfdisk -d $d > $dname.sfdisk - Backup.
+sfdisk  $d < $dname.sfdisk   - Restore.
+
 __envHEREDOC__
 }
 helptruecrypt(){
