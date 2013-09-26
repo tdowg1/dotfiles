@@ -3290,6 +3290,13 @@ $ type [-afptP] name [name ...]   # Display information about command type.
 #       -t output a single word, E[`alias', `keyword',`function', `builtin', `file', `']
 __envHEREDOC__
 }
+helpman(){
+cat <<'__envHEREDOC__'
+/calling helpcommand()/
+__envHEREDOC__
+	helpcommand
+}
+
 helpinotify(){
 cat <<'__envHEREDOC__'
 Monitor for filesystem changes beginning from some top-level path (inotify):
@@ -3907,14 +3914,17 @@ __envHEREDOC__
 
 
 
-
-
-
-
-_help6(){
+_help5(){
 cat <<'__envHEREDOC__'
 
 __envHEREDOC__
+}
+
+_help6calling(){
+cat <<'__envHEREDOC__'
+/calling helpgetconf()/
+__envHEREDOC__
+	helpgetconf
 }
 
 _help7_vars_interpretted(){
