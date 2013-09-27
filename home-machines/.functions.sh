@@ -1254,6 +1254,11 @@ helpvim4(){
 ** :se scrolloff=5 - prior to searching or put to vimrc
 * Effectively insert "|-" in between every other line:
 ** :%s/\n/\r|-\r/gc
+* Insert at beginning of every line:
+** :%s/^/aaatttt begininnnnnnning /gc
+* Insert at end of line:
+** :%s/$/ endddddd aattttt/gc
+
 * Misc regex
 ** escapes some commas and does stuff with quotes (csv-related):
 *** :%s/^\(.[^,]*\),\(.[^,]*\)/\1,"\2"/gc

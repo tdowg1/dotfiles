@@ -70,6 +70,7 @@ au BufReadPost,FileReadPost * syntax match Tab /        /
 hi Tab gui=underline guifg=blue ctermbg=blue
 filetype plugin indent on
 syntax enable
+set history=475
 
 
 :source $VIMRUNTIME/menu.vim
