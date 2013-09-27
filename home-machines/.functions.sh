@@ -2279,8 +2279,22 @@ cd ~ && wget -O - http://www.dropbox.com/download?plat=lnx.x86_64 | tar xzf -
 Next, run the Dropbox daemon from the newly created .dropbox-dist folder.
 ~/.dropbox-dist/dropboxd
 
-== CMDLN ==
+== CMDLN SILLIES ==
 $ while true ; do dropbox status | xargs echo `date` ; sleep 4s ; done
+
+== CRONTAB AUTOSTART ==
+These are handy for headless machines.  For at least how I seem to always install Dropbox,
+you must log in to a desktop environment (DE) for "autostart" features to execute. For
+headless boxes, of course, Dropbox (not) autostart'ing is an issue. Here's some notes.
+
+NOTE return status code is NOT following convension of a zero indicating success.
+
+$ dropbox running && echo failure   - 'failure' is printed when Dropbox IS NOT running.
+$ dropbox running || echo success   - 'success' is printed when Dropbox is running.
+
+Crontab to periodically check that Dropbox is running:
+# Everyday at 0830, start Dropbox if it is not already running:
+30 8 * * *  dropbox running && dropbox start  >/dev/null
 __envHEREDOC__
 }
 helpgrep(){
