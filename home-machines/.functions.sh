@@ -1264,6 +1264,10 @@ helpvim4(){
 *** :%s/^\(.[^,]*\),\(.[^,]*\)/\1,"\2"/gc
 ** joins a line onto the previous one if it doesnt start with a pipe (mediawiki table-related):
 *** :%s/\n\([^|].*\)\+$/\; \1/gc
+** Converts '$key<TAB>description with spaces' into MediaWiki hyperlink:
+*** :%s/^\(.[^\s]*\)\t\(.*\)$/[\/\/le-wiki-domain.org\/wiki\/\1\/ \2]/gc
+*** e.g. "GUAC<tab>Get the guacamole out of your ears"
+           -> [//le-wiki-domain.com/wiki/GUAC/ Get the guacamole out of your ears]
 __envHEREDOC__
 }
 helpvim5(){
