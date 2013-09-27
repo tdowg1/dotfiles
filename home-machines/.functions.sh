@@ -3900,9 +3900,56 @@ cat <<'__envHEREDOC__'
 kde4-config  --kde-version
 __envHEREDOC__
 }
+helpzfs(){
+cat <<'__envHEREDOC__'
+zpool list
+zfs list        - Gives overview--pool name, disk usage, mountpoint.
+zpool iostat -v - Gives details of r/w operations.
+zpool status    - Gives current status.
 
 
+zpool export    - Exports the given pools from the system. All devices are marked as exported, but are still considered in use by other subsystems. The devices can be moved between systems (even those of different endianness) and imported as long as a sufficient number of devices are present.
 
+zpool offline [-t] - Disables the disk in the array[, temporarily (restored upon reboot)].
+zpool replace   - Swaps the existing medium.
+
+
+zpool get all
+zpool-features
+
+__envHEREDOC__
+}
+helpzfs2(){
+cat <<'__envHEREDOC__'
+== ZFS CREATION ==
+# <assumes brand new, blank drive with first partition being the id partition and second partition being blank>.
+zpool create
+ -o ashift=12   # if using AF/4096-byte drives
+ -m /mnt/${dname} $dname ${d}2
+
+zfs create ${dname}/fs1  # required?
+
+zpool scrub $dname
+zpool status $dname
+
+zfs snapshot ${dname}/fs1
+zfs snapshot ${dname}/fs1@$( date +"%Y-%m-%d_%H.%M.%S" )
+
+zfs snapshot ${dname}@$( date +"%Y-%m-%d_%H.%M.%S" )
+
+
+__envHEREDOC__
+}
+#helpzfs3(){
+#cat <<'__envHEREDOC__'
+#
+#__envHEREDOC__
+#}
+#helpzfs4(){
+#cat <<'__envHEREDOC__'
+#
+#__envHEREDOC__
+#}
 
 
 
