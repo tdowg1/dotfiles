@@ -2303,7 +2303,7 @@ $ dropbox running || echo success   - 'success' is printed when Dropbox is runni
 
 Crontab to periodically check that Dropbox is running:
 # Everyday at 0830, start Dropbox if it is not already running:
-30 8 * * *  dropbox running && dropbox start  >/dev/null
+30 8 * * * /home/i-accidentally/bin/dropbox running && /home/i-accidentally/bin/dropbox start  >/dev/null
 __envHEREDOC__
 }
 helpgrep(){
