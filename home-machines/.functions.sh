@@ -2717,6 +2717,22 @@ badblocks writes and then verifies, read-write Test:
 # badblocks -wsv /dev/<device>
 __envHEREDOC__
 }
+helphdd6_resize2fs_and_partition_tables(){
+cat <<'__envHEREDOC__'
+Shrink sda1 fs to about 25GiB:
+$ resize2fs /dev/sda1 6553856
+
+Next, want to update partition table. Here's the
+associated (cylinder-aligned) partition table layout, 512-byte sectors:
+ sda1 2048s     52432895s
+ sda2 52432896s 100%
+
+PERSONAL NOTE: although the partitions are aligned properly, i dont think fs
+ is lining up perfectly with partition table i.e. theres some extra space
+ at the tail end of partition that is not in use by fs because is < 4K ?
+__envHEREDOC__
+}
+
 helpfdisk(){
 cat <<'__envHEREDOC__'
 Default fdisk output has...
