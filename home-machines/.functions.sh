@@ -2872,21 +2872,44 @@ __envHEREDOC__
 ## sudo su -c "source /home/bdavies/dotfiles/home-machines/.functions.sh ; slowdown 808"
 cat <<'__envHEREDOC__'
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; <insert name of function to call>
+sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 
 i.e.
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
 __envHEREDOC__
 
 cat <<'__envHEREDOC__'
-* nice --18 process
-** runs process in the real time class (one of the most favorable classes)
-* renice -18 23871
-** changes process priority (to be in one of the most favorable scheduling classes)
+
+Nicenesses range from -20 (most favorable scheduling) to 19 (least favorable).  
+
+EXAMPLES
+$ nice                # Print the current niceness.
+
+$ nice --18 process   # Run process in the real time class (one of the Most Favorable scheduling classes)
+
+~~~$ renice -18 23871    # Change process priority (to be in one of the Most Favorable scheduling classes)~~~
+
+$ nice --19 process
+
+$ nice -11 process    # Run process in one of the more Least Favorable scheduling classes.
+$ nice -+11 process   # Same as prior.
+$ nice [-10] process  # Default. Run process in one of the more Least Favorable scheduling classes.
+$ nice [-+10] process # Same as prior.
+
+$ nice -19 process    # Run process in, basically, the Least Favorable scheduling class.
+$ nice -+19 process   # Same as prior.
+
 __envHEREDOC__
 
 cat <<'__envHEREDOC__'
 == See also ==
 * getprocesspriority() slowdown() unslowdown() helpsudo()
 __envHEREDOC__
+}
+helpnice(){
+cat <<'__envHEREDOC__'
+/calling helprenice()/
+__envHEREDOC__
+	helprenice
 }
 helppasswd(){
 cat <<'__envHEREDOC__'
@@ -2948,9 +2971,9 @@ __envHEREDOC__
 }
 helppopup(){
 cat <<'__envHEREDOC__'
-calling helpnotify_send().
+/calling helpnotify_send()/
 __envHEREDOC__
-helpnotify_send
+	helpnotify_send
 }
 helpalert(){
 cat <<'__envHEREDOC__'
@@ -2971,9 +2994,9 @@ __envHEREDOC__
 }
 helplinks(){
 cat <<'__envHEREDOC__'
-calling helpreadlink().
+/calling helpreadlink()/
 __envHEREDOC__
-helpreadlink
+	helpreadlink
 }
 helpXephyr(){
 cat <<'__envHEREDOC__'
