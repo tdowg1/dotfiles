@@ -2746,6 +2746,41 @@ Default fdisk output has...
 * the Blocks column shows the number of 1K (1024 byte) blocks in the partition
 __envHEREDOC__
 }
+
+helpparted(){
+	local d=/dev/sda
+	d='${d}'
+	heredocWithVariables=$(cat <<__envHEREDOC__
+d=/dev/sda  # For example.
+== -s, --script ==
+-> Print partition layout in...
+parted $d --script unit UNIT print # ...UNIT.
+ UNIT is one of: s, B, kB, MB, GB, TB, compact, cyl, chs, %, kiB, MiB, GiB, TiB
+
+parted $d --script [unit compact] print # ...automatic/compact mode (Default).
+
+parted $d --script unit s print    # ...sectors.
+parted $d --script unit MiB print  # ...mibibytes.
+parted $d --script unit MB print   # ...megabytes.
+
+
+-> Make a new partition table:
+parted $d --script mktable msdos
+parted $d --script mktable gpt
+
+
+-> Make a new partition entry:
+parted $d --script mkpart primary zfs 23437312s 216797183s  # ...of size 99 000MB
+parted $d --script mkpart primary ext4 12000MB  111000MB    # "MB" may not be allowed... nor any of the of the following guys... ... on second thought... if 'unit UNIT' precedes 'mkpart', all thes other unit formats may actually work... e.g.:
+ `-> parted $d --script unit MB mkpart primary ext4 12000MB  111000MB
+parted $d --script mkpart primary ext4 11444MiB 105858MiB
+parted $d --script mkpart primary ext4 12.0GB   111GB 
+parted $d --script mkpart primary ext4 11.2GiB  103GiB
+__envHEREDOC__
+)
+   echo "$heredocWithVariables"
+}
+
 helpsfdisk(){
 cat <<'__envHEREDOC__'
 sfdisk -d $d > $dname.sfdisk - Backup.
