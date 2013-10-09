@@ -4013,9 +4013,15 @@ zpool status    - Gives current status.
 zpool export    - Exports the given pools from the system. All devices are marked as exported, but are still considered in use by other subsystems. The devices can be moved between systems (even those of different endianness) and imported as long as a sufficient number of devices are present.
 zpool import    - Imports the given pool.  When no pool specified, display pools available for import.
 
-zpool offline [-t] - Disables the disk in the array[, temporarily (restored upon reboot)].
+zpool offline [-t] - Disables the disk in the array[, temporarily (will be restored upon reboot)].
 zpool replace   - Swaps the existing medium.
 
+zpool remove    - Removes specified device from the pool. Currently, only pertains to hot spares, cache, and log devices.
+zpool detach    - Detaches device from a mirror. Operation is refused if there are no other valid replicas of the data.
+zpool destroy   - Destroys the pool.
+
+zpool clear
+zpool labelclear - Removes ZFS label information from the specified device.
 
 zpool get all
 zpool-features
@@ -4033,7 +4039,7 @@ zpool create
  [-o ashift=12]   # Only if using AF/4096-byte drives.
  -m /mnt/${dname} $dname ${d}2
 
-zfs create ${dname}/fs1  # required?
+zfs create ${dname}/fs1  # Create (sub?) filesystem. required? dont think so but is a good idea. generally dont put shtuffs in the root of the zpool it seems.
 
 zpool scrub $dname
 zpool status $dname
@@ -4052,11 +4058,17 @@ zfs set mountpoint=/mnt/testpool testpool
 
 __envHEREDOC__
 }
-#helpzfs4(){
-#cat <<'__envHEREDOC__'
-#
-#__envHEREDOC__
-#}
+helpzfs4(){
+cat <<'__envHEREDOC__'
+df -hT ; echo ; sudo zfs list  ; free -m ; uptime ; echo
+sudo zpool status ; sudo zpool list ; sudo zfs list
+
+iostat 1
+sudo zpool iostat 1
+ alternatively...
+sudo zpool iostat -v 1
+__envHEREDOC__
+}
 
 
 
