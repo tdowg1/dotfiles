@@ -1842,6 +1842,7 @@ $ diff -c OLD_FILE NEW_FILE > patch
 $ patch --input=patch
  	patch --input=bash_user_dev.env.patch
  	patch --verbose --input web.xml.patch $TOMCAT_HOME/webapps/portal/WEB-INF/web.xml
+	patch --verbose --ignore-whitespace --input patch  applesmc.c
 
 = v2 (svn) =
 (src: http://incubator.apache.org/jena/getting_involved/index.html)
@@ -3877,6 +3878,7 @@ $ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
 $ sudo -u hdfs hdfs dfsadmin -report
 
 == HDP v1.3.0 (Hadoop 1) ==
+$ scp voyager:/mnt/sdd1/kmeans_100GB/* /dev/stdout  | pv -pterb  | hadoop fs -put - /mnt/benchmark-test-data/
 
 == MapR v2.1.3 M3,M5 (Hadoop 1) ==
 $ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
