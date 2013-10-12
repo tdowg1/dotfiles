@@ -2856,6 +2856,11 @@ lsusb (8)            - list USB devices
 Example:
 $ lsusb --verbose ; lspci, lscpu, etc.
 
+== USB ==
+usb-devices          - print USB device details.  Aggregates nfo from...
+        /sys/bus/usb/devices/usb (The part of the sysfs tree the script walks through to assemble the printed information.)
+        /proc/bus/usb/devices (for kernel 2.6.31-)
+        /sys/kernel/debug/usb/devices (for kernel 2.6.31+)
 
 == See also ==
 * helphardinfo[2]
