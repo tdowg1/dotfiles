@@ -1560,6 +1560,7 @@ arp                               # get mac address from ip address
 helpnetstat
 helpnslookup
 helpnmap
+helparping
 __envHEREDOC__
 }
 helpnetstat(){
@@ -1593,10 +1594,16 @@ helpnmap(){
 cat <<'__envHEREDOC__'
 Listing all Linux servers which are up in a network:
 $ nmap -v -sP <Network info>  # <nw nfo> can be a whole network (say 10.10.22.0/24) or range (say 10.10.22.1-40).
-NOTE: this cmdln didn't seem to pick up my Fedora machine... is RHEL set to not respond or something?
+NOTE: this cmdln didn't seem to pick up my Fedora machine... 
+ is RHEL set to not respond or something?
+ --> SEE helparping() for locating firewalled hosts.
 __envHEREDOC__
 }
-
+helparping(){
+cat <<'__envHEREDOC__'
+$ arping 192.168.1.1          # Useful for locating / pinging/ firewalled hosts.
+__envHEREDOC__
+}
 
 
 helpgit(){
