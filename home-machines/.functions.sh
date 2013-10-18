@@ -3885,17 +3885,26 @@ __envHEREDOC__
 helphadoop(){
 cat <<'__envHEREDOC__'
 == CDH4 (Hadoop 2) ==
+- - - - - - - - - - - - - -
+# -skipTrash option valid?  where is .Trash/ by default?
 $ sudo -u hdfs hdfs dfs -rm -r /mnt/benchmark-test-data/
+
 $ sudo -u hdfs hadoop dfsadmin -safemode leave
 $ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
 $ sudo -u hdfs hdfs dfsadmin -report
 
 == HDP v1.3.0 (Hadoop 1) ==
+- - - - - - - - - - - - - -
+$ sudo -u hdfs hadoop fs -rmr /mnt/benchark-test-data/   # -> /user/hdfs/.Trash/Current/mnt/benchmark-test-data/
 $ sudo -u hdfs hadoop fs -rmr -skipTrash /mnt/benchark-test-data/
+
 $ scp voyager:/mnt/sdd1/kmeans_100GB/* /dev/stdout  | pv -pterb  | hadoop fs -put - /mnt/benchmark-test-data/
 
 == MapR v2.1.3 M3,M5 (Hadoop 1) ==
+- - - - - - - - - - - - - -
+# -skipTrash option valid?  where is .Trash/ by default?
 $ sudo -u mapr hadoop fs -rmr /mnt/benchmark-test-data/
+
 $ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
 
 Pretty cool feature if using Hadoop examples jar: you can set a lot of the job parameters from the cmdln that you may have had to set manually within the mapred-site.xml file. E.g.:
