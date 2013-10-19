@@ -1730,9 +1730,10 @@ helpgit3(){
       cat <<'__envHEREDOC__'
 = COMMIT MODIFICATION =
 == modify last commit ==
-a. $ git reset --soft HEAD^
-b. make desired modifications
-c. $ git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
+a.  $ git reset --soft HEAD^
+b.  Make desired modifications.
+b2. Do a `git add' to pull in modifications made in step b., if needed. (step c. does not stage anything "for" you!)
+c.  $ git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
 
 == modify any commit ==
 Using the commit hash prior to the commit you want to modify, run:
