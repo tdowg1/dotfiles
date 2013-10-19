@@ -4104,6 +4104,37 @@ __envHEREDOC__
 }
 
 
+helpntp(){
+cat <<'__envHEREDOC__'
+# How off or drift'ed is this machines time? (add servers to increase accuracy and resilience)
+ntpdate -q -v fedora.pool.ntp.org  ntp.ubuntu.com  pool.ntp.org
+
+# Sync this machines time:
+sudo ntpdate -v ntp.ubuntu.com  nist1-pa.ustiming.org  time-d.nist.gov
+
+== Install an NTP daemon ==
+# For RHEL, see mwiki [[Linux command ntpdate]] as it requires >1 step.
+# For Ubuntu (debian too?):
+sudo apt-get install ntp
+# Note that if the machine is WAY out of sync, prob must manually sync first using ntpdate (above).
+
+== Public NTP servers (from the pool.ntp.org proj) ==
+ -> Project asks that queries to pub servers do not occur >once every 4 seconds.
+[0-3].fedora.pool.ntp.org
+tick.apple.com
+[0-3].north-america.pool.ntp.org
+
+time.nist.gov
+
+nist1-ny.ustiming.org         # NYC, NY, USA
+nist1-pa.ustiming.org         # Northern Philly, PA, USA
+time-[a-d].nist.gov           # MoCo, MD, USA
+nist1.aol-va.symmetricom.com  # NoVa, VA, USA
+nist1-la.ustiming.org         # LA, CA, USA
+__envHEREDOC__
+}
+
+
 
 
 
