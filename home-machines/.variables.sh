@@ -90,6 +90,9 @@ fi
 
 # Python
 PYTHONPATH=$PATH
+# Need site-packages in the PYTHONPATH so can use packages within (at least for intelduo-9-ubu1204):
+test -d /usr/local/lib/python2.7/site-packages/  &&  PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
+
 # Python interpreter tweaks
 if [[ -f ~/.pystartup ]] ; then
 	PYTHONSTARTUP=~/.pystartup
