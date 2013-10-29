@@ -614,9 +614,9 @@ $ for i in `seq 7 -1 1` ; do sudo rsnapshot-diff hourly.${i}/magnificent.home/ h
 # du:
 $ d=$( for i in $( ls -trA ) ; do test -f "$i"  &&  continue ; echo $i; done | xargs echo  )
 echo ; date --rfc-3339 seconds
-sudo du -hs $d
+time sudo du -hs $d
 echo ; date --rfc-3339 seconds
-sudo du -hs --count-links $d
+time sudo du -hs --count-links $d
 echo ; date --rfc-3339 seconds
 
 [bdavies@magnificent r]$ for i in hourly.1/* ; do ib=$(basename $i) ; for j in ${i}/* ; do jb=$(basename $j); echo sudo rnapshot-diff hourly.1/$ib/$jb hourly.2/$ib/$jb; done; done
