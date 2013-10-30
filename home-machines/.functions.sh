@@ -1121,6 +1121,10 @@ $ rename -v "s//$( date +'%Y-%m-%d' ) /" [0-9]*.*
 $ rename -v 's/(.*)/$1.pdf/' [0-9]*.*
 2013-05-31 127.18 renamed as 2013-05-31 127.18.pdf                                                                     
 2013-05-31 17.94 renamed as 2013-05-31 17.94.pdf
+
+# Move text from end to beginning:
+$ rename -v -n 's/^(.*)-(2013-\d\d-\d\d)$/$2-$1/' the-name-2013-10-29
+the-name-2013-10-29 renamed as 2013-10-29-the-name
 __envHEREDOC__
 }
 
