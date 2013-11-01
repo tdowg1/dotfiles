@@ -2506,7 +2506,10 @@ diskId=$dname
 ==== using GPT / GUID ====
 $ sudo parted $d
 
+# Ideally, make GPT and/or EFI partition table:
+#  ( !! if using ZFS, this must do !! )
 (parted) mktable gpt
+
 # Alternatively, make an mbr/dos/msdos partition table:
 (parted) mktable msdos
 
@@ -2802,6 +2805,7 @@ cat <<'__envHEREDOC__'
 sfdisk -d $d > $dname.sfdisk - Backup.
 sfdisk  $d < $dname.sfdisk   - Restore.
 
+NOTE this only works for mbr/dos/msdos partition tables.
 __envHEREDOC__
 }
 helptruecrypt(){
@@ -4176,4 +4180,13 @@ unset -f _help6 _help7_vars_interpretted
 ## /help text functions
 ##
 ## ### #### ###################################################################
+helpzfs2_merge_me_in(){
+cat <<'__envHEREDOC__'
+NOTE: properties are inherited from the parent unless overriden by the child.
+
+zfs set dedup=on   testpool # e.g. Would get inherited by testpool/fs{1,2,3}, if existing.
+zfs set compression=on pool # e.g. Would get inherited by     pool/fs{1,2,3}, if existing.
+
+__envHEREDOC__
+}
 
