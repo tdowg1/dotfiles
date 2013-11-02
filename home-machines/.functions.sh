@@ -4188,6 +4188,24 @@ nist1.aol-va.symmetricom.com  # NoVa, VA, USA
 nist1-la.ustiming.org         # LA, CA, USA
 __envHEREDOC__
 }
+helpbattery(){
+cat <<'__envHEREDOC__'
+on_ac_power (1)      - test whether computer is running on AC power
+
+DESCRIPTION
+       checks  whether  the  system is running on AC power (i.e., mains power) as
+       opposed to battery power.
+
+EXIT STATUS
+       0 (true)  System is on mains power
+       1 (false) System is not on mains power
+       255 (false)    Power status could not be determined
+
+FILES
+       /proc/apm         APM status information file
+       /proc/acpi        ACPI status information directory
+__envHEREDOC__
+}
 
 
 
