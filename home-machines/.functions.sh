@@ -2214,14 +2214,42 @@ __envHEREDOC__
 }
 helpionice(){
 cat <<'__envHEREDOC__'
-EXAMPLES
+== EXAMPLES ==
+=== Get class and priority ===
+* ionice -p 89 91
+** Prints the class and priority of the processes with PID 89 and 91.
+
+=== Real time and Best effort scheduling classes ===
+   This scheduling class can take a priority argument (i.e. -n [0-7]).
+* ionice -c 2 [-n 7] svn up
+* ionice -c2 -n7 -p $$   >/dev/null 2>&1
+** Slowest in the Best effort scheduling class.
+** Schedule I/O in the next best favorable manner that is one better Idle(which is the slowest).
+** IOW, its just one notch above the slowest/worst.
+
+* ionice -c 2 -n 0 svn up
+** Fastest in the Best effort scheduling class.
+
+* ionice -c 1 -n 7 svn up
+** Slowest in the Real time scheduling class.
+* ionice -c 1 -n 0 svn up
+** Fastest in the Real time scheduling class.
+
+=== Idle scheduling class ===
+   This scheduling class doesn't take a priority argument (i.e. -n [0-7]).
 * nice ionice -c 3 svn up
 ** run svn with low priority (+10 (`nice -10') is default (+20 being lowest priority)) and as an idle io process.
 
 * nice -12 ionice -c 3 svn up
+** nice: schedule cpu time in a somewhat unfavorble/slower manner.
+** ionice: schedule io time in the absolute least favorable manner.
 
 * ionice -c 3 -p 89
+** Absolute slowest possible.
 ** Sets process with PID 89 as an idle io process.
+
+== See also ==
+helprenice2, helprenice
 __envHEREDOC__
 }
 helpmvn(){
@@ -2948,25 +2976,39 @@ Nicenesses range from -20 (most favorable scheduling) to 19 (least favorable).
 EXAMPLES
 $ nice                # Print the current niceness.
 
-$ nice --18 process   # Run process in the real time class (one of the Most Favorable scheduling classes)
+$ nice --18 process   # (faaast) Run process in the real time class (one of the Most Favorable scheduling classes)
 
 ~~~$ renice -18 23871    # Change process priority (to be in one of the Most Favorable scheduling classes)~~~
 
-$ nice --19 process
+$ nice --19 process   # (fastest) 
 
-$ nice -11 process    # Run process in one of the more Least Favorable scheduling classes.
-$ nice -+11 process   # Same as prior.
-$ nice [-10] process  # Default. Run process in one of the more Least Favorable scheduling classes.
+$ nice [-10] process  # (default) Run process in one of the more Least Favorable scheduling classes.
 $ nice [-+10] process # Same as prior.
+$ nice -11 process    # (slower) Run process in one of the more Least Favorable scheduling classes.
+$ nice -+11 process   # Same as prior.
 
-$ nice -19 process    # Run process in, basically, the Least Favorable scheduling class.
+$ nice -19 process    # (slowest) Run process in, basically, the Least Favorable scheduling class.
 $ nice -+19 process   # Same as prior.
 
 __envHEREDOC__
 
 cat <<'__envHEREDOC__'
 == See also ==
-* getprocesspriority() slowdown() unslowdown() helpsudo()
+* getprocesspriority() slowdown() unslowdown()
+* helpsudo() helpionice()
+__envHEREDOC__
+}
+helprenice2(){
+cat <<'__envHEREDOC__'
+== Set niceness of entire current shell/environment scope or context/shell script ==
+In bash (at least), can use the $$ variable to refer to the current env scope.
+
+# Schedule process very unfavorably (slowest).
+renice +19 -p $$       >/dev/null 2>&1
+
+# Schedule I/O in the next best favorable manner from Idle(which is the slowest).
+# IOW, its just one notch above the slowest/worst.
+ionice -c2 -n7 -p $$   >/dev/null 2>&1
 __envHEREDOC__
 }
 helpnice(){
