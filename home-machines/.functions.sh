@@ -2053,7 +2053,7 @@ __envHEREDOC__
 }
 helpbashexamples(){
 cat <<'__envHEREDOC__'
-Finer grained file listing:
+== Finer grained file listing ==
 [doctor-doom@slum-village ~]$ ll vpn*.png
 -rw------- 1 doctor-doom doctor-doom 311713 06-12 17:08 vpn1.png
 -rw------- 1 doctor-doom doctor-doom 279958 06-12 17:08 vpn2.png
@@ -2072,6 +2072,10 @@ What if I don't want vpn3.png in the listing?  Can also do:
 
 Not limited to just file listing.  Can also do:
 $ cssh hadron-collider-node{1,2,3,4}
+
+
+== Variable defining ==
+nodevs=$(< /proc/filesystems awk '$1 == "nodev" { print $2 }')
 __envHEREDOC__
 }
 helpsort(){
