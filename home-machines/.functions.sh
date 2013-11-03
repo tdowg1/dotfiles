@@ -2306,6 +2306,9 @@ cat <<'__envHEREDOC__'
 PRINT 2nd COLUMN and ALL REMAINING COLUMNS
 	$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
 	> b,c,d
+
+$ echo "dat filename..." | cut -c 1-7    # Print first 5 characters
+dat fil
 __envHEREDOC__
 }
 helpIFS(){
