@@ -1835,6 +1835,8 @@ $ ps -fp $( pgrep str ) # -fp gives relevant nfo on only PID's you want.
 
 == Examples ==
 $ ps axfww              # Exec str nfo, in tree form.
+$ ps axl
+
 $ ps -f -p PID...       # Nfo for PID(s).
                         # Nfo in user-defined formats:
 $ ps -p PID... -o pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
