@@ -4093,23 +4093,24 @@ __envHEREDOC__
 }
 
 
+
 helpzfs(){
 cat <<'__envHEREDOC__'
-zfs list        - Gives overview--pool name, disk usage, mountpoint.
-zpool list      - Similar to zfs; doesn't delv into filesystem stats.
-zpool iostat -v - Gives details of r/w operations.
-zpool status    - Gives current status.
+zfs list         - Gives overview--pool name, disk usage, mountpoint.
+zpool list       - Similar to zfs; doesn't delv into filesystem stats.
+zpool iostat -v  - Gives details of r/w operations.
+zpool status     - Gives current status.
 
 
-zpool export    - Exports the given pools from the system. All devices are marked as exported, but are still considered in use by other subsystems. The devices can be moved between systems (even those of different endianness) and imported as long as a sufficient number of devices are present.
-zpool import    - Imports the given pool.  When no pool specified, display pools available for import.
+zpool export     - Exports the given pools from the system. All devices are marked as exported, but are still considered in use by other subsystems. The devices can be moved between systems (even those of different endianness) and imported as long as a sufficient number of devices are present.
+zpool import     - Imports the given pool.  When no pool specified, display pools available for import.
 
 zpool offline [-t] - Disables the disk in the array[, temporarily (will be restored upon reboot)].
-zpool replace   - Swaps the existing medium.
+zpool replace    - Swaps the existing medium.
 
-zpool remove    - Removes specified device from the pool. Currently, only pertains to hot spares, cache, and log devices.
-zpool detach    - Detaches device from a mirror. Operation is refused if there are no other valid replicas of the data.
-zpool destroy   - Destroys the pool.
+zpool remove     - Removes specified device from the pool. Currently, only pertains to hot spares, cache, and log devices.
+zpool detach     - Detaches device from a mirror. Operation is refused if there are no other valid replicas of the data.
+zpool destroy    - Destroys the pool.
 
 zpool clear
 zpool labelclear - Removes ZFS label information from the specified device.
@@ -4117,11 +4118,14 @@ zpool labelclear - Removes ZFS label information from the specified device.
 zpool get all
 zpool-features
 
-zpool set       - Set a property pertaining to a pool.
-zfs set         - Set a property pertaining to <filesystem|volume|snapshot>.
+zpool set        - Set a property pertaining to a pool.
+zfs set          - Set a property pertaining to <filesystem|volume|snapshot>.
+
+zpool events [-v]   - UNDOCUMENTED.
+zpool history [-il] - Displays internally logged zfs events.
+
 __envHEREDOC__
 }
-
 helpzfs2(){
 cat <<'__envHEREDOC__'
 == ZFS CREATION ==
@@ -4139,14 +4143,15 @@ zfs snapshot ${dname}/fs1
 zfs snapshot ${dname}/fs1@$( date +"%Y-%m-%d_%H.%M.%S" )
 
 zfs snapshot ${dname}@$( date +"%Y-%m-%d_%H.%M.%S" )
-
-
 __envHEREDOC__
 }
 helpzfs3(){
 cat <<'__envHEREDOC__'
+NOTE: properties are inherited from the parent unless overriden by the child.
 zfs set mountpoint=/mnt/testpool testpool
 
+zfs set dedup=on   testpool # e.g. Would get inherited by testpool/fs{1,2,3}, if existing.
+zfs set compression=on pool # e.g. Would get inherited by     pool/fs{1,2,3}, if existing.
 __envHEREDOC__
 }
 helpzfs4(){
@@ -4158,8 +4163,16 @@ iostat 1
 sudo zpool iostat 1
  alternatively...
 sudo zpool iostat -v 1
+
+echo ; sudo zpool list ; sudo zfs list
 __envHEREDOC__
 }
+helpzfs5(){
+cat <<'__envHEREDOC__'
+echo
+__envHEREDOC__
+}
+
 
 
 helpntp(){
@@ -4247,13 +4260,4 @@ unset -f _help6 _help7_vars_interpretted
 ## /help text functions
 ##
 ## ### #### ###################################################################
-helpzfs2_merge_me_in(){
-cat <<'__envHEREDOC__'
-NOTE: properties are inherited from the parent unless overriden by the child.
-
-zfs set dedup=on   testpool # e.g. Would get inherited by testpool/fs{1,2,3}, if existing.
-zfs set compression=on pool # e.g. Would get inherited by     pool/fs{1,2,3}, if existing.
-
-__envHEREDOC__
-}
 
