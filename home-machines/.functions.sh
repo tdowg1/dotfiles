@@ -2762,6 +2762,13 @@ __envHEREDOC__
 }
 helphdd5(){
 cat <<'__envHEREDOC__'
+== Remove HDD from the system as if physically pulled out ==
+src : a response to original email "[zfs-discuss] ZFS hanging on failing drive"
+
+This is like pulling the disk, except for the kernel knowing about it first,
+also should stop ZFS from hanging:
+$ echo 1 > /sys/block/<sdX>/device/delete
+
 == HDD Burn in ==
 src : https://wiki.archlinux.org/index.php/Badblocks#read-write_Test
    This test is primarily for testing new drives and is a read-write test. As the pattern is written to every accesible block the device effectively gets wiped. Default is an extensive test with four passes using four different patterns: 0xaa (10101010), 0x55 (01010101), 0xff (11111111) and 0x00 (00000000). For some devices this will take a couple of days to complete.
