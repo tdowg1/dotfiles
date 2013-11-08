@@ -4238,6 +4238,11 @@ FILES
        /proc/acpi        ACPI status information directory
 __envHEREDOC__
 }
+helppython(){
+cat <<'__envHEREDOC__'
+python -c 'print 2**100**100'   # Hog RAM and peg 1 CPU.
+__envHEREDOC__
+}
 
 
 
