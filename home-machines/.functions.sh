@@ -4154,6 +4154,13 @@ zfs set mountpoint=/mnt/testpool testpool
 
 zfs set dedup=on   testpool # e.g. Would get inherited by testpool/fs{1,2,3}, if existing.
 zfs set compression=on pool # e.g. Would get inherited by     pool/fs{1,2,3}, if existing.
+
+zpool get dedup  - Lists system pools and associated deduplication ratio.
+zfs   get dedup  - Lists system pools and child datasets, if exists, and associated dedup property value.
+
+zpool get all    - Retrieves all properties for specified pool.
+zfs   get all    - Displays all properties that apply to the given datasets (or all datasets on the system if none specified) type; filesystem, volume, or snapshot.
+
 __envHEREDOC__
 }
 helpzfs4(){
