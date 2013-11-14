@@ -4282,3 +4282,7 @@ unset -f _help6 _help7_vars_interpretted
 ##
 ## ### #### ###################################################################
 
+
+# CLEAN UP THIS FILE.  AREAS OF INTEREST::
+# grep --line-number '`' .functions.sh
+
