@@ -3924,10 +3924,10 @@ $ sudo passwd -d guest
 It's important to note a few things with the above config.
 * ensure that PermitEmptyPasswords is no/false in ssh server config, else anyone can log in.
 * if applicatble, remove read and execute permissions on any /home directories that shouldn't be readable, listable to the guest user account.
-* this does NOT give ability to `su - guest` via some random X Terminal or remote shell since this are not considered "secure" in this situation.
-* this DOES give ability to login via any graphical login (GDM, KDM, LightDM), text log in, and via `su - guest` if executed within a text login session.  All without a password.
+* this does NOT give ability to 'su - guest' via some random X Terminal or remote shell since this are not considered "secure" in this situation.
+* this DOES give ability to login via any graphical login (GDM, KDM, LightDM), text log in, and via 'su - guest' if executed within a text login session.  All without a password.
 
-There is an argument to pam_unix.so called nullok_secure.  Changing this to nullok may allow for login via `su - guest` when using a random X Terminal or remote shell, however it's recommended to not do. http://unix.stackexchange.com/a/10872
+There is an argument to pam_unix.so called nullok_secure.  Changing this to nullok may allow for login via 'su - guest' when using a random X Terminal or remote shell, however it's recommended to not do. http://unix.stackexchange.com/a/10872
 __envHEREDOC__
 }
 helptmux(){
