@@ -2831,8 +2831,8 @@ parted $d --script mktable gpt
 
 -> Make a new partition entry:
 parted $d --script mkpart primary zfs 23437312s 216797183s  # ...of size 99 000MB
-parted $d --script mkpart primary ext4 12000MB  111000MB    # "MB" may not be allowed... nor any of the of the following guys... ... on second thought... if 'unit UNIT' precedes 'mkpart', all thes other unit formats may actually work... e.g.:
- `-> parted $d --script unit MB mkpart primary ext4 12000MB  111000MB
+parted $d --script mkpart primary ext4 12000MB  111000MB    # "MB" may not be allowed... nor any of the of the following guys... ... on second thought... if "unit UNIT" precedes "mkpart", all thes other unit formats may actually work... e.g.:
+  -> parted $d --script unit MB mkpart primary ext4 12000MB  111000MB
 parted $d --script mkpart primary ext4 11444MiB 105858MiB
 parted $d --script mkpart primary ext4 12.0GB   111GB 
 parted $d --script mkpart primary ext4 11.2GiB  103GiB
