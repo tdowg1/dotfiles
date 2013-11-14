@@ -1462,7 +1462,7 @@ EXTRACT TO STDOUT
 EXTRACT EXAMPLE0
 Generate checksum based on rarchive's contents.  by default, rar prints out bunch of other cruft, so simply doing the following will result in an invalid checksum:
    rar p fsimg.ext4.dd.rar | pv -pterab | sha1sum         # BAD.
-Here's some ways to get the checksum you probably intend to get (i.e. `tar zxfO x.tar.gz | sha1sum'):
+Here's some ways to get the checksum you probably intend to get (i.e. 'tar zxfO x.tar.gz | sha1sum'):
    rar p -ierr fsimg.ext4.dd.rar | pv -pterab | sha1sum   # Send all msgs to stderr (actual archive content goes to stdout).
    rar p -idcdpq fsimg.ext4.dd.rar | pv -pterab | sha1sum # Disables all types of messages ; -id[c,d,p,q].
    rar p -inul fsimg.ext4.dd.rar | pv -pterab | sha1sum   # Disables all messages.
