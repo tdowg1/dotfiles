@@ -4243,6 +4243,20 @@ cat <<'__envHEREDOC__'
 python -c 'print 2**100**100'   # Hog RAM and peg 1 CPU.
 __envHEREDOC__
 }
+helpalternatives(){
+cat <<'__envHEREDOC__'
+sudo alternatives --install /usr/bin/java java /usr/java/jdk1.5.0_22/bin/java 2
+sudo alternatives --install /usr/bin/javac javac /usr/java/jdk1.5.0_22/bin/javac 2
+sudo alternatives --config java
+sudo alternatives --config javac
+__envHEREDOC__
+}
+helpupdatealternatives(){
+cat <<'__envHEREDOC__'
+/calling helpalternatives()/
+__envHEREDOC__
+	helpalternatives
+}
 
 
 
