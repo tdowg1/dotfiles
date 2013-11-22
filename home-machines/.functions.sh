@@ -1560,6 +1560,12 @@ helpnetwork(){
 cat <<'__envHEREDOC__'
 arp                               # get mac address from ip address
 
+You can add that network ip address (thats not in the networks range) to 
+another machine on the network and try to get at it... i forget how to do 
+it in linux but you can do like 
+  ifconfig eth0 172.27.8.13 alias
+to get on a second network with the same interface.
+
 == See also ==
 helpnetstat
 helpnslookup
