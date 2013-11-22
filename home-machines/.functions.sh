@@ -1814,6 +1814,13 @@ List available tags:
 $ git tag [-l -n]
 Checkout one of the available tags
 $ git checkout [TAB-TAB] <one of the tag names>
+
+How to list branches from upstream repo?
+$ git branch -r
+Alternatively:
+$ git remote show origin
+$ git ls-remote --heads origin
+$ git ls-remote --refs origin   # Prints even more than --heads.
 __envHEREDOC__
 }
 
