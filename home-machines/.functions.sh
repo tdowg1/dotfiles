@@ -2805,6 +2805,12 @@ PERSONAL NOTE: although the partitions are aligned properly, i dont think fs
  at the tail end of partition that is not in use by fs because is < 4K ?
 __envHEREDOC__
 }
+helphdd6_ntfsresize(){
+cat <<'__envHEREDOC__'
+cmdln used by KDE Partition Manager 
+ntfsresize -P -i -f -v /dev/sdw1
+__envHEREDOC__
+}
 
 helpfdisk(){
 cat <<'__envHEREDOC__'
