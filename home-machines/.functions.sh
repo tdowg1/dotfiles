@@ -1603,10 +1603,13 @@ __envHEREDOC__
 helpnmap(){
 cat <<'__envHEREDOC__'
 Listing all Linux servers which are up in a network:
-$ nmap -v -sP <Network info>  # <nw nfo> can be a whole network (say 10.10.22.0/24) or range (say 10.10.22.1-40).
+$ nmap [-v] -sP <Network info>  # <nw nfo> can be a whole network (say 10.10.22.0/24) or range (say 10.10.22.1-40).
 NOTE: this cmdln didn't seem to pick up my Fedora machine... 
  is RHEL set to not respond or something?
  --> SEE helparping() for locating firewalled hosts.
+
+Scan the entire network (.1/24), trying the specified port:
+$ nmap [-v] -p 623 192.168.1.1/24
 __envHEREDOC__
 }
 helparping(){
