@@ -35,7 +35,15 @@ stuff "df -hT"
 stuff "df -hT"
 stuff "df -hT"
 
+screen -t "di"
+stuff "di"
+stuff "di"
+stuff "di"
+
 screen -t "mem"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
+stuff "swapon -s ; free -m"
 stuff "swapon -s ; free -m"
 stuff "swapon -s ; free -m"
 stuff "swapon -s ; free -m"
@@ -47,6 +55,12 @@ stuff "swapon -s ; free -m"
 screen -t "syslg"
 stuff "tail -F /var/log/syslog"
 #stuff "tail -F /var/log/messages"
+
+screen -t "bu"
+stuff "rim"
+stuff "echo time ./do-backup.sh"
+
+screen -t "x"
 
 select 2
 
