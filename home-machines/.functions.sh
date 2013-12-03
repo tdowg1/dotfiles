@@ -4311,6 +4311,13 @@ pkg contents -t file smartmontools  # list the full file paths of package files,
 prtconf | grep Mem # like free; prints physical memory size
 vmstat         # like free.... sort of?... am not pleased lol
 vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
+
+# Steps to get ram usage:
+sar -r 1 1     # get number under 'freemem' column. This measurement is wrt the pagesize.
+freemem=253992 # e.g..
+echo "$freemem * ( $( pagesize ) / 1024 ) | bc -l"   # Free RAM in KiB.
+# ^^src : http://karellen.blogspot.com/2011/10/available-used-and-free-memory-in.html
+
 swap -l [-h]   # like swapon -s; list swap devices [in human-readable format].
 swap -s [-h]   # like swapon -s; list amt of swap space available [in human-readable format].
 
