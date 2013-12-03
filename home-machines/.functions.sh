@@ -4127,9 +4127,9 @@ __envHEREDOC__
 
 helpzfs(){
 cat <<'__envHEREDOC__'
-zfs list         - Gives overview--pool name, disk usage, mountpoint.
-zpool list       - Similar to zfs; doesn't delv into filesystem stats.
-zpool iostat -v  - Gives details of r/w operations.
+zfs list   [-v]  - Gives overview--pool name, disk usage, mountpoint.
+zpool list [-v]  - Similar to zfs; doesn't delv into filesystem stats.
+zpool iostat [-v] - Gives details of r/w operations.
 zpool status     - Gives current status.
 
 
@@ -4279,6 +4279,117 @@ cat <<'__envHEREDOC__'
 __envHEREDOC__
 	helpalternatives
 }
+
+
+# TODO STUB: Determine better function names... or remove these entirely.k
+# Solaris-like operating system help texts
+helpomnios_ipmitool(){
+cat <<'__envHEREDOC__'
+ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info.
+ipmitool sensor  # Similar to sdr, but with more data.
+immitool fru     # Prints nfo about the sensors.
+
+ipmitool sunoem fan speed 0   # Sets fan speed to 0% (avg 3900RPM), 400w.
+ipmitool sunoem fan speed 100 # Sets fan speed to 0% (avg 7900RPM), 550w.
+
+ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN THIS!
+__envHEREDOC__
+}
+#helpomnios2_cmdln_equivalents(){
+helpomnios2_equivalents(){
+cat <<'__envHEREDOC__'
+== cmdln ==
+prstat         # like top
+svcs           # like service --status-all
+pkg search     # like aptitude search
+pkg install    # like aptitude install
+pkg info       # like aptitude show
+pkg update -nv # like aptitude upgrade
+pkg contents -t file smartmontools  # list the full file paths of package files, e.g. show me what just got installed.
+
+
+== files ==
+/var/adm/messages  # like /var/log/syslog or /var/log/messages
+__envHEREDOC__
+}
+helpomnios3(){
+cat <<'__envHEREDOC__'
+prtconf        # Print various system config and peripheral nfo.  Displays system configuration information, including the total amount of memory and the device configuration, as described by the system's hierarchy. This useful tool verifies whether a device has been seen by the system.
+sysdef         # Displays device configuration information, including system hardware, pseudo devices, loadable modules, and selected kernel parameters.
+dmesg          # Displays system diagnostic messages (from /var/adm/messages) as well as a list of devices attached to the system since the most recent restart.
+
+__envHEREDOC__
+}
+helpomnios4_hdd_and_storage_related(){
+cat <<'__envHEREDOC__'
+== defn's ==
+Instance Name : e.g. sd0, sd1, sd2, ssd23, md301
+Descriptive Name : e.g. in the cXtYdZsN format. The logical device 
+ name.  Are populated in /dev/dsk.
+
+
+== observations ==
+The nfo gathered from...
+* executing prtconf, and
+* listing /dev/dsk
+...can be linked up according to the ancestry of prtconf's "disk" nodes the 
+sym link targets of /dev/dsk/*.
+
+Alternatively, can just pass -v to prtconf and search to "disk" instances 
+within the output.  
+
+
+== cmdln ==
+zpool status  # Displays pool members in the cXtYdZsN format.
+
+format        # Displays both physical and logical device names for all available disks.
+   SEE ALSO
+        fmthard(1M), prtvtoc(1M), rmformat(1), format.dat(4), attri-
+        butes(5),  sd(7D)
+   
+     x86 Only
+        fdisk(1M)
+
+
+
+iostat -E     # Display storage device nfo. By  default,
+              # disks  are  identified by instance names such as
+              # ssd23 or md301.
+
+iostat -Ei    # Same as -E but instead of S/N, prints Device Id.
+
+iostat -E -Xn # Combining the X option with the -n option causes 
+              # disk names to display in the
+              #         cXtYdZsN 
+              # format, more easily associated
+              # with physical hardware characteristics.  Using the
+              # cXtYdZsN format is particularly helpful in the
+              # FibreChannel environments where the FC World
+              # Wide Name appears in the t field.
+              # Disks are identified by controller names.
+
+iostat -xcnCXTdz interval  # Particularly useful for determining whether 
+                           # disk I/O problems exist and for identifying problems.
+
+iostat -xnp   # Generates partition and device statistics for each disk.
+              # Disks are identified by controller names (disk names also 
+              # display in the cXtYdZsN  format).
+
+
+Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+iostat -E     # Display storage device nfo.
+
+__envHEREDOC__
+}
+#/TODO STUB
 
 
 
