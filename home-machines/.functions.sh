@@ -4308,15 +4308,24 @@ pkg install    # like aptitude install
 pkg info       # like aptitude show
 pkg update -nv # like aptitude upgrade
 pkg contents -t file smartmontools  # list the full file paths of package files, e.g. show me what just got installed.
+prtconf | grep Mem # like free; prints physical memory size
+vmstat         # like free.... sort of?... am not pleased lol
+vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
+swap -l [-h]   # like swapon -s; list swap devices [in human-readable format].
+swap -s [-h]   # like swapon -s; list amt of swap space available [in human-readable format].
 
 
 == files ==
 /var/adm/messages  # like /var/log/syslog or /var/log/messages
+
+== See also ==
+http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
 __envHEREDOC__
 }
 helpomnios3(){
 cat <<'__envHEREDOC__'
 prtconf        # Print various system config and peripheral nfo.  Displays system configuration information, including the total amount of memory and the device configuration, as described by the system's hierarchy. This useful tool verifies whether a device has been seen by the system.
+prtdiag        # Print various system peripheral nfo.
 sysdef         # Displays device configuration information, including system hardware, pseudo devices, loadable modules, and selected kernel parameters.
 dmesg          # Displays system diagnostic messages (from /var/adm/messages) as well as a list of devices attached to the system since the most recent restart.
 
