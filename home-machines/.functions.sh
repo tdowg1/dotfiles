@@ -696,6 +696,8 @@ helpsmartctl(){
    echo 'echo "sleep for 175 minutes" && sleep 175m'
 
 cat <<'__envHEREDOC__'
+# Example OmniOS cmdln:
+sudo smartctl --all -d sat,12 /dev/rdsk/c4t0d0
 
 d=${DEVICE}
 DEVICE=${d}
