@@ -4302,6 +4302,7 @@ __envHEREDOC__
 helpomnios2_equivalents(){
 cat <<'__envHEREDOC__'
 == cmdln ==
+notes synopsis: omnios/solaris cmdln   # the equivalent cmdln in Linux.
 prstat         # like top
 svcs           # like service --status-all
 pkg search     # like aptitude search
@@ -4312,6 +4313,11 @@ pkg contents -t file smartmontools  # list the full file paths of package files,
 prtconf | grep Mem # like free; prints physical memory size
 vmstat         # like free.... sort of?... am not pleased lol
 vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
+init 5         # like init 0
+init 1         # like init 1
+init 4         # like init 2-5*  ( *=normal states )
+init 6         # like init 6
+
 
 # Steps to get ram usage:
 sar -r 1 1     # get number under 'freemem' column. This measurement is wrt the pagesize.
@@ -4408,18 +4414,6 @@ iostat -xcnCXTdz interval  # Particularly useful for determining whether
 iostat -xnp   # Generates partition and device statistics for each disk.
               # Disks are identified by controller names (disk names also 
               # display in the cXtYdZsN  format).
-
-
-Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
-iostat -E     # Display storage device nfo.
 
 __envHEREDOC__
 }
