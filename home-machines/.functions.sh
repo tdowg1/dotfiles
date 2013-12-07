@@ -4320,9 +4320,19 @@ echo "$freemem * ( $( pagesize ) / 1024 ) | bc -l"   # Free RAM in KiB.
 # ^^src : http://karellen.blogspot.com/2011/10/available-used-and-free-memory-in.html
 
 #   ...Potential 1-liner?
-sar -r 1 1 | tail -1 | awk '{ print $2 }' | xargs echo  "$(( $( pagesize ) / 512 )) *" | bc | xargs echo RAM Free, KiB:
+sar -r 1 1 | tail -1 | awk '{ print $2 }' | \ 
+ xargs echo  "$(( $( pagesize ) / 512 )) *" | bc | xargs echo RAM Free, KiB:
 #   ...displays like:
 #RAM Free, KiB: 1369504
+#
+#   ...again, but for MiB (COMPACT THIS):
+sar -r 1 1 | tail -1 | awk '{ print $2 }' | \ 
+ xargs echo  "$(( $( pagesize ) / 512 )) *" | bc | \ 
+ xargs echo "scale = 10; (1/1024) *" | bc | xargs echo RAM Free, MiB:
+#   ...displays like:
+#RAM Free, MiB: 1852.5703125000
+#
+
 
 swap -l [-h]   # like swapon -s; list swap devices [in human-readable format].
 swap -s [-h]   # like swapon -s; list amt of swap space available [in human-readable format].
