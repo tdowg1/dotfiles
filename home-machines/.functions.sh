@@ -2205,7 +2205,8 @@ Use 'apt-get autoremove' to remove them.
 
 == [un]hold a Package ==
 $ echo synergy hold | sudo dpkg --set-selections  # this will get applied to apt-get's db too.
-$ aptitude [un]hold synergy
+$ aptitude [un]hold synergy                       # this will not get applied to apt-get's db, i dont think.
+
 === More (aptitude-related) ==
 Run aptitude with no parameters, then limit the list (Ctrl-l) to those
 packages on hold (~ahold). Then select the header of all packages on
@@ -2219,6 +2220,11 @@ $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show 
 * Search Term Reference : http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html
 * Cool aptitude search patterns : http://lwn.net/Articles/179754/
 
+== Try to install package; fail if it cannot be perfectly installed ==
+goldie@inst/xpra$ sudo dpkg --refuse-all --install 0.0.7.36/python-wimpiggy_0.0.7.36+dfsg-1_amd64.deb
+goldie@inst/xpra$ sudo dpkg --refuse-all --install 0.0.7.36/xpra_0.0.7.36+dfsg-1_amd64.deb
+goldie@inst/xpra$ echo xpra hold | sudo dpkg --set-selections
+goldie@inst/xpra$ sudo aptitude hold xpra
 
 == Package file info ( http://serverfault.com/a/96965 ) ==
 List files installed by a given package:
