@@ -1732,13 +1732,22 @@ to your .gitignore.
  |\
  | * 3f13ede (origin/master, origin/HEAD) misc dotfile changes (vm-ubu10041) (13h ago)
 
-= DIFFs =
+= DIFFs, important =
 * git diff <from> <to>          # diff FROM <from> commit TO <to> commit
 * Useful when want to review the actual content brought in i.e. MERGED IN from a branch.
 ** git di <2nd newest commit> <newest commit>   # (see example-above)
 * git di <branch1 name> <branch2 name>
 * git di <branch name> <current branch>
 * git di <branch name>          # same as above ("TO" branch implied to be current branch)
+
+= DIFFs, less important =
+Override the default diff context...
+... surrounding functions of changes:
+$ git diff [-W, --function-context]
+... between two chunks:
+$ git diff --inter-hunk-context=<lines>
+... overall:
+$ git diff --unified=33
 __envHEREDOC__
 }
 helpgit3(){
