@@ -4143,6 +4143,8 @@ __envHEREDOC__
 
 
 
+
+
 helpzfs(){
 cat <<'__envHEREDOC__'
 zfs list   [-v]  - Gives overview--pool name, disk usage, mountpoint.
@@ -4213,21 +4215,58 @@ __envHEREDOC__
 helpzfs4(){
 cat <<'__envHEREDOC__'
 df -hT ; echo ; sudo zfs list  ; free -m ; uptime ; echo
-sudo zpool status ; sudo zpool list ; sudo zfs list
+di ; echo ; sudo zpool list -v ; sudo zfs list -t all -r  ; free -m ; uptime ; echo
+
+sudo zpool status ; sudo zpool list -v ; sudo zfs list -t all -r
+sudo zpool status | grep -vP "^[\s]*$" ; sudo zpool list -v ; sudo zfs list -t all -r  ########
+
 
 iostat 1
 sudo zpool iostat 1
  alternatively...
 sudo zpool iostat -v 1
 
-echo ; sudo zpool list ; sudo zfs list
+echo ; sudo zpool list -v ; sudo zfs list
+
+di ; echo ; sudo zpool list -v ; sudo zfs list -t all -r  ; free -m ; uptime ; echo
 __envHEREDOC__
 }
 helpzfs5(){
 cat <<'__envHEREDOC__'
 echo
+
+2013-12-11 steps to replace redundant zpool partition device with non-partitioned device.
+Not sure if you can even do this gracefully using zfs cmdln's, nor how difficult the extra
+work may be if the graceful approach doesn't work.
+
+# the base block device:
+d=/dev/sda
+# the partitioned block device:
+partitioneddev=${d}1
+
+zpool remove rpool $partitioneddev  # should fail with: cannot remove /dev/sdc1: only inactive hot spares, cache, top-level, or log devices can be removed.
+zpool detach rpool $partitioneddev  # should fail with: cannot detach /dev/sdc1: only applicable to mirror and replacing vdevs.
+
+zpool export rpool
+zpool labelclear -f $partitioneddev
+
+# (if applicable, physically swap out hdd that should be removed and swap in new)
+
+zpool import rpool
+
+# pool is imported and brought online in a degraded state.
+
+zpool replace rpool $partitioneddev $d
+
+# pool begins a resilver.
+# to cancel that resilver operation (e.g. maybe takes too long), can do one of:
+$ zpool detach your_pool_name new_device  # which detaches the new device and stops resilver.
+$ zpool scrub -s your_pool_name           # which stops the scrub/resilver.
+
 __envHEREDOC__
 }
+
+
 
 
 
@@ -4299,9 +4338,12 @@ __envHEREDOC__
 }
 
 
+
+
+
 # TODO STUB: Determine better function names... or remove these entirely.k
 # Solaris-like operating system help texts
-helpomnios_ipmitool(){
+helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info.
 ipmitool sensor  # Similar to sdr, but with more data.
@@ -4311,6 +4353,8 @@ ipmitool sunoem fan speed 0   # Sets fan speed to 0% (avg 3900RPM), 400w.
 ipmitool sunoem fan speed 100 # Sets fan speed to 0% (avg 7900RPM), 550w.
 
 ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN THIS!
+
+ipmitool -V      # Print version
 __envHEREDOC__
 }
 #helpomnios2_cmdln_equivalents(){
