@@ -4376,6 +4376,9 @@ init 5         # like init 0
 init 1         # like init 1
 init 4         # like init 2-5*  ( *=normal states )
 init 6         # like init 6
+psrinfo -vp    # like less /proc/cpuinfo
+isainfo -x     # like arch
+
 
 
 # Steps to get ram usage:
@@ -4397,10 +4400,10 @@ sar -r 1 1 | tail -1 | awk '{ print $2 }' | \
 #   ...displays like:
 #RAM Free, MiB: 1852.5703125000
 #
-
-
+# ----
 swap -l [-h]   # like swapon -s; list swap devices [in human-readable format].
 swap -s [-h]   # like swapon -s; list amt of swap space available [in human-readable format].
+
 
 
 == files ==
@@ -4410,13 +4413,16 @@ swap -s [-h]   # like swapon -s; list amt of swap space available [in human-read
 http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
 __envHEREDOC__
 }
-helpomnios3(){
+helpomnios3_basicSysnfo(){
 cat <<'__envHEREDOC__'
 prtconf        # Print various system config and peripheral nfo.  Displays system configuration information, including the total amount of memory and the device configuration, as described by the system's hierarchy. This useful tool verifies whether a device has been seen by the system.
+prtconf -d     # Look at things like PCI devices. As of r151006, the new "-d" option uses a built-in copy of the PCI device database to provide vendor info.
 prtdiag        # Print various system peripheral nfo.
 sysdef         # Displays device configuration information, including system hardware, pseudo devices, loadable modules, and selected kernel parameters.
 dmesg          # Displays system diagnostic messages (from /var/adm/messages) as well as a list of devices attached to the system since the most recent restart.
-
+psrinfo -vp    # Like 'less /proc/cpuinfo'.  The bonus with psrinfo is that you can also see how the cores map to sockets.
+lgrpinfo       # If really curious about how the system schedules work across the CPUs. Displays the NUMA topology of the system. The scheduler attempts to schedule threads "near" (in NUMA terms) their associated memory allocations and potential cache entries. 
+isainfo -x     # Like 'arch'. Identifies various attributes of the instruction set architectures of the system.
 __envHEREDOC__
 }
 helpomnios4_hdd_and_storage_related(){
