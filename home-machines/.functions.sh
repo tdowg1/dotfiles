@@ -4278,6 +4278,8 @@ ntpdate -q -v fedora.pool.ntp.org  ntp.ubuntu.com  pool.ntp.org
 # Sync this machines time:
 sudo ntpdate -v ntp.ubuntu.com  nist1-pa.ustiming.org  time-d.nist.gov
 
+ntpq -pn
+
 == Install an NTP daemon ==
 # For RHEL, see mwiki [[Linux command ntpdate]] as it requires >1 step.
 # For Ubuntu (debian too?):
