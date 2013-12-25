@@ -2474,28 +2474,37 @@ $ tune2fs -l <device> | grep name
 	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
 	^^alternatively, COULD JUST LOOK HERE : /dev/disk/by-label
 
-=== Get Nfo ===
-==== Which devices are seen? ====
-$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # host=intelduo
+== GET NFO ==
+=== Which devices are seen? ===
+$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"
 
-== Misc ==
+=== /proc ===
+/proc/partitions # Contains major and minor numbers of each partition as well as number of blocks and partition name.
+/proc/scsi/scsi  # Listing of all SCSi devices known.
+
+
+== MISC ==
 findfs {LABEL=label | UUID=uuid}  # Identify device that matches query.
 cfdisk          # Display or manipulate disk partition table.
+cfdisk -P {r|s|t} # Print partition table/layout in 3 formats:
+                #    r - Raw data format (exactly what would be written to disk)
+                #    s - Partition table in sector order format (YOULL PROBABLY WANT THIS!)
+                #    t - Partition table in raw format.
 sfdisk          # Partition table manipulator for Linux.
 fdisk           # Manipulate disk partition table.
 gnu-fdisk       # Linux fdisk replacement based on libparted.
 gdisk           # GPT fdisk text-mode partitioning tool.
 parted          # Disk partition manipulator.
+di              # Disk information util, displays more than df.
 blockdev        # Call block device ioctls from the command line.
 dmsetup         # Low level logical volume management.
 fsfreeze        # Suspend access to a filesystem (Linux Ext3/4, 
                 # ReiserFS, JFS, XFS) (intended for hw RAID devices).
 
 blkid           # Locate/print block device attributes like UUID and LABEL.
-lsblk           # !!! List Block Devices. !!!!!!!!!!!!!!!!!!!!!!!!!
-findmnt         # !!! Prints all mounted FS's in tree-format by default. !!!!!!!
-di              # Disk information util, displays more than df.
-disktype        # Detect && display nfo about FS's, partitions, tables, etc.
+lsblk           # !!! List Block Devices.
+findmnt         # !!! Prints all mounted FS's in tree-format by default.
+disktype        # !!! Detect && display nfo about FS's, partitions, tables, etc.
 hdparm          # Tune hard disk parameters for high performance.
                 #   Get/set device parameters for Linux SATA/IDE drives.
                 #   Primary use is for enabling irq-unmasking and IDE multiplemode.
@@ -2513,15 +2522,18 @@ gpart           # Guess PC disk partition table, find lost partitions.
                 #   them (using fdisk, cfdisk, sfdisk, etc.).
                 #   The guessed table can also be written to a file or (if you firmly 
                 #    believe the guessed table is entirely correct) directly to a disk device.
-pv              # Shell pipeline element to meter data passing though.
+partprobe -s    # Informs OS kernel of partition table changes, by requesting
+                # that the OS re-read the partition table.
+                #   -s Show a summary of devices and their partitions.
+sginfo          # (scsi)
+sg_scan [-i]    # (scsi)
 
-SEE ALSO `helplstopo`, helpblkid
 
-==== What are block sizes? ====
-$ cat /proc/partitions
+== SEE ALSO ==
+helplstopo, helpblkid, helppv
 __envHEREDOC__
 }
-helphdd2(){
+helphdd2_fs_related(){
 cat <<'__envHEREDOC__'
 Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
@@ -2533,17 +2545,10 @@ $ tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL DEVICE
 $ tune2fs -l DEVICE                # display info about filesystem.
 $ dumpe2fs -h DEVICE                # display info about filesystem (same as tune2fs -l).
 $ resize2fs -p DEVICE              # expands device to max, -p shows progress.
-TODO STUB $ mkfs -t btrfs                    # create btrfs filesystem.
+$ mkfs -t btrfs                    # create btrfs filesystem.
 $ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
 $ mkfs.vfat -n label DEVICE        # create fat32 filesystem; useful for reformat thumb drive.
-$ cfdisk -P {r|s|t} DEVICE         # Print partition table/layout in 3 formats:
-                                   #   r Raw data format (exactly what would be written to disk)
-                                   #   s Partition table in sector order format (YOULL PROBABLY WANT THIS!)
-                                   #   t Partition table in raw format.
 $ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
-$ partprobe  -s                    # Informs OS kernel of partition table changes, by requesting
-                                   # that the OS re-read the partition table.
-                                   #   -s Show a summary of devices and their partitions.
 __envHEREDOC__
 }
 helphdd3(){
@@ -2831,6 +2836,60 @@ cmdln used by KDE Partition Manager
 ntfsresize -P -i -f -v /dev/sdw1
 __envHEREDOC__
 }
+helphdd7_sg_scsi_driver_and_fifo_howto(){
+cat <<'__envHEREDOC__'
+== man sg_dd ==
+EXAMPLES
+   Looks quite similar in usage to dd:
+
+      sg_dd if=/dev/sg0 of=t bs=512 count=1MB
+
+   This  will  copy 1 million 512 byte blocks from the device associated with /dev/sg0 (which
+   should have 512 byte blocks) to a file called t.  Assuming /dev/sda and /dev/sg0  are  the
+   same device then the above is equivalent to:
+
+      dd if=/dev/sda iflag=direct of=t bs=512 count=1000000
+
+   although  dd's  speed may improve if bs was larger and count was suitably reduced. The use
+   of the 'iflag=direct' option bypasses the buffering and caching that is usually done on  a
+   block device.
+
+   Using a raw device to do something similar on a ATA disk:
+
+      raw /dev/raw/raw1 /dev/hda
+      sg_dd if=/dev/raw/raw1 of=t bs=512 count=1MB
+
+   To copy a SCSI disk partition to an ATA disk partition:
+
+      raw /dev/raw/raw2 /dev/hda3
+      sg_dd if=/dev/sg0 skip=10123456 of=/dev/raw/raw2 bs=512
+
+   This  assumes  a valid partition is found on the SCSI disk at the given skip block address
+   (past the 5 GB point of that disk) and that the partition goes to  the  end  of  the  SCSI
+   disk.  An  explicit count is probably a safer option. The partition is copied to /dev/hda3
+   which is an offset into the ATA disk /dev/hda . The  exact  number  of  blocks  read  from
+   /dev/sg0 are written to /dev/hda (i.e. no padding).
+
+   To time a streaming read of the first 1 GB (2 ** 30 bytes) on a disk this utility could be
+   used:
+
+      sg_dd if=/dev/sg0 of=/dev/null bs=512 count=2m time=1
+
+   On completion this will output a line like: "time to transfer  data  was  18.779506  secs,
+   57.18 MB/sec". The "MB/sec" in this case is 1,000,000 bytes per second.
+
+   The  'of2=' option can be used to copy data and take a md5sum of it without needing to re-
+   read the data:
+
+     mkfifo fif
+     md5sum fif &
+     sg_dd if=/dev/sg3 iflag=coe of=sg3.img oflag=sparse of2=fif bs=512
+
+   This will image /dev/sg3 (e.g. an unmounted disk) and place the contents in  the  (sparse)
+   file  sg3.img  .  Without re-reading the data it will also perform a md5sum calculation on
+   the image.
+__envHEREDOC__
+}
 
 helpfdisk(){
 cat <<'__envHEREDOC__'
@@ -2966,6 +3025,10 @@ usb-devices          - print USB device details.  Aggregates nfo from...
 * helplstopo
 __envHEREDOC__
 }
+
+
+
+
 helpchkconfig(){
 cat <<'__envHEREDOC__'
 == RHEL-related ==
@@ -3491,9 +3554,7 @@ cat <<'__envHEREDOC__'
 $ 
 $ command $ help command
 
-helpenv
-helptypeset
-which
+helpenv helptypeset which
 
 == Related ==
 * http://www.cyberciti.biz/faq/unix-linux-shell-find-out-posixcommand-exists-or-not/
@@ -3511,6 +3572,9 @@ __envHEREDOC__
 }
 helpman(){
 cat <<'__envHEREDOC__'
+== Notable manpage topics ==
+* man proc   # docs for processes information pseduo-file sys ( /proc ).
+
 /calling helpcommand()/
 __envHEREDOC__
 	helpcommand
@@ -3531,6 +3595,8 @@ set +x
 }
 helppv(){
 cat <<'__envHEREDOC__'
+pv - Shell pipeline element to meter data passing though.
+
 (2012-12-05 19:05:39) Tim C.
 $ dd if=/dev/sdb bs=4M | pv -eprb -s 466g > /dev/null
 
@@ -4167,10 +4233,13 @@ zpool clear
 zpool labelclear - Removes ZFS label information from the specified device.
 
 zpool get all
+zfs get all
 zpool-features
 
 zpool set        - Set a property pertaining to a pool.
 zfs set          - Set a property pertaining to <filesystem|volume|snapshot>.
+
+zfs get origin   - For cloned file systems or volumes, the snapshot from which the clone was created. See also the clones property.
 
 zpool events [-v]   - UNDOCUMENTED.
 zpool history [-il] - Displays internally logged zfs events.
@@ -4233,15 +4302,15 @@ __envHEREDOC__
 }
 helpzfs5(){
 cat <<'__envHEREDOC__'
-echo
-
 2013-12-11 steps to replace redundant zpool partition device with non-partitioned device.
-Not sure if you can even do this gracefully using zfs cmdln's, nor how difficult the extra
-work may be if the graceful approach doesn't work.
 
-# the base block device:
+Not sure if you can even do this gracefully using zfs cmdln's (it seems you can... prob
+want to nail down the actual best steps to follow, along with an example), ~~~nor how 
+difficult the extra work may be if the graceful approach doesn't work~~~ (N/A).
+
+# the base block device :
 d=/dev/sda
-# the partitioned block device:
+# the partitioned block device, i.e. /dev/sda1 :
 partitioneddev=${d}1
 
 zpool remove rpool $partitioneddev  # should fail with: cannot remove /dev/sdc1: only inactive hot spares, cache, top-level, or log devices can be removed.
@@ -4250,18 +4319,19 @@ zpool detach rpool $partitioneddev  # should fail with: cannot detach /dev/sdc1:
 zpool export rpool
 zpool labelclear -f $partitioneddev
 
-# (if applicable, physically swap out hdd that should be removed and swap in new)
+# ~~~(if applicable, physically swap out hdd that should be removed and swap in new)~~~
+# (if your current scenario calls for physical hdd swapping for some reason, NOW
+#  is the time to do so.)
 
-zpool import rpool
+zpool import rpool  # should succeed with: pool being imported and brought online, albeit in a degraded state.
 
-# pool is imported and brought online in a degraded state.
+zpool replace rpool $partitioneddev $d  # should succeed with: pool beginning to resilver.
 
-zpool replace rpool $partitioneddev $d
 
-# pool begins a resilver.
 # to cancel that resilver operation (e.g. maybe takes too long), can do one of:
 $ zpool detach your_pool_name new_device  # which detaches the new device and stops resilver.
 $ zpool scrub -s your_pool_name           # which stops the scrub/resilver.
+^^^TODO STUB: mv this content elsewhere.
 
 __envHEREDOC__
 }
