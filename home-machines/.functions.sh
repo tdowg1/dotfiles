@@ -4557,6 +4557,14 @@ __envHEREDOC__
 #/TODO STUB
 
 
+helpnc(){
+cat <<'__envHEREDOC__'
+Netcat file transfer from host1 to host2:
+host2$ nc -l 8080 > file
+
+host1$ nc host2 8080 < file
+__envHEREDOC__
+}
 
 
 
