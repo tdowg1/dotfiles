@@ -4565,6 +4565,11 @@ host2$ nc -l 8080 > file
 host1$ nc host2 8080 < file
 __envHEREDOC__
 }
+helprdesktop(){
+cat <<'__envHEREDOC__'
+rdesktop -g 1400x1000 vm-w7-2
+__envHEREDOC__
+}
 
 
 
