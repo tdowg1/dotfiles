@@ -4250,11 +4250,13 @@ helpzfs2(){
 cat <<'__envHEREDOC__'
 == ZFS CREATION ==
 # <assumes brand new, blank drive with first partition being the id partition and second partition being blank>.
+# NOTE: OmniOS (at least 5.11 omnios-8d266aa 2013.05.04) does not support this 'ashift' option.
 zpool create
  [-o ashift=12]   # Only if using AF/4096-byte drives.
  -m /mnt/${dname} $dname ${d}2
 
 zfs create ${dname}/fs1  # Create (sub?) filesystem. required? dont think so but is a good idea. generally dont put shtuffs in the root of the zpool it seems.
+zfs create a108/fs1      # e.g.
 
 zpool scrub $dname
 zpool status $dname
