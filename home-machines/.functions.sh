@@ -4560,6 +4560,30 @@ iostat -xnp   # Generates partition and device statistics for each disk.
 
 __envHEREDOC__
 }
+helpomnios5_cfgadm(){
+cat <<'__envHEREDOC__'
+== Configuration Administration ==
+cfgadm -alv - will show all three disks and a zillion sata ports lol (with some additional non-sata devices too) (and actually, the -a specifies that the -l option must also list dynamic attachment points)
+
+cfgadm -la sata - will show all three disks with less verbosity. ("lists all current configurable hardware information" of type sata).
+
+"cfgadm -l sata | grep -v empty" - makes it seem like you have disks plugged into sata5/1 and sata6/2.
+
+cfgadm -c configure sata5/1 - makes the sata device to be usable/seen and ready for normal operations, e.g. zpools, etc.
+__envHEREDOC__
+}
+helpomnios6_fault_manager(){
+cat <<'__envHEREDOC__'
+== How to use these things, I don't know. ==
+sudo fmadm config
+sudo fmadm faulty 
+sudo fmadm faulty -a -r -v
+
+sudo fmstat
+
+fmdump
+__envHEREDOC__
+}
 #/TODO STUB
 
 
