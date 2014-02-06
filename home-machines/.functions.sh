@@ -4236,8 +4236,8 @@ zpool get all
 zfs get all
 zpool-features
 
-zpool set        - Set a property pertaining to a pool.
-zfs set          - Set a property pertaining to <filesystem|volume|snapshot>.
+zpool set        - Set a property pertaining to a pool. (lists properties if dataset provided)
+zfs set          - Set a property pertaining to <filesystem|volume|snapshot>. (lists properties if dataset provided)
 
 zfs get origin   - For cloned file systems or volumes, the snapshot from which the clone was created. See also the clones property.
 
@@ -4258,13 +4258,17 @@ zpool create
 zfs create ${dname}/fs1  # Create (sub?) filesystem. required? dont think so but is a good idea. generally dont put shtuffs in the root of the zpool it seems.
 zfs create a108/fs1      # e.g.
 
+== ZFS STATUS ==
 zpool scrub $dname
 zpool status $dname
 
+== ZFS SNAPSHOTS ==
 zfs snapshot ${dname}/fs1
 zfs snapshot ${dname}/fs1@$( date +"%Y-%m-%d_%H.%M.%S" )
 
 zfs snapshot ${dname}@$( date +"%Y-%m-%d_%H.%M.%S" )
+
+zfs set snapdir=visible - Makes the .zfs directory visibe in the root of the filesystem.
 __envHEREDOC__
 }
 helpzfs3(){
