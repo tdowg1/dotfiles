@@ -4572,6 +4572,31 @@ cat <<'__envHEREDOC__'
 rdesktop -g 1400x1000 vm-w7-2
 __envHEREDOC__
 }
+helpkvm(){
+cat <<'__envHEREDOC__'
+SNAPSHOTS
+  Note: snapshots can only be made on certain disk image files...
+    ok: qcow2
+	!ok: raw
+
+qemu-img snapshot -l  # List snapshots for image file.
+
+# Create a snapshot, "pre-partitiontable-modify".
+qemu-img snapshot -c pre-partitiontable-modify vm-centos6.img
+
+# Convert [, with -progress,] the image file from qcow2 format to raw format.
+qemu-img convert -p -f qcow2 -O raw vm-centos6.qcow2.img vm-centos6.raw.img
+
+# Create a 33GiB image file, using raw format.
+qemu-img create -f raw vm-centos6.swap.img 33G
+# similarly, a qcow2-format image file, with a bit of preallocation.
+qemu-img create -f qcow2 -o preallocation=metadata centos_test0_preallc.qcow2 33G
+
+# Resize (e.g. a qcow2-format) image file to be 60GiB.
+qemu-img resize vm-centos6.img 60G
+
+__envHEREDOC__
+}
 
 
 
