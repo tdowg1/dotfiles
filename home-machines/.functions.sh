@@ -4345,7 +4345,7 @@ __envHEREDOC__
 helpntp(){
 cat <<'__envHEREDOC__'
 # How off or drift'ed is this machines time? (add servers to increase accuracy and resilience)
-ntpdate -q -v fedora.pool.ntp.org  ntp.ubuntu.com  pool.ntp.org
+ntpdate -q -v ntp.ubuntu.com  pool.ntp.org
 
 # Sync this machines time:
 sudo ntpdate -v ntp.ubuntu.com  nist1-pa.ustiming.org  time-d.nist.gov
