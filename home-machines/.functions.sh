@@ -971,6 +971,10 @@ $ export TZ=US/Central; echo "Dallas:             `date +\"%F %R (%Z)\"`"
 # TZ=EST5EDT
 # TZ=US/Eastern
 
+TIMEZONE CHANGE | /etc/localtime (binary TZ file)
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime 
+ note: this works for RHEL and deb-based machines.
+
 CONVERT a given locale-->to the current (iow: convert a diff-TZ into curr-TZ):
 $ date --date="2012-05-24 18:08:56 UTC"   # current locale is EDT
 # `--> Thu May 24 14:08:56 EDT 2012
