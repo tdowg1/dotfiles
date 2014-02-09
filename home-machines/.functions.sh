@@ -4505,6 +4505,7 @@ dmesg          # Displays system diagnostic messages (from /var/adm/messages) as
 psrinfo -vp    # Like 'less /proc/cpuinfo'.  The bonus with psrinfo is that you can also see how the cores map to sockets.
 lgrpinfo       # If really curious about how the system schedules work across the CPUs. Displays the NUMA topology of the system. The scheduler attempts to schedule threads "near" (in NUMA terms) their associated memory allocations and potential cache entries. 
 isainfo -x     # Like 'arch'. Identifies various attributes of the instruction set architectures of the system.
+pgstat -pv 1   # Displays realtime CPU information.
 __envHEREDOC__
 }
 helpomnios4_hdd_and_storage_related(){
