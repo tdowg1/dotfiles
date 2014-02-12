@@ -1151,8 +1151,8 @@ cat <<'__envHEREDOC__'
 $ rpm -ihv --nodeps rpmfile # forces an rpm installation (I think)
 $ rpm -qa *PACKAGE_NAME*    # search installed rpm packages for PACKAGE_NAME
 $ rpm -qa --last            # gives packge & date modified
-$ rpm -qip rpmfile          # display details for the rpm file rpmfile
-      --filesbypkg          # list all the files in package 
+$ rpm -qip rpmfile          # display details for the rpm file rpmfile (use -p for file)
+      --filesbypkg          # list all the files in package (use -qi for package)
 __envHEREDOC__
 }
 helpyum(){
