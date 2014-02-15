@@ -3529,6 +3529,21 @@ group to do shtuffs...  e.g.
 # %wheel        ALL=(ALL)       ALL
 ## Same thing without a password
 %ilike ALL=(ALL)      NOPASSWD: ALL
+
+
+== usermod cmdln's and resulting output of `id` ==
+Here's default...
+[u-god@vm-hdp2-x1 ~]$ id
+uid=500(u-god) gid=500(u-god) groups=500(u-god)
+
+And maybe some modifications are made...
+[u-god@vm-hdp2-x1 ~]$ sudo usermod -a -G hdfs u-god
+[u-god@vm-hdp2-x1 ~]$ id
+uid=500(u-god) gid=500(u-god) groups=500(u-god),497(hdfs)
+
+[u-god@vm-hdp2-x1 ~]$ sudo usermod -g wu-tang -G hdfs u-god
+[u-god@vm-hdp2-x1 ~]$ id
+uid=500(u-god) gid=1007(wu-tang) groups=1007(wu-tang),497(hdfs)
 __envHEREDOC__
 }
 helptypeset(){
