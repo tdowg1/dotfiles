@@ -4662,6 +4662,20 @@ qemu-img resize vm-centos6.img 60G
 
 __envHEREDOC__
 }
+helpgpg(){
+cat <<'__envHEREDOC__'
+gpg --gen-key      # Generate a new key pair.
+gpg --list-keys    # List all keys from the public keyrings, or just the keys given on the command line.
+gpg [-a|--armor] --export "User Name" [> public.key]             # Export public key.
+gpg [-a|--armor] --export-secret-key "User Name" [> private.key] # Export private key.
+
+
+== See also ==
+http://www.gnupg.org/gph/en/manual.html       - GPG docs
+http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/  - GPG Cheat Sheet *** (good)
+http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html - webpost
+__envHEREDOC__
+}
 
 
 
