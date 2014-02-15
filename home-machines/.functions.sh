@@ -4109,6 +4109,23 @@ cat <<'__envHEREDOC__'
 == Initiate the Checkpointing process (fsimage, edits, etc.) ==
 $ hadoop dfsadmin -saveNamespace
 
+== Snapshots ==
+=== usage ===
+Usage: hadoop fs [generic options]
+        [-createSnapshot <snapshotDir> [<snapshotName>]]
+        [-deleteSnapshot <snapshotDir> <snapshotName>]
+        [-renameSnapshot <snapshotDir> <oldName> <newName>]
+
+=== examples ===
+To make root directory snapshottable:
+$ hdfs dfsadmin -allowSnapshot /
+
+Create snapshot of root directory:
+$ hadoop fs -createSnapshot /
+
+List root directory snapshots; get
+$ hadoop fs -ls /.snapshot/
+
 == Find the blocks for a file ==
 Find out which blocks are in any particular file, e.g.
 $ hadoop fsck /user/tainted/rubbish -files -blocks -racks
