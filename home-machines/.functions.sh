@@ -3146,6 +3146,10 @@ __envHEREDOC__
 }
 helpmail(){
 cat <<'__envHEREDOC__'
+== Works on Debian ==
+<nil>
+
+== Works on RHEL ==
 # Send an email message to Guru (using the mailx package):
 $ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  mail -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
 
