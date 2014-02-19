@@ -1163,6 +1163,8 @@ If have list of packages/rpms and want to know the dependencies of each package,
 $ echo 'list-of-packages.rpm
 some-other-package.rpm
 another-rpm-package.rpm' | sed 's/.rpm//' | xargs --verbose -n 1 -I {} yum deplist {} [>> deplist.log 2>&1]
+
+rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 __envHEREDOC__
 }
 
