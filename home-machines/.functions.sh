@@ -4678,6 +4678,13 @@ http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/  - GPG Cheat Sheet *** (good)
 http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html - webpost
 __envHEREDOC__
 }
+helptcpdump(){
+cat <<'__envHEREDOC__'
+Print all email packets to and from port 25, i.e. print only packets that
+contain data, not, for example, SYN and FIN packets and ACK-only packets, on eth2:
+$ tcpdump -i eth2 'tcp port 25 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+__envHEREDOC__
+}
 
 
 
