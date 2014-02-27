@@ -320,29 +320,32 @@ function ddBadLbaAndSurrounding1000Sectors(){
 }
 
 function smartctllogger(){
-	# Example: $0 /dev/sdb a96-931
+	# Example: $0 /dev/sdb a96-931 [smartctl options [to passthrough]]
 	#
 	# What does this function do?
 	# 1. smartctl option '--all' and '--xall' will be called.
 	# 2. log file generated to CWD.
-	if [[ $# != 2 ]] || [[ x"$1" = x"--help" ]] ; then
+	if [[ $# -lt 2 ]] ; then
 		echo "$FUNCNAME - logs 'smartctl --(x)all' for device to a consistenly named log file. (invokes sudo)"
 		echo "Usage:   $FUNCNAME device   volume-name"
 		echo "Example: $FUNCNAME /dev/sdb a96-931"
+		echo "Example: $FUNCNAME /dev/sdb a96-931 -d sat,12"
 		return 1
 	fi
 
 	local devicepath=$1
 	local devicename=$2
+	shift 2
+	local extraopts="$*"
 	local commontime="$( date +"%Y-%m-%d_%H.%M.%S" )"
 
 	local nextcmd="smartctl_--all"
 	local logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	sudo smartctl --all "${devicepath}"  >  "${logfilename}"
+	sudo smartctl "${extraopts}" --all "${devicepath}"  >  "${logfilename}"
 
 	nextcmd="smartctl_--xall"
 	logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	sudo smartctl --xall "${devicepath}"  >  "${logfilename}"
+	sudo smartctl "${extraopts}" --xall "${devicepath}"  >  "${logfilename}"
 }
 
 ## /HDD-related
