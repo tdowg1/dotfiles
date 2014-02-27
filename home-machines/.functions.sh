@@ -341,11 +341,11 @@ function smartctllogger(){
 
 	local nextcmd="smartctl_--all"
 	local logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	sudo smartctl "${extraopts}" --all "${devicepath}"  >  "${logfilename}"
+	sudo smartctl ${extraopts} --all "${devicepath}"  >  "${logfilename}"
 
 	nextcmd="smartctl_--xall"
 	logfilename="${devicename}_${commontime}_cmd-${nextcmd}.log"
-	sudo smartctl "${extraopts}" --xall "${devicepath}"  >  "${logfilename}"
+	sudo smartctl ${extraopts} --xall "${devicepath}"  >  "${logfilename}"
 }
 
 ## /HDD-related
