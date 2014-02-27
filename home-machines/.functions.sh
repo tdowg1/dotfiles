@@ -683,21 +683,23 @@ __envHEREDOC__
 
 ##
 ## pulled from SVN.HOME
+# reader be warned, this isn't exactly help text..... is basically garbage...
 helpsmartctl(){
-   echo
-   echo "   # LIST ATTRIBUTES"
-   echo 'smartctl -a /dev/sda ; echo ; echo ; smartctl -a /dev/sdb ; echo ; echo;  echo; smartctl -a /dev/sdc'
-   echo '   # LONG TEST'
-   echo 'smartctl -t long /dev/sda'
-   echo 'echo "sleep for 45 minutes" && sleep 45m'
-   echo 'smartctl -t long /dev/sdb'
-   echo 'echo "sleep for 175 minutes" && sleep 175m'
-   echo 'smartctl -t long /dev/sdc'
-   echo 'echo "sleep for 175 minutes" && sleep 175m'
-
 cat <<'__envHEREDOC__'
+== List attributes ==
+smartctl -a /dev/sda ; echo ; echo ; smartctl -a /dev/sdb ; echo ; echo;  echo; smartctl -a /dev/sdc
+
+== Long test ==
+smartctl -t long /dev/sda && sleep 45m
+smartctl -t long /dev/sdb && sleep 175m
+smartctl -t long /dev/sdc && sleep 175m
+smartctl -t long /dev/sdc && sleep 175m
+
+# Enable as much monitoring and testing as possible:
+smartctl DEVICE --smart=on --offlineauto=on --saveauto=on
+
 # Example OmniOS cmdln:
-sudo smartctl --all -d sat,12 /dev/rdsk/c4t0d0
+smartctl --all -d sat,12 /dev/rdsk/c4t0d0
 
 d=${DEVICE}
 DEVICE=${d}
@@ -721,7 +723,7 @@ sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; 
 $ sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
 
 == SEE ALSO ==
-smart-notifierdbus service and graphical disk health notifier
+smart-notifierdbus - service and graphical disk health notifier
 __envHEREDOC__
 }
 helpsvn(){
@@ -4604,6 +4606,8 @@ iostat -xnp   # Generates partition and device statistics for each disk.
               # Disks are identified by controller names (disk names also 
               # display in the cXtYdZsN  format).
 
+== See also ==
+helpsmartctl
 __envHEREDOC__
 }
 helpomnios5_cfgadm(){
