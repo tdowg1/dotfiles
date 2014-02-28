@@ -3156,9 +3156,13 @@ cat <<'__envHEREDOC__'
 
 == Works on RHEL ==
 # Send an email message to Guru (using the mailx package):
-$ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  mail -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
-
+$ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  \
+	mail -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
 #^^TODO STUB uhuhg this doesn't look right on the reciever's side... fixup the stdout string crap thats going on here
+
+# Same as previous, but use custom SMTP server to send the email
+$ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  \
+	mail  -S smtp=qa-in-f26.1e100.net  -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
 
 == See also ==
 http://superuser.com/a/219051
