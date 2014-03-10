@@ -3304,6 +3304,15 @@ Extract to stdout:
 $ tar xf tarfile.tar -O
 $ tar xfO tarfile.tar
 
+Limit to a single or small number of files (conversely, to limit a large number of files, theres also --exclude -like options):
+-> list archive contents, only for the archvie paths specified within tmpfilelist.txt :
+echo vm-image.img >tmpfilelist.txt 
+tar ztfv tarfile.tar.gz --files-from tmpfilelist.txt
+-> similarly, extract the files listed in tmpfilelist.txt :
+tar zxfv tarfile.tar.gz --files-from tmpfilelist.txt
+-> basically, compute hash sum for files listed in tmpfilelist.txt : 
+tar zxfv tarfile.tar.gz --files-from tmpfilelist.txt -O | sha1sum -
+
 mtar (multi-threaded tar)
 -------------------------
 $ bsdtar zcfY a.tar.gz /path/to/some/de/lah  # -Y indicates to run multi-threaded
@@ -4395,7 +4404,17 @@ $ zpool scrub -s your_pool_name           # which stops the scrub/resilver.
 
 __envHEREDOC__
 }
+helpzfs6sending(){
+cat <<'__envHEREDOC__'
+Backup an entire pool including all snapshots and properties and dedupeish:
+Create snapshot:
+sudo zfs snapshot -r a46-467@2014-03-08_01-05-30--for-sending
 
+Do the dump:
+time sudo zfs send -v -P  -R -D  a46-467@2014-03-08_01-05-30--for-sending  >a46-467-at-2014-03-08_01-05-30--for-sending.zfs-send-dump
+
+__envHEREDOC__
+}
 
 
 
