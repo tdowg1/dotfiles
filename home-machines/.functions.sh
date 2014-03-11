@@ -4119,6 +4119,10 @@ $ sudo -u hdfs hadoop fs -rmr -skipTrash /mnt/benchark-test-data/
 
 $ scp voyager:/mnt/sdd1/kmeans_100GB/* /dev/stdout  | pv -pterb  | hadoop fs -put - /mnt/benchmark-test-data/
 
+$ hdfs getconf -confKey <confKey> # e.g.
+$ hdfs getconf -confKey mapreduce.input.fileinputformat.split.minsize
+0
+
 == MapR v2.1.3 M3,M5 (Hadoop 1) ==
 - - - - - - - - - - - - - -
 # -skipTrash option valid?  where is .Trash/ by default?
