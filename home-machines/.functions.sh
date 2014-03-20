@@ -3618,6 +3618,38 @@ __envHEREDOC__
 }
 helpman(){
 cat <<'__envHEREDOC__'
+== Printing and Viewing ==
+man -t iptables > iptables.ps   # saves the manpage to postscruipt file.
+man -t iptables | lpr -P HP690C # print manpage to printer.
+
+                                # gives a plaintext manpage version 
+										  # uses col to strip out backspaces and reverse linefeeds, uses sed to strip out 'm' escape codes:
+man iptables | col -b | sed 's/[0-9]\{1,\}m//g' > iptables.txt
+
+                                # ... although I also had luck with just doing 
+										  # this, straight up: (gives a plaintext manpage version):
+										  # (I suspect this could be due to MAN_KEEP_FORMATTING variable (see man man))
+man iptables > iptables.txt
+
+== Locations ==
+/usr/share/man/      # main man docs location.
+/usr/share/man/man1  # corresponds to manpage type: section number 1 (user executables and programs)
+/usr/share/man/man2  # corresponds to manpage type: section number 2 (system calls)
+...etc.
+
+== Notable apt-packages ==
+asr-manpages          - alt.sysadmin.recovery manual pages                                         
+freebsd-manpages      - Manual pages for a GNU/kFreeBSD system                                     
+funny-manpages        - more funny manpages    
+gmanedit              - GTK+ man pages editor 
+gman                  - small man(1) front-end for X                                               
+help2man              - Automatic manpage generator                                                
+man2html-base         - convert man pages into HTML format                                         
+man2html              - browse man pages in your web browser                                       
+man-db                - on-line manual pager                                                       
+whichman              - Fault tolerant search utilities: whichman, ftff, ftwhich                   
+xmltoman              - simple XML to man converter
+
 == Notable manpage topics ==
 * man proc   # docs for processes information pseduo-file sys ( /proc ).
 
