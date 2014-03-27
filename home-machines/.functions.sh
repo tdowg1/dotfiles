@@ -1162,6 +1162,8 @@ __envHEREDOC__
 }
 helpyum(){
 cat <<'__envHEREDOC__'
+$ yum --releasever=6.3 update  # update to minor release 3, of major release 6.
+
 $ yum deplist package       # returns what is needed by package.
 
 If have list of packages/rpms and want to know the dependencies of each package,
