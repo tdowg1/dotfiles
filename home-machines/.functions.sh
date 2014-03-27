@@ -4769,6 +4769,22 @@ $ echo scale=2 \; 39938 / 60 / 24 | bc
 27.73
 __envHEREDOC__
 }
+helpselinux(){
+cat <<'__envHEREDOC__'
+fattrs-related ( see also : helpxattrs )
+
+
+Remove the security context associated with files:
+$ find . -print0 |xargs -0 -n 1 setfattr -h -x security.selinux
+
+Add security context to /home e.g. so that public key authentication freaking
+works when SELinux is enabled:
+$ sudo setfattr -n security.selinux -v system_u:object_r:home_root_t:s0 /home
+
+See what the security context is for /home :
+$ getfattr -n security.selinux /home
+__envHEREDOC__
+}
 
 
 
