@@ -4758,6 +4758,15 @@ contain data, not, for example, SYN and FIN packets and ACK-only packets, on eth
 $ tcpdump -i eth2 'tcp port 25 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
 __envHEREDOC__
 }
+helpbc(){
+cat <<'__envHEREDOC__'
+== decimal math with bc ==
+$ echo 39938 / 60 / 24 | bc
+27
+$ echo scale=2 \; 39938 / 60 / 24 | bc
+27.73
+__envHEREDOC__
+}
 
 
 
