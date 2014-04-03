@@ -3725,9 +3725,12 @@ $ lame  --abr 192  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--ab
 $ lame  --preset standard  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--preset standard (vbr)"  input.wav  output.4-preset-standard.vbr.mp3
 $ lame  --preset 192  --verbose --tt "TITLE"  --tl "album"  --ty "2012"  --tc "--preset 192 (abr)"  input.wav  output.5-preset-192.abr.mp3
 
-Actual cmdln used by K3b to encode audio (2nd line has hints):
+Actual cmdln used by K3b to  __ ENCODE __  audio (2nd line has hints):
 $ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt %t --ta %a --tl %m --ty %y --tc %c --tn %n - output.mp3
 $ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt "TITLE" --ta "ARTIST" --tl "ALBUM TITLE" --ty "RELEASE YR" --tc "COMMENT" --tn "TRACK #" - output.mp3
+
+And to  __ DECODE __  is stupid simple:
+$ lame --decode /path/to/input.mp3    # Creates decoded form at location: /path/to/input.wav
 
 ==== ...And some actual numbers: ====
 NOTE the flac file was encoded using maximum compression options and is 
@@ -3742,6 +3745,9 @@ $ ls -lh
 153M 12-02 04:41 2012-11-28-BBC-1Xtra-DJ-Nihal.4-preset-standard.vbr.mp3
 160M 12-02 04:46 2012-11-28-BBC-1Xtra-DJ-Nihal.5-preset-192.abr.mp3
 1.2G 12-02 03:16 2012-11-28-BBC-1Xtra-DJ-Nihal.wav
+
+== See also ==
+helplame helpflac helpmuzik
 __envHEREDOC__
 }
 helpflac(){
@@ -3765,12 +3771,20 @@ file infile.flac
 samples=317667328
 flac --decode --until=$( clac.py "${samples} / 2" ) infile.flac -o 1of2.wav   
 flac --decode --skip=$( clac.py "${samples} / 2" )  infile.flac -o 2of2.wav
+
+== See also ==
+helplame helpflac helpmuzik
 __envHEREDOC__
 }
 helpmuzik(){
 cat <<'__envHEREDOC__'
 abcde: Command Line Music CD Ripping for Linux
 icedax: stands for InCrEdible Digital Audio eXtractor. It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
+flac: Flac encoder/decoder
+lame: mp3 encoder/decoder
+
+== See also ==
+helplame helpflac helpmuzik
 __envHEREDOC__
 }
 helpdig(){
