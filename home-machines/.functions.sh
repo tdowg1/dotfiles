@@ -4645,7 +4645,9 @@ format        # Displays both physical and logical device names for all availabl
      x86 Only
         fdisk(1M)
 
+format inq <disk name, e.g. c11t3d0>
 
+prtvtoc /dev/rdsk/c11t3d0   # prints some hardware parameters like geometry, also partition nfo.
 
 iostat -E     # Display storage device nfo. By  default,
               # disks  are  identified by instance names such as
