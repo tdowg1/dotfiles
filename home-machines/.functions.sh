@@ -4787,6 +4787,19 @@ See what the security context is for /home :
 $ getfattr -n security.selinux /home
 __envHEREDOC__
 }
+helpmunin(){
+cat <<'__envHEREDOC__'
+tail -F /var/log/munin/munin-*.log /var/log/munin-node/munin-node.log
+
+Force the munin to do the update:
+$ sudo -u munin /usr/share/munin/munin-update
+
+The output from the following cmdln be helpful esp when manip.'ing /etc/munin/munin.conf
+Can get field names and stuff, the plugin's capabilities, etc.
+$ sudo -u munin munin-run diskstats config
+
+__envHEREDOC__
+}
 
 
 
