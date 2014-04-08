@@ -4755,6 +4755,13 @@ qemu-img resize vm-centos6.img 60G
 
 __envHEREDOC__
 }
+helpvirsh(){
+cat <<'__envHEREDOC__'
+virsh snapshot-list vm-vcs
+virsh snapshot-dumpxml vm-vcs 1395958755
+virsh snapshot-create vm-vcs
+__envHEREDOC__
+}
 helpgpg(){
 cat <<'__envHEREDOC__'
 gpg --gen-key      # Generate a new key pair.
