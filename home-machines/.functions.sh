@@ -4760,6 +4760,7 @@ cat <<'__envHEREDOC__'
 virsh snapshot-list vm-vcs
 virsh snapshot-dumpxml vm-vcs 1395958755
 virsh snapshot-create vm-vcs
+virsh snapshot-revert vm-vcs 1395958755
 __envHEREDOC__
 }
 helpgpg(){
