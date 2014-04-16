@@ -1172,6 +1172,19 @@ some-other-package.rpm
 another-rpm-package.rpm' | sed 's/.rpm//' | xargs --verbose -n 1 -I {} yum deplist {} [>> deplist.log 2>&1]
 
 rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+== Determine which package provides a file ==
+Find which package provides a file that is already on system (or not on the system):
+$ yum provides /etc/hadoop/conf.empty/mapred-site.xml
+hadoop-1.2.0.1.3.0.0-107.el6.x86_64 : Hadoop is a software platform for processing vast amounts of data
+Repo        : HDP-1.3.0
+Matched from:
+Filename    : /etc/hadoop/conf.empty/mapred-site.xml
+
+hadoop-1.2.0.1.3.0.0-107.el6.x86_64 : Hadoop is a software platform for processing vast amounts of data
+Repo        : installed
+Matched from:
+Other       : Provides-match: /etc/hadoop/conf.empty/mapred-site.xml
 __envHEREDOC__
 }
 
