@@ -4822,6 +4822,16 @@ $ sudo -u munin munin-run diskstats config
 
 __envHEREDOC__
 }
+helppaths(){
+cat <<'__envHEREDOC__'
+List of notable home-directory config paths
+* .config/user-dirs.dirs
+** some apps seem to use the values specified here for their start location for file open/save.
+
+== See also ==
+[[Linux_kde]]
+__envHEREDOC__
+}
 
 
 
