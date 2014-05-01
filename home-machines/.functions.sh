@@ -4167,6 +4167,11 @@ c-a ,   - rename curr tmux window/pane
 c-a x   - kill curr tmux window/pane
 c-a &   - kill curr tmux window/pane
 c-a ??   - kill entire curr tmux session
+
+list-clients  - list all clients attached to the server
+detach-client - Detach the current client if bound to a key, the client specified with -t, or all clients currently attached to the session specified by -s.  If -P is given, send SIGHUP to the parent process of the client, typically causing it to exit.
+ `--> detach-client -t /dev/pts/5 - when two clients attached to same session, detach other client.
+
 == Figure out's ==
 * tmux copy to OS system clipboard? (KDE)
 ** http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard
