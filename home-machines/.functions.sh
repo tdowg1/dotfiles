@@ -922,7 +922,17 @@ __envHEREDOC__
 
 
 
+#utc2local(){
+# TODO STUB: make func st
+#  in: date and/or time (allow loosely defined e.g. 2014-04-04 00:00) which is in UTC
+#  out: prints what the date and time was at that time, but for curr locale.
+# so basically want a wrapper around date.
+#what was the current locales date and time at 2014-04-23T00:00-0000 ?
 
+#[toki-wartooth@mordhaus ]$ TZ=US/Eastern ; date --date=2014-04-23T00:00:00-0000
+#Tue Apr 22 20:00:00 EDT 2014
+
+#}
 helpdate(){
 	local useThisDate=`date`
 	echo "using date $useThisDate"
