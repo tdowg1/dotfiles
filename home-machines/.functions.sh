@@ -4024,6 +4024,8 @@ $ wget --limit-rate 409600 url  # Similarly, 400KiB.
 $ wget --limit-rate $(( desired-KiB-amount  *  1024 )) url
 $ wget url -O filename          # Download url target to filename.
 $ wget url -O -                 # Download url target to stdout.
+
+-c,  --continue                resume getting a partially-downloaded file.
 __envHEREDOC__
 }
 helplogrotate_of_files(){
