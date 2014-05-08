@@ -1609,6 +1609,18 @@ helpnetstat
 helpnslookup
 helpnmap
 helparping
+helpreversetunnel
+__envHEREDOC__
+}
+helpreversetunnel(){
+	cat <<'__envHEREDOC__'
+Killing a previously created reverse tunnel connection which now has State=CLOSE_WAIT:
+* sudo netstat -e -p --protocol=inet   # only interested in Active Internet connections (w/o servers).
+* look for entries where Local Address is localhost:8051 (which is what I commonly use as the reverse tunnel connection port).
+** and where State=CLOSE_WAIT
+** note the pid given in the PID/Program column
+** kill this pid.
+* return to where reverse tunnel is initiated (i.e. remote machine) and re-create connection.
 __envHEREDOC__
 }
 helpnetstat(){
