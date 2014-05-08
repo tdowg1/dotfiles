@@ -4233,10 +4233,6 @@ $ hadoop fs -createSnapshot /
 List root directory snapshots; get
 $ hadoop fs -ls /.snapshot/
 
-== Find the blocks for a file ==
-Find out which blocks are in any particular file, e.g.
-$ hadoop fsck /user/tainted/rubbish -files -blocks -racks
-
 == DataNode block scanner ==
 * http://datanode:50075/blockScannerReport
 * http://datanode:50075/blockScannerReport?listblocks
@@ -4250,6 +4246,27 @@ sudo -u hdfs hadoop fs -chown $USER:$USER /user/$USER
 NOTE: if using MapR, you should use the mapr user instead of hdfs above:
 sudo -u mapr hadoop fs -mkdir /user/$USER
 sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
+__envHEREDOC__
+}
+helphadoop3fsck(){
+cat <<'__envHEREDOC__'
+== Find the blocks for a file ==
+Find out which blocks are in any particular file, e.g.
+$ hadoop fsck /user/tainted/rubbish -files -blocks -racks
+
+== HDP v2.0.6.0 (or v2.0.8.0; it is not clear to me) (Hadoop2 with YARN) ==
+[bdavies@vm-hdp2-b2 ~]$ hdfs fsck -help
+Usage: {hadoop|hdfs} DFSck <path> [-list-corruptfileblocks | [-move | -delete | -openforwrite] [-files [-blocks [-locations | -racks]]]]
+        <path>  start checking from this path
+        -move   move corrupted files to /lost+found
+        -delete delete corrupted files
+        -files  print out files being checked
+        -openforwrite   print out files opened for write
+        -list-corruptfileblocks print out list of missing blocks and files they belong to
+        -blocks print out block report
+        -locations      print out locations for every block
+        -racks  print out network topology for data-node locations
+                By default fsck ignores files opened for write, use -openforwrite to report such files. They are usually  tagged CORRUPT or HEALTHY depending on their block allocation status
 __envHEREDOC__
 }
 helpfind(){
