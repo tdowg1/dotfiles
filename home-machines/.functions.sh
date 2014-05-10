@@ -4902,6 +4902,34 @@ for i in `grep -v hadoopcl ~/active-nodes-list.txt | grep -v $( hostname -s )` ;
 
 __envHEREDOC__
 }
+helpredis(){
+cat <<'__envHEREDOC__'
+== Connecting ==
+$ redis-cli
+$ redis-cli -h vm-log
+redis vm-log:6379> help
+
+== Help ==
+redis-cli 2.4.10
+Type: "help @<group>" to get a list of commands in <group>
+      "help <command>" for help on <command>
+      "help <tab>" to get a list of possible help topics
+      "quit" to exit
+
+> help @server 
+> help @transactions
+> help @list
+> help @generic
+# ... etc.
+
+== Monitor transactions in real-time ==
+> MONITOR
+
+== Remove data from database(s) ==
+> FLUSHDB       - Removes data from your connection's CURRENT database.
+> FLUSHALL      - Removes data from ALL databases.
+__envHEREDOC__
+}
 
 
 
