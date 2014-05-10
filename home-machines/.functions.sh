@@ -4892,6 +4892,16 @@ List of notable home-directory config paths
 [[Linux_kde]]
 __envHEREDOC__
 }
+helpbashloopsnippets(){
+cat <<'__envHEREDOC__'
+# Update a logstash config(s) on logstash clients:
+for i in `grep -v hadoopcl ~/active-nodes-list.txt | grep -v $( hostname -s )` ; do rsync -av --progress /etc/logstash/conf.d/input.conf root@${i}:/etc/logstash/conf.d/input.conf ; done
+
+# Execute commands on remote hosts:
+for i in `grep -v hadoopcl ~/active-nodes-list.txt | grep -v $( hostname -s )` ; do echo -n "$i:" ; ssh $i  sudo service logstash status ; done
+
+__envHEREDOC__
+}
 
 
 
