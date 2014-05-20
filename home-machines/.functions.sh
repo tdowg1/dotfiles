@@ -4261,6 +4261,9 @@ sudo -u hdfs hadoop fs -chown $USER:$USER /user/$USER
 NOTE: if using MapR, you should use the mapr user instead of hdfs above:
 sudo -u mapr hadoop fs -mkdir /user/$USER
 sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
+
+== Rebalance HDFS nodes ==
+$ hdfs balancer # starts the rebalancer with the default settings
 __envHEREDOC__
 }
 helphadoop3fsck(){
