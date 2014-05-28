@@ -1596,7 +1596,7 @@ __envHEREDOC__
 }
 helpnetwork(){
 cat <<'__envHEREDOC__'
-arp                               # get mac address from ip address
+arp -v                              # get mac address from ip address
 
 You can add that network ip address (thats not in the networks range) to 
 another machine on the network and try to get at it... i forget how to do 
