@@ -4805,6 +4805,9 @@ qemu-img snapshot -l  # List snapshots for image file.
 # Create a snapshot, "pre-partitiontable-modify".
 qemu-img snapshot -c pre-partitiontable-modify vm-centos6.img
 
+# nfo
+qemu-img info vm-centos6.img
+
 # Convert [, with -progress,] the image file from qcow2 format to raw format.
 qemu-img convert -p -f qcow2 -O raw vm-centos6.qcow2.img vm-centos6.raw.img
 
@@ -4824,6 +4827,12 @@ virsh snapshot-list vm-vcs
 virsh snapshot-dumpxml vm-vcs 1395958755
 virsh snapshot-create vm-vcs
 virsh snapshot-revert vm-vcs 1395958755
+virsh snapshot-delete --children vm-vcs 1395958755
+
+# If you made manual changes to the KVM xml definition/conf file, you must tell virsh
+# about it.  To apply the changes, do:
+virsh define /path/to/updated/xml/file
+virsh define /etc/libvirt/qemu/vm-log.xml
 __envHEREDOC__
 }
 helpgpg(){
