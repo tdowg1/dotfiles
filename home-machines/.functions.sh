@@ -4194,36 +4194,45 @@ __envHEREDOC__
 }
 helphadoop(){
 cat <<'__envHEREDOC__'
-== CDH4 (Hadoop 2) ==
-- - - - - - - - - - - - - -
-# -skipTrash option valid?  where is .Trash/ by default?
-$ sudo -u hdfs hdfs dfs -rm -r /mnt/benchmark-test-data/
+# Put file into HDFS from outside:
+hadoop fs -copyFromLocal /sw/big /big1
+hadoop fs -copyFromLocal /sw/big /big2
 
-$ sudo -u hdfs hadoop dfsadmin -safemode leave
-$ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
-$ sudo -u hdfs hdfs dfsadmin -report
+# To see the actual block placement of a specific file...
+hadoop fsck filename -files -blocks -racks
+# ...from the NameNode server and looked at the top of the report.
 
-== HDP v1.3.0 (Hadoop 1) ==
-- - - - - - - - - - - - - -
-$ sudo -u hdfs hadoop fs -rmr /mnt/benchark-test-data/   # -> /user/hdfs/.Trash/Current/mnt/benchmark-test-data/
-$ sudo -u hdfs hadoop fs -rmr -skipTrash /mnt/benchark-test-data/
+# Create a file with more than three replicas
+hadoop fs -D dfs.replication=4 -copyFromLocal ~/big /big5
 
-$ scp voyager:/mnt/sdd1/kmeans_100GB/* /dev/stdout  | pv -pterb  | hadoop fs -put - /mnt/benchmark-test-data/
+# Changing the replication factor of an existing file...
+hadoop fs -setrep 6 /big7
+# ...the NameNode wont immediately apply the new replica policy.
+# If youre in a hurry, adding -w to the command should trigger immediate replication level change:
+hadoop fs -setrep 5 -w /big7
 
-$ hdfs getconf -confKey <confKey> # e.g.
-$ hdfs getconf -confKey mapreduce.input.fileinputformat.split.minsize
-0
+# Similarly, changing the replication factor recursively
+hadoop fs -setrep -R 5 -w /big7
 
-== MapR v2.1.3 M3,M5 (Hadoop 1) ==
-- - - - - - - - - - - - - -
-# -skipTrash option valid?  where is .Trash/ by default?
-$ sudo -u mapr hadoop fs -rmr /mnt/benchmark-test-data/
+# Recursive directory list
+hadoop fs -lsr
+# Count the directories, files, and bytes in a path
+hadoop count hdfs://node/data
+# Empty filesystem trash
+hadoop expunge
 
-$ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
 
-Pretty cool feature if using Hadoop examples jar: you can set a lot of the job parameters from the cmdln that you may have had to set manually within the mapred-site.xml file. E.g.:
-$ hadoop jar hadoop-examples.jar terasort -Dmapred.map.child.java.opts="-Xmx1000m"
+# Distributed copy from one or more node/dirs to a target:
+hadoop distcp  hdfs://node1:8020/dir_a  hdfs://node2:8020/dir_b
 
+# Job list, dispatching, status check, and kill:
+hadoop job -list [all]
+hadoop job -submit job_file
+hadoop job -status id
+hadoop job -kill id
+
+# List job queues
+hadoop queue -list
 __envHEREDOC__
 }
 helphadoop2(){
@@ -4264,6 +4273,8 @@ sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
 
 == Rebalance HDFS nodes ==
 $ hdfs balancer # starts the rebalancer with the default settings
+$ hdfs balancer -threshold 10 # default 10%.  The lower, the more impossible it is.  The higher, the more 
+rough an average it is or the direction in which the balancer gives up more easier.
 __envHEREDOC__
 }
 helphadoop3fsck(){
@@ -4285,6 +4296,51 @@ Usage: {hadoop|hdfs} DFSck <path> [-list-corruptfileblocks | [-move | -delete | 
         -locations      print out locations for every block
         -racks  print out network topology for data-node locations
                 By default fsck ignores files opened for write, use -openforwrite to report such files. They are usually  tagged CORRUPT or HEALTHY depending on their block allocation status
+__envHEREDOC__
+}
+helphadoop4distros(){
+cat <<'__envHEREDOC__'
+== CDH4 (Hadoop 2) ==
+- - - - - - - - - - - - - -
+# -skipTrash option valid?  where is .Trash/ by default?
+$ sudo -u hdfs hdfs dfs -rm -r /mnt/benchmark-test-data/
+
+$ sudo -u hdfs hadoop dfsadmin -safemode leave
+$ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
+$ sudo -u hdfs hdfs dfsadmin -report
+
+== HDP v1.3.0 (Hadoop 1) ==
+- - - - - - - - - - - - - -
+$ sudo -u hdfs hadoop fs -rmr /mnt/benchark-test-data/   # -> /user/hdfs/.Trash/Current/mnt/benchmark-test-data/
+$ sudo -u hdfs hadoop fs -rmr -skipTrash /mnt/benchark-test-data/
+
+$ scp voyager:/mnt/sdd1/kmeans_100GB/* /dev/stdout  | pv -pterb  | hadoop fs -put - /mnt/benchmark-test-data/
+
+$ hdfs getconf -confKey <confKey> # e.g.
+$ hdfs getconf -confKey mapreduce.input.fileinputformat.split.minsize
+0
+
+== MapR v2.1.3 M3,M5 (Hadoop 1) ==
+- - - - - - - - - - - - - -
+# -skipTrash option valid?  where is .Trash/ by default?
+$ sudo -u mapr hadoop fs -rmr /mnt/benchmark-test-data/
+
+$ hadoop conf -dump  # Cool feature that dumps the curr conf information for this node.
+
+Pretty cool feature if using Hadoop examples jar: you can set a lot of the job parameters from the cmdln that you may have had to set manually within the mapred-site.xml file. E.g.:
+$ hadoop jar hadoop-examples.jar terasort -Dmapred.map.child.java.opts="-Xmx1000m"
+
+__envHEREDOC__
+}
+helphadoop5archives(){
+cat <<'__envHEREDOC__'
+Hadoop Archives (HAR) reduces load, memory usage on NameNode in particulr when HDFS is storing
+many small files (small defn.: a file that uses <1 HDFS block (default=128MB)).
+
+= See also =
+* https://developer.yahoo.com/blogs/hadoop/hadoop-archive-file-compaction-hdfs-461.html
+* http://hadoop.apache.org/docs/r0.19.0/hadoop_archives.html
+* https://www.inkling.com/read/hadoop-definitive-guide-tom-white-3rd/chapter-3/hadoop-archives
 __envHEREDOC__
 }
 helpfind(){
