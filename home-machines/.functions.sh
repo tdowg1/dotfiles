@@ -4345,6 +4345,9 @@ __envHEREDOC__
 }
 helpfind(){
 cat <<'__envHEREDOC__'
+== Syntax ==
+-xdev  - do not cross filesystem boundaries.
+
 == Examples ==
 # Recursively list *file* modification times:
 find $a -type f -exec stat --format '%Y :%y %n' {} \;
