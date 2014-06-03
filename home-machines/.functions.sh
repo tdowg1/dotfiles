@@ -5002,6 +5002,11 @@ Type: "help @<group>" to get a list of commands in <group>
 > FLUSHALL      - Removes data from ALL databases.
 __envHEREDOC__
 }
+helpmfs(){
+cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+}
 
 
 
