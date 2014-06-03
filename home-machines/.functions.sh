@@ -4358,6 +4358,10 @@ find $a -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f2- 
 # operate on the file that match the last '-name':
 find ark.*    -name \*.rar -o -name \*.par2
 find ark.* \( -name \*.rar -o -name \*.par2 \) -exec ls '{}' \;
+
+
+# Find files modified over a day ago
+find . -name x -mtime +2
 __envHEREDOC__
 }
 helpstat(){
