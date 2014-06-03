@@ -5007,6 +5007,17 @@ cat <<'__envHEREDOC__'
 
 __envHEREDOC__
 }
+helpphp(){
+cat <<'__envHEREDOC__'
+# View the default values of phpinfo
+php -i
+
+# To print the real and customized parameters of the phpinfo
+php -r "phpinfo();"
+# or
+echo "<?php phpinfo(); ?>" | php
+__envHEREDOC__
+}
 
 
 
