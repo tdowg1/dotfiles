@@ -4365,6 +4365,15 @@ find ark.* \( -name \*.rar -o -name \*.par2 \) -exec ls '{}' \;
 
 # Find files modified over a day ago
 find . -name x -mtime +2
+
+# Find files modified in the last 2 days:
+$ find . -type f -mtime -2
+
+# To search for files in /target_directory and all its sub-directories, that have been modified in the last 60 minutes:
+$ find /target_directory -type f -mmin -60
+
+# Find files that have been modified in the last 7 days, but not in the last 3 days:
+$ find /target_directory -type f -mtime -7 ! -mtime -3
 __envHEREDOC__
 }
 helpstat(){
