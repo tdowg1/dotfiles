@@ -1598,11 +1598,24 @@ helpnetwork(){
 cat <<'__envHEREDOC__'
 arp -v                              # get mac address from ip address
 
-You can add that network ip address (thats not in the networks range) to 
+"You can add that network ip address (thats not in the networks range) to 
 another machine on the network and try to get at it... i forget how to do 
 it in linux but you can do like 
   ifconfig eth0 172.27.8.13 alias
-to get on a second network with the same interface.
+to get on a second network with the same interface."
+
+what is my ip?
+curl ifconfig.me             # whatismyip?
+curl icanhazip.com           # whatismyip?
+curl ident.me                # whatismyip?
+curl ipecho.net/plain        # whatismyip?
+curl whatismyip.akamai.com   # whatismyip?
+curl tnx.nl/ip               # whatismyip?
+curl myip.dnsomatic.com      # whatismyip?
+curl ip.appspot.com    	     # whatismyip?
+curl ip.telize.com     	     # whatismyip?
+curl curlmyip.com      	     # whatismyip?
+curl -s checkip.dyndns.org | sed 's/.*IP Address: \([0-9\.]*\).*/\1/g'   # what is my ip?
 
 == See also ==
 helpnetstat
