@@ -2191,10 +2191,11 @@ __envHEREDOC__
 }
 helpzip(){
 cat <<'__envHEREDOC__'
-STUB!!! THERES NOTHING HERE :(
-
 zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
 zip -T|--test        archive.zip
+
+== See also ==
+helpgpg() for info on creating an encrypted zip file.
 __envHEREDOC__
 }
 helptcpdump(){
