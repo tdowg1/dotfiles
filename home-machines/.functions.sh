@@ -4877,6 +4877,7 @@ cat <<'__envHEREDOC__'
 Netcat file transfer from host1 to host2:
 host2$ nc -l 8080 > file
 host1$ nc host2 8080 < file
+tip: if firewall complains of invalid HTTP request upon port80 use, do with 443 instead.
 
 Transfer a whole directory (including its content) from hostA.com to hostB.com:
 hostb$ nc -l 5000 | tar xvf -
