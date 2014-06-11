@@ -1566,6 +1566,12 @@ $ ssh-keygen -l -f  private-open-ssh-key
 $ exec ssh-agent bash
 $ env | grep ^SSH           # Ensure SSH_AUTH_SOCK defined?
 $ ssh-add ~/.ssh/some-key   # If so, then can add keys!
+
+== Faster X-forwarding ==
+Instead of 
+$ ssh -2XC  host
+do...
+$ ssh -XC -c blowfish-cbc,arcfour  host
 __envHEREDOC__
 }
 helpssh2(){
