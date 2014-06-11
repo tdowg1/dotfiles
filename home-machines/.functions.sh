@@ -4876,8 +4876,29 @@ helpnc(){
 cat <<'__envHEREDOC__'
 Netcat file transfer from host1 to host2:
 host2$ nc -l 8080 > file
-
 host1$ nc host2 8080 < file
+
+Transfer a whole directory (including its content) from hostA.com to hostB.com:
+hostb$ nc -l 5000 | tar xvf -
+hosta$ tar cvf - /path/to/dir  | nc hostb 5000
+
+
+Test if TCP port is open:
+$ nc -vn 192.168.1.102 5000
+nc: connect to 192.168.1.102 port 5000 (tcp) failed: Connection refused
+$ nc -vn 192.168.1.102 22
+Connection to 192.168.1.102 22 port [tcp/*] succeeded!
+SSH-2.0-OpenSSH_6.1p1 Debian-4
+
+Send test UDP packet to remote host:
+$ echo -n "foo" | nc -u -w1 192.168.1.102 5000
+
+Perform TCP port scan in the ranges of [1-1000] and [2000-3000] to check which port(s) are open:
+$ nc -vnz -w 1 192.168.1.102 1-1000 
+$ nc -vnz -w 1 192.168.1.102 2000-3000 
+
+== See also ==
+http://xmodulo.com/2014/01/useful-netcat-examples-linux.html
 __envHEREDOC__
 }
 helprdesktop(){
