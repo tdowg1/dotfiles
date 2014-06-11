@@ -4938,6 +4938,10 @@ gpg [-a|--armor] --export-secret-key "User Name" [> private.key] # Export privat
 http://www.gnupg.org/gph/en/manual.html       - GPG docs
 http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/  - GPG Cheat Sheet *** (good)
 http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html - webpost
+http://xmodulo.com/2013/09/how-to-create-encrypted-zip-file-on-linux.html How to create an encrypted zip file on Linux - Linux FAQ
+http://xmodulo.com/2013/08/how-to-pgp-encrypt-decrypt-digitally-sign-files-via-gnupg-gui.html How to PGP encrypt, decrypt or digitally sign files via GnuPG GUI
+
+
 __envHEREDOC__
 }
 helptcpdump(){
