@@ -1168,6 +1168,7 @@ $ rpm -qa *PACKAGE_NAME*    # search installed rpm packages for PACKAGE_NAME
 $ rpm -qa --last            # gives packge & date modified
 $ rpm -qip rpmfile          # display details for the rpm file rpmfile (use -p for file)
       --filesbypkg          # list all the files in package (use -qi for package)
+$ rpm --erase rpm
 __envHEREDOC__
 }
 helpyum(){
