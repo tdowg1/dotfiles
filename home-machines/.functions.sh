@@ -3553,7 +3553,12 @@ ntfs-3g: Mount options: rw,nosuid,nodev,uhelper=udisks,allow_other,nonempty,rela
 * noatime - do not update inode access times on this fs.
 * nodiratime - do not update directory inode access times on this fs.
 * nobootwait - useful for mountpoints that may prevent system fully booting.
+** RHEL6-based OS's : bad option
 * nofail - ?useful for mountpoints that may prevent system fully booting?
+** ( RHEL6-based OS's : OK :: it actually gets converted to: _netdev )
+* _netdev - The filesystem resides on a device that requires network access (used to prevent the system from attempting to mount these filesystems until the network has been enabled on the system).
+** lol this be prob a (?early?) workaround for not having the ( actual nofail or ) nobootwait option???
+
 __envHEREDOC__
 }
 helpmount3sshfsfromscratch(){
