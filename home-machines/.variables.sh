@@ -214,7 +214,9 @@ fi
 ##
 ## [com.spryinc.]SHAZAM-specific .........................................
 if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
-	
+	# be me.
+	# on shazam.
+
 	# Git-preferences:
 	# If (this script) executing on work machine, use work email.
 	# Else use the personal email which is specified in my .gitconfig.
@@ -226,8 +228,9 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	fi
 
 
-
-	# 2012-11-26 TEMPORARY VARIABLES
+	# 2012-11-26 temporary variables.
+	# 2014-06-14 ya. they were /temporary/ alright.  keeping around tho, just because 
+	# that hadoop instance is still around.
 	CDH=/home/bdavies/cdh3
 	HADOOP=$CDH/hadoop
 	HADOOP_HOME=$CDH/hadoop
