@@ -236,6 +236,12 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	HADOOP_HOME=$CDH/hadoop
 	HADOOP_TUTORIAL=$CDH/hadoop-tutorial
 	PATH=${PATH}:/home/bdavies/cdh3/hadoop/bin/
+
+
+	# 2014-06-14 These needed so can execute cmdln's in the Amazon EC2 API Tools package (ec2-ami-tools):
+	export EC2_URL=https://ec2.us-east-1.amazonaws.com
+	export EC2_PRIVATE_KEY=$HOME/.ec2/pk-ONU2NHJPSHXB5VF52YZEONZXVSP4VVKN.pem
+	export EC2_CERT=$HOME/.ec2/cert-ONU2NHJPSHXB5VF52YZEONZXVSP4VVKN.pem
 fi
 
 
