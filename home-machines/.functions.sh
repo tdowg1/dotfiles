@@ -5082,6 +5082,21 @@ php -r "phpinfo();"
 echo "<?php phpinfo(); ?>" | php
 __envHEREDOC__
 }
+helpec2(){
+cat <<'__envHEREDOC__'
+ec2-describe-images -o self   # AMI's created/owned by me.
+ec2-describe-images -o amazon # Amazon provided AMI's.
+
+ec2-describe-spot-price-history -a us-east-1c  # other regions: us-east-1b us-east-1a
+ec2-describe-spot-price-history -t m3.xlarge
+ec2-describe-spot-price-history -a us-east-1c -t t1.micro
+
+
+ec2-describe-instance
+ec2-describe-instances
+ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE'   # gives parsable / computable output
+__envHEREDOC__
+}
 
 
 
