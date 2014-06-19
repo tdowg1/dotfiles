@@ -4351,6 +4351,9 @@ __envHEREDOC__
 }
 helphadoop(){
 cat <<'__envHEREDOC__'
+# Print the full java classpath needed by Hadoop (at least v2)
+hadoop classpath
+
 # Put file into HDFS from outside:
 hadoop fs -copyFromLocal /sw/big /big1
 hadoop fs -copyFromLocal /sw/big /big2
@@ -4459,8 +4462,12 @@ helphadoop4distros(){
 cat <<'__envHEREDOC__'
 == CDH4 (Hadoop 2) ==
 - - - - - - - - - - - - - -
-# -skipTrash option valid?  where is .Trash/ by default?
-$ sudo -u hdfs hdfs dfs -rm -r /mnt/benchmark-test-data/
+$ sudo -u hdfs hdfs dfs -rm -r -skipTrash /mnt/benchmark-test-data/
+
+Default location of a users .Trash folder:
+hadoop fs -ls .Trash
+hadoop fs -ls /user/$USER/.Trash
+
 
 $ sudo -u hdfs hadoop dfsadmin -safemode leave
 $ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
