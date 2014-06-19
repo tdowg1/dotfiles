@@ -3779,24 +3779,31 @@ __envHEREDOC__
 }
 helplame(){
 cat <<'__envHEREDOC__'
-== Examples Configurations ==
-$ lame  -V 0       --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "-V 0"  input.wav  output.1-v0.mp3
-$ lame  -V 2       --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2014"  --tc "-V 2"  input.wav  output.2-v2.mp3
-$ lame  --abr 192  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--abr 192"  input.wav  output.3-abr192.mp3
-$ lame  --preset standard  --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--preset standard (vbr)"  input.wav  output.4-preset-standard.vbr.mp3
-$ lame  --preset 192  --verbose --tt "TITLE"  --tl "album"  --ty "2012"  --tc "--preset 192 (abr)"  input.wav  output.5-preset-192.abr.mp3
+== Notes ==
+For ID3 tags, should always include the --add-id3v2 option (for encoding, at least). From `lame --help id3`:
+    Note: A version 2 tag will NOT be added unless one of the input fields
+    won't fit in a version 1 tag (e.g. the title string is longer than 30
+    characters), or the '--add-id3v2' or '--id3v2-only' options are used,
+    or output is redirected to stdout.
+
+== Examples cmdlns ==
+$ lame  -V 0          --add-id3v2 --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "-V 0"  in.wav  out.1-v0.mp3
+$ lame  -V 2          --add-id3v2 --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2014"  --tc "-V 2"  in.wav  out.2-v2.mp3
+$ lame  --abr 192     --add-id3v2 --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--abr 192"  in.wav  out.3-abr192.mp3
+$ lame  --preset standard  --add-id3v2 --verbose --tt "TITLE"  --tl "ALBUM"  --ty "2012"  --tc "--preset standard (vbr)"  in.wav  out.4-preset-standard.vbr.mp3
+$ lame  --preset 192  --add-id3v2 --verbose --tt "TITLE"  --tl "album"  --ty "2012"  --tc "--preset 192 (abr)"  in.wav  out.5-preset-192.abr.mp3
 
 Actual cmdln used by K3b to  __ ENCODE __  audio (2nd line has hints):
-$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt %t --ta %a --tl %m --ty %y --tc %c --tn %n - output.mp3
-$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt "TITLE" --ta "ARTIST" --tl "ALBUM TITLE" --ty "RELEASE YR" --tc "COMMENT" --tn "TRACK #" - output.mp3
+$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt %t --ta %a --tl %m --ty %y --tc %c --tn %n - out.mp3
+$ lame -r --bitwidth 16 --little-endian -s 44.1 -h --tt "TITLE" --ta "ARTIST" --tl "ALBUM TITLE" --ty "RELEASE YR" --tc "COMMENT" --tn "TRACK #" - out.mp3
 
 And to  __ DECODE __  is stupid simple:
 $ lame --decode /path/to/input.mp3    # Creates decoded form at location: /path/to/input.wav
 
-==== ...And some actual numbers: ====
+==== ...And some actual numbers (file sizes of things created using the various encoding options) : ====
 NOTE the flac file was encoded using maximum compression options and is 
 included here just for comparison.
-$ flac  --verify --padding --compression-level-8  input.wav -o 2012-11-28-BBC-1Xtra-DJ-Nihal.flac
+$ flac  --verify --padding --compression-level-8  in.wav -o 2012-11-28-BBC-1Xtra-DJ-Nihal.flac
 
 $ ls -lh
 762M 12-02 04:17 2012-11-28-BBC-1Xtra-DJ-Nihal.flac
@@ -3807,31 +3814,40 @@ $ ls -lh
 160M 12-02 04:46 2012-11-28-BBC-1Xtra-DJ-Nihal.5-preset-192.abr.mp3
 1.2G 12-02 03:16 2012-11-28-BBC-1Xtra-DJ-Nihal.wav
 
+== Moar cmdlns ==
+Get info
+$ lame --help id3
+
 == See also ==
 helplame helpflac helpmuzik
 __envHEREDOC__
 }
 helpflac(){
 cat <<'__envHEREDOC__'
-== Example Configurations ==
+== Example cmdlns ==
 $ flac  --verify --padding --compression-level-8 --picture=picturefile.jpg   input.wav -o output.flac
 $ flac  --verify --padding --compression-level-8 --qlp-coeff-precision-search --picture=picturefile.jpg   input.wav -o output.flac
 
-Actual cmdln used by K3b to encode audio:
+Actual cmdln used by K3b to ENCODE audio:
 $ flac -V -o %f --force-raw-format --endian=little --channels=2 --sample-rate=44100 --sign=signed --bps=16 -T ARTIST=%a -T TITLE=%t -T TRACKNUMBER=%n -T DATE=%y -T ALBUM=%m -
 
-* Get info
-metaflac --list infile.flac
+Get info
+$ metaflac --list infile.flac
 
-* Split 1 flac file into 2 wav files (*straight up!* without cuefile crap!)
-# first, must determine number of samples in track.  One way:
+Split 1 flac file into 2 wav files (_straight up!_ without cuefile crap!).
+# First, must determine number of samples in track.  One way:
 file infile.flac
+
 # which outputs something like
-#  2012-11-28-BBC-1Xtra-DJ-Nihal.flac: FLAC audio bitstream data, 16 bit, stereo, 44.1 kHz, 317667328 samples
-# second, do the split by dividing samples by 2:
+
+#   2012-11-28-BBC-1Xtra-DJ-Nihal.flac: FLAC audio bitstream data, 16 bit, stereo, 44.1 kHz, 317667328 samples
+# Second, do the split by dividing samples by 2:
 samples=317667328
 flac --decode --until=$( clac.py "${samples} / 2" ) infile.flac -o 1of2.wav   
 flac --decode --skip=$( clac.py "${samples} / 2" )  infile.flac -o 2of2.wav
+
+Decode flac to wav:
+$ flac --decode the.flac
 
 == See also ==
 helplame helpflac helpmuzik
@@ -3839,13 +3855,128 @@ __envHEREDOC__
 }
 helpmuzik(){
 cat <<'__envHEREDOC__'
+== Random muzik-related packages and programs ==
 abcde: Command Line Music CD Ripping for Linux
-icedax: stands for InCrEdible Digital Audio eXtractor. It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
+icedax: stands for InCrEdible Digital Audio eXtractor
+ * It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
 flac: Flac encoder/decoder
-lame: mp3 encoder/decoder
+lame: mp3 encoder/decoder    LAME AINT AN MP3 ENCODER, duh
+mpgtx: is a tool to manipulate MPEG files.
+ * ( video ) mpgtx can currently split and join MPEG 1 video files and most MPEG audio files. 
+ * ( video ) mpgtx can fetch detailed information from MPEG 1 and MPEG 2. 
+ * ( video ) mpgtx can demultiplex MPEG 1 and MPEG 2 files (System layer, Program layer and Transport Layer). 
+ * mpgtx can add, remove and edit ID3 tags from mp3 files and rename mp3 files according to their ID3
+   tags. It reads and writes ID3v1, but only reads ID3v2.
+ * PROVIDES:
+     mpgsplit
+         is equivalent to mpgtx -s 
+     mpgjoin
+         is equivalent to mpgtx -j 
+     mpgcat
+         is equivalent to mpgtx -j -o - 
+     mpginfo
+         is equivalent to mpgtx -i 
+     mpgdemux
+         is equivalent to mpgtx -d 
+     tagmp3
+         is equivalent to mpgtx -T
+libmp3-tag-perl: Module for reading tags of MP3 audio files.
+ * MP3::Tag is a wrapper module to read different tags of mp3 files. It provides an easy way to access the
+   functions of separate modules which do the handling of reading/writing the tags itself. 
+ * At the moment MP3::Tag::ID3v1 and MP3::Tag::ID3v2 are supported.
+ * PROVIDES: mp3info2
+
+madplay: MPEG audio player in fixed point. MAD is an MPEG audio decoder. There is also full support for ID3 tags.
+mpg123:  MPEG layer 1/2/3 audio player.
+
+=== ide-related ==
+$ aptitude search id3 --disable-columns | grep -v 386
+id3 - An ID3 Tag Editor
+id3ren - id3 tagger and renamer
+id3tool - Command line editor for id3 tags
+id3v2 - A command line id3v2 tag editor
+kid3 - KDE MP3 ID3 tag editor
+kid3-qt - Audio tag editor
+libaudid3tag-dev - 
+libicegrid34 - Libraries implementing grid-like services for ZeroC Ice
+libid3-3.8.3-dev - ID3 Tag Library: Development Libraries and Header Files
+libid3-3.8.3c2a - library for manipulating ID3v1 and ID3v2 tags
+libid3-dev - 
+libid3-doc - ID3 Tag Library: Documentation
+libid3-tools - ID3 Tag Library: Utilities
+libid3tag0 - ID3 tag reading library from the MAD project
+libid3tag0-dev - ID3 tag reading library from the MAD project
+libsmokesolid3 - Solid SMOKE libraries
+php-getid3 - PHP script to extract informations from multimedia files
+python-id3 - Python module for id3-tags manipulation
+squid3 - Full featured Web Proxy cache (HTTP proxy)
+squid3-cgi - 
+squid3-client - 
+squid3-common - Full featured Web Proxy cache (HTTP proxy) - common files
+squid3-dbg - Full featured Web Proxy cache (HTTP proxy) - Debug symbols
+xmms2-plugin-id3v2 - XMMS2 - ID3v2 plug-in
 
 == See also ==
-helplame helpflac helpmuzik
+helplame helpflac helpmuzik helpsox
+__envHEREDOC__
+}
+helpmuzik2snippets_flac_to_mp3_conversion(){
+cat <<'__envHEREDOC__'
+== generic loop defn ==
+# e.g. files like : "07 Donald Byrd - Just My Imagination.wav"
+for i in *.wav ; do
+ j=$( echo $i | awk '{ for(i = 5; i <= NF; i++) { printf("%s ", $i) } printf("\n") }' )
+ ttt=$( echo "${j%%.wav }" )
+ lame  -V 0 --verbose   --tl "Places and Spaces"  --ty "1975"   --tc "-V 0" --ta "Donald Byrd"  --tt "$ttt"  "$i"
+done
+
+=== two loop states: ===
+01 Donald Byrd - Change.wav
+Change.wav
+Change
+lame -V 0 --verbose --tl "Places and Spaces" --ty "1975" --tc "-V 0" --ta "Donald Byrd" --tt "Change" 01 Donald Byrd - Change.wav
+
+02 Donald Byrd - Wind Parade.wav
+Wind Parade.wav
+Wind Parade
+lame -V 0 --verbose --tl "Places and Spaces" --ty "1975" --tc "-V 0" --ta "Donald Byrd" --tt "Wind Parade" 02 Donald Byrd - Wind Parade.wav
+__envHEREDOC__
+}
+helpsox(){
+cat <<'__envHEREDOC__'
+== from sox manpage, slightly modified ==
+Here is an overview of SoX's capabilities; detailed explanations of how to use all SoX  parameters,
+file formats, and effects can be found in sox(1), in soxformat(7), and in soxi(1).
+
+Here is a selection of examples of how SoX might be used.
+The simple:
+   sox recital.au recital.wav
+^^translates an audio file in Sun AU format to a Microsoft WAV file, whilst
+   sox recital.au -b 16 recital.wav channels 1 rate 16k fade 3 norm
+^^performs  the  same format translation, but also applies four effects (down-mix to one channel, sample rate change,
+fade-in, nomalize), and stores the result at a bit-depth of 16.
+   sox -r 16k -e signed -b 8 -c 1 voice-memo.raw voice-memo.wav
+^^converts `raw' (a.k.a. `headerless') audio to a self-describing file format,
+   sox slow.aiff fixed.aiff speed 1.027
+^^adjusts audio speed,
+   sox short.wav long.wav longer.wav
+^^CONCATENATES two audio files, and
+   sox -m music.mp3 voice.wav mixed.flac
+^^mixes together two audio files.
+   play "The Moonbeams/Greatest/*.ogg" bass +3
+^^plays a collection of audio files whilst applying a bass boosting effect,
+   play -n -c1 synth sin %-12 sin %-9 sin %-5 sin %-2 fade h 0.1 1 0.1
+^^plays a synthesised `A minor seventh' chord with a pipe-organ sound,
+   rec -c 2 radio.aiff trim 0 30:00
+^^records half an hour of stereo audio, and
+   play -q take1.aiff & rec -M take1.aiff take1-dub.aiff
+^^(with POSIX shell and where supported by hardware) records a new track in a multi-track recording.  Finally,
+   rec -r 44100 -b 16 -s -p silence 1 0.50 0.1% 1 10:00 0.1% | \
+     sox -p song.ogg silence 1 0.50 0.1% 1 2.0 0.1% : \
+     newfile : restart
+^^records a stream of audio such as LP/cassette and splits in to multiple audio files at points  with  2  seconds  of
+silence.  Also, it does not start recording until it detects audio is playing and stops after it sees 10 minutes of
+silence.
 __envHEREDOC__
 }
 helpdig(){
