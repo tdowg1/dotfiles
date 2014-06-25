@@ -4351,8 +4351,11 @@ __envHEREDOC__
 }
 helphadoop(){
 cat <<'__envHEREDOC__'
-# Print the full java classpath needed by Hadoop (at least v2)
+# Print the full java classpath needed by Hadoop (at least v2):
 hadoop classpath
+
+# Print version nfo:
+hadoop version         # see also : /etc/default/hadoop (at least for HDP2)
 
 # Put file into HDFS from outside:
 hadoop fs -copyFromLocal /sw/big /big1
