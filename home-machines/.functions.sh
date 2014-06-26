@@ -3021,6 +3021,8 @@ __envHEREDOC__
 }
 helptruecrypt(){
 cat <<'__envHEREDOC__'
+!!! NOTE !!! truecrypt is discontinued !!!
+
 == In general ==
 $ truecrypt --list -v
 
@@ -3038,6 +3040,9 @@ $ sudo e2fsck -f -y -v /dev/mapper/truecrypt4
 
 == See also ==
 * helphdd4
+* tcplay -- tool to manage TrueCrypt volumes  (DragonFlyBSD)
+** http://leaf.dragonflybsd.org/cgi/web-man?command=tcplay
+** The tcplay utility provides full support for creating and opening/mapping TrueCrypt-compatible volumes.
 __envHEREDOC__
 }
 helpblkid(){
