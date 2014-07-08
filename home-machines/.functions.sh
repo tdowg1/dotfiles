@@ -1862,7 +1862,7 @@ __envHEREDOC__
 }
 helpgit5(){
       cat <<'__envHEREDOC__'
-= Fix "non-bare" upstream repo =
+= Fix "non-bare" upstream git repo =
 For instance, may be receiving this when trying to push changes upstream:
 	http://stackoverflow.com/questions/2199897/how-to-convert-a-git-repository-from-normal-to-bare
 		remote: error: refusing to update checked out branch: refs/heads/master
@@ -1883,6 +1883,19 @@ For instance, may be receiving this when trying to push changes upstream:
 ...^^it's resolvable in the following way *AND ALSO ASSUMING* that the original upstream 
 repo's config file holds nothing special (which i *think* is the common case):
 $ git clone --bare [--no-hardlinks --verbose] /path/to/repo  [/path/to/new/repo]
+
+The reason this happened is basically because the repo was not created like so in the first place:
+$ git init --bare
+
+General steps to fix:
+$ cd repo
+$ mv .git .. && rm -fr *
+$ mv ../.git .
+$ mv .git/* .
+$ rmdir .git
+
+$ git config --bool core.bare true
+$ cd ..; mv repo repo.git # renaming just for clarity
 __envHEREDOC__
 }
 helpgitsvn(){
