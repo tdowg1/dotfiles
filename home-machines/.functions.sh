@@ -2545,6 +2545,7 @@ $ ntfslabel <device>
 $ tune2fs -l <device> | grep name
 	$ tune2fs -l <device> | grep 'Filesystem volume name' | sed 's/Filesystem volume name://' | sed 's/^[ \t]*//'
 	^^alternatively, COULD JUST LOOK HERE : /dev/disk/by-label
+$ dosfslabel <device> [LABEL]
 
 == GET NFO ==
 === Which devices are seen? ===
