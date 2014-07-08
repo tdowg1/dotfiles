@@ -2044,6 +2044,9 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
+== modulus to get random sleep time within 10s ==
+sleep $(( $RANDOM % 10 ))
+
 == shopt ==
 TODO STUB pretty cool... lots of options... should spend some time playing with this.
 
