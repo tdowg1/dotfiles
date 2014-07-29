@@ -1301,6 +1301,9 @@ helpvim4(){
 ** :%s/^/aaatttt begininnnnnnning /gc
 * Insert at end of line:
 ** :%s/$/ endddddd aattttt/gc
+* Work with ^ control characters
+** c-v (which modifies/prepares the next input...) then, the control character desired.
+*** e.g. control M : c-v c-m
 
 * Misc regex
 ** escapes some commas and does stuff with quotes (csv-related):
