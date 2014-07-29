@@ -2502,7 +2502,8 @@ $ grep -P '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' $( find . -type f )
 $ find . -type f -size -10M  -print0 | xargs -0 grep --null-data --files-with-match -i "lolumad"
 
 == Syntax ==
-$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"  # grep with regex
+$ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"     # grep with regex.
+$ yum deplist hadoop | grep --color -E 'hadoop|'   # Dear grep, Highlight, don't grep (!)
 __envHEREDOC__
 }
 helpcurl(){
