@@ -4402,9 +4402,9 @@ hadoop fs -setrep -R 5 -w /big7
 # Recursive directory list
 hadoop fs -lsr
 # Count the directories, files, and bytes in a path
-hadoop count hdfs://node/data
+hadoop fs -count hdfs://node/data
 # Empty filesystem trash
-hadoop expunge
+hadoop fs -expunge
 
 
 # Distributed copy from one or more node/dirs to a target:
