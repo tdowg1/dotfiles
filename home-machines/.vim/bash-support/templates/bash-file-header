@@ -90,7 +90,7 @@ while [ "$#" -gt "0" ] ; do
          PATH_TO_RUNNER_SCRIPT="${1#--path-to-runner-script=}"
          ;;
       -u|--usage|-h|--help) # specified like: --key
-         f_usage_long
+         f_usage
          ;;
       *)
          echo "ERROR: invalid cmdln arguments $1"
@@ -100,7 +100,44 @@ while [ "$#" -gt "0" ] ; do
    shift
 done
 
-#some test condition
+# A perhaps improved upon version of the previous while loop block?
+while [ "$#" -gt "0" ] ; do
+   case $1 in
+      -B) # specified like: --pidfile /tmp/mypidfile
+         BLOCKSIZE=$2
+         shift 2
+         ;;  
+      --block-size=?*) # specified like: --pidfile=/tmp/mypidfile
+         BLOCKSIZE=${1#--block-size=}
+         shift
+         ;;  
+      --block-size) # specified like: --pidfile /tmp/mypidfile
+         BLOCKSIZE=$2
+         shift 2
+         ;;  
+      -u|--usage|-h|--help) # specified like: --key
+         f_usage
+         ;;  
+      *) # if user input didn't match any of the prior flags, 
+         # going to assume it's the starting path. A sanity 
+         # check will be performed after all cmdln args parsed.
+         STARTINGPATH=$1
+         shift
+         ;;
+   esac
+done
+
+
+#     <perhaps some test conditions make sense to check inputs, prior to the main 
+#      variable param/error block...>
+: ${STARTINGPATH:?ERROR: STARTINGPATH variable must be set}
+# Is this path garbage or not?  bail if so.
+hadoop fs -ls "$STARTINGPATH" >/dev/null  2>&1
+if [[ $? != 0 ]] ; then
+   echo "ERROR: $STARTINGPATH doesn't seem right as an HDFS path... bai."
+   exit 2
+fi
+
 
 if [[ $? != 0 ]] ; then
    echo "ERROR: $source_filesystem must be a mountpoint"
@@ -114,6 +151,7 @@ fi
 #
 : ${ISFORCED:="FALSE"}
 # required to be defined by now; think "<cfparam=* required=yes..."
+
 : ${TEMPDIR2:?ERROR: not specified}
 : ${HOME:?ERROR: HOME variable must be set}
 
