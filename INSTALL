@@ -1,14 +1,6 @@
 
 == cmdln operations performed to get my env up with my github dotfiles ==
-* Optionally (erm-this is more of a personal note), obtain authorized
-openssh key so can interact with repo via git:// protocol... an ~/.ssh/config
-might look like:
->>>
-Host github.com
-IdentityFile ~/.ssh/authorized-openssh-key
-<<<
-
-* Next, get the goods : clone repo
+* clone repo
 >>>
 cd
 git clone git@github.com:tdowg1/dotfiles
@@ -57,4 +49,17 @@ $ZOMG_DOTFILES/dotfiles.sh install
 
 * optionally, continue on with INSTALL.extra
 
+* if wish to be able to commit to the dotfiles repo as well, obtain the github key that I use.
+
+* update ~/.ssh/config to look something like:
+>>>
+Host github.com
+IdentityFile ~/.ssh/authorized-openssh-key
+<<<
+
+* if becoming prompted for username when doing e.g. git push, verify that the remote.origin.url
+is not set to an https but set to:
+  git@github.com:tdowg1/dotfiles.git
+by executing
+git config remote.origin.url git@github.com:tdowg1/dotfiles.git
 
