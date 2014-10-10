@@ -2064,6 +2064,9 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
+== envsubst ==
+whats this envsubst?
+
 == modulus to get random sleep time within 10s ==
 sleep $(( $RANDOM % 10 ))
 
