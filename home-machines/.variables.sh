@@ -55,15 +55,25 @@ PATH=$PATH:$_pathupdates
 
 
 # Less Colors for Man Pages
-# src: http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-# disabled standout-mode bc very difficult to see.
-#export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+## src: http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
+#export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+#export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+#export LESS_TERMCAP_me=$'\E[0m'           # end mode
+#export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+## disabled standout-mode bc very difficult to see.
+##export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+#export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+#export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+
+# 2014-08-06:
+# src: Amazon Linux AMI release 2014.03::/etc/profile.d/less.sh
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;38;5;208m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[04;38;5;111m'
+# /Less Colors for Man Pages
 
 
 
