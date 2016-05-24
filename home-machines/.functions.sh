@@ -2627,7 +2627,7 @@ sg_scan [-i]    # (scsi)
 
 
 == SEE ALSO ==
-helplstopo, helpblkid, helppv
+helplstopo, helpblkid, helppv, helpinotify
 __envHEREDOC__
 }
 helphdd2_fs_related(){
