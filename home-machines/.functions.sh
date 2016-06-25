@@ -2043,12 +2043,13 @@ If the third character is
 A, the package was automatically installed.
 
 
-== NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/tips/linux-debian-package-management-cheat-sheet.html
+== NOTES FOR YOU == http://www.cyberciti.biz/tips/linux-debian-package-management-cheat-sheet.html
 
-== MOAR NOTES FOR YOU, SLACKER == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
- remove        - Remove packages.
- purge         - Remove packages and their configuration files.
- search ~ahold - Show held packages
+== MOAR NOTES FOR YOU == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
+$ aptitude remove        - Remove packages.
+$ aptitude purge         - Remove packages and their configuration files.
+$ aptitude search ~ahold - Show held packages
+$ dpkg -l | grep ^h      - Show held packages
 
 == Determine which package provides a file ==
 $ dpkg --search /etc/bash_completion
@@ -2308,14 +2309,12 @@ The following package was automatically installed and is no longer required:
 Use 'apt-get autoremove' to remove them.
 
 == [un]hold a Package ==
-$ echo synergy hold | sudo dpkg --set-selections  # this will get applied to apt-get's db too.
-$ aptitude [un]hold synergy                       # this will not get applied to apt-get's db, i dont think.
-
-=== More (aptitude-related) ==
-Run aptitude with no parameters, then limit the list (Ctrl-l) to those
-packages on hold (~ahold). Then select the header of all packages on
-hold and hit "+" to mark them for install. This removes the hold. Then
-do an update to get the current version.
+Hold:
+$ echo synergy hold | sudo dpkg --set-selections  # This will get applied to apt-get's db as well as aptitude's.
+Unhold:
+$ apt-mark unhold synergy                         # This will get applied to apt-get's db as well as aptitude's.
+[Un]Hold:
+$ aptitude [un]hold synergy                       # This will NOT get applied to apt-get's db; only aptitude's.
 
 == SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
 $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
