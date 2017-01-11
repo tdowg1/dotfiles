@@ -2983,19 +2983,19 @@ EXAMPLES
 __envHEREDOC__
 }
 
-helpfdisk(){
-cat <<'__envHEREDOC__'
-Default fdisk output has...
-~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
-	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
-	NOT CYLINDERS!!!!!!!
-	lol... aw boy. and the confusion never ends.
-* the Start and End columns show the starting and ending __SECTORS__
-** hint: just run the 'u' command and it will toggle+display the unit being used.
-
-* the Blocks column shows the number of 1K (1024 byte) blocks in the partition
-__envHEREDOC__
-}
+#helpfdisk(){
+#cat <<'__envHEREDOC__'
+#Default fdisk output has...
+#~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
+#	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
+#	NOT CYLINDERS!!!!!!!
+#	lol... aw boy. and the confusion never ends.
+#* the Start and End columns show the starting and ending __SECTORS__
+#** hint: just run the 'u' command and it will toggle+display the unit being used.
+#
+#* the Blocks column shows the number of 1K (1024 byte) blocks in the partition
+#__envHEREDOC__
+#}
 
 helpparted(){
 	local d=/dev/sda
@@ -4192,6 +4192,10 @@ $ sane-find-scanner
 $ simple-scan
 
 $ xsane
+
+Currently in my kubuntu newjack-2-ubu1404 install by default:
+* Skanlite
+* AcquireImages
 __envHEREDOC__
 }
 helpscan2(){
