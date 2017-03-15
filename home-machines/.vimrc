@@ -1,3 +1,4 @@
+" check out https://github.com/scrooloose/nerdtree
 " 
 " SEE ALSO : /etc/vim/*
 " 
@@ -46,21 +47,34 @@ filetype plugin indent on     " required!
 " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after ('after'? you mean, 'trailing'?) Bundle command are not allowed..
 " /2012-08-07 use Vundle
 
 
 syntax on
-se nu
-set tabstop=3
+
+
+"set nu   " regular numbering
+set relativenumber
+
+
 
 
 " Prevents vim from replacing spaces with tabs whenever autoindent is on:
-" set expandtab
-set smarttab
+set expandtab
 set shiftwidth=3
-set shiftround
+set softtabstop=3
+"set tabstop=3
+
+" smarttab affects how <TAB> key presses are interpretted depending on whwhere
+" the cursor is.  There is seldom any need to set this option, unless it is
+" necessary to use hard TAB characters in body text or code.
+"set smarttab
+
 set autoindent
+
+set shiftround
+
 highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
 colors ron
 set hlsearch
@@ -82,6 +96,9 @@ set history=475
 
 " (me!) add from gVim
 set gfn=Terminus\ 13
+
+" shows visual line under the cursor's current line
+set cursorline
 
 
 set bg=light

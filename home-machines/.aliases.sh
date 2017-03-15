@@ -194,8 +194,8 @@ alias vibuyarchive='vim "$db/db.dox/next.Buy.txt.archive.txt"'
 ## git-related
 alias gitcommitauto='git commit -m "auto commit"'
 alias gitcommitautoa='git commit -m -a "auto commit"'
-alias gitcommitmisc='git commit -m "misc dotfile changes ($( hostname -s ))"'
-alias gitcommitmisca='git commit -m -a "misc dotfile changes ($( hostname -s ))"'
+alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
+alias gitcommitmisca='git commit -m -a "misc dotfile changes ($HOSTNAME)"'
 alias gitupstreamUrl='git config --list | grep remote.origin.url'
 
 alias br='git branch'
@@ -217,6 +217,7 @@ alias logp='git log -p'
 alias logs='git log --stat'
 alias logps='git log -p --stat'
 alias logsp='git log -p --stat'   # same as the above
+alias logf='git log --follow'     # Continue listing the history of a file beyond renames (works only for a single file).
 alias loghead='git log | head'
 alias loghead2='git log | head -20'
 alias logheadp='git plog | head'

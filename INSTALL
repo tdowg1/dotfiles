@@ -1,6 +1,14 @@
 
 == cmdln operations performed to get my env up with my github dotfiles ==
-* clone repo
+* Optionally (erm-this is more of a personal note), obtain authorized
+openssh key so can interact with repo via git:// protocol... an ~/.ssh/config
+might look like:
+>>>
+Host github.com
+IdentityFile ~/.ssh/authorized-openssh-key
+<<<
+
+* Next, get the goods : clone repo
 >>>
 cd
 git clone git@github.com:tdowg1/dotfiles

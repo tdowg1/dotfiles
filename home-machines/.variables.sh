@@ -41,7 +41,7 @@ export installsoftos2="${installsoft}/os2"
 
 
 # PATH modifications
-PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
+PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
 _pathupdates=""
 
 # add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )
@@ -75,19 +75,41 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;111m'
 # /Less Colors for Man Pages
 
+# PS1 terminal prompt colors:
+export COLOR_NC='\e[0m' # No Color
+export COLOR_WHITE='\e[1;37m'
+export COLOR_BLACK='\e[0;30m'
+export COLOR_BLUE='\e[0;34m'
+export COLOR_LIGHT_BLUE='\e[1;34m'
+export COLOR_GREEN='\e[0;32m'
+export COLOR_LIGHT_GREEN='\e[1;32m'
+export COLOR_CYAN='\e[0;36m'
+export COLOR_LIGHT_CYAN='\e[1;36m'
+export COLOR_RED='\e[0;31m'
+export COLOR_LIGHT_RED='\e[1;31m'
+export COLOR_PURPLE='\e[0;35m'
+export COLOR_LIGHT_PURPLE='\e[1;35m'
+export COLOR_BROWN='\e[0;33m'
+export COLOR_YELLOW='\e[1;33m'
+export COLOR_GRAY='\e[0;30m'
+export COLOR_LIGHT_GRAY='\e[0;37m'
+
+
 
 
 # Git preferences and hacks (/etc/bash_completion.d/git)
-if [[ -f /etc/bash_completion.d/git ]] || [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
-	test -f /etc/bash_completion.d/git && source /etc/bash_completion.d/git
-	test -f /usr/lib/git-core/git-sh-prompt && source /usr/lib/git-core/git-sh-prompt
+if [[ -f /etc/bash_completion.d/git ]] ; then
+	source /etc/bash_completion.d/git
 
 	# test to see if /etc/bash_completion.d/git is even being sourced
-	env | grep __git_ps1 2>&1 >/dev/null
+	# POSSIBLE BUG by calling "env".  should probably be calling "set" which displays all functions.  env doesnt show functions on some os's and thats what is being tested here by the call to grep:
+	env | grep __gitdir 2>&1 >/dev/null
 	if [[ $? = 0 ]] ; then
 		# ok it is.
 		PREV_PS1="$PS1"
-		PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+		#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+                #PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
+                export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
 
 		GIT_PS1_SHOWDIRTYSTATE=true
 		GIT_PS1_SHOWSTASHSTATE=true
@@ -96,6 +118,9 @@ if [[ -f /etc/bash_completion.d/git ]] || [[ -f /usr/lib/git-core/git-sh-prompt 
 	else
 		echo "/etc/bash_completion.d/git exists but doesn't seem to have been sourced by your env"
 	fi
+     else
+        #PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
+        export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w \[\e[0;31m\]]\$\[\e[0m\] '
 fi
 
 
@@ -231,7 +256,7 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 	# Git-preferences:
 	# If (this script) executing on work machine, use work email.
 	# Else use the personal email which is specified in my .gitconfig.
-	GIT_COMMITTER_EMAIL="bdavies@spryinc.com"
+	GIT_COMMITTER_EMAIL="bdavies@webbmason.com"
 	GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
 	#if [[ $( tty -s ) = 0 ]] ; then
 	if tty -s ; then

@@ -118,29 +118,38 @@ fi
 
 
 #
-# makes anything defined automatically exported
-set -o allexport
+set -o allexport    # anything defined is automatically exported.
+shopt -s direxpand  # specifically set so that "$" is not auto-escaped upon tab-completion.
 #
 
 
 
+setSparksServersVariablesForLocal(){
+	export sparksMajorServers="stardust voyager vega2 phobos"
+	export sparksMinorServers="remote print-server"
+}
+setSparksServersVariablesForRemote(){
+	local remote_string=""
+	remote_string="remote-"
+	remote_string="proxy-"
+
+	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
+	export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
+}
+
+setSparksServersVariablesForLocal
 
 
 
-IS_I_ON_INTELDUO='false'
-IS_I_ON_LAPTOP='false'
-IS_I_ON_MAGNIFICENT='false'
-IS_I_ON_PHISATA='false'
-IS_I_ON_SHAZAM='false'
-IS_I_ON_SVN='false'
-#
-#if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
-#
+
 if [ x"${HOSTNAME}" = x"intelduo"  -o  x"${HOSTNAME}" = x"intelduo.home" ] ; then
 	IS_I_ON_INTELDUO='true'
 
 elif [ x"${HOSTNAME}" = x"laptop"  -o  x"${HOSTNAME}" = x"laptop.home" ] ; then
 	IS_I_ON_LAPTOP='true'
+
+elif [ x"$( hostname -s )" = x"newjack" ] ; then
+	IS_I_ON_NEWJACK='true'
 
 elif [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ] ; then
 	IS_I_ON_MAGNIFICENT='true'
@@ -155,6 +164,15 @@ elif [ x"${HOSTNAME}" = x"svn"  -o  x"${HOSTNAME}" = x"svn.home" ] ; then
 	IS_I_ON_SVN='true'
 
 fi
+
+: ${IS_I_ON_INTELDUO:='false'}
+: ${IS_I_ON_LAPTOP:='false'}
+: ${IS_I_ON_NEWJACK:='false'}
+: ${IS_I_ON_MAGNIFICENT:='false'}
+: ${IS_I_ON_PHISATA:='false'}
+: ${IS_I_ON_SHAZAM:='false'}
+: ${IS_I_ON_SVN:='false'}
+
 
 
 

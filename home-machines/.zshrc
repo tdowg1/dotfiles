@@ -38,3 +38,6 @@ setopt SHARE_HISTORY
 #colors
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# dont clear screen at logout
+setopt norcs
