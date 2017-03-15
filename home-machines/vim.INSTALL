@@ -23,3 +23,7 @@ following their next pull.  This can be addressed by simply updating
 the subproject/submodule:
 $ cd ~/.vim/bundle/vundle/  &&  git pull
 
+erm...^this not working... maybe have to do the following in additon to the above?
+
+$ cd ~/dotfiles/home-machines && git add .vim/bundle
+
