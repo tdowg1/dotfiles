@@ -5073,8 +5073,14 @@ $ simple-scan
 $ xsane
 
 Currently in my kubuntu newjack-2-ubu1404 install by default:
-* Skanlite
-* AcquireImages
+* Skanlite / AcquireImages
+** basic scanning seemed to work ok except for the scan preview.  gave error: "Invalid argument"
+** wasn't able to determine the actual supported resolutions.  i tried 75dpi and gave same error.  also, didn't offer 1200dpi which im sure this scanner can do.
+** ...
+** lol ooh wait, hold up... the default preview scan resolution was 100dpi.  changing that to 150, which is a supported resolution by the scanner, preview works!
+** ok, not a bad program.
+** it would be nice, however, along with the changable image properties(bright,contra,gamm) it offers you, if it would show a realtime updated potential image... instead you will have to do trial and error scans if youre trying to tinker with those properties.
+
 __envHEREDOC__
 }
 helpscan2(){
