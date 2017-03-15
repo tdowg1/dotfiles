@@ -78,11 +78,12 @@ export LESS_TERMCAP_us=$'\E[04;38;5;111m'
 
 
 # Git preferences and hacks (/etc/bash_completion.d/git)
-if [[ -f /etc/bash_completion.d/git ]] ; then
-	source /etc/bash_completion.d/git
+if [[ -f /etc/bash_completion.d/git ]] || [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
+	test -f /etc/bash_completion.d/git && source /etc/bash_completion.d/git
+	test -f /usr/lib/git-core/git-sh-prompt && source /usr/lib/git-core/git-sh-prompt
 
 	# test to see if /etc/bash_completion.d/git is even being sourced
-	env | grep __gitdir 2>&1 >/dev/null
+	env | grep __git_ps1 2>&1 >/dev/null
 	if [[ $? = 0 ]] ; then
 		# ok it is.
 		PREV_PS1="$PS1"

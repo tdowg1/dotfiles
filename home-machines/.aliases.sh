@@ -194,8 +194,8 @@ alias vibuyarchive='vim "$db/db.dox/next.Buy.txt.archive.txt"'
 ## git-related
 alias gitcommitauto='git commit -m "auto commit"'
 alias gitcommitautoa='git commit -m -a "auto commit"'
-alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
-alias gitcommitmisca='git commit -m -a "misc dotfile changes ($HOSTNAME)"'
+alias gitcommitmisc='git commit -m "misc dotfile changes ($( hostname -s ))"'
+alias gitcommitmisca='git commit -m -a "misc dotfile changes ($( hostname -s ))"'
 alias gitupstreamUrl='git config --list | grep remote.origin.url'
 
 alias br='git branch'
