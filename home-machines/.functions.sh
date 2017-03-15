@@ -10,6 +10,20 @@
 #get that echoandexec method I wrote
 
 
+update_auth_sock() {
+    local socket_path="$(tmux show-environment | sed -n 's/^SSH_AUTH_SOCK=//p')"
+
+    if ! [[ "$socket_path" ]]; then
+        echo 'no socket path' >&2
+        return 1
+    else
+        export SSH_AUTH_SOCK="$socket_path"
+    fi
+}
+
+
+
+
 timevariouslyformattedtoseconds(){
 	#in; out
 	#-------
@@ -46,9 +60,13 @@ decimal2characterTODO(){
 	# a b c d.
 	#i havent found a program to do this. shouldnt be hard to write. just use ascii table.
 	echo
+	#uppercase A = 
+	printf "\x$(printf %x 65)"
+	#lowercase a = 
+	printf "\x$(printf %x 97)"
 }
 
-getReservedblockcount(){
+getReservedBlockCount(){
 	if [[ $# != 1 ]] || [[ x"$1" = x"--help" ]] ; then
 		echo "$FUNCNAME - too lazy to look at tune2fs output? Call me now for your free analysis!"
 		# future unknown: default to using "$d" if it's non-empty and no argument passed.
@@ -85,7 +103,8 @@ mkurl(){
 
 findwildiname(){
 	if [[ $# = 0 ]] ; then
-		echo "findwildiname() [path] wildcarded_searchstring"
+		#echo "findwildiname() [path] wildcarded_searchstring"
+		echo "${FUNCNAME}() [path] wildcarded_searchstring"
 		return
 	fi
 	local path="."
@@ -163,17 +182,56 @@ chdotfiles(){
 	#/home/bdavies/tmp/dotfiles.2/home-machines/ ; export DOTFILES_HOME=`pwd` ; source .mainly.sh ; echo $ZOMG_DOTFILES ;
 }
 
-#getfullpath(){
-#	# Example invocations
-#	#  $ getfullpath .functions.sh
-#	#  /home/bdavies/tmp/dotfiles.2/home-machines/.functions.sh
-#	#  $ getfullpath ~/../../dev/tty50
-#	#  /dev/tty50
-#	#  $ getfullpath ~/
-#	#  /home/bdavies
-#	local fso="${1}"  # file system object
-#	echo "$( readlink -f "$( dirname "$fso" )" )/$( basename "$fso" )"
-#}
+chmodchownchgrp(){
+   if [[ $# = 0 ]] ; then
+      echo "Usage: $FUNCNAME args-to-call-chmod-chown-and-chgrp-with"
+      echo "Example: $FUNCNAME --reference=/etc/hosts newhostsfile"
+      return
+   fi
+   echo sudo chmod "${*}"
+   echo sudo chown "${*}"
+   echo sudo chgrp "${*}"
+}
+
+
+snippetCreateEthernetDeviceIfcfgFile1(){
+	# This snippet creates an ifcfg- file in the CWD for the specified *ETHERNET* slave
+	# device (passed in), handling the setting of its HWADDR and DEVICE key values.
+	#
+	# Here's an example ifcfg file, ifcfg-p3p1, if p3p1 was passed in:
+   #   HWADDR="a0:36:9f:4b:50:e8"
+   #   DEVICE="p3p1"
+   #   BOOTPROTO="none"
+   #   NM_CONTROLLED="no"
+   #   ONBOOT="yes"
+   #   TYPE="Ethernet"
+   #   SLAVE=yes
+   #   MASTER=bond0
+   #   MTU=9000
+
+
+	#d=eth0
+	local d="$1"
+
+
+	echo -n 'HWADDR="' >> ifcfg-${d}
+
+	ip -oneline link show $d  |  awk  '{ ORS=""; print $(NF-2) }' >> ifcfg-${d}
+
+	echo -n '"
+	DEVICE="' >> ifcfg-${d}
+
+	echo -n $d  >> ifcfg-${d}
+
+	echo '"
+	BOOTPROTO="none"
+	NM_CONTROLLED="no"
+	ONBOOT="yes"
+	TYPE="Ethernet"
+	SLAVE=yes
+	MASTER=bond0
+	MTU=9000' >> ifcfg-${d}
+}
 
 
 
@@ -291,12 +349,16 @@ greptxtfiles(){
 grepdotfiles(){
 	# SYNOPSYS grepdotfiles SINGLE-STRING-SEARCH-QUERY
 	local searchquery="$1"
+        # TODO STUB: exclude files with trailing ~ characters.
 	local searchpath="$ZOMG_DOTFILES"
 
 	#greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
 	greptxtfiles "$searchquery" "$searchpath" 
 	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
 }
+
+
+
 
 ## 
 ## HDD-related
@@ -350,6 +412,7 @@ function smartctllogger(){
 
 ## /HDD-related
 ##
+
 
 
 svnhelp(){
@@ -557,6 +620,56 @@ createSymlinkTogms_pvobCCView(){
 
 
 
+setSparksServersVariablesForLocal(){
+	export sparksMajorServers="stardust voyager vega2 phobos"
+	export sparksMinorServers="remote print-server"
+}
+
+setSparksServersVariablesForRemote(){
+	local remote_string=""
+	remote_string="remote-"
+	remote_string="proxy-"
+
+	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
+	export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
+}
+
+
+
+listAllRunningSparksVmguests(){
+	for i in $sparksMajorServers ; do
+		echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+		ssh -A $i  'sudo vmrun list'
+	done
+}
+listAllRunningSparksVmguests2_original(){
+	for i in $sparksMajorServers ; do
+		echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+		ssh -A $i  'ps fwww $(pgrep -f /usr/lib/vmware/bin/vmware-vmx)'
+	done
+}
+listAllSparksVmguests(){
+	# shows the vmguests that are present on a vmhosts filesystem.
+	local defaultVmguestFilesLocation="/opt/vms/"
+	for i in $sparksMajorServers ; do 
+		echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+		ssh -A $i  "ls -1 $defaultVmguestFilesLocation" | grep -v ^archive$ | grep -v ^bu$
+	done
+}
+locateAcrossSparksMajors(){
+	local matchstring="$1"
+	for i in $sparksMajorServers ; do 
+		echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+		ssh -A $i  'sudo locate '${matchstring}''
+	done
+}
+updatedbAcrossSparksMajors(){
+	local matchstring="$1"
+	for i in $sparksMajorServers ; do 
+		echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+		ssh -A $i  'sudo updatedb'
+	done
+}
 
 
 
@@ -570,6 +683,71 @@ createSymlinkTogms_pvobCCView(){
 ##  commands, etc.
 ##
 ## ### #### ###################################################################
+helpsparks(){
+cat <<'__envHEREDOC__'
+# call...
+setSparksServersVariablesForLocal
+# or
+setSparksServersVariablesForRemote
+# in order to set the sparksMajorServers and sparksMinorServers variables appropriately.
+
+= See also =
+locateAcrossSparksMajors
+updatedbAcrossSparksMajors
+listAllRunningSparksVmguests
+listAllSparksVmguests
+__envHEREDOC__
+}
+helpvmware(){
+#cat <<'__envHEREDOC__'
+#__envHEREDOC__
+set -x
+alias | grep vmware
+set +x
+
+cat <<'__envHEREDOC__'
+= Renaming vmware vm files =
+cd vm-centos6-bamboo/
+sudo rename  "s/vm-centos6-bamboo/vm-centos6-yubikey-storage/" -v *
+sudo sed -i "s/vm-centos6-bamboo/vm-centos6-yubikey-storage/g" vm-centos6-yubikey-storage.*
+cd ..
+mv vm-centos6-bamboo vm-centos6-yubikey-storage
+
+= Installing vmware-tools =
+* Assumes the requisite packages (e.g. kernel-headers, build tools, make) are already installed...
+** build-essential     # for Debian-based OS's             
+** linux-kernel-headers
+** "Development Tools" # a groupinstall for RHEL-based OS's
+
+* Attach the ROM to the vm, then execute..
+sudo mount -t iso9660 /dev/sr0 /media
+df
+cd /tmp/
+tar zxfv /media/VMwareTools-*.tar.gz
+cd /tmp/vmware-tools-distrib/  &&  sudo ./vmware-install.pl 
+* if all is ok, restart the machine to test.
+* the vmtoolsd process should be running.
+
+= See also =
+helpvmrun
+__envHEREDOC__
+}
+helpvmrun(){
+cat <<'__envHEREDOC__'
+# Lists all running vm's, does include __VMWARE__ "paused" (__NOT__ "suspended") machines:
+suspended machines are not included in this listing:
+machines in a state of "paused" which is transparent to the guest ARE listed:
+sudo vmrun list
+
+
+suspend - Suspends a virtual machine. The guest OS can be made aware of the suspend command by passing the soft parameter, allowing it to sleep/hibernate (if supported).
+suspend vmxfile hard
+suspend vmxfile soft  # USE THIS TO suspend/pause a vm
+
+start vmxfile nogui   # USE THIS TO unsuspend/unpause/start a previously suspended/paused vm
+
+__envHEREDOC__
+}
 
 helpmd5(){
 	# consider RENAME helpchecksumming, helpdigest, helphashdigest, etc
@@ -582,6 +760,8 @@ $ sort -k2 md5sum.md5  >  md5sum.md5.sorted
 
 CREATE2:: Have hashes sorted by filename from the start # cd $DIR
 $ find .  -type f | sort | xargs md5sum > md5sum.md5
+or...
+$ find .  -type f -print0 | sort | xargs -0 md5sum > md5sum.md5
 
 CREATE3::
 $ # cd $DIR
@@ -622,6 +802,11 @@ echo ; date --rfc-3339 seconds
 time sudo du -hs --count-links $d
 echo ; date --rfc-3339 seconds
 
+# du: (same thing as above but on 1 line)
+d=$( for i in $( ls -trA ) ; do test -f "$i"  &&  continue ; echo $i; done | xargs echo  ) ;  echo ; date --rfc-3339 seconds; time sudo du -hs $d ; echo ; date --rfc-3339 seconds ; time sudo du -hs --count-links $d ; echo ; date --rfc-3339 seconds
+
+
+
 [bdavies@magnificent r]$ for i in hourly.1/* ; do ib=$(basename $i) ; for j in ${i}/* ; do jb=$(basename $j); echo sudo rnapshot-diff hourly.1/$ib/$jb hourly.2/$ib/$jb; done; done
 sudo rsnapshot-diff hourly.1/perm/home hourly.2/perm/home
 sudo rsnapshot-diff hourly.1/perm/misc hourly.2/perm/misc
@@ -635,11 +820,13 @@ $ for i in $(ls -trd ./*) ; do  echo $i $( sudo find $i | wc -l); done
 
 Delete a directory within all snapshots (or some, but want to test all):
 # within rsnapshot directory, you can see where it exists:
-$ for i in *  ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && echo ' ->^^EXISTS' ; done
-$ for i in .* ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && echo ' ->^^EXISTS' ; done
+$ for i in * .*  ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && echo ' ->^^EXISTS' ; done
 # and then do the deletion:
-$ for i in *  ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && sudo rm -rf $toremove ; done
-$ for i in .* ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && sudo rm -rf $toremove ; done
+$ for i in * .* ; do echo $i; toremove=$i/path/to/removal-fso ; sudo test -d $toremove && sudo rm -rf $toremove ; done
+
+Upon modifying all the rsnapshots (e.g. like with previous cmdln), all the last modified 
+times may reflect times that are not desired.  If noatime was enabled, this can be fixed with:
+for i in hourly.* daily.* weekly.* monthly.* ; do echo $i ; sudo touch -m --date="$( stat   --printf "%x\n" $i )"  $i ; sleep 1s; done
 __envHEREDOC__
 }
 pssynergy(){
@@ -667,7 +854,37 @@ helppar2(){
 }
 
 helpmdadm(){
-	echo 'sudo mdadm --assemble --scan'
+	cat <<'__envHEREDOC__'
+sudo mdadm --assemble --scan
+sudo mdadm --detail /dev/md0
+cat /proc/mdstat
+ls /sys/block/md0/md/
+
+= Create a JBOD / linear device across 2 drives =
+# edit /etc/raidtab:
+raiddev /dev/md0
+        raid-level      linear
+        nr-raid-disks   2
+        persistent-superblock 1
+        device          /dev/sdd
+        raid-disk       0
+        device          /dev/sde
+        raid-disk       1
+
+mdadm --create --verbose /dev/md0 --level=linear --raid-device=2 /dev/sdd /dev/sde
+mkfs.xfs -L md0 /dev/md0
+mkdir /mnt/md0
+# edit /etc/fstab:
+LABEL=md0             /mnt/md0              xfs     defaults,nofail        0 0
+LABEL=md0             /mnt/md0              xfs     defaults,nofail,noatime,nodiratime        0 0
+
+= Create a RAID-0 device across 2 drives =
+Follow the above instructions for JBOD, except instead of specifying "linear", specify
+"stripe".
+
+= See also =
+helpsysfs
+__envHEREDOC__
 }
 
 helpsvnpropset(){
@@ -693,10 +910,10 @@ cat <<'__envHEREDOC__'
 smartctl -a /dev/sda ; echo ; echo ; smartctl -a /dev/sdb ; echo ; echo;  echo; smartctl -a /dev/sdc
 
 == Long test ==
-smartctl -t long /dev/sda && sleep 45m
-smartctl -t long /dev/sdb && sleep 175m
-smartctl -t long /dev/sdc && sleep 175m
-smartctl -t long /dev/sdc && sleep 175m
+sudo smartctl -t long /dev/sda && sleep 45m
+sudo smartctl -t long /dev/sdb && sleep 175m
+sudo smartctl -t long /dev/sdc && sleep 175m
+sudo smartctl -t long /dev/sdd && sleep 175m
 
 # Enable as much monitoring and testing as possible:
 smartctl DEVICE --smart=on --offlineauto=on --saveauto=on
@@ -777,6 +994,20 @@ $ smbtree (1)          - A text based smb network browser
 $ testparm (1)         - check an smb.conf configuration file for internal correctness
 $ testparm.samba3 (1)  - check an smb.conf configuration file for internal correctness
 
+== net USERSHARE ==
+# net USERSHARE ADD sharename path [comment] [acl] [guest_ok=[y|n]]
+net usershare add <share name> <share path> guest_ok=y
+net usershare list
+# FINALLY!  Thank you samba project!  An easy way to create a share from the cmdln 
+# that is fully usable by some user:
+net usershare add doctor-dooms-share /mnt/share/ "half cocked and half baked" doctor-doom:F guest_ok=n
+
+KDE/Dolphin share nfo not in smb.conf but in:
+ /var/lib/samba/usershares/
+More nfo:
+* http://askubuntu.com/questions/520891/samba-share-not-in-smb-conf
+* https://help.ubuntu.com/community/Samba/SambaServerGuide
+
 == See also ==
 helpmount()
 __envHEREDOC__
@@ -830,9 +1061,9 @@ WRITE-remap block sector (seemed to have good luck w this)"
    dd if=/dev/zero of=/dev/sdd count=1 seek=<decimal LBA block> oflag=direct conv=notrunc
 WRITE-rewrite entire disk.1-trying this on a disk that has 1000+ bad sectors... im not going to remap all those _manually_ so, lets see what this will do (fyi: the disk is iA18)
    dd if=/dev/sdk of=/dev/sdk bs=4096 [oflag=direct] conv=notrunc,noerror   # I
-	                # would reconsider the oflag usage of "direct"... this will
-						 # make execution extremely slow... slow like ~5MiB/s for
-						 # typical magnetic disk (1TB hdd, in fact).
+                # would reconsider the oflag usage of "direct"... this will
+                # make execution extremely slow... slow like ~5MiB/s for
+                # typical magnetic disk (1TB hdd, in fact).
 WRITE-rewrite entire disk.2-dcfldd
 $ dcfldd if=/dev/sda of=/dev/sda bs=4096 conv=notrunc,noerror  status=on sizeprobe=if
 WRITE-rewrite entire disk.3-dc3dd
@@ -888,7 +1119,7 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 
 
 == See Also ==
-* truncate
+* truncate - sparse files
 
 * hdrecover.sf.net
 
@@ -956,6 +1187,9 @@ helpdate(){
 	echo 
 
 	
+	cmdln="date +\"%Y-%m-%d_%H-%M-%S\"  --date=\"$(eval echo ${useThisDate})\""
+	echo -e "$(eval $cmdln)\t$cmdln"
+	
 	cmdln="date +\"%Y-%m-%d %H-%M-%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 	
@@ -970,8 +1204,9 @@ helpdate(){
 
 cat <<'__envHEREDOC__'
 
-$ date  --rfc-3339 seconds          # GIVE ME ISO-FORMATTED DATE
-$ date  --reference=file-to-reference
+date  --rfc-3339 seconds          # GIVE ME ISO-FORMATTED DATE
+date  --reference=file-to-reference
+$( date +"%Y%m%d%H%M%S" )
 
 TIMEZONES | /usr/share/zoneinfo
 $ export TZ=Europe/Stockholm; echo "Stockholm:    `date +\"%F %R (%Z)\"`"
@@ -988,6 +1223,7 @@ $ export TZ=US/Central; echo "Dallas:             `date +\"%F %R (%Z)\"`"
 
 TIMEZONE CHANGE | /etc/localtime (binary TZ file)
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime 
+ln -sf /usr/share/zoneinfo/UTC   /etc/localtime
  note: this works for RHEL and deb-based machines.
 
 CONVERT a given locale-->to the current (iow: convert a diff-TZ into curr-TZ):
@@ -997,7 +1233,13 @@ CONVERT between locale's:
 $ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08:56 UTC"`"
 # `--> Jaisalmer, India: Thu May 24 23:38:56 IST 2012
 
-SEE ALSO
+START AND END TIME VARIABLES
+t1=$( date --rfc-3339 sec )
+t2=$( date --rfc-3339 sec )
+echo "starttime: $t1"
+echo " stoptime: $t2"
+
+= SEE ALSO =
 $ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
 helplogrotate_of_files()
 __envHEREDOC__
@@ -1007,8 +1249,8 @@ cat <<'__envHEREDOC__'
 PRINT LAST COLUMN
 	$ svn info | grep 'Last Changed Rev:' | awk '{ print $NF }'
 	> 1200
-PRINT LAST COLUMN and DO MATH
-	$ svn info | grep 'Last Changed Rev:' | awk '{ print $NF-5 }'
+PRINT 11th TO-LAST COLUMN and __DO MATH__
+   $ svn info | grep 'Last Changed Rev:' | awk '{ print $(NF-11)-5 }'
 	> 1195
 PRINT 2rd TO-LAST COLUMN
 	$ svn info | grep 'Last Changed Rev:' | awk '{ print $(NF-1) }'
@@ -1025,43 +1267,68 @@ ltrim( rtrim( $1 ) )
 	awk  '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'
 __envHEREDOC__
 }
+helpawk2_isodatetime(){
+cat <<'__envHEREDOC__'
+Assume logfile like:
+$ echo 'vm-hdp21-e1 2014-11-15 00:17:49 cpu  833884 0 194692 31984819 71236 4690 4618 24413 0
+vm-hdp21-e1 2014-11-15 00:17:50 cpu  833896 0 194705 31985973 71247 4691 4619 24415 0
+vm-hdp21-e1 2014-11-15 00:17:51 cpu  833915 0 194729 31987118 71247 4691 4619 24416 0
+vm-hdp21-e1 2014-11-15 00:17:52 cpu  833930 0 194750 31988276 71248 4691 4619 24416 0
+vm-hdp21-e1 2014-11-15 00:17:53 cpu  833992 0 194774 31989387 71248 4691 4619 24416 0
+vm-hdp21-e1 2014-11-15 00:17:54 cpu  834028 0 194800 31990515 71248 4692 4620 24417 0
+vm-hdp21-e1 2014-11-15 00:17:55 cpu  834114 0 194840 31991575 71253 4692 4620 24419 0
+vm-hdp21-e1 2014-11-15 00:17:56 cpu  834220 0 194879 31992620 71253 4693 4620 24420 0
+vm-hdp21-e1 2014-11-15 00:17:57 cpu  834328 0 194919 31993660 71253 4694 4621 24421 0
+vm-hdp21-e1 2014-11-15 00:17:58 cpu  834415 0 194947 31994738 71253 4694 4621 24421 0
+vm-hdp21-e1 2014-11-15 00:17:59 cpu  834507 0 194984 31995797 71256 4694 4621 24422 0
+vm-hdp21-e1 2014-11-15 00:18:00 cpu  834578 0 195018 31996883 71303 4694 4622 24423 0
+vm-hdp21-e1 2014-11-15 00:18:01 cpu  834631 0 195047 31997986 71311 4695 4622 24423 0
+vm-hdp21-e1 2014-11-15 00:18:02 cpu  834650 0 195069 31999136 71311 4695 4622 24425 0
+vm-hdp21-e1 2014-11-15 00:18:03 cpu  834693 0 195093 32000261 71311 4695 4622 24425 0
+vm-hdp21-e1 2014-11-15 00:18:04 cpu  834714 0 195117 32001401 71311 4698 4623 24430 0
+vm-hdp21-e1 2014-11-15 00:18:05 cpu  834749 0 195141 32002526 71316 4698 4624 24431 0
+vm-hdp21-e1 2014-11-15 00:18:06 cpu  834765 0 195160 32003680 71316 4699 4625 24432 0
+vm-hdp21-e1 2014-11-15 00:18:07 cpu  834775 0 195171 32004853 71316 4699 4625 24435 0
+vm-hdp21-e1 2014-11-15 00:18:09 cpu  834784 0 195191 32006009 71322 4699 4625 24435 0
+vm-hdp21-e1 2014-11-15 00:18:10 cpu  834811 0 195212 32007159 71322 4699 4625 24437 0
+vm-hdp21-e1 2014-11-15 00:18:11 cpu  834823 0 195231 32008312 71328 4699 4625 24438 0
+vm-hdp21-e1 2014-11-15 00:18:12 cpu  834836 0 195249 32009473 71328 4699 4625 24438 0' >logfile
+
+and want to parse out only the lines that apply to the following timeframe:
+* 2014-11-15 00:17:59 (start time)
+* 2014-11-15 00:18:08 (ending time; ! NOTICE ! this exact timestamp DNE in log data!)
+
+could use awk to do this with:
+$ cat logfile | \
+	awk '{ if ( ( $2 " " $3 >= "2014-11-15 00:17:59" ) && ( $2 " " $3 <= "2014-11-15 00:18:08" ) ) { print $0 } }'
+
+= See also =
+* http://stackoverflow.com/questions/17557377/do-a-grep-of-a-group-of-files-about-a-range-of-dates-in-bash
+__envHEREDOC__
+}
 helpsetuid(){
 	echo "from stat /muzik-work/: Access: (2775/drwxrwsr-x)"
 }
 
 helprsync(){
-	echo "** copy -r DIR amadedir into another_dir (post-op: another_dir/amadedir)"
-	echo "	rsync -av path/to/amadedir /path/to/another_dir/"
-	echo "	rsync -av path/to/amadedir /path/to/another_dir"
-	echo "... copy -r DIR amadedir __contents!!__ (post-op: another_dir contains amadedir/*)"
-	echo "... this is awkward-typically, something I wouldn't do"
-	echo "	rsync -av path/to/amadedir/ /path/to/another_dir/"
-	echo
-	echo "IOW, these 2 cmdln's are equivalent:"
-	echo "	* cp -rf /tmp/some/folder /tmp     # --> new \`/tmp/folder'"
-	echo "	* rsync -av /tmp/some/folder /tmp  # --> new \`/tmp/folder'"
-	echo ""
-	echo "rsync -av beres.hammond@xbryn:. /mnt/a32-555/xbryn --exclude=em-200* --dry-run"
-	echo 
-	echo "--checksum : used this to detect xls differences that weren't detected, ow"
-
 cat <<'__envHEREDOC__'
-== ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?' ==
-COPY FOLDER (into destination folder):
-	rsync -av /opt/muzik /mnt/rsnapshot/
-SYNC FOLDER's CONTENTS with that of the destination:
-	rsync -av /opt/muzik/ /mnt/rsnapshot/
+--checksum : have used this to detect file differences (especially in xls / Excel
+    Spreadsheet files) that werent detected, otherwise.
 
-== YET ANOTHER ATTEMPT AT THE QUESTION 'use slash || not?' ==
-?do NOT create extra directory?
-TRUEcheck this to clone src to destination (both paths contain trailing slash)
-FALSEleave unchecked to create an extra directory inside destination (first path does NOT contain trailing slash)
-
-== Don't Forget... ==
+== Dont Forget... ==
 AFAIK, when --stats, --human-readable are reported, it is done so using SI-notation (base-10) (uses powers of 1000).
 as opposed to (e.g.)
 how the _du_ command measures and reports --human-readable, which is in base-2 (uses powers of 1024).
-__envHEREDOC__
+
+== -E, --executability ==
+Does the -a, --archive option implicitly do this or not?
+
+* -a is supposed to preserve -p, --permissions (or access bits), which is what defines 
+a files executability, so Im not sure what the purpose of -E is... if only to 
+say like rsync -E: to preserve ONLY the executability and not -p, --perms, for
+instance.... idk.
+* man page also says -a performs some kind of compression, but doesnt 
+mention --compress as one of the options that -a is an alias for....
 }
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
@@ -1076,17 +1343,21 @@ Data Integrity:
 	--inplace --ignore-times
 BU an rsnapshot root/repo (hard links):
 	rsync -a --hard-links --delete /mnt/rsnapshot/ /mnt/rsnapshot_bu1/
-Opts to specify OpenSSH, login:
-	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
-	rsync -av -e "ssh -l ssh-user-phife-dawg"  ali.shaheed.muhammad@brooklyn:. /tmp
-Common; useful for diff'ing:
+Common; useful for diffing:
  Slow. Use when want to be sure data is exact, bit for bit.
 	rsync -av --delete --stats --progress --human-readable --xattrs --hard-links /le/src/ /and/dest/ --checksum    --dry-run 
-Common-2; useful for diff'ing;
+Common-2; useful for diffing;
  Fast. Use when want quick results.
  When permissions (own,grp,access) and modification times can be ignored.
  Rsync basically just looks at file sizes.
 	rsync -av --delete --stats --progress --human-readable --xattrs --hard-links /le/src/ /and/dest/ --no-checksum --dry-run --no-owner --no-group --no-perms --no-times
+Opts to specify OpenSSH, login:
+	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/ 
+	rsync -av -e "ssh -l phife-dawg"  phife-dawg@queens-server:. /tmp
+Opts to OpenSSH to machine as yourself while executing rsync with sudo so can e.g. update an /etc/ file:
+	sudo rsync -av -e "ssh -i /home/phife-dawg/.ssh/id_rsa" [phife-dawg@]queens-server:/etc/ansible/hosts /etc/ansible/hosts
+Opts to OpenSSH running on custom port 443:
+	rsync -av -e "ssh -p 443 -l phife-dawg"  phife-dawg@queens-server:. /tmp
 __envHEREDOC__
 }
 helprename(){
@@ -1118,7 +1389,7 @@ $ rename -v 's/\ HEAD//' intelduo\ bookmarks-201*
 intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
 intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
 
-$ rename -v 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf 
+$ rename -v 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf
 book of eli 2005.pdf renamed as book of eli 2005 [ISBN 159159159X].pdf
 
 $ rename -v 's/\.bak$//' *.bak    # Strips the extension from all "*.bak" files.
@@ -1126,7 +1397,7 @@ le-file.txt.bak renamed as le-file.txt
 
 $ rename -v 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
 
-$ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/' le-file.txt 
+$ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/' le-file.txt
 le-file.txt renamed as le-file__insert-txt-at-4-positions-from-the-end__.txt
 
 # Zero-pad image files:
@@ -1135,17 +1406,18 @@ wasacomadago232-9-lg.jpg renamed as wasacomadago232-009-lg.jpg
 
 # Insert todays (ISO) date to the beginning (of all matching file names):
 $ rename -v "s//$( date +'%Y-%m-%d' ) /" [0-9]*.*
-127.18 renamed as 2013-05-31 127.18                                                                                    
+127.18 renamed as 2013-05-31 127.18
 17.94 renamed as 2013-05-31 17.94
 
 # Append '.pdf' to the end (of all matching file names):
 $ rename -v 's/(.*)/$1.pdf/' [0-9]*.*
-2013-05-31 127.18 renamed as 2013-05-31 127.18.pdf                                                                     
+2013-05-31 127.18 renamed as 2013-05-31 127.18.pdf
 2013-05-31 17.94 renamed as 2013-05-31 17.94.pdf
 
 # Move text from end to beginning:
 $ rename -v -n 's/^(.*)-(2013-\d\d-\d\d)$/$2-$1/' the-name-2013-10-29
 the-name-2013-10-29 renamed as 2013-10-29-the-name
+$ rename -v 's/^(.*)(2013-\d\d-\d\d).pdf$/$2_bge.$1$2.pdf/' -n *pdf  # for monthly statements
 __envHEREDOC__
 }
 
@@ -1169,20 +1441,32 @@ $ rpm -qa --last            # gives packge & date modified
 $ rpm -qip rpmfile          # display details for the rpm file rpmfile (use -p for file)
       --filesbypkg          # list all the files in package (use -qi for package)
 $ rpm --erase rpm
+
+Extract rpm contents:
+$ rpm2cpio rpm | cpio -idmv
+
+= See also =
+helpyum
 __envHEREDOC__
 }
 helpyum(){
 cat <<'__envHEREDOC__'
-$ yum --releasever=6.3 update  # update to minor release 3, of major release 6.
+== Misc ==
+yum --releasever=6.3 update  # update to minor release 3, of major release 6.
 
-$ yum deplist package       # returns what is needed by package.
+yum deplist package       # returns what is needed by package.
 
-If have list of packages/rpms and want to know the dependencies of each package,
-$ echo 'list-of-packages.rpm
+# If have list of packages/rpms and want to know the dependencies of each package,
+echo 'list-of-packages.rpm
 some-other-package.rpm
 another-rpm-package.rpm' | sed 's/.rpm//' | xargs --verbose -n 1 -I {} yum deplist {} [>> deplist.log 2>&1]
 
+# EPEL repo
 rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+# To hold (to use deb terminology) or lock a package from being updated, append the following line 
+# to /etc/yum.conf under [main] section to lock e.g. php and nginx:
+exclude=php* nginx* 
 
 == Determine which package provides a file ==
 Find which package provides a file that is already on system (or not on the system):
@@ -1196,21 +1480,42 @@ hadoop-1.2.0.1.3.0.0-107.el6.x86_64 : Hadoop is a software platform for processi
 Repo        : installed
 Matched from:
 Other       : Provides-match: /etc/hadoop/conf.empty/mapred-site.xml
+
+== Troubleshooting ==
+Error: Cannot retrieve metalink for repository: epel. Please verify its path and try again
+1. use HTTP (not HTTPS):
+sudo sed -i "s/mirrorlist=https/mirrorlist=http/" /etc/yum.repos.d/epel.repo
+2. dont use mirror list:
+uncomment first line beginning like "baseurl"
+comment first line beginning like "mirrorlist"
+
+TODO STUB: whats the path to the files that should be deleted when yum db or whtaever gets corrupted???
+
+= See also =
+helprpm
 __envHEREDOC__
 }
 
 helpvim(){
 	cat <<'__envHEREDOC__'
-STOP IT, NANO!
+STOP IT, NANO! (use vim by default): couple of options::
 $ select-editor
+$ sudo apt-get purge nano
+
+SITES && CHEATSHEETS
+http://vim.wikia.com
+http://www.worldtimzone.com/res/vi.html
 
 NOTES
-http://vim.wikia.com
+:<c-d>                              # shows all of the available options that you can set
 :set nonu                           # disable line numbering
-:%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar'
-:[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
+:se relativenumbering
+
 http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
-http://www.worldtimzone.com/res/vi.html   Nice cheat sheet
+# '%' is a shortcut for '1,$' (beginning to start). .
+:[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
+:%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar' starting at ln1
+:.,$s/foo/bar/g                     # Find each occurrence of 'foo', and replace it with 'bar' starting from curr location
 
 :colorscheme slate
 UNDO REDO (:help undo)
@@ -1226,6 +1531,9 @@ change, wherever the change occurred.
 ENTER A CONTROL CHARACTER (e.g. CTRL+M ('^M'))
 * c-X  ; where X is the desired control character
 ** e.g. c-v  ; to insert
+
+UNDO/REDO CURSOR MOVE
+* c-o/c-i
 
 VISUAL / BLOCK EDIT MODE : c-v (to go into mode), then select cols/rows where want to...
 * I - Insert Text
@@ -1281,8 +1589,16 @@ __envHEREDOC__
 helpvim3(){
       cat <<'__envHEREDOC__'
 * ~/dotfiles/home-machines/.vim/bundle/.vundle/script-names.vim-scripts.org.json
-** JYE-NOR-MUS list (JSON) of what looks like various COOL functionality enabling vim scripts!
-** ( calling `grepdotfiles collection' will dump it to the screen hhehe... took screenshot ~/Dropbox/db.misc-linuxish/2012-10-05_script-names.vim* )
+** GINORMOUS list (JSON) of what looks like various COOL functionality enabling vim scripts!
+** ( calling `grepdotfiles collection' used to dump it to the screen hhehe... took screenshot ~/Dropbox/db.misc-linuxish/2012-10-05_script-names.vim* )
+
+* ~/.ssh/other-ppls-pubs/ark
+* Filesystem Path Autocompletion:
+** start off with an absolute or valid relative path such as: 
+*** /e
+*** ~/.
+** then, while still in insert mode, do c-x c-f and a menu list of files appears>
+** c-n will advance selection.
 __envHEREDOC__
 }
 helpvim4(){
@@ -1292,7 +1608,7 @@ helpvim4(){
 
 * Trim trailing whitespace
 ** :%s/\s\+$//
-** :%s/\s\+$     (substitution text can be imitted if blank)
+** :%s/\s\+$     (substitution text can be limitted if blank)
 * Search[/Replace]: show more context when reviewing matches
 ** :se scrolloff=5 - prior to searching or put to vimrc
 * Effectively insert "|-" in between every other line:
@@ -1314,9 +1630,11 @@ helpvim4(){
 *** :%s/^\(.[^\s]*\)\t\(.*\)$/[\/\/le-wiki-domain.org\/wiki\/\1\/ \2]/gc
 *** e.g. "GUAC<tab>Get the guacamole out of your ears"
            -> [//le-wiki-domain.com/wiki/GUAC/ Get the guacamole out of your ears]
+** :%s/^\([^p]\|p\([^r]\|r\([^o]\|$\)\|$\)\|$\).\+$/#####\0/gc
+*** matches (and comments out) all lines NOT beginning with "pro" (which is short for proxy)
 __envHEREDOC__
 }
-helpvim5(){
+helpvim5_macros(){
       cat <<'__envHEREDOC__'
 * Select all and then put into OS's clipboard (copy) (this also puts content into the "yank" buffer--as if you said 'y' instead of '"+y'):
 ** ggVG
@@ -1345,7 +1663,7 @@ so say you want to number the visually higlighted region, can do
 :let i=1
 :'<'>g/^/s//\=printf('%-4s',printf('%d. ',i))/ | let i+=1
 not exactly "simple"
-liek it's a bit lengthy but not too tough if you do it only once in a while
+like it's a bit lengthy but not too tough if you do it only once in a while
 __envHEREDOC__
 }
 helpvimdiff(){
@@ -1385,6 +1703,12 @@ $ echo "
   As mtr starts, it investigates the network connection between the host
   mtr runs on and a user-specified destination host." | xargs echo
 mtr combines the functionality of the traceroute and ping programs in a single network diagnostic tool. As mtr starts, it investigates the network connection between the host mtr runs on and a user-specified destination host.
+
+Busy the processor:
+seq 1 | xargs -n1 -P1 yes > /dev/null
+
+Busy the processor that can execute 8 threads (e.g. 8 cores):
+seq 8 | xargs -n1 -P8 yes > /dev/null
 __envHEREDOC__
 }
 helpirb(){
@@ -1468,6 +1792,10 @@ ARCHIVE EXAMPLE3 (**NOTE this snippet has been known to go outside of
 ARCHIVE EXAMPLE4
 perhaps want to archive all folders in cwd (and files too if exist in cwd) that begin with 2011 and 2012... (i.e. ff-snapshots):
    for i in 201[12]* ; do sudo rar a -m5 -r -rr4p -t -tsmca "${i}.rar" "${i}" ; done
+
+ARCHIVE EXAMPLE5
+perhaps want to exclude some huge directory:
+   rar a -m5 -r -rr4p -t -tsmca -ep1 -x/mnt/tmp/rhapsody/ 2011-08-03_cell-phone-backup.rar /mnt/tmp/
 __envHEREDOC__
 }
 helprar2(){
@@ -1527,19 +1855,36 @@ add file to specific location within a pre-existing archive (keep orig archive t
 must specify archive creation options... it doesnt seem to persist the original archive's properties--if you just add a file, for example, and it previously had a recovery record set--its lost--and the only way to get a recovery record generated for the final updated rarchive, you must define it.
    rar u   [-ap<PATH INSIDE ARCHIVE TO USE>]   -m5 -rr4p -t -tsmca   -tk   archive.rar   file1[ file2[...]]
 UPDATE EXAMPLE1 (N+1)
-   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   2011-09-08_23.18.01.rar   2011-09-08_23.18.01.NOTE.txt
+   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   2011-08-03_23.18.01.rar   2011-08-03_23.18.01.NOTE.txt
 UPDATE EXAMPLE2 (N+2)
 ??? do you have to say "-ep1" too in this case???? to avoid having "ARCHIVES-TESTED-FAILED/rearchived/" folders created within the archive?? that I just want to add a single stupid file to?
-   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   ARCHIVES-TESTED-FAILED/rearchived/2011-09-08_23.18.01.rar   2011-09-08_23.18.01.NOTE.txt
+   rar u   -ap.   -m5 -rr4p -t -tsmca   -tk   ARCHIVES-TESTED-FAILED/rearchived/2011-08-03_23.18.01.rar   2011-08-03_23.18.01.NOTE.txt
 UPDATE EXAMPLE3 (N+3)
-   rar u   -apmnt/intelduo-s/tmp/rearchive/2011-09-08_23.18.01/   -m5 -rr4p -t -tsmca   -tk   rearchived/2011-09-08_23.18.01.rar  ../2011-09-08_23.18.01.NOTE.txt
+   rar u   -apmnt/intelduo-s/tmp/rearchive/2011-08-03_23.18.01/   -m5 -rr4p -t -tsmca   -tk   rearchived/2011-08-03_23.18.01.rar  ../2011-08-03_23.18.01.NOTE.txt
 __envHEREDOC__
 }
 helpless(){
 	cat <<'__envHEREDOC__'
+== Keyboard usage ==
 * show nfo: ^G
 * jump to line number, "N", with: Ng
 ** ex: ln88 : 88g
+
+== Customizing coloring ==
+Show the effective __values__ of the TERMCAP variables...
+$ env | grep LESS_TERMCAP | cat
+
+Show the effective __color(ing)__ of the TERMCAP variables...
+$ env | grep LESS_TERMCAP | cat
+
+Capture the values of the TERMCAP variables:
+$ env | grep LESS_TERMCAP >/tmp/values-of-termcap-variables.txt
+
+Notable configs:
+* /etc/profile.d/less.sh
+
+== See also ==
+* goog"less termcap"
 __envHEREDOC__
 }
 
@@ -1568,7 +1913,10 @@ $ ssh
 	[user@]host1
 
 == FINGERPRINTs ==
-$ ssh-keygen -l -f  private-open-ssh-key
+$ ssh-keygen -l -f  private-OpenSSH-key
+
+== Convert putty-formatted public key to OpenSSH ==
+ssh-keygen -i -f ssh2.pub > openssh.pub
 
 == AGENTs ==
 $ exec ssh-agent bash
@@ -1580,6 +1928,39 @@ Instead of
 $ ssh -2XC  host
 do...
 $ ssh -XC -c blowfish-cbc,arcfour  host
+
+== Keyboard shortcuts / hotkeys pertaining to the terminal ==
+(ya I know this is not to do with ssh, but thought this was best place to put this note)
+* c-s pauses the terminal
+* c-q resumes the terminal
+
+== Escape character sequences (defaults) ==
+NOTE: escapes are only recognized immediately after newline.
+  ~.  - terminate session
+  ~#  - list forwarded connections
+  ~B  - send a BREAK to the remote system
+  ~R  - Request rekey (SSH protocol 2 only)
+  ~?  - this message
+  ~~  - send the escape character by typing it twice
+== ControlMaster and multiplexing ==
+Sometimes a want to connect to a machine with a brand new connection, i.e. not using the existing connection
+that may exist if already connected to said machine and have ControlMaster'ing enabled.
+
+To force a brand new, fresh connection, use:
+  -S none
+__envHEREDOC__
+}
+helpsshX(){
+cat <<'__envHEREDOC__'
+== RHEL-based systems ==
+: src : http://serverfault.com/a/425413
+1) Install the following:
+xorg-x11-xauth
+xorg-x11-fonts-*
+xorg-x11-utils
+2) Enable the following in the sshd_config file
+X11Forwarding yes
+3) Use an appropriate X-Server on your desktop
 __envHEREDOC__
 }
 helpssh2(){
@@ -1587,6 +1968,11 @@ cat <<'__envHEREDOC__'
 $ ssh -o "ForwardAgent=yes" remote.local
 $ ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
 $ cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
+
+Connect to a commonly accessible server from a non-commonly accessible server in order to allow for creation of a tunnel:
+$ ssh -A common.server.com [-p 443] -R 7777:localhost:22
+Now can connect to non-commonly accessible server from a third machine via common.server.com with:
+$ ssh -Aq common.server.com nc localhost 7777
 __envHEREDOC__
 }
 helpsshconfig(){
@@ -1594,6 +1980,10 @@ cat <<'__envHEREDOC__'
 Host dethklok-cluster-server216
 User nathan-explosion
 StrictHostKeyChecking no
+
+If wish to disable hosts key checking globally for a machine, adding
+StrictHostKeyChecking no
+to /etc/ssh/ssh_config works mmkay.
 __envHEREDOC__
 }
 helpuseradd(){
@@ -1631,12 +2021,92 @@ curl ip.telize.com     	     # whatismyip?
 curl curlmyip.com      	     # whatismyip?
 curl -s checkip.dyndns.org | sed 's/.*IP Address: \([0-9\.]*\).*/\1/g'   # what is my ip?
 
+== iperf ==
+Do 16 simultaneous transfer streams to $client for 10s:
+[server] iperf -s                       # Server-side
+[client] iperf -c $client -P 16 -t 10   # Client-side
+
+Validate dual-10gigabit bonded bridge on server gives a summed total thruput near 20Gb/s:
+[server1] iperf -s                      # Server-side
+[client1] iperf -c $client -P 16 -t 10  # Client-side
+[server1] iperf -s --port 7001          # Server-side
+[client2] iperf -c $client --port 7001 -P 16 -t 10  # Client-side; NOTICE this is different client!
+
+Measure time to (TCP) transmit 124GiB:
+[server] iperf -s                       # Server-side
+[client] iperf -c $client --num 133143986176  # Client-side
+
 == See also ==
+helpnetwork2
 helpnetstat
 helpnslookup
 helpnmap
 helparping
 helpreversetunnel
+helpip
+/etc/udev/rules.d/70-persistent-net.rules
+helppktstat
+helpsysfs
+__envHEREDOC__
+}
+helpip(){
+	cat <<'__envHEREDOC__'
+ip a [sh eth0]        # like ifconfig -a [eth0]
+ip maddr show [eth0]  # ~~show associated mac addresses [corresponding to this interface, eth0]~~
+                      # ^^lol, no. idk what this is showing.
+ip link show [eth0]   # show mac address among other nfo [corresponding to this interface, eth0]
+ip -f link addr show    # (same)
+ip -family link addr show  # (same)
+ip addr show [eth0]
+ip -family inet addr show 
+
+ip l                  # show link level information for all devices
+ip -o[neline] l       # show link level information for all devices, one device per line.
+ip link show [eth0]   # show link level information [for eth0]
+
+
+# Get MAC address for eth0 device:
+ip -oneline link show eth0  |  awk '{ print $(NF-2) }'
+# lol which can also be expressed like:
+ip -o l sh eth0  |  awk '{ print $(NF-2) }'
+
+# Get Subnet mask for eth0 device:
+ip a sh eth0 | sed -n -e "3p" | awk '{ print $2 }'
+or
+ip -o a sh eth0 | sed -n -e "2p" | awk '{ print $4 }'
+# ...get for all devices [excluding IPv6]:
+ip -o a sh | grep inet[^6]
+
+# Get list of all devices/interfaces (ONLY)
+ip -o l | awk '{ print $2 }' |  sed -e 's/://'
+
+# Get route table:
+ip route list
+
+# Delete an entry in the route table:
+sudo ip route delete 192.168.0.0/16
+__envHEREDOC__
+}
+helpnetwork2(){
+cat <<'__envHEREDOC__'
+/usr/share/doc/bridge-utils/README.Debian
+
+/usr/share/doc/bridge-utils/README.Debian
+interfaces(5)
+bridge-utils-interfaces(5)
+
+/etc/network/interfaces
+/etc/network/run/ifstate
+/etc/network/run/ifup.br0
+
+sudo ifdown br0
+sudo service network-manager restart 
+
+sudo ifconfig up eth0
+sudo ip link delete br0
+
+== See also ==
+http://unix.stackexchange.com/questions/50602/cant-ifdown-eth0-main-interface
 __envHEREDOC__
 }
 helpreversetunnel(){
@@ -1687,11 +2157,34 @@ NOTE: this cmdln didn't seem to pick up my Fedora machine...
 
 Scan the entire network (.1/24), trying the specified port:
 $ nmap [-v] -p 623 192.168.1.1/24
+
+
+HTTPS/SSL/TLS-related things ( works with at least nmap-7.25BETA1-1.x86_64.rpm )
+Shows copious infomation about certificate, encryption protocols, and ciphers in use:
+$ nmap --script ssl-cert,ssl-enum-ciphers -p 6182,443,55-100 host
+
+= See also =
+helpopenssl
 __envHEREDOC__
 }
 helparping(){
 cat <<'__envHEREDOC__'
 $ arping 192.168.1.1          # Useful for locating / pinging/ firewalled hosts.
+__envHEREDOC__
+}
+helppktstat(){
+cat <<'__envHEREDOC__'
+# basic usage
+sudo pktstat -i eth0
+
+# increases refresh rate
+sudo pktstat -i eth0 -w 1
+
+# a single-shot mode which runs without screenoutput for -w seconds, quits and displays iverview of connections
+sudo pktstat -i eth0 -1 -w 10
+
+== See also ==
+iftop trafshow
 __envHEREDOC__
 }
 
@@ -1715,10 +2208,10 @@ $ git log master...test # commits reachable from either test or
 * --date-order: similar to --topo-order in that no parent comes before all of its children, ow commits ordered in the commit timestamp order.
 ** IOW: commits appear primarily by commit date.
 
+
 = BRANCHes =
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin e1999eternal-branch
-
 
 * Make local branch track an upstream branch
 ** git branch --set-upstream e1999eternal-branch origin/e1999eternal-branch
@@ -1726,9 +2219,12 @@ $ git log master...test # commits reachable from either test or
 * Create a local branch based on an upstream branch:
 ** git branch --track my_branch origin/my_branch
 
-
 * Delete remote branch
 ** git push origin :my_branch
+
+* rename (... MOVE) local branch (implies: + the corresponding reflog):
+** git branch -m
+
 == branching example (create new branch, push upstream and track) ==
 $ newBranchName=Environment--DEMO
 newBranchName=environment--
@@ -1741,6 +2237,7 @@ for i in Environment--DEMO environment--dev ; do
  git push origin $i
  git branch --set-upstream $i origin/${i}
 done
+
 
 = TAGs =
 * Create
@@ -1758,6 +2255,9 @@ http://www.randallkent.com/development/gitignore-not-working
 or?
 git update-index --assume-unchanged
 ^^ya I think this workd
+
+= Cloning over ssh port 443 =
+git clone ssh://user@host:443/absolute/path/to/repo.git
 __envHEREDOC__
 }
 helpgit2(){
@@ -1832,7 +2332,7 @@ helpgit3(){
 a.  $ git reset --soft HEAD^
 b.  Make desired modifications.
 b2. Do a `git add' to pull in modifications made in step b., if needed. (step c. does not stage anything "for" you!)
-c.  $ git commit -c ORIG_HEAD  # or use -C to indicate you do NOT want to edit commit msg
+c.  $ git commit -C ORIG_HEAD  # or use -c to indicate you DO want to edit commit msg
 
 == modify any commit ==
 Using the commit hash prior to the commit you want to modify, run:
@@ -1854,7 +2354,7 @@ __envHEREDOC__
 }
 helpgit4(){
       cat <<'__envHEREDOC__'
-= get diff b/w all the commits that occured b/w two dates? =
+= Get diff b/w all the commits that occured b/w two dates? =
 	http://stackoverflow.com/q/1161609
 $ git diff-tree -p HEAD           # INCORRECT get diff (in patch format) between unstaged and HEAD commit
 $ git diff-tree -p HEAD           # get diff (in patch format) between HEAD^ and HEAD (and in that order)
@@ -1865,6 +2365,31 @@ $ git ls-tree -r --name-only HEAD | while read filename; do
   echo "$(git log -1 --format="%ad" -- $filename) $filename"
   # echo "$(git log -1 --format="%Cgreen(%ci)%Creset %d" -- $filename) $filename"  # alternative format--iso
 done
+
+= Submodules, working with =
+# A repo is cloned which contains a sub-repository or sub-module.
+git clone http://git.wikimedia.org/git/mediawiki/skins.git
+# Notice, there is basically nothing in the "skins" repo as far as code and content goes:
+find skins | head
+skins
+skins/DuskToDawn
+skins/Tempo
+skins/Dusk
+skins/sync-with-gerrit.py
+skins/BlueSky
+skins/chameleon
+skins/Empty
+skins/Vector
+skins/Example
+# However, what is included are references to other repositories (the "submodules").
+# To get *all* the top-level/current working directory's submodules content, do:
+git submodule update --init *
+# To get not only the top-level/current working directory's submodule content but
+# if any of those submodules have-yet-their own submodules, get those as well (and
+# so on):
+git submodule update --init --recursive
+# To get a particular submodules content, do:
+git submodule update --init Dusk
 __envHEREDOC__
 }
 helpgit5(){
@@ -1923,22 +2448,33 @@ $ git tag [-l -n]
 Checkout one of the available tags
 $ git checkout [TAB-TAB] <one of the tag names>
 
-How to list branches from upstream repo?
+? How to list branches from upstream repo?
 $ git branch -r
 Alternatively:
 $ git remote show origin
-$ git ls-remote --heads origin
+$ git ls-remote --heads origin  # Seems to print all remote tags
 $ git ls-remote --refs origin   # Prints even more than --heads.
+
+? How to get current git repository's root path?
+: src : man git-rev-parse
+git rev-parse --show-toplevel
+
+? How to change upstream/repository URL?
+git remote set-url origin <new url>
+Assuming cwd is the repository root directory, can probably do:
+base=$( basename $PWD ) ; git remote set-url origin git@git.bitbucket.wmanalytics.io:${base::2}/${base}.git
 __envHEREDOC__
 }
 
 
 helptree(){
       cat <<'__envHEREDOC__'
-$ tree --charset=${LANG}          # Works.
-$ tree --charset=en_US.UTF-8      # Perhaps more portable?  idk...
-                                  # both have worked when tree is 
-											 # exec'd via putty (wo '--charset', putty displays garbage).
+# Works:
+$ tree --charset=${LANG}
+
+# Perhaps more portable?  idk...  both have worked when tree is 
+# executed via putty. Without --charset, putty displays garbage.
+$ tree --charset=en_US.UTF-8
 __envHEREDOC__
 }
 helpps(){
@@ -1946,10 +2482,14 @@ helpps(){
 == Misc ==
 $ ps L | sort -k2       # List format codes, sorted by rhs (rhs
                         # has many dupes, lhs has none).
-$ ps -fp $( pgrep str ) # -fp gives relevant nfo on only PID's you want.
+$ ps -fp $( pgrep str ) # -fp gives relevant nfo on only PIDs you want.
+$ ps fwww $( pgrep str) # use instead of -fp if want lines to wrap.
+
+$ ps ww PID             # use if need lines to wrap.
+$ ps ww $( pgrep str )  # use if need lines to wrap.
 
 == Examples ==
-$ ps axfww              # Exec str nfo, in tree form.
+$ ps axfww              # Execution str nfo, in tree form.
 $ ps axl
 
 $ ps -f -p PID...       # Nfo for PID(s).
@@ -1957,12 +2497,31 @@ $ ps -f -p PID...       # Nfo for PID(s).
 $ ps -p PID... -o pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
 $ ps -p PID... -o stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
 $ ps -p PID... -o pid,tt,user,fname,tmout,f,wchan
+
+$ ps aux | awk '$8 ~ /D/   # show processes in the 'D' state.
+
+= See also =
+iostat helppidstat helprenice
+http://xmodulo.com/how-to-checkpoint-and-restore-linux-process.html - uses criu, crtools
+__envHEREDOC__
+}
+helppidstat(){
+      cat <<'__envHEREDOC__'
+pidstat -p pid -d -u -h 5
+* for pid...
+** display io statistics 
+** display cpu statistics
+** display all on a single line
+** ...every 5s
+
+= See also =
+iostat helpps helprenice
 __envHEREDOC__
 }
 helppatch(){
       cat <<'__envHEREDOC__'
 = v1 =
-# Create patch: to apply changes going from 'INITIAL' -> to 'FINAL' content
+# Create patch: to apply changes going from "INITIAL" -> to "FINAL" content
 $ diff -c START_FILE END_FILE > patch
 $ diff -c INITIAL_FILE FINAL_FILE > patch
 $ diff -c OLD_FILE NEW_FILE > patch
@@ -1977,7 +2536,7 @@ $ patch --input=patch
 (src: http://incubator.apache.org/jena/getting_involved/index.html)
 # Create patch
 $ svn diff > JENA-XYZ.patch
-# Apply patch (MAXIMUM compatibility, doesn't seem to allow line numbers to differ)
+# Apply patch (MAXIMUM compatibility, doesnt seem to allow line numbers to differ)
 $ patch -p0 < JENA-XYZ.patch
 # Apply patch ((slightly less) MAXIMUM compatibility, allows line numbers to differ)
 $ patch -p1 < JENA-XYZ.patch
@@ -1986,36 +2545,66 @@ __envHEREDOC__
 helpsed(){
 cat <<'__envHEREDOC__'
 == MISC ==
-* http://austinmatzko.com/2008/04/26/sed-multi-line-search-and-replace/
+: src : http://austinmatzko.com/2008/04/26/sed-multi-line-search-and-replace/
 $ sed -n -e "<LINE NUMBER>p"        # print a specific line
+$ sed -n -e "<STARTING LINE NUMBER>,<ENDING LINE NUMBER>p"  # print a range of lines
 $ sed -n -e "3p" -e "3p" /etc/hosts # print /etc/hosts:ln3, twice
-$ sed 's/[ \t]*$//'         # trim trailing whitespace
+$ sed 's/[ \t]*$//'                 # trim trailing whitespace
+$ sed 's/[ \t]*$//;s/^[ \t]*//'     # trim leading and trailing whitespace
 $ sed '/^$/d'               # delete blank lines
 $ echo /e/s/conf | sed "y/\//|/"    # transliterate src to dest
   `--> |e|s|conf
+$ sed 'N;s/\n/\t/'          # join alternate lines/join every 2 lines ( 'N' joins 2 lins.  Then replace the newline with a tab. )
 
 == SNIPPETS ==
-COPY SYSTEM FILE (e.g. rsyslog) and rename by dotifying the original
-files' full path (1: repeat path; 2: "/" -> "."; 3: remove leading "." (if E)):
+# Parse text between two delimiters or markers (START and END):
+sed -n "/START/,/END/{
+/START/d
+/END/d
+p
+}"  [/path/to/file]
+
+# COPY SYSTEM FILE (e.g. rsyslog) and rename by dotifying original
+# files full path (1: repeat path; 2: "/" -> "."; 3: remove leading "." (if E)):
 $ echo /etc/sysconfig/rsyslog | \
 >  sed   -e 1p   -e "s/\//./g"   -e "s/\//./g" | \  # <-- 1,2,3
 >  xargs --verbose  cp --preserve --no-clobber --verbose
   `--> $ cp --no-clobber --preserve --verbose /etc/sysconfig/rsyslog etc.sysconfig.rsyslog
          `--> `/etc/sysconfig/rsyslog' -> `etc.sysconfig.rsyslog'
 
+# For specified /etc/hosts line numbers and excluding lines fully commented, sort
+# the ip addresses:
+sed -ne '150,298p' /etc/hosts | sed -n 's/#//p' | sort
+
+# Improves on prev by starting from a $matching_string until the EOF:
+starting_line=$( grep '# This /etc/hosts entry block Last Modified:' /etc/hosts --line-number | cut -f1 -d ':' )
+sed -ne ''${starting_line}',$p' /etc/hosts | sed -n 's/#//p' | sort
+# or:
+sed -ne "${starting_line},\$p" /etc/hosts | sed -n 's/#//p' | sort
+# (depending on how you want to quote)
+
+# To remove the line containing a pattern and print the output:
+sed '/pattern to match/d' infile
+# For example, removes any line containing "//":
+sed "/\/\//d" infile
+
+# Prepend/insert text/a line to a file
+sed -i "1i Prepended line" /tmp/newfile
+
 == FIND/REPLACE ==
-PREVIEW find/replace on files:
-$ sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
-. . . ^. . . . . . . . . . . . ^
-DO find/replace on files:
-$ sed -i "s/192.168.8.3/bryn-pc/g" file1 [fileN]
-. . . ^
-HELPFUL for changing all the [fileN]'s:
-$ grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
-PREVIEW:
-$ sed -n "s/frommmmmm/tooooooo/gp" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
-DO:
-$ sed -i "s/frommmmmm/tooooooo/g" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
+# PREVIEW find/replace on files:
+sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
+. . ^. . . . . . . . . . . . ^
+# DO find/replace on files:
+sed -i "s/192.168.8.3/bryn-pc/g" file1 [fileN]
+. . ^
+
+# HELPFUL for changing all the [fileN]'s:
+grep -R --files-with-match PATTERN [PATH] | xargs --verbose -n 1 <sed STUFF>
+# PREVIEW:
+sed -n "s/frommmmmm/tooooooo/gp" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
+# DO:
+sed -i "s/frommmmmm/tooooooo/g" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
 __envHEREDOC__
 }
 helpaptitude(){
@@ -2051,7 +2640,7 @@ $ aptitude purge         - Remove packages and their configuration files.
 $ aptitude search ~ahold - Show held packages
 $ dpkg -l | grep ^h      - Show held packages
 
-== Determine which package provides a file ==
+== Searching: Determine which package provides a file ==
 $ dpkg --search /etc/bash_completion
 bash-completion: /etc/bash_completion
 $ dpkg --search `which gethostip`
@@ -2065,17 +2654,41 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
-== envsubst ==
-whats this envsubst?
-
-== modulus to get random sleep time within 10s ==
+== modulus/modulo to get random sleep time within 10s ==
 sleep $(( $RANDOM % 10 ))
 
+loopcounter=0
+while true ; do
+   echo $loopcounter
+   [[ $(( $loopcounter % 2 )) = 0 ]] && echo even number
+   let loopcounter+=1
+done
+
+
+== set ==
+allexport             histexpand            noexec                pipefail
+braceexpand           history               noglob                posix
+emacs                 ignoreeof             nolog                 privileged
+errexit               interactive-comments  notify                verbose
+errtrace              keyword               nounset               vi
+functrace             monitor               onecmd                xtrace
+hashall               noclobber             physical              
+
 == shopt ==
-TODO STUB pretty cool... lots of options... should spend some time playing with this.
+autocd                   direxpand                gnu_errfmt               nocaseglob
+cdable_vars              dirspell                 histappend               nocasematch
+cdspell                  dotglob                  histreedit               no_empty_cmd_completion
+checkhash                execfail                 histverify               nullglob
+checkjobs                expand_aliases           hostcomplete             progcomp
+checkwinsize             extdebug                 huponexit                promptvars
+cmdhist                  extglob                  interactive_comments     restricted_shell
+compat31                 extquote                 lastpipe                 shift_verbose
+compat32                 failglob                 lithist                  sourcepath
+compat40                 force_fignore            login_shell              xpg_echo
+compat41                 globstar                 mailwarn                 
 
 == typeset ==
-SEE helptypeset()
+SEE helptypeset()  (its not 'typedef' ! lol u confused?)
 
 == Misc ==
 -n   : Syntax Check, e.g. `bash -n shell-script-file-to-be-syntax-checked.sh'
@@ -2094,32 +2707,45 @@ FUNCNAME :  An array variable containing the names of all shell functions curren
 
 == See also ==
 * [[Shell bash]]
+* helpIFS()
 __envHEREDOC__
 }
 helpbashstrings(){
 cat <<'__envHEREDOC__'
 # Assuming the following variable is set...:
+
+
 $ kv='database_hostname=The-Hive-RRRROLOLOLOOOL'
+
 
 # ...this will be the output:
 #      (for more nfo::`man bash'-->'Parameter Expansion')
-$ echo "${kv%%The-Hive-RRRROLOLOLOOOL}"   # get the LHS of the string, get the key
+$ echo "${kv%%The-Hive-RRRROLOLOLOOOL}"   # get the LHS of the string, get the key, silence the right side.
 database_hostname=
-$ echo "${kv##database_hostname=}"        # get the RHS of the string, get the value
+
+$ echo "${kv##database_hostname=}"        # get the RHS of the string, get the value, silence the left side.
 The-Hive-RRRROLOLOLOOOL
+
 $ echo ${#kv}       # ->41                # get the string length
+
 $ echo ${kv:0: $(( ${#kv} - 1 )) }        # remove 1 char from the end
 database_hostname=The-Hive-RRRROLOLOLOOO
+
 $ echo ${kv::-1}                          # remove 1 char from the end
 database_hostname=The-Hive-RRRROLOLOLOOO
+
 $ echo ${kv:1}                            # remove 1 char from the beginning
 atabase_hostname=The-Hive-RRRROLOLOLOOOL
+
 $ echo ${kv:1: $(( ${#kv} - 1 )) }        # remove 1 char from the beginning
 atabase_hostname=The-Hive-RRRROLOLOLOOOL
+
 $ echo ${kv:1: ${#kv} }                   # remove 1 char from the beginning
 atabase_hostname=The-Hive-RRRROLOLOLOOOL
+
 $ echo ${kv::1}                           # get the first character
 d
+
 $ echo ${kv: $(( ${#kv} - 1 )) : 1 }      # get the last character
 L
 __envHEREDOC__
@@ -2200,6 +2826,13 @@ $ cssh hadron-collider-node{1,2,3,4}
 
 == Variable defining ==
 nodevs=$(< /proc/filesystems awk '$1 == "nodev" { print $2 }')
+
+== In-line control structures ==
+wget -qO /dev/null 'http://webserver/some_existing_short_document.html' || {
+    echo "Webserver down"
+    # another mailer example
+    sendemail -s mailserverip -f 'from@localhost' -t 'user@localhost' -u 'Webserver down' -m 'The webserver is down'
+}
 __envHEREDOC__
 }
 helpsort(){
@@ -2318,6 +2951,10 @@ $ aptitude [un]hold synergy                       # This will NOT get applied to
 
 == SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
 $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+$ apt-cache madison ^apache2     # See which versions of apache2 are available
+$ apt-get install apache2=2.2\*  # Install a specific version found in previous cmdln...
+$ apt-get install apache2=2.2.20-1ubuntu1
+$ dpkg -l 'apache2*' | grep ^i   # Check which version installed
 
 ==== See also ====
 * Search Term Reference : http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html
@@ -2436,8 +3073,19 @@ PRINT 2nd COLUMN and ALL REMAINING COLUMNS
 	$ echo a,b,c,d | cut --delimiter=, --fields=1 --complement
 	> b,c,d
 
-$ echo "dat filename..." | cut -c 1-7    # Print first 5 characters
+$ echo "dat filename..." | cut -c 1-7    # Print first 7 characters
 dat fil
+
+$ a="bind-key        C-a last-window"
+.....1234567890123456789012345678901  # 0's position.
+.....0000000001111111111222222222233  # 10's position.
+.....________+++++++++++_+++++++++++.... # the fields to parse. the last field shoudl be parsed until EOL.
+$ a="bind-key        C-a last-window"
+$ echo "$a" | cut -c 1-8 # first field
+$ echo "$a" | cut -c 9-19 or 20 # second field
+ `--> a subsequent pipe to awk will do left and right trim:  awk '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'
+$ echo "$a" | cut -c 21- # third field
+
 __envHEREDOC__
 }
 helpIFS(){
@@ -2493,25 +3141,43 @@ $ grep --null-data --files-with-match "lolwut" $( find . -type f ! -executable -
 $ find . -type f ! -executable -print0 | xargs -0 grep --null-data --files-with-match "lolwut" 
 
 == Examples ==
-# Find files that contain "dependency" pattern, while specifying a filename pattern:
+Find files that contain "dependency" pattern, while specifying a filename pattern:
 $ grep dependency $( find . -name pom.xml )
-# Edit pom.xml files that contain "opensocial" pattern:
+
+Edit pom.xml files that contain "opensocial" pattern:
 $ vim $( grep --files-with-matches opensocial $( find . -name pom.xml ) )
-# Find files that contain an IP address:
+
+Find files that contain an IP address:
 $ grep -P '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$' $( find . -type f )
-# Find (potentially *many*) files that are less than 10M, for case-insensitive
-# search of "lolumad" (useful for targeting text files):
+
+Find (potentially *many*) files that are less than 10M, for case-insensitive
+search of "lolumad" (useful for targeting text files):
 $ find . -type f -size -10M  -print0 | xargs -0 grep --null-data --files-with-match -i "lolumad"
+  ^^if this dummy doesnt give results, I may not be using "-size" arg correctly... try this also:
+$ find . -type f -not -size +10M  -print0 | xargs -0 grep --null-data --files-with-match -i "lolumad"
+
+!!! (don't use "-size -1M" because that asks for files less than 1M which includes 0M and below) !!!
+
+Print the line matching "lol jk....  Use it." plus the line that follows:
+$ grep --after-context=1 "lol jk....  Use it."
 
 == Syntax ==
 $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"     # grep with regex.
 $ yum deplist hadoop | grep --color -E 'hadoop|'   # Dear grep, Highlight, don't grep (!)
+
+== See also ==
+helpsed
+the command "strings" searches binary files for strings >4 characters
 __envHEREDOC__
 }
 helpcurl(){
 cat <<'__envHEREDOC__'
 curl --data @<file-containing-POST-data> <URL>  # Perform POST request
 curl --silent whatismyip.org | xargs echo   # display WAN ipaddr
+
+# --fail Fail silently (no output at all) on HTTP errors
+# -o     Write output to <file> instead of stdout
+curl  --connect-timeout 10  --fail  -o /dev/null www.example.org  >/dev/null 2>&1
 __envHEREDOC__
 }
 helpgeditmultieditmode(){
@@ -2626,21 +3292,24 @@ sg_scan [-i]    # (scsi)
 
 
 == SEE ALSO ==
-helplstopo, helpblkid, helppv, helpinotify
+helplstopo, helpblkid, helppv, helpinotify helphdparm
 __envHEREDOC__
 }
 helphdd2_fs_related(){
 cat <<'__envHEREDOC__'
 Linux_disk_management wiki page    # See also : Linux_disk_management wiki page.
 
-$ mkswap -L linuxswap DEVICE       # create linux swap device.
-$ mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # create ext4 filesystem.
-$ dumpe2fs -h DEVICE                # display info about filesystem (same as tune2fs -l).
-$ resize2fs -p DEVICE              # expands device to max, -p shows progress.
-$ mkfs -t btrfs                    # create btrfs filesystem.
-$ mkntfs [-v] --label LABEL --quick DEVICE       # create ntfs filesystem.
-$ mkfs.vfat -n label DEVICE        # create fat32 filesystem; useful for reformat thumb drive.
-$ ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
+mkswap -L linuxswap DEVICE       # Create linux swap device.
+mke2fs -L LABEL -t ext4 [-v] [-c [-c]] DEVICE  # Create ext4 filesystem.
+dumpe2fs -h DEVICE               # Display info about filesystem (same as tune2fs -l).
+resize2fs -p DEVICE              # Expands device to max, -p shows progress.
+mkfs -t btrfs                    # Create btrfs filesystem.
+mkntfs [-v] --label LABEL --quick DEVICE       # Create ntfs filesystem.
+mkfs.vfat -n label DEVICE        # Create fat32 filesystem; useful for reformat thumb drive.
+mkfs.exfat -n label DEVICE       # Create exFAT filesystem.
+ntfscluster --info device        # NTFS info, block size (given as "bytes per cluster").
+
+lsblk --nodeps --noheadings --output NAME      # List block devices (only) in the system.
 __envHEREDOC__
 }
 helphdd3(){
@@ -2660,9 +3329,13 @@ __envHEREDOC__
 }
 helphdd4(){
 cat <<'__envHEREDOC__'
-d=/dev/sd_
-dname=a123-456
-diskId=$dname
+d=c7t1d0               # e.g. on Solaris.
+d=/dev/sdc             # e.g. on Linux.
+dnamefull=a107-2787
+#dname=a107                                                
+dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
+
+diskId=$dnamefull
 
 == HDD Initialization Steps ==
 
@@ -2886,8 +3559,24 @@ $ truecrypt -d ${d}2
 $ sudo mke2fs -L ${dname} -t ext4 -v ${d}2
 $ sudo tune2fs -c 5 -i 5d -e remount-ro -m 1 ${d}2
 
+==== Create XFS ====
+# mkfs.xfs ${d}1
+# mkfs.xfs -L ${dname} ${d}1
+$ mkfs.xfs -L ${dname} ${d}2
 
-== Update fstab, any other mounting scripts ==
+==== Set XFS label after the fact ====
+xfs_admin -L ${dname} ${d}
+
+
+== Create XFS fs, update fstab, create mountpoint, and mount ==
+subdevice=sdX
+sudo mkfs.xfs -L $subdevice /dev/${subdevice}
+sudo su -c "echo \"LABEL=${subdevice}             /mnt/${subdevice}              xfs     defaults,nofail,noatime,nodiratime        0 0\" >> /etc/fstab"
+sudo mkdir /mnt/${subdevice}
+sudo mount -v /mnt/${subdevice}
+
+= See also =
+helpzfs2
 __envHEREDOC__
 }
 helphdd5(){
@@ -2983,19 +3672,55 @@ EXAMPLES
 __envHEREDOC__
 }
 
-#helpfdisk(){
-#cat <<'__envHEREDOC__'
-#Default fdisk output has...
-#~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
-#	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
-#	NOT CYLINDERS!!!!!!!
-#	lol... aw boy. and the confusion never ends.
-#* the Start and End columns show the starting and ending __SECTORS__
-#** hint: just run the 'u' command and it will toggle+display the unit being used.
-#
-#* the Blocks column shows the number of 1K (1024 byte) blocks in the partition
-#__envHEREDOC__
-#}
+helpiostat(){
+cat <<'__envHEREDOC__'
+iostat -m 1 -x  # shows disk thruput in megs along with (-x) thruput utilization estimates for the disk
+__envHEREDOC__
+}
+
+helpfdisk(){
+cat <<'__envHEREDOC__'
+Default fdisk output has...
+~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
+	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
+	NOT CYLINDERS!!!!!!!
+	lol... aw boy. and the confusion never ends.
+* the Start and End columns show the starting and ending __SECTORS__
+** hint: just run the 'u' command and it will toggle+display the unit being used.
+
+* the Blocks column shows the number of 1K (1024 byte) blocks in the partition
+
+
+= Scripting fdisk / running Non-interactively =
+== print partition table ==
+echo "u
+p
+q
+" | sudo fdisk /dev/xvda
+
+
+== expand the current single partion ==
+# u: change units to sectors
+# d: deletes partition (since there's only 1 partition on curr device, defaults to 1, no prompt.)
+# n: new parition
+# p: of type:: primary
+# 1: with partion number 1
+# 2048: is the first sector
+#  : (blank) defaults to last sector
+# w: writes changes to partition table
+
+echo "u
+d
+n
+p
+1
+2048
+
+w" | fdisk /dev/xvda
+# next can do resize2fs -p /dev/xvda1
+
+__envHEREDOC__
+}
 
 helpparted(){
 	local d=/dev/sda
@@ -3029,9 +3754,28 @@ parted $d --script mkpart primary ext4 11.2GiB  103GiB
 
 === loop for printing all machine devices ===
 for d in /dev/sd[a-z] ; do  sudo parted $d --script unit s print  ; done
+
 __envHEREDOC__
 )
    echo "$heredocWithVariables"
+cat <<'__envHEREDOC__'
+=== random snippet(s) ===
+Format two new 4TB hdd's with ext4 and set better properties:
+   /dev/sdj /dev/sdk
+sudo parted /dev/sdj --script mktable gpt 
+sudo parted /dev/sdk --script mktable gpt 
+sudo parted /dev/sdj --script mkpart primary ext4 2048s 100%
+sudo parted /dev/sdk --script mkpart primary ext4 2048s 100%
+
+time for i in /dev/sdj1 /dev/sdk1 ; do sudo mke2fs -t ext4 -v $i ; done
+
+sudo tune2fs -c 5 -i 5d -e remount-ro -m 0 -L sdj1 /dev/sdj1
+sudo tune2fs -c 5 -i 5d -e remount-ro -m 0 -L sdk1 /dev/sdk1
+sudo mkdir /mnt/sdj1 /mnt/sdk1
+sudo vim /etc/fstab
+sudo mount -a
+
+__envHEREDOC__
 }
 
 helpsfdisk(){
@@ -3118,8 +3862,7 @@ usb-devices          - print USB device details.  Aggregates nfo from...
         /sys/kernel/debug/usb/devices (for kernel 2.6.31+)
 
 == See also ==
-* helphardinfo[2]
-* helplstopo
+helphardinfo[2] helplstopo helpprocfs helpsysfs
 __envHEREDOC__
 }
 
@@ -3129,12 +3872,18 @@ __envHEREDOC__
 helpchkconfig(){
 cat <<'__envHEREDOC__'
 == RHEL-related ==
-<no notes for this section since I'm pretty familiar>
+* RHEL7 / systemd uses:
+systemctl
+* instead of:
+service
+* e.g.:
+sudo systemctl {start|stop|restart|enable} docker
 
 == Ubuntu-related ==
 chkconfig /seems/ to be workable, but isn't exactly like rhel (also, I think its just a convenience program... and probably shouldnt really be used--USE the deb shtuff instead!)... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
 
 see also : insserve update-rc.d helpupdatercd
+                      ^...use this guy e.g. sudo update-rc.d krb5-admin-server enable
 
 see also2 : 
 * REFUSED(buggy or obsolete) rcconf(must also manually install 'dialog') - displays a menu of all the services which could be started at boot
@@ -3156,6 +3905,7 @@ other keywords : lsb upstart lsb-header
 == See also ==
 * https://help.ubuntu.com/community/UbuntuBootupHowto
 * http://wiki.debian.org/LSBInitScripts
+* helpsystemctl
 __envHEREDOC__
 }
 helprenice(){
@@ -3207,6 +3957,8 @@ cat <<'__envHEREDOC__'
 == See also ==
 * getprocesspriority() slowdown() unslowdown()
 * helpsudo() helpionice()
+* cpulimit
+* pidstat
 __envHEREDOC__
 }
 helprenice2(){
@@ -3238,7 +3990,13 @@ __envHEREDOC__
 helpmail(){
 cat <<'__envHEREDOC__'
 == Works on Debian ==
-<nil>
+# assuming which mailx actually resolves to something (on a 12.04 box, got
+# readlink -e `which mailx` -> /usr/bin/heirloom-mailx), need to at least 
+# install sendmail:
+sudo apt-get install sendmail
+
+# then can successfully cmdln like:
+echo "email body... oh, so fine" | mailx -v -s "PROBLEM: the website is down" -S from="borat@remote.tacowolf.comz" some-guy-Earl@gmail.com
 
 == Works on RHEL ==
 # Send an email message to Guru (using the mailx package):
@@ -3249,6 +4007,16 @@ $ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  \
 # Same as previous, but use custom SMTP server to send the email
 $ echo 'message body... oh hai11111111 on:' `date --rfc-3339=ns` `who -m`  |  \
 	mail  -S smtp=qa-in-f26.1e100.net  -s "message subject from `who -m | cut -d"(" -f2 | cut -d")" -f1`"  guru@rip.com
+
+# Had been having problems sending mail on a client network that used a relay mail server...
+# it turned out that I should have been setting the from property. Without that, mails
+# weren't getting through (not sure if that was fault of local relay server or destination
+# mail server.
+echo 'msg body' |\
+   mail -v -S  smtp="192.192.192.192" -S  from="noreply@domain.com"  -s "msg subject" guru@domain.com
+# ^^and with this, I also had to modify /etc/postfix/main.cf with:
+relayhost = 192.192.192.192
+# because I noticed in /var/log/maillog a lot of "relay=<none>" entries.
 
 == See also ==
 http://superuser.com/a/219051
@@ -3389,6 +4157,8 @@ $ tar xf tarfile.tar -C /path/to/pre-existing/directory/to/extract/into/
 Extract to stdout:
 $ tar xf tarfile.tar -O
 $ tar xfO tarfile.tar
+Keep leading `/' in member names with `P' (prevent tar from removing the leading `/' from member names):
+$ tar zcfvP tarfile.tar.gz
 
 Limit to a single or small number of files (conversely, to limit a large number of files, theres also --exclude -like options):
 -> list archive contents, only for the archvie paths specified within tmpfilelist.txt :
@@ -3398,10 +4168,14 @@ tar ztfv tarfile.tar.gz --files-from tmpfilelist.txt
 tar zxfv tarfile.tar.gz --files-from tmpfilelist.txt
 -> basically, compute hash sum for files listed in tmpfilelist.txt : 
 tar zxfv tarfile.tar.gz --files-from tmpfilelist.txt -O | sha1sum -
+-> create an archive containing the files listed in tmpfilelist.txt
+tar zcfv tarfile.tar.gz --files-from tmpfilelist.txt
 
 mtar (multi-threaded tar)
 -------------------------
-$ bsdtar zcfY a.tar.gz /path/to/some/de/lah  # -Y indicates to run multi-threaded
+$ bsdtar zcfvY a.tar.gz /path/to/some/de/lah  # -Y indicates to run multi-threaded
+
+$ time sudo /usr/local/bin/bsdtar zcfvY  vm-phd2-a1.kvm.tar.gz  --files-from /home/libvirt-images/vm-phd2-a1.files.txt.0
 __envHEREDOC__
 }
 helparchive(){
@@ -3634,10 +4408,32 @@ cat <<'__envHEREDOC__'
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; <insert name of function to call>
 i.e.
 sudo su -c "source $ZOMG_DOTFILES/.functions.sh ; slowdown 808"
+
+== See also ==
+* helpvisudo()
+__envHEREDOC__
+}
+helpvisudo(){
+cat <<'__envHEREDOC__'
+Make visudo use vim NOT nano:
+sudo update-alternatives --config editor
+
+This entry, initially appears to be what you want...
+
+<TODO STUB>
+
+However, if need to exec things as different users, that is other than root,
+  i.e. sudo -u bmore-sun-news-guy  echo "China Threatens Drama if Obama Meets the Dalai Lama"
+it wont work.  Use instead:
+bmore-sun-worker-gui  ALL=(ALL) NOPASSWD: ALL
 __envHEREDOC__
 }
 helpusermod(){
 cat <<'__envHEREDOC__'
+If necessary, create group first:
+$ groupadd ilike
+
+Now add members:
 $ usermod -a -G GROUPNAME USER
 $ usermod -a -G ilike devborrat
 
@@ -3670,9 +4466,11 @@ cat <<'__envHEREDOC__'
 -F [function name] : display [specific] function(s)
 
 $ typeset -p VARIABLE     # Displays definition.
-$ set   # Without options, the name and value of each shell variable are 
-        # displayed in a format that can  be reused as input for setting 
-		  # or resetting the currently-set variables.
+$ set      # Without options, the name and value of each shell variable are 
+           # displayed in a format that can  be reused as input for setting 
+		     # or resetting the currently-set variables.
+$ shopt    # Toggle the values of variables controlling optional shell behavior.
+           # With no options or with -p, a list of all settable options is displayed
 $ alias ALIAS             # Similarly, displays alias definition.
 $ export -p               # If no names are given, or if the -p option is 
                           # supplied, a list of all names that are 
@@ -3682,6 +4480,8 @@ how to get the definition for a function displayed???
 ANSWER: type
 $ type FUNCTION_NAME
 
+== See also ==
+helpcommand
 __envHEREDOC__
 }
 helpcommand(){
@@ -3709,6 +4509,17 @@ __envHEREDOC__
 }
 helpman(){
 cat <<'__envHEREDOC__'
+catman   # builds windex files which are used by keyword searches, i.e. apropos === man -k.
+makewhatis
+nroff -mdoc tmux.1 | less # reading man pages without calling "man"
+
+== Finding ==
+apropos cmd                     # Search the manual page names and descriptions.
+man -k cmd                      # === to apropos
+whatis cmd                      # Display manual page descriptions.
+man -f cmd                      # === to whatis
+whatis -r cmd                   # Interpret each name as a regular expression.  If a name matches any part of a page name, a match will be made.
+
 == Printing and Viewing ==
 man -t iptables > iptables.ps   # saves the manpage to postscruipt file.
 man -t iptables | lpr -P HP690C # print manpage to printer.
@@ -3742,11 +4553,18 @@ whichman              - Fault tolerant search utilities: whichman, ftff, ftwhich
 xmltoman              - simple XML to man converter
 
 == Notable manpage topics ==
-* man proc   # docs for processes information pseduo-file sys ( /proc ).
+man proc   # docs for processes information pseduo-file sys ( /proc ).
 
-/calling helpcommand()/
+/calling helpcommand().../
 __envHEREDOC__
 	helpcommand
+
+cat <<'__envHEREDOC__'
+/...calling helpcommand() --> DONE!/
+
+== See also ==
+* helpless()
+__envHEREDOC__
 }
 
 helpinotify(){
@@ -3754,13 +4572,6 @@ cat <<'__envHEREDOC__'
 Monitor for filesystem changes beginning from some top-level path (inotify):
 $ inotifywait --monitor --recursive .kde/
 __envHEREDOC__
-}
-helpvmware(){
-#cat <<'__envHEREDOC__'
-#__envHEREDOC__
-set -x
-alias | grep vmware
-set +x
 }
 helppv(){
 cat <<'__envHEREDOC__'
@@ -3917,7 +4728,7 @@ libmp3-tag-perl: Module for reading tags of MP3 audio files.
 madplay: MPEG audio player in fixed point. MAD is an MPEG audio decoder. There is also full support for ID3 tags.
 mpg123:  MPEG layer 1/2/3 audio player.
 
-=== ide-related ==
+=== id3-related ==
 $ aptitude search id3 --disable-columns | grep -v 386
 id3 - An ID3 Tag Editor
 id3ren - id3 tagger and renamer
@@ -3944,6 +4755,11 @@ squid3-common - Full featured Web Proxy cache (HTTP proxy) - common files
 squid3-dbg - Full featured Web Proxy cache (HTTP proxy) - Debug symbols
 xmms2-plugin-id3v2 - XMMS2 - ID3v2 plug-in
 
+https://github.com/leafnode/m3ugen/raw/master/m3ugen.py - Create a m3u playlist with all files (ogg, mp3, mpc) in given directory. Uses eyeD3 and pyvorbis libs to read music length.
+eyed3 - Display and manipulate id3-tags on the command-line
+python-eyed3 - Python module for id3-tags manipulation
+
+
 == See also ==
 helplame helpflac helpmuzik helpsox
 __envHEREDOC__
@@ -3968,6 +4784,21 @@ lame -V 0 --verbose --tl "Places and Spaces" --ty "1975" --tc "-V 0" --ta "Donal
 Wind Parade.wav
 Wind Parade
 lame -V 0 --verbose --tl "Places and Spaces" --ty "1975" --tc "-V 0" --ta "Donald Byrd" --tt "Wind Parade" 02 Donald Byrd - Wind Parade.wav
+__envHEREDOC__
+}
+helpmuzik3detecterrors(){
+cat <<'__envHEREDOC__'
+= MP3 =
+-------
+Using mp3info
+find path -name *.mp3  -print0 | xargs --verbose -n 1 -0 nice -19 ionice -c 3 mp3info -p "%b\n"
+
+= FLAC =
+--------
+pretty sure FLAC has its very own checking criteria options from the cmdln...
+ --test
+ --verify
+
 __envHEREDOC__
 }
 helpsox(){
@@ -4024,12 +4855,15 @@ $ identify -verbose image
 $ identify -format %G image | awk --field-separator x '{ print $1 }'
 # get y-dimensions:
 $ identify -format %G image | awk --field-separator x '{ print $2 }'
+
+= See also =
+exif
 __envHEREDOC__
 }
 helpburn(){
 cat <<'__envHEREDOC__'
 Erase rewritable medium
-----
+-----------------------
 * In general -> try these 2 cmdln's in this order:
 $ cdrecord -v blank=fast dev=/dev/sr0 
 $ cdrecord -v blank=all -force dev=/dev/sr0 
@@ -4048,13 +4882,13 @@ $ dvd+rw-format -force[=full] [-lead-out | -blank[=full]] /dev/sr0
 * https://bugs.launchpad.net/ubuntu/+source/cdrkit/+bug/15424/comments/77
 
 Generate ISO of non-audio, optical medium
-----
+-----------------------------------------
 dd duh-duh-duh-duh-duh-DUMB arss
 $ dd if=/dev/sr0 of=/path/to/output/file.iso
 $ dcfldd if=/dev/sr0 of=knoppix.iso
 
 Burn ISO
-----
+--------
 * cdrw -> see `helpwodim`
 * dvdrw -> continue:
 ** growisofs -dvd-compat -Z /dev/dvd=image.iso
@@ -4062,7 +4896,7 @@ Burn ISO
 ** growisofs -dvd-compat -Z /dev/dvd -l -r -V "volume-name" "directory-to-burn"
 
 dd to ISO (e.g.) for Speed Reports (context=Debian Other mailing list "USB Port speeds")
-----
+----------------------------------------------------------------------------------------
 $ dd if=/dev/zero bs=1M count=1000 | \
   xorriso -as cdrecord -v dev=/dev/sr0 -
 
@@ -4070,7 +4904,7 @@ $ dd if=/dev/zero bs=1M count=1000 | \
   xorriso -as cdrecord -v dev=/dev/sr0 stream_recording=on -
 
 General Tips
-----
+------------
 * wodim says: HINT: use dvd+rw-mediainfo from dvd+rw-tools for information extraction:
 ** $ dvd+rw-mediainfo /dev/sr0
 * How to find out the device that your DVD/CD rom is attached to:
@@ -4078,11 +4912,23 @@ General Tips
 * If errors are received (esp when burning re-writables) try specifying different speeds
 ** speed=6
 
+Terminology
+-----------
+: srcs : http://forums.afterdawn.com/threads/what-tao-sao-dao-raw-dao-means.264689/
+: http://club.myce.com/f44/tao-dao-better-why-62255/
+
+* TAO: Track-At-Once
+* SAO and DAO
+** Session-At-Once and Disk-At-Once
+** SAO is similar to DAO, but DAO closes the disc, SAO closes only the last session
+
 See Also
-----
+--------
 * helpwodim*
 * helpgrowisofs
 * devdump, isoinfo, isovfy, isodump - Utility programs for dumping and verifying iso9660 images.
+* isomaster - gui program allows for modification of [bootable] ISO's.
+* genisoimage
 __envHEREDOC__
 }
 helpwodim(){
@@ -4149,6 +4995,39 @@ $ wodim dev=/dev/sr0 -v -pad -text -cuefile=infile.cue infile.wav
 
 Actual cmdln used by K3b to burn audio CD:
 $ wodim -v gracetime=2 dev=/dev/sr0 speed=24 -sao driveropts=burnfree -useinfo -audio /path/to/k3b_audio_0_01.inf
+__envHEREDOC__
+}
+helpgenisoimage(){
+cat <<'__envHEREDOC__'
+src : https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Installation_Guide/s1-kickstart2-putkickstarthere.html
+"Making the Kickstart File Available"
+
+Explains how to modify a bootable linux iso rom for adding a Kickstart file to the install media:
+
+Copy data off optical media to local:
+mount image.iso /media/cdrom -t iso9660
+rsync -av /media/cdrom/ iso/
+
+Account for the Kickstart file:
+touch iso/ks.cfg
+mv somekickstartfile.cfg iso/ks.cfg
+...
+
+Edit the iso/isolinux/isolinux.cfg configuration file...
+vim iso/isolinux/isolinux.cfg
+... and the ks= boot option to the line beginning with "append", e.g.
+append initrd=initrd.img ks=icdrom:/ks.cfg
+
+Use genisoimage in the iso/ directory to create a new bootable ISO image with your changes included:
+cd iso
+genisoimage -U -r -v -T -J -joliet-long -V "RHEL-6.7" -volset "RHEL-6.7" -A "RHEL-6.7" 
+  -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 
+  -boot-info-table -eltorito-alt-boot -e images/efiboot.img -no-emul-boot 
+  -o ../NEWISO.iso .
+
+
+Implant a md5 checksum into the new ISO image:
+# implantisomd5 ../NEWISO.iso
 __envHEREDOC__
 }
 helpscan0(){
@@ -4231,6 +5110,7 @@ __envHEREDOC__
 }
 helplogrotate_of_files(){
 cat <<'__envHEREDOC__'
+== Just some Gulf Floundering (scribles and nonsense) ==
 filename-and-file-extension.N.`date +"%Y-%m-%d"`
 ^^prefer
 filename-and-file-extension.N.`date +"%Y-%m-%d-%H-%M"`
@@ -4245,8 +5125,36 @@ filename.`date +"%Y-%m-%d"`.N.file-extension
 filename.N.`date +"%Y-%m-%d"`.file-extension
 
 filename-and-file-extension.`date +"%Y-%m-%d.%H-%M`
+
+== cp's ==
+f=
+cp -p ${f} ${f}.`date +"%Y-%m-%d"`
+cp -p ${f} ${f}.`date +"%Y-%m-%d-%H-%M"`
+
 __envHEREDOC__
 }
+
+
+helpcp(){
+cat <<'__envHEREDOC__'
+/calling helplogrotate_of_files()/
+__envHEREDOC__
+helplogrotate_of_files
+}
+
+helpbackup(){
+cat <<'__envHEREDOC__'
+/calling helplogrotate_of_files()/
+__envHEREDOC__
+helplogrotate_of_files
+}
+helpbackupsinglefiles(){
+cat <<'__envHEREDOC__'
+/calling helplogrotate_of_files()/
+__envHEREDOC__
+helplogrotate_of_files
+}
+
 helpadaptec(){
 cat <<'__envHEREDOC__'
 == Run the java-based Storage Manager ==
@@ -4257,13 +5165,19 @@ sudo /usr/StorMan/StorMan.sh
 __envHEREDOC__
 }
 helpstormanager(){
+cat <<'__envHEREDOC__'
+/calling helpadaptec()/
+__envHEREDOC__
        helpadaptec
 }
+
 helpupdatercd(){
 cat <<'__envHEREDOC__'
 update-rc.d - install and remove System-V style init script links
 
 update-rc.d SERVICE disable|enable [ S|2|3|4|5 ]
+
+update-rc.d[-insserv]
 
 == See also ==
 helpchkconfig
@@ -4361,24 +5275,60 @@ cat <<'__envHEREDOC__'
 == CheatSheets ==
 http://www.dayid.org/os/notes/tm.html
 https://gist.github.com/MohamedAlaa/2961058
-== cmdln ==
+
+== cmdln's ==
 tmux ls
 tmux attach [-t session-number-index] - attach to tmux session.
-== tmux's ==
-c-a d   - unattach curr tmux session
-c-a ,   - rename curr tmux window/pane
-c-a x   - kill curr tmux window/pane
-c-a &   - kill curr tmux window/pane
-c-a ??   - kill entire curr tmux session
 
-list-pane  - no clue...
+== Attached session commands ==
+c-a d   - unattach curr tmux session
+c-a ?   - shows currently bound/bind'ed keys
+c-a :   - tmux command mode e.g. can say like 'show-environment'; BONUS: has tab-completion
+c-a ,   - rename curr tmux window/pane
+c-a x   - kill curr tmux window/pane (it uses actual window name)
+c-a &   - kill curr tmux window/pane (it just uses the word "pane" 0)
+c-a ???   - kill entire curr tmux session
+
+== Commands ==
+show-environment [-g] - lists environment variables [on a global basis (! this is neat though, its puts each entry ON A SINGLE LINE)]
 list-clients  - list all clients attached to the server
 detach-client - Detach the current client if bound to a key, the client specified with -t, or all clients currently attached to the session specified by -s.  If -P is given, send SIGHUP to the parent process of the client, typically causing it to exit.
  `--> detach-client -t /dev/pts/5 - when two clients attached to same session, detach other client.
 
-== Figure out's ==
-* tmux copy to OS system clipboard? (KDE)
-** http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard
+tmux list-pane  - no clue.
+tmux list-panes -a - lists all panes on the server
+tmux list-panes -as - lists all panes of the current session (seems identical to "-a")
+tmux list-panes -F FORMAT
+tmux list-panes -F '#{session_name}' - get current session name
+ `--> Later, can use this in a script like this: ( http://betabug.ch/blogs/bsdcow/48 )
+
+tmux select-window -t$SESSION:window_name
+
+tmux rename-session [-t] - renames current session [or session specified]
+
+tmux kill-session [-t] - kill current session [or session specified] and all windows
+
+== Misc ==
+Specify own window selection session commands
+* Do a c-a followed by ":" and enter:
+** bind-key -n F10 select-window -t 10  # -n says that the initial tmux c-a is not to be used (just pressing F10 will do the thing)
+** bind-key -n F11 select-window -t 11
+** bind-key -n F12 select-window -t 12
+
+tmux copy to OS system clipboard? (KDE)
+* http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard
+* SEE ALSO: helpxdotool()
+
+=== Figure out's ===
+* I seem to have a confusion as to what "panes" means...
+** session - when you run tmux brand new for first time, you create a session.
+** window - when a session is created, one window is created within the session (can think of this like a "tab").
+** pane - this is something else???   is it the same as a window?????
+          i think pane's are contained within windows.
+          ... lol k. now im still confused tho. maybe if i play with splitting and things, it'll become clear?
+
+= See also =
+* tmate - Instant terminal sharing (fork of tmux; can coexist on same system)
 __envHEREDOC__
 }
 helphadoop(){
@@ -4411,8 +5361,11 @@ hadoop fs -setrep -R 5 -w /big7
 
 # Recursive directory list
 hadoop fs -lsr
-# Count the directories, files, and bytes in a path
+hdfs dfs -ls -R
+
+# Count the directories, files, and bytes in a path:  (run this if du returns unexpected information)::
 hadoop fs -count hdfs://node/data
+
 # Empty filesystem trash
 hadoop fs -expunge
 
@@ -4420,20 +5373,28 @@ hadoop fs -expunge
 # Distributed copy from one or more node/dirs to a target:
 hadoop distcp  hdfs://node1:8020/dir_a  hdfs://node2:8020/dir_b
 
+# Distributed copy from one or more node/dirs to the same location on a target (works like cp):
+hadoop distcp  hdfs://node1:8020/dir_a  hdfs://node2:8020/
+
 # Job list, dispatching, status check, and kill:
-hadoop job -list [all]
-hadoop job -submit job_file
-hadoop job -status id
-hadoop job -kill id
+hadoop|mapred job -list [all]
+hadoop|mapred job -submit job_file
+hadoop|mapred job -status id
+hadoop|mapred job -kill id
+ ^^------------->> deprecated; use mapred (at least on HDP2.2)
+yarn application -list
+yarn application -kill id
 
 # List job queues
-hadoop queue -list
+hadoop|mapred queue -list
+ ^^------------->> deprecated; use mapred (at least on HDP2.2)
 __envHEREDOC__
 }
 helphadoop2(){
 cat <<'__envHEREDOC__'
 == Initiate the Checkpointing process (fsimage, edits, etc.) ==
-$ hadoop dfsadmin -saveNamespace
+hadoop|hdfs dfsadmin -saveNamespace
+ ^^------------->> deprecated; use hdfs (at least on HDP2.2)
 
 == Snapshots ==
 === usage ===
@@ -4443,14 +5404,18 @@ Usage: hadoop fs [generic options]
         [-renameSnapshot <snapshotDir> <oldName> <newName>]
 
 === examples ===
-To make root directory snapshottable:
-$ hdfs dfsadmin -allowSnapshot /
+# To make root directory snapshottable:
+hdfs dfsadmin -allowSnapshot /
 
-Create snapshot of root directory:
-$ hadoop fs -createSnapshot /
+# Create snapshot of root directory:
+hadoop fs -createSnapshot /
 
-List root directory snapshots; get
-$ hadoop fs -ls /.snapshot/
+# List root directory snapshots:
+hadoop fs -ls /.snapshot/
+
+#  drwxr-xr-x   - hdfs hdfs          0 2017-01-05 22:31 /.snapshot/pre-play-around-and-maybe-ruin-hive-data
+
+hdfs dfs -deleteSnapshot / pre-play-around-and-maybe-ruin-hive-data
 
 == DataNode block scanner ==
 * http://datanode:50075/blockScannerReport
@@ -4470,6 +5435,14 @@ sudo -u mapr hadoop fs -chown $USER:$USER /user/$USER
 $ hdfs balancer # starts the rebalancer with the default settings
 $ hdfs balancer -threshold 10 # default 10%.  The lower, the more impossible it is.  The higher, the more 
 rough an average it is or the direction in which the balancer gives up more easier.
+
+== Manually create HDFS fsimage ==
+Normally, this would be handled automatically.. but sometimes problems occur and fresh fsimages are not created... or maybe you want to create one manually.
+If a new fsimage is not regenerated periodically, you will end up with many unsaved edits to the fsimage.  This will significantly increase the start up time of HDFS service.
+
+hdfs dfsadmin -safemode enter
+hdfs dfsadmin -saveNamespace
+hdfs dfsadmin -safemode leave
 __envHEREDOC__
 }
 helphadoop3fsck(){
@@ -4504,6 +5477,8 @@ hadoop fs -ls .Trash
 hadoop fs -ls /user/$USER/.Trash
 
 
+$ sudo -u hdfs hadoop dfsadmin -safemode get
+$ sudo -u hdfs hadoop dfsadmin -safemode enter
 $ sudo -u hdfs hadoop dfsadmin -safemode leave
 $ sudo -u hdfs hadoop dfsadmin -report         # DEPRECATED
 $ sudo -u hdfs hdfs dfsadmin -report
@@ -4542,6 +5517,122 @@ many small files (small defn.: a file that uses <1 HDFS block (default=128MB)).
 * https://www.inkling.com/read/hadoop-definitive-guide-tom-white-3rd/chapter-3/hadoop-archives
 __envHEREDOC__
 }
+helphadoop6distcp(){
+cat <<'__envHEREDOC__'
+[yep-im-a-scientist@vm-centos6-hdp2-i1 ~]$ hadoop version
+ Hadoop 2.2.0.2.0.6.0-101
+ Subversion git@github.com:hortonworks/hadoop.git -r b07b2906c36defd389c8b5bd22bebc1bead8115b
+ Compiled by jenkins on 2014-01-09T05:18Z
+ Compiled with protoc 2.5.0
+ From source with checksum 704f1e463ebc4fb89353011407e965
+ This command was run using /usr/lib/hadoop/hadoop-common-2.2.0.2.0.6.0-101.jar
+
+[yep-im-a-scientist@vm-centos6-hdp2-i1 ~]$ locate distcp
+ /usr/lib/hadoop-mapreduce/hadoop-distcp-2.2.0.2.0.6.0-101.jar
+
+[yep-im-a-scientist@vm-centos6-hdp2-i1 ~]$ hadoop distcp
+usage: distcp OPTIONS [source_path...] <target_path>
+              OPTIONS
+ -async                 Should distcp execution be blocking.
+ -atomic                Commit all changes or none.
+ -bandwidth <arg>       Specify bandwidth per map in MB.
+ -delete                Delete from target, files missing in source.
+ -f <arg>               List of files that need to be copied.
+ -filelimit <arg>       (Deprecated!) Limit number of files copied to <= n .
+ -i                     Ignore failures during copy.
+ -log <arg>             Folder on DFS where distcp execution logs are saved.
+ -m <arg>               Max number of concurrent maps to use for copy.
+ -mapredSslConf <arg>   Configuration for ssl config file, to use with hftps:// .
+ -overwrite             Choose to overwrite target files unconditionally, even if they exist.
+ -p <arg>               preserve status (rbugp)(replication, block-size, user, group, permission).
+ -sizelimit <arg>       (Deprecated!) Limit number of files copied to <= n bytes.
+ -skipcrccheck          Whether to skip CRC checks between source and target paths.
+ -strategy <arg>        Copy strategy to use. Default is dividing work based on file sizes.
+ -tmp <arg>             Intermediate work path to be used for atomic commit.
+ -update                Update target, copying only missingfiles or directories.
+
+"distcp -update" will update a file if src size is different from dst size.
+ Keep in mind -update is not a delta-xfer algo like rsync and only does a size check, 
+ which isn't perfect when files are all the same size yet data is different. 
+
+"distcp -overwrite" will overwrite the file no matter whether the size matches or not. It's 
+ a destructive process, so make sure that you really want to do this. 
+
+
+== arguments seem to have luck with for most distros ==
+hadoop distcp -delete -overwrite -prbugp
+
+== arguments had to use instead with HDP2.1.7.0 and Isilon ==
+hadoop distcp -delete  -skipcrccheck -update
+__envHEREDOC__
+}
+helphive(){
+cat <<'__envHEREDOC__'
+= Import/Export database tables: syntax and example =
+ssh host "hive -e "EXPORT TABLE ${hivetable} TO \"${hdfsdestination}/${hivetable}\";"
+`-> ssh vm-hdp22-c1      'hive -e "EXPORT TABLE mts_scheduling_domain_2_0_orc.place_patterns_orc TO '\''/tmp/exports/mts_scheduling_domain_2_0_orc.place_patterns_orc'\'';"'
+`-> ssh muzik-production 'hive -e "EXPORT TABLE mfdoom_quotes.buttery_biscuits TO '\''/tmp/exports/mfdoom_quotes.buttery_biscuits'\'';"'
+
+ssh host "hive -e \"CREATE DATABASE $hivedatabase;\""
+`-> ssh vm-hdp22-f1 'hive -e "CREATE DATABASE mts_scheduling_domain_2_0_orc;"'
+`-> ssh muze        'hive -e "CREATE DATABASE mfdoom_quotes;"'
+
+ssh host "hive -e \"USE $hivedatabase; DROP TABLE ${hivetable};\""
+`-> ssh vm-hdp22-f1 'hive -e "USE mts_scheduling_domain_2_0_orc; DROP TABLE mts_scheduling_domain_2_0_orc.place_patterns_orc;"'
+`-> ssh muze        'hive -e "USE mfdoom_quotes; DROP TABLE mfdoom_quotes.buttery_biscuits;"'
+
+ssh host "hive -e \"USE $hivedatabase; IMPORT FROM '${hdfssource}/${hivetable}';\""
+`-> ssh vm-hdp22-f1 'hive -e "USE mts_scheduling_domain_2_0_orc; IMPORT FROM '\''/tmp/exports/mts_scheduling_domain_2_0_orc.place_patterns_orc'\'';"'
+`-> ssh muze        'hive -e "USE mfdoom_quotes; IMPORT FROM '\''/tmp/exports/mfdoom_quotes.buttery_biscuits'\'';"'
+
+
+= Meta && discovery =
+: Rule of thumb: pretty sure Hive runs on top of MySQL (or through it, idk, doesn't matter), 
+  basically, if unsure about syntax, can always try the MySQL equivalent.
+
+hive> SHOW CONF $conf-name ; returns a description of the specified configuration property.
+hive> set $conf-name ; shows the current value of $conf
+
+hive> show databases
+hive> describe database $db
+hive> describe database extended $db
+
+hive> show tables
+hive> describe $table
+hive> describe extended $table
+
+special count
+hive> 
+hive> 
+hive> 
+
+= Other =
+hive> ANALYZE TABLE table_name COMPUTE STATISTICS FOR COLUMNS ;  will compute column statistics for all columns in the specified table (and for all partitions if the table is partitioned). 
+
+To view the gathered column statistics:
+hive> DESCRIBE FORMATTED [db_name.]table_name column_name ;    
+hive> DESCRIBE FORMATTED [db_name.]table_name column_name PARTITION (partition_spec); 
+
+See https://cwiki.apache.org/confluence/display/Hive/StatsDev#StatsDev-ExistingTables for more information about the ANALYZE TABLE command.
+__envHEREDOC__
+}
+helpambari(){
+cat <<'__envHEREDOC__'
+: src : https://cwiki.apache.org/confluence/display/AMBARI/Using+APIs+to+delete+a+service+or+all+host+components+on+a+host
+
+List cluster services:
+curl -u admin:admin -H "X-Requested-By: ambari" -X GET  http://`hostname`:8080/api/v1/clusters/vmhdp23d/services/
+
+List service components (for example, components of service=HDFS):
+curl -u admin:admin -H "X-Requested-By: ambari" -X GET  http://`hostname`:8080/api/v1/clusters/vmhdp23d/services/HDFS
+
+List info about service component (for example, component=SECONDARY_NAMENODE):
+curl -u admin:admin -H "X-Requested-By: ambari" -X GET  http://`hostname`:8080/api/v1/clusters/vmhdp23d/services/HDFS/components/SECONDARY_NAMENODE
+
+Delete a service component (for example, component=SECONDARY_NAMENODE):
+curl -u admin:admin -H "X-Requested-By: ambari" -X DELETE http://`hostname`:8080/api/v1/clusters/vmhdp23d/services/HDFS/components/SECONDARY_NAMENODE
+__envHEREDOC__
+}
 helpfind(){
 cat <<'__envHEREDOC__'
 == Syntax ==
@@ -4573,6 +5664,9 @@ $ find /target_directory -type f -mmin -60
 
 # Find files that have been modified in the last 7 days, but not in the last 3 days:
 $ find /target_directory -type f -mtime -7 ! -mtime -3
+
+== See also ==
+helpcomparingdirectories
 __envHEREDOC__
 }
 helpstat(){
@@ -4583,12 +5677,17 @@ __envHEREDOC__
 }
 helpxclip(){
 cat <<'__envHEREDOC__'
-to copy contents of a file or output of some command to clipboard use:
-cat ./myfile.txt | xclip -i
+To copy contents of a file or output of some command to clipboard use:
+   cat ./myfile.txt | xclip -i
 the text can be then pasted somewhere using middle mouse button (this is called "primary selection buffer").
 
 If you want to copy data to the "clipboard" selection, so it can be pasted into an application with Ctrl-V, you can do:
-cat ./myfile.txt | xclip -i -selection clipboard
+   cat ./myfile.txt | xclip -i -selection clipboard
+
+xclip -selection clipboard < ~/.ssh/id_rsa.pub
+
+Copy the contents of a remote text file:
+   ssh remote  cat /etc/ansible/hosts | xclip -i -selection clipboard
 
 == SEE ALSO ==
 * Linux command xclip wiki page
@@ -4700,12 +5799,39 @@ cat <<'__envHEREDOC__'
 == ZFS CREATION ==
 # <assumes brand new, blank drive with first partition being the id partition and second partition being blank>.
 # NOTE: OmniOS (at least 5.11 omnios-8d266aa 2013.05.04) does not support this 'ashift' option.
-zpool create
- [-o ashift=12]   # Only if using AF/4096-byte drives.
- -m /mnt/${dname} $dname ${d}2
+# NOTE: on Sun/Illumos/Omni, first call cfgadm.
+d=c7t1d0               # e.g. on Solaris.
+d=/dev/sdc             # e.g. on Linux.
+dnamefull=a107-2787
+#dname=a107
+dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
-zfs create ${dname}/fs1  # Create (sub?) filesystem. required? dont think so but is a good idea. generally dont put shtuffs in the root of the zpool it seems.
-zfs create a108/fs1      # e.g.
+sudo zpool create \
+ -o ashift=12 \  # Only if using AF/4096-byte size for physical sector disks; http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
+ -m /mnt/${dname} $dname ${d}
+
+sudo zfs create ${dname}/fs1
+sudo zfs create ${dname}/iam--${dnamefull}--$( basename ${d} )
+
+
+== ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
+# assuming a128 is the pooled device you want to add to another pool (and delete a128):
+old_pool_full_name=a128-2786
+old_pool=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
+zpool status $old_pool            # Note the device of this pool.
+sudo zpool destroy $old_pool
+
+old_pool_device=c7t1d0            # From above.
+
+pool=a122
+device=c7t3d0
+new_device=${old_pool_device}
+
+sudo zpool attach $pool $device $new_device
+
+sudo zfs create a122/iam--a128-2786--c11t5d0
+sudo zfs create ${pool}/iam--${old_pool_full_name}--${old_pool_device}
+
 
 == ZFS STATUS ==
 zpool scrub $dname
@@ -4718,6 +5844,9 @@ zfs snapshot ${dname}/fs1@$( date +"%Y-%m-%d_%H.%M.%S" )
 zfs snapshot ${dname}@$( date +"%Y-%m-%d_%H.%M.%S" )
 
 zfs set snapdir=visible - Makes the .zfs directory visibe in the root of the filesystem.
+
+= See also =
+helphdd4
 __envHEREDOC__
 }
 helpzfs3(){
@@ -4809,11 +5938,15 @@ helpntp(){
 cat <<'__envHEREDOC__'
 # How off or drift'ed is this machines time? (add servers to increase accuracy and resilience)
 ntpdate -q -v ntp.ubuntu.com  pool.ntp.org
+ntpq -pn
+ntpdc -c sysinfo
+ntpstat         # Seems to only be on RHEL-based machines.  Says if machine is synchronized or not.
 
 # Sync this machines time:
 sudo ntpdate -v ntp.ubuntu.com  nist1-pa.ustiming.org  time-d.nist.gov
 
-ntpq -pn
+# Sync this machines time but stop the ntp service first since it uses the same socket:
+sudo service ntpd stop || sudo service ntp stop; sudo ntpdate -v 2.north-america.pool.ntp.org; sudo service ntpd start || sudo service ntp start
 
 == Install an NTP daemon ==
 # For RHEL, see mwiki [[Linux command ntpdate]] as it requires >1 step.
@@ -4822,18 +5955,25 @@ sudo apt-get install ntp
 # Note that if the machine is WAY out of sync, prob must manually sync first using ntpdate (above).
 
 == Public NTP servers (from the pool.ntp.org proj) ==
- -> Project asks that queries to pub servers do not occur >once every 4 seconds.
+ -> Project asks that queries to pub servers do not occur >once/4s.
 [0-3].fedora.pool.ntp.org
 tick.apple.com
 [0-3].north-america.pool.ntp.org
 
 time.nist.gov
 
-nist1-ny.ustiming.org         # NYC, NY, USA
-nist1-pa.ustiming.org         # Northern Philly, PA, USA
+nist1-ny.ustiming.org         # DED? NYC, NY, USA
+nist1-pa.ustiming.org         # DED? Northern Philly, PA, USA
 time-[a-d].nist.gov           # MoCo, MD, USA
 nist1.aol-va.symmetricom.com  # NoVa, VA, USA
 nist1-la.ustiming.org         # LA, CA, USA
+
+== sysfs thinggies ==
+cat /sys/devices/system/clocksource/clocksource0/current_clocksource
+cat /sys/devices/system/clocksource/clocksource0/available_clocksource
+
+Apparently "hpet" is preferable to at least tsc.  hpet is apparently the future (of this technology).
+sudo su -c 'echo "hpet" > /sys/devices/system/clocksource/clocksource0/current_clocksource'
 __envHEREDOC__
 }
 helpbattery(){
@@ -4857,6 +5997,24 @@ __envHEREDOC__
 helppython(){
 cat <<'__envHEREDOC__'
 python -c 'print 2**100**100'   # Hog RAM and peg 1 CPU.
+
+python -c 'import socket; print socket.gethostbyname(socket.getfqdn())'  # get hostname/ip or something
+
+echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readable format.
+
+== Regex ==
+: src : http://www.thegeekstuff.com/2014/07/advanced-python-regex/
+>>> paragraph = \
+... '''
+... YOUR MULTI LINE STRING IN QUESTION TO DO REGEXING ON
+... '''
+>>> import re
+>>> match = re.search( r' THE REGULAR EXPRESIONISMS ', paragraph, re.MULTILINE)
+>>> match.string
+<the matched string will display if it matched, otherwise it will not>
+
+# alternatively...
+>>> re.search( r' THE REGULAR EXPRESIONISMS ', paragraph, re.MULTILINE).string
 __envHEREDOC__
 }
 helpalternatives(){
@@ -4873,12 +6031,18 @@ cat <<'__envHEREDOC__'
 __envHEREDOC__
 	helpalternatives
 }
+helpnc(){
+cat <<'__envHEREDOC__'
+/calling helpnetcat()/
+__envHEREDOC__
+	helpnetcat
+}
 
 
 
 
 
-# TODO STUB: Determine better function names... or remove these entirely.k
+# TODO STUB: Determine better function names... or remove these entirely.
 # Solaris-like operating system help texts
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
@@ -4901,6 +6065,7 @@ cat <<'__envHEREDOC__'
 notes synopsis: omnios/solaris cmdln   # the equivalent cmdln in Linux.
 prstat         # like top
 svcs           # like service --status-all
+svcadm         # use in conjunction with svcs.
 pkg search     # like aptitude search
 pkg install    # like aptitude install
 pkg info       # like aptitude show
@@ -4910,12 +6075,13 @@ prtconf | grep Mem # like free; prints physical memory size
 vmstat         # like free.... sort of?... am not pleased lol
 vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
 init 5         # like init 0
+shutdown -y -i5 -g0 # (use this to turn machine OFF) like init 0
+shutdown -y -g 0 -i 0 # does NOT turn machine off and power off (just stops OS apparently).
 init 1         # like init 1
 init 4         # like init 2-5*  ( *=normal states )
 init 6         # like init 6
 psrinfo -vp    # like less /proc/cpuinfo
 isainfo -x     # like arch
-
 
 
 # Steps to get ram usage:
@@ -4948,6 +6114,7 @@ swap -s [-h]   # like swapon -s; list amt of swap space available [in human-read
 
 == See also ==
 http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
+helpafs
 __envHEREDOC__
 }
 helpomnios3_basicSysnfo(){
@@ -4981,6 +6148,7 @@ sym link targets of /dev/dsk/*.
 Alternatively, can just pass -v to prtconf and search to "disk" instances 
 within the output.  
 
+ls -l /dev/rdsk | grep 'c.t.d0 '
 
 == cmdln ==
 zpool status  # Displays pool members in the cXtYdZsN format.
@@ -5020,8 +6188,14 @@ iostat -xnp   # Generates partition and device statistics for each disk.
               # Disks are identified by controller names (disk names also 
               # display in the cXtYdZsN  format).
 
+fsstat -F 1   # Filesystem statistics organized by whichever process is reading/writing.
+
+fsstat $(awk '{ print $2 }' /etc/mnttab | xargs) 1   # FS statistics broken down by FS.
+
+
 == See also ==
 helpsmartctl
+helpafs
 __envHEREDOC__
 }
 helpomnios5_cfgadm(){
@@ -5029,11 +6203,25 @@ cat <<'__envHEREDOC__'
 == Configuration Administration ==
 cfgadm -alv - will show all three disks and a zillion sata ports lol (with some additional non-sata devices too) (and actually, the -a specifies that the -l option must also list dynamic attachment points)
 
-cfgadm -la sata - will show all three disks with less verbosity. ("lists all current configurable hardware information" of type sata).
+cfgadm -la sata - will show all disks with less verbosity. ("lists all current configurable hardware information" of type sata).
 
 "cfgadm -l sata | grep -v empty" - makes it seem like you have disks plugged into sata5/1 and sata6/2.
 
+=== Post-Physically Inserting a HDD ===
+(adding a hdd)
+
 cfgadm -c configure sata5/1 - makes the sata device to be usable/seen and ready for normal operations, e.g. zpools, etc.
+
+
+=== Pre-Physically Removing a HDD ===
+(removing a hdd)
+
+cfgadm -c unconfigure sata5/1 - makes the sata device to be logically removed from the system.
+
+And if the device is still in the zpool list, can get rid of it with:
+
+sudo zpool export a108
+
 __envHEREDOC__
 }
 helpomnios6_fault_manager(){
@@ -5048,10 +6236,36 @@ sudo fmstat
 fmdump
 __envHEREDOC__
 }
+helpomnios7_adm_cmdlns(){
+cat <<'__envHEREDOC__'
+== Network-related ==
+flowstat is in bytes for some reason
+but maxbw is bits
+# Once a "flow" is defined, can do nifty things like:
+flowstat -i 1    # Show current network i/o.  Like iostat -m 1 but for network.
+flowadm set-flowprop -t -p maxbw=1200K  afs3-volser-udp    # Throttle network i/o.
+                 # maxbw is in kilobits/s; 1200K = 1200 kilobits ~= 146.48 kibibytes
+
+# Example of setting up a flow:
+sudo flowadm add-flow -t -l e1000g0 -a transport=tcp,local_port=7005 afs3-volser-tcp
+sudo flowadm add-flow -t -l e1000g0 -a transport=udp,local_port=7005 afs3-volser-udp
+
+
+# network information on network devices: 
+dladm show-link
+dladm show-linkprop e1000g0
+ipadm show-ifprop
+ipadm show-if e1000g0
+
+# restart networking:  see also http://wiki.openindiana.org/oi/Static+IP
+sudo svcadm restart svc:/network/physical:default
+__envHEREDOC__
+}
+
 #/TODO STUB
 
 
-helpnc(){
+helpnetcat(){
 cat <<'__envHEREDOC__'
 Netcat file transfer from host1 to host2:
 host2$ nc -l 8080 > file
@@ -5079,17 +6293,45 @@ $ nc -vnz -w 1 192.168.1.102 2000-3000
 
 == See also ==
 http://xmodulo.com/2014/01/useful-netcat-examples-linux.html
+socat
 __envHEREDOC__
 }
 helprdesktop(){
 cat <<'__envHEREDOC__'
 rdesktop -g 1400x1000 vm-w7-2
+# Generally, pretty good:
+rdesktop -u laluna -p "laluna's passwordie" -g 1200x900 las-vms-machines
+# Slightly larger display:
+rdesktop -u laluna -p "laluna's passwordie" -g 1250x1000 las-vms-machines
+# Better fits on shazam's own display:
+rdesktop -u laluna -p "laluna's passwordie" -g 1250x980 las-vms-machines
+
+= Decrease network traffic =
+rdesktop -u laluna -p "laluna's passwordie" -g 1250x900 las-vms-machines -C -D -a 8 -z -P 
+
+= Clipboard =
+rdesktop -u laluna -p "laluna's passwordie" -g 1250x900 las-vms-machines -C -D -a 8 -z -P -r clipboard:PRIMARYCLIPBOARD
+
+= See also =
+xfreerdp
+__envHEREDOC__
+}
+helpxfreerdp(){
+cat <<'__envHEREDOC__'
+xfreerdp --plugin cliprdr -u laluna -p "laluna's passwordie" las-vms-machines
+
+= See also =
+rdesktop
+__envHEREDOC__
+}
+helpvncviewer(){
+cat <<'__envHEREDOC__'
+vncviewer phobos:5900
 __envHEREDOC__
 }
 helpkvm(){
 cat <<'__envHEREDOC__'
-SNAPSHOTS
-  Note: snapshots can only be made on certain disk image files...
+Snapshot functionality can only be used on certain disk image formats...
     ok: qcow2
 	!ok: raw
 
@@ -5098,7 +6340,7 @@ qemu-img snapshot -l  # List snapshots for image file.
 # Create a snapshot, "pre-partitiontable-modify".
 qemu-img snapshot -c pre-partitiontable-modify vm-centos6.img
 
-# nfo
+# Get vdisk image nfo.
 qemu-img info vm-centos6.img
 
 # Convert [, with -progress,] the image file from qcow2 format to raw format.
@@ -5106,35 +6348,78 @@ qemu-img convert -p -f qcow2 -O raw vm-centos6.qcow2.img vm-centos6.raw.img
 
 # Create a 33GiB image file, using raw format.
 qemu-img create -f raw vm-centos6.swap.img 33G
-# similarly, a qcow2-format image file, with a bit of preallocation.
+
+# Similarly, a qcow2-format image file, with a bit of preallocation.
 qemu-img create -f qcow2 -o preallocation=metadata centos_test0_preallc.qcow2 33G
 
 # Resize (e.g. a qcow2-format) image file to be 60GiB.
 qemu-img resize vm-centos6.img 60G
 
+
+# ??? Shrinks an expandable virtual disk by removing any unused sectors ???
+# ^^this didn't work for a qcow2 volume that has once-allocated blocks which
+# are now NOT allocated.
+# ??? May need to zero out the fs on the vdisk image...
+# 
+# -> man page only mentions qcow i.e. NOT qcow2... not sure what's supported.
+qemu-img convert  -p -f qcow2 -O qcow2  original.img  new.img
+
+== See also ==
+helpkvm() helpvirsh()
 __envHEREDOC__
 }
 helpvirsh(){
 cat <<'__envHEREDOC__'
 virsh snapshot-list vm-vcs
 virsh snapshot-dumpxml vm-vcs 1395958755
-virsh snapshot-create vm-vcs
+virsh snapshot-current vm-vcs                       # display information about current snapshot.
+virsh snapshot-create vm-vcs                        # snapshot name will be curr timestamp (name = $time)
+virsh snapshot-create-as vm-vcs wuuut               # create a named snapshot (name = "wuuut")
+
 virsh snapshot-revert vm-vcs 1395958755
-virsh snapshot-delete --children vm-vcs 1395958755
+virsh snapshot-delete --children vm-vcs 1395958755  # deletes this snapshot and all descendant nodes.
+
+virsh console vm-vcs
+virsh start vm-vcs --console
 
 # If you made manual changes to the KVM xml definition/conf file, you must tell virsh
 # about it.  To apply the changes, do:
 virsh define /path/to/updated/xml/file
 virsh define /etc/libvirt/qemu/vm-log.xml
+
+# Lists block devices used by vm:
+virsh domblklist <domain/id/vm>
+
+# Attach a qcow2-formatted vdisk (domain xml file will be updated):
+virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2 --persistent
+
+# Attach a qcow2-formatted vdisk temporarily(i havent tried this yet but I guess upon reboot/shutdown or upon a virsh destroy, this vdisk will no longer be associated):
+virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2
+
+== See also ==
+helpkvm() helpvirsh()
+* https://raymii.org/s/tutorials/KVM_add_disk_image_or_swap_image_to_virtual_machine_with_virsh.html
+* https://raymii.org/s/tutorials/KVM_with_bonding_and_VLAN_tagging_setup_on_Ubuntu_12.04.html - learn how to set up a proper KVM hypervisor host.
 __envHEREDOC__
 }
 helpgpg(){
 cat <<'__envHEREDOC__'
+NOTE that in order to enter your passphrase, it seems like it wants to open an X window in order to enter.
+
 gpg --gen-key      # Generate a new key pair.
 gpg --list-keys    # List all keys from the public keyrings, or just the keys given on the command line.
 gpg [-a|--armor] --export "User Name" [> public.key]             # Export public key.
 gpg [-a|--armor] --export-secret-key "User Name" [> private.key] # Export private key.
 
+gpg-connect-agent
+
+gpg --list-keys
+gpg --output foo.txt --decrypt foo.txt.gpg
+
+if you're getting problems with not being prompted for a passphrase and you've ssh'd and su'd to the curruser, NOTE
+that su does not change the ownership of your TTY, so you need to manually chown it or ssh connect directly as that user.
+
+gpg --output file.txt --decrypt file.txt.pgp
 
 == See also ==
 http://www.gnupg.org/gph/en/manual.html       - GPG docs
@@ -5142,8 +6427,6 @@ http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/  - GPG Cheat Sheet *** (good)
 http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html - webpost
 http://xmodulo.com/2013/09/how-to-create-encrypted-zip-file-on-linux.html How to create an encrypted zip file on Linux - Linux FAQ
 http://xmodulo.com/2013/08/how-to-pgp-encrypt-decrypt-digitally-sign-files-via-gnupg-gui.html How to PGP encrypt, decrypt or digitally sign files via GnuPG GUI
-
-
 __envHEREDOC__
 }
 helptcpdump(){
@@ -5268,11 +6551,1115 @@ ec2-describe-spot-price-history -a us-east-1c -t t1.micro
 ec2-describe-instance
 ec2-describe-instances
 ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE'   # gives parsable / computable output
+
+# What to do if instance immediately terminates:
+ec2-describe-instances <instance id> -v
+# then search for XML node <stateReason>.  There should be <code> and <message> nodes describing
+# the reason that the instance terminated, for example, VolumeLimitExceeded.
+__envHEREDOC__
+}
+helpec2snippets(){
+cat <<'__envHEREDOC__'
+Using the unique vpc id discovered beforehand, wanted to know the private ip (col $18) and 'Name' (col $35) tag for all instances
+within this vpc id...
+[v1] $ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE|^TAG' | grep --after-context=1 vpc-6379d406 | sed 'N;s/\n/\t/'  | awk '{ print $18 " " $35 }'
+... example output:
+  10.0.0.159 vm-hdp2-k02
+  10.0.0.167 vm-hdp2-k03
+  10.0.0.165 vm-hdp2-k04
+  10.0.0.166 vm-hdp2-k05
+An attempt at an improved version of [v1] from above...
+[v2] $ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE|^TAG' | grep -vP '\teip\t' | grep --after-context=1 vpc-6379d406 | sed 'N;s/\n/\t/'  | awk '{ print $18 " " $35 }'
+^^NOTE: since am only interested in the "Name" tag and not the "eip" tag, remove that line because it will mess up the snippet.
+^^NOTE: both seemed to not get the last one... something with a leading "--" instead of "INSTANCE" was output by the ec2-describe-instances for some reason... 
+
+^^^^FOLLOW UP: lol k, the "--" is inserted by grep in between groups of matches, duh.  so cut that out too...
+[v3] $ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE|^TAG' | grep -vP '\teip\t' | grep --after-context=1 vpc-6379d406 | grep -v -- '--' | sed 'N;s/\n/\t/'  | awk '{ print $18 " " $35 }'
+^^^^^^YES, this got everything, perfectly!
+  10.0.0.159 vm-hdp2-k02
+  10.0.0.167 vm-hdp2-k03
+  10.0.0.165 vm-hdp2-k04
+  10.0.0.163 vm-hdp2-k07
+  10.0.0.164 vm-hdp2-k06
+  10.0.0.161 vm-hdp2-k09
+  10.0.0.162 vm-hdp2-k08
+  10.0.0.160 vm-hdp2-k10
+  10.0.0.197 vm-hdp2-k01
+  10.0.0.191 vm-hdp2-k05
+
+How about also getting the instance id?
+[v4] $ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE|^TAG' | grep -vP '\teip\t' | grep --after-context=1 vpc-6379d406 | grep -v -- '--' | sed 'N;s/\n/\t/'  | awk '{ print $18 " " $35 " " $33 }'
+
+__envHEREDOC__
+}
+helpfalcon(){
+cat <<'__envHEREDOC__'
+[sudo -u ambari-qa] falcon entity -type cluster  -list
+sudo -u ambari-qa falcon entity -type cluster  -list
+sudo -u ambari-qa falcon entity -type feed -list
+sudo -u ambari-qa falcon entity -type process  -list
+__envHEREDOC__
+}
+helpoozie(){
+cat <<'__envHEREDOC__'
+oozie version
+echo 'export oozieurl="-oozie http://localhost:11000/oozie/"' >> ~/.bash_profile
+
+oozie jobs $oozieurl  
+oozie jobs $oozieurl  -jobtype bundle
+
+oozie job $oozieurl  -info jobid
+
+oozie job $oozieurl  -kill jobid   # except... for bundle jobs, depending on conf, the job will respawn!!!!!! ARG!!!!
+# perhaps -suspend'ing a bundle job that keeps respawning is the way to go????
+oozie job $oozieurl  -suspend jobid
+
+oozie job $oozieurl  
+oozie job $oozieurl  
+
+oozie admin $oozieurl  -queuedump
+oozie admin $oozieurl  -status
+
+__envHEREDOC__
+}
+helphue(){
+cat <<'__envHEREDOC__'
+To list all available configuration options:
+$ /usr/lib/hue/build/env/bin/hue config_help | less
+
+__envHEREDOC__
+}
+helpcron(){
+cat <<'__envHEREDOC__'
+== Crontab entry examples ==
+NOTE: certain characters must be escaped in a crontab, e.g. '%'.
+
+# Execute a custom logrotate every day at 1300 and log all of its output to a dated logfile:
+00 13 * * * /root/bin/logrotate.custom.sh  >  /root/bin/logrotate.custom.sh.log-$( /bin/date +\%Y-\%m-\%d_\%H-\%M-\%S )  2>&1
+__envHEREDOC__
+}
+helpdu(){
+cat <<'__envHEREDOC__'
+Some tips for analyzing a filesystem(s) containg lots of shtuff.
+
+# Occasionally run this and feed the output into sort -n:
+nice -n 19 ionice -c 3 du -a
+
+# The output of du can diverted to a file, running overnight, and then
+# afterward, xdu can take it as input and display it nicely.
+
+# ncdu takes some time to finish calculating, but the output is easier to 
+# handle and you can drill down to lower directories without losing the other data.
+
+# To capture disk usage nfo, run:
+ionice -c3 ncdu -o ~/ncdu-output
+# then to examine the file that was produced, run:
+ncdu -f ~/ncdu-output
+__envHEREDOC__
+}
+helpprocfs(){
+cat <<'__envHEREDOC__'
+cat /proc/net/bonding/bond0
+cat /proc/net/vlan/config
+cat /proc/sys/fs/file-max  - global file limit (check local limits with ulimit -Hn and ulimit -Sn)
+
+
+= See also =
+man proc   # docs for processes information pseduo-file sys ( /proc ).
+helpsysfs helpdevices
+__envHEREDOC__
+}
+helpsysfs(){
+cat <<'__envHEREDOC__'
+# Shows all key value pairs for a network bonding device:
+for i in /sys/class/net/bond0/bonding/* ; do echo $i;  echo "  $( cat $i )" ; done
+
+# md/mdadm arrays can be scrubbed by writing: check or repair to this sysfs file for the device:
+# assuming the md device is md0:
+If "check" was used, no action is taken to handle the mismatch, it is simply recorded.
+If "repair" was used, then a mismatch will be repaired in the same way that resync repairs arrays.
+sudo su -c 'echo check > /sys/block/md0/md/sync_action'
+
+# Holds curr count of mismatches (SEE md(4) if nonzero):
+/sys/block/md0/md/mismatch_cnt
+# If set, overrides the system-wide setting in /proc/sys/dev/raid/speed_limit_min for this array only.
+/sys/block/md0/md/sync_speed_min
+
+# This is the partner of md/sync_speed_min and overrides /proc/sys/dev/raid/speed_limit
+/sys/block/md0/md/sync_speed_max
+
+# This  can  be  used  to monitor and control the resync/recovery process of MD.  
+#   "check" will cause the array to read all data block and check they are consistent; discrepancies 
+#   found are NOT corrected.  A count of problems found will be stored in md/mismatch_count.
+#   "repair" will cause the same check to be performed, but any errors will be corrected.
+#   "idle" will stop the check/repair process.
+/sys/block/md0/md/sync_action
+
+# This is only available on RAID5 and RAID6.
+# Records the size (in pages per device) of the stripe cache which is used for 
+# synchronising all write operations to the array and all read operations if 
+# the array is degraded.  The default is 256.  Valid values are 17 to 32768.
+# Increasing this  number can increase performance in some situations, at some 
+# cost in system memory.  Note, setting this value too high can result in an 
+# "out of memory" condition for the system.
+#
+# memory_consumed = system_page_size * nr_disks * stripe_cache_size
+/sys/block/md0/md/stripe_cache_size
+
+# This is only available on RAID5 and RAID6.
+# This variable sets the number of times MD will service a full-stripe-write 
+# before servicing a stripe that requires some "prereading".  For fairness 
+# this defaults to 1.  Valid values are 0 to stripe_cache_size.  Setting 
+# this to 0 maximizes sequential-write throughput at the cost of fairness to 
+# threads doing small or random writes.
+/sys/block/md0/md/preread_bypass_threshold
+
+# This  tells  md  to  start  all  arrays in read-only mode.
+/sys/module/md_mod/parameters/start_ro
+
+# This module parameter allows special arrays (SEE md(4)) to be started at boot time:
+/sys/module/md_mod/parameters/start_dirty_degraded
+
+
+
+= See also =
+helpprocfs helpdevices
+__envHEREDOC__
+}
+helpsleep_suspend_and_hibernate(){
+cat <<'__envHEREDOC__'
+uswsusp
+
+Description: tools to use userspace software suspend provided by Linux
+
+This package (also known as µswsusp, suspend-utils or simply suspend) contains the programs 
+to use the userspace software suspend facility available in Linux kernels 2.6.17-rc1 and
+higher. It allows the system to have its state saved to disk and be powered off. On 
+restarting, it will be put back in the state it was left in (this is sometimes called hibernation). 
+
+It also includes a program to suspend the system to RAM after the state is saved to disk. In 
+that state, the system still uses power, but resuming is faster. If the battery depletes, the state 
+is resumed from disk without data loss. 
+
+s2ram --test
+s2ram
+__envHEREDOC__
+}
+helpbashseq(){
+cat <<'__envHEREDOC__'
+echo {1..9}                                                                                                                            
+1 2 3 4 5 6 7 8 9                                                                                                                                          
+echo {9..3}
+9 8 7 6 5 4 3
+
+echo {a..r}}                                                                                                                       
+a} b} c} d} e} f} g} h} i} j} k} l} m} n} o} p} q} r}                                                                                                      
+echo {a..r}
+a b c d e f g h i j k l m n o p q r
+
+ascii ' '
+<gives info about the SPACE ascii character>
+
+i 0xffff
+<prints in decimal, hexadecimal, octal and as ASCII characters (if printable)>
+__envHEREDOC__
+}
+helpansiblehosts(){
+cat <<'__envHEREDOC__'
+== Specifying / Limiting ==
+# All hosts using wildcard, except for one:
+restarthosts1='vm-dss:vm-rsnapshot:vm-hdp23-a*:!vm-hdp23-a1'
+restarthosts2='vm-hdp23-a1'
+
+* regex usage
+~(web|db).*\.example\.com
+__envHEREDOC__
+}
+helpansible(){
+cat <<'__envHEREDOC__'
+= Modules with the "ansible" binary =
+ansible ${h}:proxy-vm-centos6-hdp13-a-template -l sparks_deb_shared:sparks_rhel_shared  -m ping
+ansible $h -l sparks_rhel_shared  -m ping --list-hosts
+ansible hadoopcl\* -m ping
+ansible \* -i hadoopcl08-hadoopcl12.txt -m ping
+
+# Executes the hostname command on remote box:
+ansible $h -l sparks_rhel_shared  -m command --args "hostname"
+proxy-vm-centos6-hdp13-a-template | success | rc=0 >>
+vm-centos6-hdp13-a-template
+
+# Gather and print Facts for a remote box:
+ansible $h -l sparks_rhel_shared  -m setup
+
+# Inspecting the gathered Facts for a remote box:
+ansible $h -l sparks_rhel_shared  -m setup --args "filter=ansible_fqdn"
+
+# runs apt-get dist-upgrade on hosts contained in sparks_deb_shared:
+ansible $h -l sparks_deb_shared  -m apt -a "upgrade=dist"  -vvvv --sudo
+
+# Bounces hosts:
+ansible $h -l sparks_deb_shared  -m command -a "/sbin/reboot"   --sudo
+ansible $h -m command -a "init 6" --sudo
+
+# Sets machines hostname
+ansible $h  -m hostname -a "name=the.new.hostname"
+
+ansible $h -m win_ping
+# Gets dumb mswin updates
+ansible $h -m win_updates -a "category_names='SecurityUpdates'"
+ansible $h -m win_updates -a "category_names='CriticalUpdates'"
+ansible $h -m win_updates -a "category_names='UpdateRollups'"
+ansible $h -m win_updates -a "category_names='DefinitionUpdates'"
+
+= ansible-doc =
+ansible-doc --list
+ansible-doc [--snippet] <module>
+ansible-doc shell
+
+= See also =
+* [https://gist.github.com/marktheunissen/2979474 Insanely complete Ansible playbook, showing off all the options]
+* [http://www.stavros.io/posts/example-provisioning-and-deployment-ansible/ An example of provisioning and deployment with Ansible - Stavros' Stuff]
+* [https://github.com/lorin/ansible-quickref lorin/ansible-quickref] - ** GREAT list of all those extra task options that are possible **
+* [http://stackoverflow.com/questions/27805976/resolve-dictionary-key-or-parameter-variable-in-ansible resolve dictionary key or parameter variable in Ansible] - successfully determines value of variable that uses / depends on a just previously defined variable, all within the same "vars" section.
+
+__envHEREDOC__
+}
+helpansibleplaybook(){
+#= Playbook content-related =
+cat <<'__envHEREDOC__'
+== cmdln parameters ==
+ansible-playbook ...
+-C, --check  - don't make any changes; instead, try to predict some of the changes that may occur
+--check - dont actually do the tasks(unless task has "always_run: true"), try to predict some of the changes that may occur
+--inventory-file - can specify an *executable file* now! (default /etc/ansible/hosts)
+--list-hosts  - be hosts listing...
+--list-tasks  - be tasks listing...
+--sudo  - executes remote operations with sudo
+--start-at-task='Check if a reboot is required'  - would start at task with "name: Check if a reboot is required"
+--step
+--syntax-check
+-v - normal verbosity mode, -vvv for more, -vvvv to enable connection debugging
+
+== Execute something locally/on the Ansible host ==
+: src : http://docs.ansible.com/playbooks_delegation.html#local-playbooks
+# To run an entire playbook locally, on the Ansible host, specify --connection=local when calling a playbook resembling:
+- name: a play that runs entirely on the ansible host
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+  - name: check out a git repository
+    git: repo=git://foosball.example.org/path/to/repo.git dest=/local/path
+# (It's also possible to run a specific play localally within a larger playbook that includes plays that should be executed as normally)
+
+: src : http://docs.ansible.com/playbooks_delegation.html#delegation-rolling-updates-and-local-actions
+# If you just want to run a single task on your Ansible host, you can use local_action to specify that a task should be run locally:
+  - local_action: git repo=git://foosball.example.org/path/to/repo.git dest=/local/path
+
+# (the synopsys of local_action is like)
+  - local_action: module_to_use [module params [...]]
+
+# Alternatively, to run a task locally:
+sudo: yes
+tasks:
+  - git: repo=git://foosball.example.org/path/to/repo.git dest=/local/path
+    sudo: no  # would probably not want sudo (because SSH keys) if private git repository configured like this.
+    delegate_to: 127.0.0.1
+
+== Condition execution of a task (based on your own VARIABLE defn) ==
+vars:
+- timezone: 'America/New_York'
+tasks: 
+  - name: Set value of the variable- current_zone (whichll be interrogated at next task)
+    shell: awk -F\" '{ print $2}' /etc/sysconfig/clock
+    register: current_zone
+    # controls what defines an Ansible "change" as far as playbook execution status's are concerned:
+    changed_when: False
+  
+  - name: (current system timezone != the above defined $timezone) -> (Make it be the above defined $timezone)
+    file: src=/usr/share/zoneinfo/{{ timezone }}  dest=/etc/localtime state=link force=yes
+    when: current_zone.stdout != '{{ timezone }}'
+
+== Condition execution of a task (based on gathered Facts) ==
+tasks:
+  - debug: msg="this might be CentOS 6"
+    when: "{{ ansible_distribution_major_version | int }} == 6" 
+  - debug: msg="this might be CentOS 7"
+    when: "{{ ansible_distribution_major_version | int }} > 6" 
+
+  - set_fact: snmp_group="wheel" 
+    when: ansible_os_family == 'RedHat'
+  - set_fact: snmp_group="snmp" 
+    when: ansible_os_family == 'Debian'
+
+  # Setting this fact allows you to them use 'service' module in a generic way, e.g. service: name={{ntpservice}} state=stopped
+  - set_fact: ntpservice="ntpd" 
+    when: ansible_os_family == 'RedHat'
+  - set_fact: ntpservice="ntp" 
+    when: ansible_os_family == 'Debian'
+
+== Condition continued execution of a playbook upon task failure threshold ==
+: src : http://docs.ansible.com/playbooks_delegation.html#maximum-failure-percentage
+- hosts: webservers
+  # If more than 3 of the 10 servers inthe group fail, the rest of the play is aborted:
+  max_fail_percentage: 30
+  serial: 10
+
+== Tagging a task ==
+# To run a tagged task, specify the tag to the --tags= param.
+# Alternatively, to skip a tagged task use --skip-tags= param.
+  - command: echo example
+    tags: [configuration,timezone]
+
+== User-defined granularity over when (and where, if desired) a task executes ==
+: src : http://docs.ansible.com/playbooks_delegation.html#run-once
+# To run a task one time on the first host, as defined by inventory:
+hosts: webservers
+tasks:
+  - script: update_app_on_host_frozen-windex.sh
+    run_once: true
+# or on a specific host:
+    delegate_to: frozen-windex.example.org
+
+# The above is a more concise and cleaner approach compared to something like:
+  - script: update_app_on_host_frozen-windex.sh
+    when: inventory_hostname == webservers[0]
+
+# Says to run task even when --check was specified
+  - script: test.sh 
+    always_run: True
+
+
+== Other/misc. ==
+
+__envHEREDOC__
+}
+helpansibleplaybookvariable(){
+cat <<'__envHEREDOC__'
+inventory_hostname - this will be the value of the current machine as specified by your inventory (/etc/ansible/hosts)
+  In other words, it is not determined by a value from the remote machine in any way (/etc/hosts, cname, etc.).
+
+: src : http://docs.ansible.com/playbooks_variables.html
+  - set_fact: hiveuserpassword="{{ lookup('password', hiveuserpasswordfilepath + ' length=15') }}"
+    when: generate_passwords=='yes'
+  - debug: msg="hiveuserpassword is {{ hiveuserpassword }}"
+  - user: name=hiveuserpasswordtest password={{ hiveuserpassword }}
+
+  - shell: /usr/bin/foo
+    register: foo_result
+    ignore_errors: True
+  - shell: /usr/bin/bar
+    when: foo_result.rc == 5
+
+  - name: add home dirs to the backup spooler
+    file: path=/mnt/bkspool/{{ item }} src=/home/{{ item }} state=link
+    with_items: home_dirs.stdout_lines
+    # same as with_items: home_dirs.stdout.split()
+    # or even with_items:
+    #           - netcat
+    #           - curl
+    #           - tmux
+
+=== Skip fact gathering ===
+hosts: all
+gather_facts: no
+
+=== Lookups ===
+: src : http://docs.ansible.com/playbooks_lookups.html
+
+# Password-management-related: Creates the account phifedawg with password atribecalledquest::
+# First, use this python cmdln snippet to obtain a string used thereafter:
+python -c 'import crypt; print crypt.crypt("atribecalledquest", "$1$SomeSalt$")'
+# ^^generated:
+$1$SomeSalt$iF1zSVy0JhijVfk9yubdN.
+# Now, can use the user module to create the account and set the password to this:
+  - user: shell=/bin/bash password=$1$SomeSalt$iF1zSVy0JhijVfk9yubdN. name=phifedawg
+
+# lookup('csvfile', 'key arg1=val1 arg2=val2 ...')
+  - debug: msg="The atomic mass of Lithium is {{ lookup('csvfile', 'Li file=elements.csv delimiter=, col=2') }}"
+
+  - debug: msg="{{ lookup('pipe', 'uuidgen') }}"
+  - debug: msg="{{ lookup('pipe', 'date +"%Y%m%d_%H%M%S"') }}"
+  - debug: msg="{{ lookup('env','HOME') }} is an environment variable"
+  - debug: msg="{{ lookup('pipe','date') }} is the raw result of running this command"
+
+# redis_kv lookup requires the Python redis package
+  - debug: msg="{{ lookup('redis_kv', 'redis://localhost:6379,somekey') }} is value in Redis for somekey"
+
+# dnstxt lookup requires the Python dnspython package
+  - debug: msg="{{ lookup('dnstxt', 'example.com') }} is a DNS TXT record for example.com"
+
+  - debug: msg="{{ lookup('template', './some_template.j2') }} is a value from evaluation of this template"
+  - debug: msg="{{ lookup('etcd', 'foo') }} is a value from a locally running etcd"
+
+# Concatenates the file /etc/motd to the variable motd_value:
+vars:
+  motd_value: "{{ lookup('file', '/etc/motd') }}"
+
+# {{ var | quote}} is useful esp when parameters are being passed to like a shell script and, if you were calling it directly on cmdln, would need to be quoted.
+# Synopsis for parse-block.sed.sh: parse-block.sed.sh beginning-marker ending-marker [path]
+  - shell: ./files/parse-block.sed.sh {{ some_string_containing_spaces | quote }} {{ end_with_more_spaces | quote }} {{ hosts_file_path | quote }}  >  {{ generated_hosts_file_database_output_path | quote }}
+
+# Debug/Dump a variable ( e.g.   register: reboot_hint ):
+- name: What's in reboot_hint?
+  debug: var=reboot_hint
+
+# Dump all variables (assumes dumpall has been installed, a non-standard thing)
+$ cat dumpall.yml 
+# ansible-playbook $this -l $hosts
+---
+- hosts: aneyays
+  roles:
+       - { role: f500.dumpall, dumpall_host_destination: /tmp/examine-the-aneyays-host }
+
+# Defining and using ansible host/inventory variables in plays
+: (considered a _role_ variable when setting custom kv pairs, but can use access it regardless of implementation of role-based plays) conditionals in plays.
+: this approach can be used to define both simple flags and kv-pairs.
+Inventory file contains:
+wmavm-hdp23-a1-dred   im_a_flag
+wmavm-hdp23-a2-dred   im_a_key=thevalue
+
+Playbook can contain:
+- whatevermodule: msg="oh hai im wmavm-hdp23-a1-dred"
+  when: im_a_flag is defined
+- whatevermodule: msg="oh hai im wmavm-hdp23-a2-dred"
+  when: im_a_key is defined and im_a_key == "thevalue"
+
+- include: tasks/sometasks.yml
+  when: im_a_key is defined and im_a_key == "thevalue"
+
+
+=== See also ===
+* http://docs.ansible.com/playbooks_loops.html#looping-over-parallel-sets-of-data
+* http://docs.ansible.com/playbooks_loops.html#looping-over-integer-sequences
+* http://docs.ansible.com/playbooks_loops.html#random-choices
+__envHEREDOC__
+}
+helpansibleyaml(){
+cat <<'__envHEREDOC__'
+/calling helpansibleplaybook2()/
+__envHEREDOC__
+   helpansibleplaybook2
+}
+helpansibleplaybook2(){
+cat <<'__envHEREDOC__'
+---
+- name: Basic playbook, also shows how YAML syntax can express the same Ansible thing in 2 very different ways.
+  hosts: all
+  tags: [tag,your,it]
+  vars:
+    - thekey: "and the value"
+  tasks:
+    - git: repo=git@git.example.com:repos/scripts.git dest=/tmp/scripts
+      sudo: False  # other valid values: false, true, yes, no
+
+    - debug: msg="the above can also be written like..."
+    - git:
+      repo: git@git.example.com:repos/scripts.git
+      dest: /tmp/scripts
+      sudo: False
+__envHEREDOC__
+}
+helpansiblemodule(){
+cat <<'__envHEREDOC__'
+
+== Module: lineinfile ==
+# Add a line to a file if it does not exist, without passing regexp:
+- command: touch /tmp/testfile
+- lineinfile: dest=/tmp/testfile line="192.168.1.99 foo.lab.net foo"
+
+- lineinfile: dest=/etc/profile line="export JAVA_HOME=/usr/java/default"
+- lineinfile: dest=/etc/profile line="export PATH=$JAVA_HOME/bin:$PATH"
+- lineinfile: dest=/etc/environment line="JAVA_HOME=/usr/java/default"
+
+
+__envHEREDOC__
+}
+helpansiblemodule_blockinfile(){
+cat <<'__envHEREDOC__'
+The "blockinfile" module is not a standard module.
+
+The "blockinfile" module works like the (standard) "lineinfile" module but
+allows to operate on multi-line blocks of text instead of just one.
+
+To install:
+ansible-galaxy install yaegashi.blockinfile
+
+which will create:
+/etc/ansible/roles/yaegashi.blockinfile/
+
+and will contain:
+/etc/ansible/roles/yaegashi.blockinfile/library/blockinfile
+
+so to obtain this module:
+cp -p /etc/ansible/roles/yaegashi.blockinfile/library/blockinfile library/
+
+where the destination library is the desired library.
+
+To use in a playbook, it should be picked up automatically if the library/
+dir is a sibling to the playbook being executed.  Otherwise, it should always
+work when the library/ path is specified. For example, to read the ansible-doc
+for blockinfile module:
+ansible-doc -M library/ blockinfile
 __envHEREDOC__
 }
 
 
 
+
+helpafs(){
+cat <<'__envHEREDOC__'
+== Login using kerberos ==
+kinit username && aklog
+
+== information ==
+"vos listpart bhouse.tcreech.com" you can see that we've got just the one
+"vos listpart dozer.tcreech.com" has 3 partitions on a few zpools
+
+"vos partinfo dozer.tcreech.com" shows the sizes
+
+
+== regarding AFS space ==
+you can always put something in a volume backed only by bump if you want
+
+some stuff is already like that
+
+from anywhere in the world on any AFS client you can query stuff like this though
+"vos listvol bhouse.domain.com" will list all of the volumes on bump
+and how much space they represent.  this includes readonly clones and backups though
+
+to see actual space used/available you can 
+"vos partinfo $server"
+e.g., vos partinfo bhouse.domain.com
+
+
+or if you just know a path and want AFS to figure out which volume/host/partition it's on you can ask with "fs"
+
+fs diskfree -human /afs/.domain.com/shared/path
+Volume Name                   total      used     avail %used
+path                         748.7G    592.1G    156.6G   79%
+
+fs version  # shows version
+
+
+# To restart the fs server from any machine that you're authenticated on:
+bos restart bhouse.domain.com fs
+# although it didn't seem to actually update the IP in the volume database.
+# that shoudl normally do it but on bump i force it to use your public 
+# address in a file: /usr/afs/local/NetInfo
+# since otherwise it only knows the private NATted address. so i need to update that first.
+
+
+# Primary Volume Database Server election
+It will take AFS a while to be convinced that dzr is down and vote for a new primary volume database server.
+I guess we shoudl just wait a bit.
+Kind of fun to watch the two remaining servers slowly figure out 1) dzr is gone, and 2) who shoudl be the new boss?
+Can piece it together by watching "udebug tutti.domain.com vlserver ; udebug tuba.domain.com vlserver".
+So far theyr'e both voting for my server here in the apartment.
+But haven't actually switched to it.
+Wonder if they're waiting for a 3rd vote from dzr and will eventually give up.
+
+
+== TODO STUB backing up AFS data ==
+TODO : get im's from tim that were from like... within last few days to within last few weeks.
+its about what is the best way to backup afs content.
+
+
+== Create a Volume on a New Partition ==
+# Assuming you are doing this on a ZFS-enabled system, create and mount the new vice partition:
+sudo zfs create -o mountpoint=/vicebX zpool/vicebX  # where X is the next alpha in use for this system.
+
+# Now youve got to tell afs about it.  maybe this requires restarting fs service...
+"bos status bhouse.tcreech.com" will tell you that the fs server is running
+(hooray)
+if you run "bos restart bhouse.tcreech.com fs" then it will restart the fs server
+can do that from anything, like a laptop or something
+then "vos partinfo bhouse.tcreech.com" should know about the "b" partition
+
+
+# Now create the volume:
+vos create -server bhouse.tcreech.com -partition /vicepb -name shared.tv.$i;
+# ^^this will create the Volume as you expect, but it's not mounted anywhere.
+
+# Now, to corrolate this Volume with an actual path on a usable filesystem
+# e.g. how to associate /afs/tcreech.com/shared/tv/Adam Ruins Everything/ with shared.tv.$i[.*] used in the vos cmd?
+
+# You actually store mount points to Volumes /IN/ other Volumes, like in the Filesystem.
+# To create a mountpoint, you could do something like
+fs mkmount -dir /afs/.tcreech.com/shared/tv/simpsons -vol shared.tv.jeopardy
+
+# Then you have to Release shared.tv in order for the mountpoint to show up in the RO version of shared.tv, at /afs/tcreech.com/shared/tv/
+it's a bit tricky cuz there can be multiple mountpoints of the same volume
+and the mountpoints are treated exactly the same way as regular files in terms of their RO/RW parent volumes
+
+i'll warn that $i needs to be relatively short see "man vos_create", under the "-name" option
+it says the max length is 22 characters
+i forget if that includes the .readonly/.backup suffixes)
+
+since there is a relatively small limit for the total volume name length
+the command to add a RO copy (which you can do at the beginning before fs mkmount) would be like
+vos addsite -server bhouse.tcreech.com -partition b -id shared.tv.jeopardy
+that would wind up creating a shared.tv.jeopardy.readonly
+which is sort of a copy on write snapshot of shared.tv.jeopardy
+
+
+forgot to mention
+you might learn the "fs setacl" and "fs listacl" commands
+to ensure that when you create new directories the permissions are kosher
+
+in a nutshell, the ACLs do what you'd expect, except they're ONLY on directories
+files just get the ACL of whatever directory they're in 
+
+that's why you end up sometimes with stilly stuff in AFS like /afs/athena.mit.edu/contrib/bitbucket/README.bitbucket/README.bitbucket
+the README.bitbucket directory only exists to make it so that people can't delete the README.bitbucket file
+
+
+
+= See also =
+helpomnios*
+man: bos
+man: fs
+man: vos - Introduction to the vos command suite
+__envHEREDOC__
+}
+helpsystemd(){
+cat <<'__envHEREDOC__'
+= Init Services =
+# Init scripts (now called "units" or "unit-files" or "unit" or something) are now represented by
+# .conf files within these directories (may be symbolic links, these two...):
+/lib/systemd/system/
+/etc/init/
+
+= Logging =
+# systemd has its own logging system called the journal.
+
+# E.g. the logs for the docker daemon can be viewed using:
+journalctl -u docker
+journalctl -u ntpd
+
+= See also =
+helpsystemctl
+__envHEREDOC__
+}
+helpxdotool(){
+cat <<'__envHEREDOC__'
+Simulate/automate keyboard presses:
+
+# used to enter password on a w7 login screen displayed within vncviewer:
+xdotool getactivewindow type 'jijijijij password ayyy lmao'
+
+# other misc
+xdotool key alt+Tab
+xdotool key "Return"
+__envHEREDOC__
+}
+helpchmod(){
+cat <<'__envHEREDOC__'
+== set user or group ID on execution (s) bit ==
+chmoduser=nobody
+chmodgroup=devops
+pathtochange=/opt/coolcode/
+
+sudo groupadd $chmodgroup
+sudo usermod -a -G $chmodgroup user, etc.
+
+sudo find $pathtochange -type d               -exec chmod 2775  '{}' \;  # ug+rwx, o=rx, g+s
+sudo find $pathtochange -type f   -executable -exec chmod  775  '{}' \;  # ug+rwx, o=rx
+sudo find $pathtochange -type f ! -executable -exec chmod  664  '{}' \;  # ug+rw,  o=r
+
+sudo chown -R $chmoduser:$chmodgroup $pathtochange
+
+# the above will result in files looking something like:
+drwxrwsr-x 3 nobody devops  20 Jan 23 23:23 somedirectory
+-rwxrwxr-x 1 nobody devops 356 Jan 23 23:23 script.sh 
+-rw-rw-r-- 1 nobody devops 356 Jan 23 23:23 somefile.txt
+__envHEREDOC__
+}
+helpiftop(){
+cat <<'__envHEREDOC__'
+= AFS processes =
+sudo iftop -f 'port afs3-callback'
+__envHEREDOC__
+}
+helppulseaudio(){
+cat <<'__envHEREDOC__'
+pacmd list-sinks
+
+__envHEREDOC__
+}
+helphdparm(){
+cat <<'__envHEREDOC__'
+The man page is pretty straight forward but, here are some things Ive ran...
+# show the APM level, basically how loud the hdd can be:
+sudo hdparm -B /dev/sdb
+
+# set the APM level to the lowest/quietest/lowest power use:
+sudo hdparm -B 1 /dev/sdb
+
+# set the activity timeout before the hdd spins down, to 5s:
+sudo hdparm -S 1 /dev/sdb
+
+# disable the activity timeout:
+sudo hdparm -S 0 /dev/sdb
+
+# Check the current IDE power mode status, which will always be one of unknown (drive does not support this command), active/idle (normal operation), standby (low power mode, drive has spun down), or sleeping (lowest power mode, drive is completely shut down).
+sudo hdparm -C /dev/sdb
+__envHEREDOC__
+}
+helppostgres(){
+cat <<'__envHEREDOC__'
+\l+  - shows list of databases along with Owner,Encoding,Collate,Ctype,Access privileges,Size,Tablespace,Description
+\t   - switches tuples on and off.
+\d   - shows tables?
+\dl  - ?
+
+# Remove a user
+REVOKE ALL ON DATABASE "database" FROM "user OR role";
+DROP USER "user OR role";
+
+# Define custom privileges for a user within a database:
+SET ROLE dba;
+GRANT CONNECT ON DATABASE database TO me!!;
+\connect database;
+SET ROLE dba;
+CREATE USER "user" WITH PASSWORD 'password';
+GRANT CONNECT ON DATABASE database TO "user";
+GRANT INSERT ON TABLE some_table TO "user";
+GRANT SELECT ON TABLE some_other_table TO "user";
+
+= See also =
+helppostgresgettingstarted
+__envHEREDOC__
+}
+helppostgresgettingstarted(){
+cat <<'__envHEREDOC__'
+# After fresh installation, become this user in order to initialize a dba role:
+sudo su - postgres
+
+# with the following pg_hba.conf...
+   ## "local" is for Unix domain socket connections only
+   local   all   postgres                               ident
+   ## IPv4 local connections:
+   host    all   postgres         127.0.0.1/32          ident
+   ## IPv6 local connections:
+   host    all   postgres         ::1/128               ident
+   
+   #local  all  ambari,mapred md5
+   host  all   all           0.0.0.0/0  md5
+
+# can login as postgres user with: 
+psql
+
+# otherwise, login as a dba user with:
+psql  --password dba -h `hostname`
+
+# newdb and user commands:
+#execute:
+SET ROLE "dba";
+#execute:
+CREATE ROLE "database" NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOLOGIN; 
+CREATE ROLE "user" NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT LOGIN ENCRYPTED PASSWORD 'password'; 
+GRANT "database" TO "user"; 
+CREATE DATABASE "database" WITH OWNER="user"; 
+#REVOKE ALL ON DATABASE "database" FROM "public";
+REVOKE CONNECT ON DATABASE "database" FROM "public";
+GRANT ALL ON SCHEMA "public" TO "user" WITH GRANT OPTION;
+GRANT CONNECT ON DATABASE "database" TO "user";
+#ALTER ROLE "user" ON DATABASE "database" WITH SUPERUSER;
+#ALTER DEFAULT PRIVILEGES FOR USER "user" IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON tables TO "user";
+
+#CREATE USER readonly  WITH ENCRYPTED PASSWORD 'readonly';
+#GRANT USAGE ON SCHEMA public to readonly;
+#ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO readonly;
+#
+#GRANT CONNECT ON DATABASE "database" to readonly;
+#\c database
+#GRANT USAGE ON SCHEMA public to readonly;
+#GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO readonly;
+#GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
+__envHEREDOC__
+}
+helppsql(){
+cat <<'__envHEREDOC__'
+/calling helppostgres()/
+__envHEREDOC__
+helppostgres
+}
+helpjavascript(){
+cat <<'__envHEREDOC__'
+echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readable format.
+__envHEREDOC__
+}
+helpjson(){
+cat <<'__envHEREDOC__'
+/calling helpjavascript()/
+__envHEREDOC__
+	helpjavascript
+}
+helpsystemctl(){
+cat <<'__envHEREDOC__'
+systemctl (or) systemctl list-unit-files --type=service (or) 
+ls /lib/systemd/system/*.service /etc/systemd/system/*.service
+# Like ls /etc/init.d/
+Used to list the services that can be started or stopped 
+Used to list all the services and other units
+
+systemctl                  # By itself, stuff about services.
+systemctl --all            # Other stuff about services.
+systemctl list-units       # Like service --status-all ?
+
+systemctl list-unit-files  # Like chkconfig --list !
+systemctl list-unit-files --type=service (or) ls /etc/systemd/system/*.wants/
+Print a table of services that lists which runlevels each is configured on or off
+
+ls /etc/systemd/system/*.wants/frobozz.service   # Like chkconfig <svc> --list
+
+systemctl disable <svc>    # Like chkconfig <svc> off
+systemctl ...DNE.......    # Like chkconfig <svc> --delete
+systemctl enable <svc>     # Like chkconfig <svc> on 
+systemctl daemon-reload    # Like chkconfig <svc> --add
+
+
+
+systemctl cat <svc>        # Like cat /etc/init.d/<svc> ?
+systemctl is-enabled <svc> # Like chkconfig <svc> # See if its enabled to run at boot.
+
+systemctl stop <svc>       # Like service <svc> stop
+systemctl start <svc>      # Like service <svc> start
+systemctl restart <svc>    # Like service <svc> restart
+systemctl condrestart <svc># Like service <svc> condrestart
+systemctl reload <svc>     # Like service <svc> reload
+systemctl status <svc>     # Like service <svc> status
+
+systemctl list-dependencies <svc>           # What does this svc depend on?
+systemctl list-dependencies <svc> --reverse # What depends on this svc?
+
+
+= After stopping, service comes back =
+If youve 
+systemctl stop <svc>
+and then 
+systemctl status <svc>
+a bit later and the service is back to running
+TODO STUB: what to do?
+
+systemctl disable <svc>
+systemctl stop <svc>
+anope. ITS STILL FUCKING RUNNING!  Dood, why cannot I find *anything* about this on google?  Ive had this issue multiple times on multiple machines for a varying degree of different applicatuions/services....
+
+the only brute force/hammer (instead of scalpel) way i know how to solve this is:
+* uninstall the responsible package, or
+* move the .conf file associated with the service/unit somewhere else.
+
+
+
+
+= See also =
+helpsystemctl2 helpsystemctl3
+helpsystemd
+helpchkconfig
+journalctl
+__envHEREDOC__
+}
+helpsystemctl2(){
+cat <<'__envHEREDOC__'
+# On a CentOS Linux release 7.2.1511 (Core) system...
+sudo systemctl --version
+systemd 219
++PAM +AUDIT +SELINUX +IMA -APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ -LZ4 -SECCOMP +BLKID +ELFUTILS +KMOD +IDN
+
+cancel                               -- Cancel all, one, or more jobs
+cat                                  -- Show the source unit files and drop-ins
+daemon-reexec                        -- Reexecute systemd manager
+daemon-reload                        -- Reload systemd manager configuration
+default                              -- Enter system default mode
+delete                               -- Remove one or more snapshots
+disable                              -- Disable one or more unit files
+edit                                 -- Edit one or more unit files
+emergency                            -- Enter system emergency mode
+enable                               -- Enable one or more unit files
+exit                                 -- Ask for user instance termination
+get-default                          -- Query the default target
+halt                                 -- Shut down and halt the system
+help                                 -- Show documentation for specified units
+hibernate                            -- Hibernate the system
+hybrid-sleep                         -- Hibernate and suspend the system
+is-active                            -- Check whether units are active
+is-enabled                           -- Check whether unit files are enabled
+is-failed                            -- Check whether units are failed
+isolate                              -- Start one unit and stop all others
+is-system-running                    -- Query overall status of the system
+kexec                                -- Shut down and reboot the system with kexec
+kill                                 -- Send signal to processes of a unit
+link                                 -- Link one or more units files into the search path
+list-dependencies                    -- Show unit dependency tree
+list-jobs                            -- List jobs
+list-sockets                         -- List sockets
+list-timers                          -- List timers
+list-unit-files                      -- List installed unit files
+list-units                           -- List units
+mask                                 -- Mask one or more units
+poweroff                             -- Shut down and power-off the system
+preset                               -- Enable/disable one or more unit files based on preset configuration
+reboot                               -- Shut down and reboot the system
+reenable                             -- Reenable one or more unit files
+reload                               -- Reload one or more units
+reload-or-restart                    -- Reload one or more units if possible, otherwise start or restart
+reload-or-try-restart  force-reload  -- Reload one or more units if possible, otherwise restart if active
+rescue                               -- Enter system rescue mode
+reset-failed                         -- Reset failed state for all, one, or more units
+restart                              -- Start or restart one or more units
+set-default                          -- Set the default target
+set-environment                      -- Set one or more environment variables
+show                                 -- Show properties of one or more units/jobs or the manager
+show-environment                     -- Dump environment
+snapshot                             -- Create a snapshot
+start                                -- Start (activate) one or more units
+status                               -- Show runtime status of one or more units
+stop                                 -- Stop (deactivate) one or more units
+suspend                              -- Suspend the system
+switch-root                          -- Change root directory
+try-restart            condrestart   -- Restart one or more units if active
+unmask                               -- Unmask one or more units
+unset-environment                    -- Unset one or more environment variables
+__envHEREDOC__
+}
+helpsystemctl3(){
+cat <<'__envHEREDOC__'
+# On a CentOS Linux release 7.2.1511 (Core) system...
+sudo systemctl --version
+systemd 219
++PAM +AUDIT +SELINUX +IMA -APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ -LZ4 -SECCOMP +BLKID +ELFUTILS +KMOD +IDN
+
+--after                    -- Show units ordered after
+--all                  -a  -- Show all units/properties, including dead/empty ones
+--before                   -- Show units ordered before
+--fail                     -- When queueing a new job, fail if conflicting jobs are pending
+--failed                   -- Show only failed units
+--force                -f  -- When enabling unit files, override existing symlinks. When shutting down, execute action immediately
+--full                 -l  -- Dont ellipsize unit names on output
+--global                   -- Enable/disable unit files globally
+--help                 -h  -- Show help
+--host                 -H  -- Operate on remote host
+--ignore-dependencies      -- When queueing a new job, ignore all its dependencies
+--ignore-inhibitors    -i  -- When executing a job, ignore jobs dependencies
+--irreversible             -- Mark transactions as irreversible
+--kill-who                 -- Who to send signal to
+--lines                -n  -- Journal entries to show
+--no-ask-password          -- Do not ask for system passwords
+--no-block                 -- Do not wait until operation finished
+--no-legend                -- Do not print a legend, i.e. the column headers and the footer with hints
+--no-pager                 -- Do not pipe output into a pager
+--no-reload                -- When enabling/disabling unit files, dont reload daemon configuration
+--no-wall                  -- Dont send wall message before halt/power-off/reboot
+--output               -o  -- Change journal output mode
+--plain                    -- When used with list-dependencies, print output as a list
+--privileged           -P  -- Acquire privileges before execution
+--property             -p  -- Show only properties by specific name
+--quiet                -q  -- Suppress output
+--reverse                  -- Show reverse dependencies
+--root                     -- Enable unit files in the specified root directory
+--runtime                  -- Enable unit files only temporarily until next reboot
+--show-types               -- When showing sockets, show socket type
+--signal               -s  -- Which signal to send
+--state                    -- Display units in the specifyied state
+--system                   -- Connect to system manager
+--type                 -t  -- List only units of a particular type
+--user                     -- Connect to user service manager
+--version                  -- Show package version
+__envHEREDOC__
+}
+helpopenssl(){
+cat <<'__envHEREDOC__'
+openssl ciphers # shows supported ciphers
+
+various cipher formats/names for the same actual cipher:
+https://www.openssl.org/docs/manmaster/apps/ciphers.html
+
+
+= s_server : useful for debugging =
+= s_client : useful for debugging =
+openssl s_client --help
+openssl s_client -connect hostname:port
+
+Im not positive, but I think this might be the way to connect using a specific cipher... should double check though:
+openssl s_client -state -host host -port 443 -cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA
+openssl s_client -state -host host -port 443 -cipher DES-CBC3-SHA
+openssl s_client -state -host host -port 443 -cipher DES-CBC3-SHA
+openssl s_client -state -host host -port 443 -cipher DHE-RSA-DES-CBC3-SHA
+openssl s_client -state -host host -port 443 -cipher AES128-SHA256
+
+== See also ==
+helpnmap
+__envHEREDOC__
+}
+helpssl(){
+cat <<'__envHEREDOC__'
+/calling helpopenssl()/
+__envHEREDOC__
+   helpopenssl
+}
+helpapg(){
+cat <<'__envHEREDOC__'
+apg - generates several random passwords  # (search string matching; ignore: passwd)
+
+apg -m 8 -x 8
+__envHEREDOC__
+}
+helpgeneratepasswords(){
+cat <<'__envHEREDOC__'
+/calling helpapg()/
+__envHEREDOC__
+	helpapg
+}
+helppasswordgeneration(){
+cat <<'__envHEREDOC__'
+/calling helpapg()/
+__envHEREDOC__
+	helpapg
+}
+helpvideo(){
+cat <<'__envHEREDOC__'
+# Get a video files run length/duration time:
+ffprobe  -show_format  inputfile 2>&1  | grep -i duration | sed 's/.*=//')
+# Looped:
+# first, have to change the shells IFS variable (see helpIFS), then can execute:
+for i in $( find . -type f -size +100M ) ; do
+   echo $i
+   ffprobe -show_format $i 2>&1 | grep -i duration | sed 's/.*=//'
+done > video-runtime-lengths.txt
+
+== See also ==
+helpmkvmerge
+helphandbrake
+__envHEREDOC__
+}
+helpmkvmerge(){
+cat <<'__envHEREDOC__'
+# Merge a bunch of auto-split videos (like what you would get if you were forced to
+# record onto the most cat rapey filesystem still in use today that we should have 
+# f*#$%^& abandoned in like 2000):
+mkvmerge -o joined-peanuckle-video.mp4.mkv  peanuckle-video1.mp4 + peanuckle-video2.mp4 + ...
+
+__envHEREDOC__
+}
+helphandbrake(){
+cat <<'__envHEREDOC__'
+Transcode a video (e.g. from high quality to much lower for use on less powerful machine/device):
+
+Transcode a whole bunch of videos:
+
+__envHEREDOC__
+}
+helpglances(){
+cat <<'__envHEREDOC__'
+fucking python/pip/glances-installation problems
+
+pip install -U pip setuptools
+or might be
+sudo /usr/local/bin/pip install -U pip setuptools
+
+__envHEREDOC__
+}
 
 
 
@@ -5311,3 +7698,4 @@ unset -f _help6 _help7_vars_interpretted
 # CLEAN UP THIS FILE.  AREAS OF INTEREST::
 # grep --line-number '`' .functions.sh
 
+#32 up
