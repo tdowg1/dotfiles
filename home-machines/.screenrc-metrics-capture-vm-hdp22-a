@@ -1,32 +1,0 @@
-# custom screenrc 'execute stuff' help src:
-# 
-#
-# source default/base screenrc config
-source $HOME/.screenrc
-
-
-#
-# begin .screenrc-gitdevel specific shtuff
-# (NOTE: the c-M character says to execute statement (presses ENTER))
-screen -t "~"
-stuff "echo hai"
-
-screen -t "cpu"
-stuff "/opt/coolcode/operating-system-metrics/capture/cpu.sh > /opt/log/cpu.log &"
-screen -t "disk"
-stuff "/opt/coolcode/operating-system-metrics/capture/disk.sh xvdd > /opt/log/disk.log &"
-screen -t "network"
-stuff "/opt/coolcode/operating-system-metrics/capture/network.sh eth0 > /opt/log/network.log &"
-screen -t "ram"
-stuff "/opt/coolcode/operating-system-metrics/capture/ram.sh > /opt/log/ram.log &"
-
-
-#screen -t ""
-#stuff "cd $HOME/dev/git/"
-
-
-select 1
-
-#screen -t ""
-#stuff "cd $TOMCAT_HOME"
-#stuff ""
