@@ -1,0 +1,27 @@
+# example custom tmux.conf file.
+# can be called like: 
+# tmux new-session -d -s dummy  # only need to execute if there are no other tmux sessions already created.
+# tmux source-file ~/.tmux.conf-custom-example  # now, create a session based on $this config file
+rename-session custom-example
+
+new -n home
+send-keys 'echo welcome to the custom example' C-m
+
+new-window -n emacs
+send-keys 'echo we use vim up in here, aww sawwy emacs' C-m
+send-keys 'vim /tmp/turn-up-for-me' C-m
+
+new-window -n puppet
+send-keys 'which puppet' C-m
+
+new-window -n haskell
+send-keys 'cd /tmp' C-m
+send-keys 'ls -ltra' C-m
+
+new-window -n python
+send-keys 'python' C-m
+
+selectw -t 0
+selectw -t 1
+selectw -t 3
+

@@ -1,0 +1,53 @@
+# can be called like: 
+# tmux new-session -d -s dummy  # only need to execute if there are no other tmux sessions already created.
+# tmux source-file $ZOMG_DOTFILES/.tmux.conf-session-shazam  # now, create a session based on $this config file
+rename-session shazamprimary
+
+new -n rdsk
+send-keys 'cd ~/tmp' C-m
+
+neww -n d
+send-keys 'pydf' C-m
+send-keys 'pydf' C-m
+send-keys 'pydf' C-m
+send-keys 'pydf' C-m
+send-keys 'pydf' C-m
+send-keys 'pydf' C-m
+
+neww -n f
+send-keys 'free -m' C-m
+send-keys 'free -m' C-m
+send-keys 'free -m' C-m
+send-keys 'free -m' C-m
+send-keys 'free -m' C-m
+
+
+
+neww -n vibf
+send-keys 'vibf'
+
+neww -n git 
+send-keys 'cdgit' C-m
+
+neww -n /e/hosts
+send-keys 'sudo vim /etc/hosts' 
+
+neww -n rsyc
+send-keys 'cdgit' C-m
+send-keys 'rsync -av coolcode vm-hdp22-c1:automated-backup/  --delete -n'
+
+
+#neww -n 
+#send-keys '' C-m
+#neww -n 
+#send-keys '' C-m
+#neww -n 
+#send-keys '' C-m
+#neww -n 
+#send-keys '' C-m
+#send-keys '' C-m
+
+
+
+selectw -t 4
+

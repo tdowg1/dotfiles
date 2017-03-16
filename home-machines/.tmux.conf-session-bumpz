@@ -1,0 +1,61 @@
+# window0: "tmp"
+# * cd ~/tmp
+# 
+# window1: "tv"
+# * cd /afs/tcreech.com/shared/tv
+# 
+# window2: "tv"
+# * cd /afs/tcreech.com/shared/tv
+# 
+# window3: "tmp"
+# * cd ~/tmp
+# 
+# window4: "flows"
+# * exec flowstat -i 1
+# 
+# window5: "a107"
+# * cd /mnt/a107/fs1
+# 
+# window6: "a108"
+# * cd /mnt/a108/fs1
+# 
+# window7: "df"
+# * exec zpool list
+# 
+# window8: "exec"
+# * cd /mnt/a108/fs1/afs-local-mirror
+
+
+# example custom tmux.conf file.
+# can be called like: 
+# tmux new-session -d -s dummy  # only need to execute if there are no other tmux sessions already created.
+# tmux source-file $ZOMG_DOTFILES/.tmux.conf-session-bumpz  # now, create a session based on $this config file
+rename-session bumpz
+
+new -n tmp
+send-keys 'cd ~/tmp' C-m
+neww -n tv
+send-keys 'cd /afs/tcreech.com/shared/tv' C-m
+neww -n tv
+send-keys 'cd /afs/tcreech.com/shared/tv' C-m
+neww -n tmp
+send-keys 'cd ~/tmp' C-m
+
+neww -n flows
+send-keys 'flowstat -i 1' C-m
+
+neww -n a107
+send-keys 'cd /mnt/a107/fs1' C-m
+neww -n a122
+send-keys 'cd /mnt/a122/fs1' C-m
+
+neww -n df
+send-keys 'exec zpool list' C-m
+
+neww -n exec
+send-keys 'cd /mnt/a117/fs1/afs-local-copy' C-m
+
+
+
+selectw -t 4
+
