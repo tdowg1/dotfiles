@@ -15,9 +15,9 @@
 #===============================================================================
 #PS4='[${LINENO}]+'
 #typeset -ft $(typeset +f)
+#set -o xtrace
 #set -o errexit
 set -o nounset                              # Treat unset variables as an error
-#set -o xtrace
 
 f_usage(){
    local scriptname="$( basename "$0" )"
@@ -62,22 +62,22 @@ fi
 ARGC="$#"
 while [[ "$1" = -* ]] ; do
    case $1 in
-      --pidfile) # specified like: --pidfile /tmp/mypidfile
+      --pidfile) # specified like: --key value
          pid_file=$2
          shift 2
-         ;;  
-      --pidfile=?*) # specified like: --pidfile=/tmp/mypidfile
+         ;;
+      --pidfile=?*) # specified like: --key=value
          pid_file=${1#--pidfile=}
          shift
-         ;;  
-      --force) # no-value arg / flag
+         ;;
+      --force) # no-value arg / flag ; specified like: --key
          force="force"
          shift
-         ;;  
+         ;;
       *)  
         echo "ERROR case matched wildcard"
         f_usage
-        ;;  
+        ;;
    esac
 done
 
@@ -103,21 +103,25 @@ done
 # A perhaps improved upon version of the previous while loop block?
 while [ "$#" -gt "0" ] ; do
    case $1 in
-      -B) # specified like: --pidfile /tmp/mypidfile
-         BLOCKSIZE=$2
-         shift 2
-         ;;  
-      --block-size=?*) # specified like: --pidfile=/tmp/mypidfile
+      --block-size=?*) # specified like: --key=value
          BLOCKSIZE=${1#--block-size=}
          shift
-         ;;  
-      --block-size) # specified like: --pidfile /tmp/mypidfile
+         ;;
+      #-b) # specified like: -k value
+      #   BLOCKSIZE=$2
+      #   shift 2
+      #   ;;
+      -b|--block-size) # specified like: -k value, or like: --key value
          BLOCKSIZE=$2
          shift 2
-         ;;  
-      -u|--usage|-h|--help) # specified like: --key
+         ;;
+      -q|--quiet) # specified like: -k, or like: --key
+         ISQUIET="TRUE"
+			shift
+         ;;
+      -u|--usage|-h|--help) # specified like: -k, or like: --key
          f_usage
-         ;;  
+         ;;
       *) # if user input didn't match any of the prior flags, 
          # going to assume it's the starting path. A sanity 
          # check will be performed after all cmdln args parsed.
@@ -139,25 +143,19 @@ if [[ $? != 0 ]] ; then
 fi
 
 
-if [[ $? != 0 ]] ; then
-   echo "ERROR: $source_filesystem must be a mountpoint"
-   f_usage
-fi
-
 
 #
 # VARIABLE PARAMS/INITIALIZATION AND SANITY CHECKING
 #====================================================================
 #
+# vars to define if not defd; think "<cfparam=*..."
+: ${ISQUIET:="FALSE"}
 : ${ISFORCED:="FALSE"}
-# required to be defined by now; think "<cfparam=* required=yes..."
-
-: ${TEMPDIR2:?ERROR: not specified}
-: ${HOME:?ERROR: HOME variable must be set}
-
-# vars to set if not set; think "<cfparam=*..."
 : ${TEMPDIR:=/tmp}
 
+# required to be defined by now; think "<cfparam=* required=yes..."
+: ${TEMPDIR2:?ERROR: not specified}
+: ${HOME:?ERROR: HOME variable must be set}
 
 # e.g. ../amazondev/runsparqlizerODSE.sh
 : ${PATH_TO_RUNNER_SCRIPT:? "ERROR: --path-to-runner-script is required"}
@@ -165,16 +163,31 @@ fullPathToRunnerScript="$( f_getfullpath "${PATH_TO_RUNNER_SCRIPT}" )"
 
 
 #
-# FUNCTIONS
+# FUNCTIONS AND ANY OTHER PRE-MAIN
 #====================================================================
 #
-fIsIgnored(){
+f_control_c(){
+   # c-c was entered.
+   #echo -en "\n*** Ouch! Exiting ***\n"
+   exit 1
+}
+
+# trap keyboard interrupt (control-c)
+trap f_control_c SIGINT
+
+
+f_IsIgnored(){
    file="$1"
    grep "$file" ignore  >/dev/null  2>&1
    [[ $? = 0 ]] && echo 'true' && return
    echo 'false'
 }
 
+
+#if [ -n "${ISQUIET}" ] ; then
+if [ x"${ISQUIET}" = x"TRUE" ] ; then
+    exec &>/dev/null
+fi
 
 
 #
