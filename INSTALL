@@ -36,7 +36,14 @@ ln -s ../../dotfiles/home-machines/htoprc
 
 * setup Vundle bundler (for vim)
 >>>
-git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
+~~~git clone  http://github.com/gmarik/vundle.git  ~/.vim/bundle/vundle/
+
+# for existing repos that need cleanup:
+rm -rf home-machines/.vim/bundle/vundle
+<continue with new pristine repos steps...>
+# for new pristine repos:
+git submodule init home-machines/.vim/bundle/vundle
+git submodule update --init home-machines/.vim/bundle/vundle
 <<<
 
 * (NOT RECOMMENDED) optionally, get a diff: determine which dotfiles were not installed to home directory:
