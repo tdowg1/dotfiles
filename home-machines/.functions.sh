@@ -4415,17 +4415,21 @@ __envHEREDOC__
 }
 helpvisudo(){
 cat <<'__envHEREDOC__'
-Make visudo use vim NOT nano:
+Make visudo use vim NOT nano (see also: helpvim)
 sudo update-alternatives --config editor
 
+
 This entry, initially appears to be what you want...
+bmore-sun-reporter ALL=NOPASSWD: ALL
 
-<TODO STUB>
+...but there _IS_ a difference between ^^that and this:
+bmore-sun-reporter ALL=(ALL) NOPASSWD: ALL
 
-However, if need to exec things as different users, that is other than root,
-  i.e. sudo -u bmore-sun-news-guy  echo "China Threatens Drama if Obama Meets the Dalai Lama"
-it wont work.  Use instead:
-bmore-sun-worker-gui  ALL=(ALL) NOPASSWD: ALL
+One difference is that the former is unable to run the specified command as a user other than root.
+IOW, if need to exec things as different users (sans root)...
+  e.g. sudo -u bmore-sun-reporter  echo "China Threatens Drama if Obama Meets the Dalai Lama"
+  e.g. sudo -u hdfs hdfs dfsadmin -report
+...it wont work.
 __envHEREDOC__
 }
 helpusermod(){
