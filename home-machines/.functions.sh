@@ -1498,7 +1498,7 @@ __envHEREDOC__
 
 helpvim(){
 	cat <<'__envHEREDOC__'
-STOP IT, NANO! (use vim by default): couple of options::
+STOP IT, NANO! (use vim by default (see also: helpvisudo)): couple of options::
 $ select-editor
 $ sudo apt-get purge nano
 
