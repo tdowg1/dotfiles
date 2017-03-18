@@ -1386,38 +1386,45 @@ $ [[ $diskCount > 99 ]] && rename "$disk" "$disk"0 "$disk"??
 == Rename v2 (regex) ==
 -----------------------
 $ rename -v 's/\ HEAD//' intelduo\ bookmarks-201*
-intelduo bookmarks-2012-01-12 HEAD.json renamed as intelduo bookmarks-2012-01-12.json
-intelduo bookmarks-2012-01-13 HEAD.json renamed as intelduo bookmarks-2012-01-13.json
+intelduo bookmarks-2012-01-12 HEAD.json RENAMED AS intelduo bookmarks-2012-01-12.json
+intelduo bookmarks-2012-01-13 HEAD.json RENAMED AS intelduo bookmarks-2012-01-13.json
 
 $ rename -v 's/2005/2005 [ISBN 159159159X]/' book\ of\ eli\ 2005.pdf
-book of eli 2005.pdf renamed as book of eli 2005 [ISBN 159159159X].pdf
+book of eli 2005.pdf RENAMED AS book of eli 2005 [ISBN 159159159X].pdf
 
 $ rename -v 's/\.bak$//' *.bak    # Strips the extension from all "*.bak" files.
-le-file.txt.bak renamed as le-file.txt
+le-file.txt.bak RENAMED AS le-file.txt
 
 $ rename -v 'y/A-Z/a-z/' *           # Translate uppercase names to lower.
 
 $ rename -v 's/(\....$)/__insert-txt-at-4-positions-from-the-end__$1/' le-file.txt
-le-file.txt renamed as le-file__insert-txt-at-4-positions-from-the-end__.txt
+le-file.txt RENAMED AS le-file__insert-txt-at-4-positions-from-the-end__.txt
 
 # Zero-pad image files:
 $ rename -v 's/-(\d)-/-00$1-/' *.jpg
-wasacomadago232-9-lg.jpg renamed as wasacomadago232-009-lg.jpg
+wasacomadago232-9-lg.jpg RENAMED AS wasacomadago232-009-lg.jpg
 
 # Insert todays (ISO) date to the beginning (of all matching file names):
 $ rename -v "s//$( date +'%Y-%m-%d' ) /" [0-9]*.*
-127.18 renamed as 2013-05-31 127.18
-17.94 renamed as 2013-05-31 17.94
+127.18 RENAMED AS 2013-05-31 127.18
+17.94  RENAMED AS 2013-05-31 17.94
 
 # Append '.pdf' to the end (of all matching file names):
 $ rename -v 's/(.*)/$1.pdf/' [0-9]*.*
-2013-05-31 127.18 renamed as 2013-05-31 127.18.pdf
-2013-05-31 17.94 renamed as 2013-05-31 17.94.pdf
+2013-05-31 127.18 RENAMED AS 2013-05-31 127.18.pdf
+2013-05-31 17.94  RENAMED AS 2013-05-31 17.94.pdf
 
 # Move text from end to beginning:
 $ rename -v -n 's/^(.*)-(2013-\d\d-\d\d)$/$2-$1/' the-name-2013-10-29
-the-name-2013-10-29 renamed as 2013-10-29-the-name
+the-name-2013-10-29 RENAMED AS 2013-10-29-the-name
+
 $ rename -v 's/^(.*)(2013-\d\d-\d\d).pdf$/$2_bge.$1$2.pdf/' -n *pdf  # for monthly statements
+
+# Replace auto-enumerated filename with absolute filename:
+$ rename -n -v 's/hdp13-a./hdp13-a1/' *-a[^1]\).png
+2013-06-25-CHOSEN)_(on_vm-centos6-hdp13-a2).png RENAMED AS 2013-06-25-CHOSEN)_(on_vm-centos6-hdp13-a1).png
+2013-06-25-n_vm-centos6-hdp13-a3).png           RENAMED AS 2013-06-25-n_vm-centos6-hdp13-a1).png
+2013-06-25-on_vm-centos6-hdp13-a7).png          RENAMED AS 2013-06-25-on_vm-centos6-hdp13-a1).png
 __envHEREDOC__
 }
 
