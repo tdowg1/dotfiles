@@ -6067,8 +6067,8 @@ ipmitool sdr     # Print Sensor Data Repository entries and readings. temperatur
 ipmitool sensor  # Similar to sdr, but with more data.
 immitool fru     # Prints nfo about the sensors.
 
-ipmitool sunoem fan speed 0   # Sets fan speed to 0% (avg 3900RPM), 400w.
-ipmitool sunoem fan speed 100 # Sets fan speed to 0% (avg 7900RPM), 550w.
+ipmitool sunoem fan speed 0   # Sets fan speed to 0%  ; avg 3900RPM; <base wattage>w
+ipmitool sunoem fan speed 100 # Sets fan speed to 100%; avg 7900RPM; <base wattage>w+150w
 
 ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN THIS!
 
