@@ -27,3 +27,20 @@ erm...^this not working... maybe have to do the following in additon to the abov
 
 $ cd ~/dotfiles/home-machines && git add .vim/bundle
 
+also seems to work:
+
+$ cd ~/dotfiles
+rm -rf home-machines/.vim/bundle/vundle
+git submodule init home-machines/.vim/bundle/vundle
+git submodule update --init home-machines/.vim/bundle/vundle
+
+if still having probs, go into repo and see whats up:
+
+cd ~/dotfiles/home-machines/.vim/bundle/vundle
+# should be on the master branch:
+git status
+# if not or says like HEAD detached, switch back to master:
+git checkout master
+# also ensure got the latest:
+git pull
+
