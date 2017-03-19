@@ -24,6 +24,9 @@
 # 
 # window8: "exec"
 # * cd /mnt/a108/fs1/afs-local-mirror
+# 
+# window9: "vim"
+# * cd /mnt/a108/fs1/afs-local-mirror
 
 
 # example custom tmux.conf file.
@@ -33,7 +36,7 @@
 rename-session bumpz
 
 new -n tmp
-send-keys 'cd ~/tmp' C-m
+send-keys 'cd ~/tmp; kinit && aklog' C-m
 neww -n tv
 send-keys 'cd /afs/tcreech.com/shared/tv' C-m
 neww -n tv
@@ -55,7 +58,8 @@ send-keys 'exec zpool list' C-m
 neww -n exec
 send-keys 'cd /mnt/a117/fs1/afs-local-copy' C-m
 
+#neww -n zList
+#send-keys 'date; zpool list' C-m
 
 
 selectw -t 4
-
