@@ -6060,7 +6060,7 @@ __envHEREDOC__
 
 
 # TODO STUB: Determine better function names... or remove these entirely.
-# Solaris-like operating system help texts
+# Solaris-like operating system help texts would be more precise, methinks
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info.
@@ -6091,12 +6091,14 @@ pkg contents -t file smartmontools  # list the full file paths of package files,
 prtconf | grep Mem # like free; prints physical memory size
 vmstat         # like free.... sort of?... am not pleased lol
 vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
-init 5         # like init 0
-shutdown -y -i5 -g0 # (use this to turn machine OFF) like init 0
+
+shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0
 shutdown -y -g 0 -i 0 # does NOT turn machine off and power off (just stops OS apparently).
+init 5         # like init 0 (well, at least on Solaris proper, I think this is true, but does NOT turn machine off and power off)
 init 1         # like init 1
 init 4         # like init 2-5*  ( *=normal states )
 init 6         # like init 6
+
 psrinfo -vp    # like less /proc/cpuinfo
 isainfo -x     # like arch
 
@@ -6270,16 +6272,20 @@ sudo flowadm add-flow -t -l e1000g0 -a transport=udp,local_port=7005 afs3-volser
 
 # network information on network devices: 
 dladm show-link
-dladm show-linkprop e1000g0
+dladm show-linkprop e1000g0   # Show ethernet link speed.
 ipadm show-ifprop
 ipadm show-if e1000g0
 
 # restart networking:  see also http://wiki.openindiana.org/oi/Static+IP
-sudo svcadm restart svc:/network/physical:default
+sudo svcadm restart svc:/network/physical:default   # Restart the network.
 __envHEREDOC__
 }
 
 #/TODO STUB
+
+
+
+
 
 
 helpnetcat(){
