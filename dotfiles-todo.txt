@@ -1,0 +1,36 @@
+
+COMPLETE figure out wtf is up with that fucking vundle sub repo
+COMPLETE deal with git stashies within primary dotfiles repo on shazam...
+
+deal with changes made to dotfiles on bump
+
+
+
+NEW non-repo fixup'ing SHIT::
+
+deal with "dotfiles--to-add" text file on newjack
+
+dotfiles under webserver path files/linux/*
+
+when in a git working copy, on shazam, i get a nice supporting bash prompt...
+* but on newjack i dont. whats the settings for that?
+* after figuring it out on newjack, try to reproduce on bump (im not optimistic itll work there though)
+* lol and weirdly, this looks better on newjack than shazam (the branch text is colored blue):
+    [ teelah@newjack ~/dotfiles/home-machines ]$ bra -v
+    * master 06bdcc7 [origin/master] misc dotfile changes (shazam)
+    [ bdavies@shazam ~/dotfiles-merging/home-machines (master $=) ]$ bra -v
+    * master 06bdcc7 [origin/master] misc dotfile changes (shazam)
+
+
+
+change terminal prompt colors (vibv) for newjack...
+
+aliases
+logp
+logs
+logps
+^^pretty sure have these. also want:
+logsp
+
+
+
