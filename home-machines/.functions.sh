@@ -2661,8 +2661,11 @@ __envHEREDOC__
 }
 helpbash(){
 cat <<'__envHEREDOC__'
-== modulus/modulo to get random sleep time within 10s ==
+== modulus/modulo to get random sleep time within 0,10s ==
 sleep $(( $RANDOM % 10 ))
+
+# Alternatively, can specify a lower bound, e.g. at least 15s but not more than 45s:
+sleep $( clac.py "15 + $(( $RANDOM % 30 ))" )
 
 loopcounter=0
 while true ; do
