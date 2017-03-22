@@ -133,3 +133,16 @@ if filereadable(hostfile)
   exe 'source ' . hostfile
 endif
 
+
+" make ':W' ':WQ' ':Wq' ':Q' ':Qa' ':QA' actually do
+" stuffs:
+:command W w
+:command WQ wq
+:command Wq wq
+:command Q q
+":command Q! q!
+:command Qa qa
+:command QA qa
+":command Qa! qa
+":command QA! qa!
+
