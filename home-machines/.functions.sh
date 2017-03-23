@@ -7085,6 +7085,37 @@ cat <<'__envHEREDOC__'
       sudo: False
 __envHEREDOC__
 }
+helpansibleplaybook3(){
+cat <<'__envHEREDOC__'
+== superuser access to a machine but as a different user (authenticated with password and with a sudo password) but user has your key and you want to create your own account ==
+# update as applicable: /etc/ansible/hosts or /etc/ansible/hosts.2
+# update as applicable: /etc/hosts
+# update as applicable: ~/.ssh/config
+# update as applicable: ~/active-nodes-list.txt
+
+me=somebody
+remoteuser=somebodyelse
+
+host="ansible_hosts_set"
+host_limits="-l $host"
+# or
+host_limits="-l $host  -i /etc/ansible/hosts.2"
+host_and_user_and_key_args="$host_limits  -u $remoteuser -k --ask-sudo-pass"
+
+# TIP: useful to get password in paste buffer since will be prompted multiple times.
+
+sudo sed -i 's/^pipelining = True/pipelining = False/g' /etc/ansible/ansible.cfg
+ansible-playbook user-account-management-tasks.yml --tags $me $host_and_user_and_key_args
+ansible-playbook sudoers.yml $host_and_user_and_key_args  -e accounts='["'$me'"]'
+sudo sed -i 's/^pipelining = False/pipelining = True/g' /etc/ansible/ansible.cfg
+
+# now can exec as myself:
+host_and_user_and_key_args="$host_limits"
+
+ansible-playbook sshd_config-update.yml $host_and_user_and_key_args
+ansible-playbook ssh_config-update.yml $host_limits 
+__envHEREDOC__
+}
 helpansiblemodule(){
 cat <<'__envHEREDOC__'
 
