@@ -1523,7 +1523,7 @@ http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
 :[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
 :%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar' starting at ln1
 :.,$s/foo/bar/g                     # Find each occurrence of 'foo', and replace it with 'bar' starting from curr location
-
+\c                                  # CASE INSENSITIVE searching
 :colorscheme slate
 UNDO REDO (:help undo)
 Note that (somewhat confusingly) U is undo-able with u.
