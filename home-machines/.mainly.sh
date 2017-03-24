@@ -178,5 +178,6 @@ fi
 
 fSourceIfThere "$ZOMG_DOTFILES/.aliases.sh"
 fSourceIfThere "$ZOMG_DOTFILES/.functions.sh"
+fSourceIfThere "$ZOMG_DOTFILES/.git-prompt.sh"
 fSourceIfThere "$ZOMG_DOTFILES/.variables.sh"
 

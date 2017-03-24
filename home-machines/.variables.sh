@@ -95,33 +95,15 @@ export COLOR_GRAY='\e[0;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 
 
+OLDPS1="$PS1"
+#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+#PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
+export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
 
-
-# Git preferences and hacks (/etc/bash_completion.d/git)
-if [[ -f /etc/bash_completion.d/git ]] ; then
-	source /etc/bash_completion.d/git
-
-	# test to see if /etc/bash_completion.d/git is even being sourced
-	# POSSIBLE BUG by calling "env".  should probably be calling "set" which displays all functions.  env doesnt show functions on some os's and thats what is being tested here by the call to grep:
-	env | grep __gitdir 2>&1 >/dev/null
-	if [[ $? = 0 ]] ; then
-		# ok it is.
-		PREV_PS1="$PS1"
-		#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-                #PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
-                export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
-
-		GIT_PS1_SHOWDIRTYSTATE=true
-		GIT_PS1_SHOWSTASHSTATE=true
-		GIT_PS1_SHOWUNTRACKEDFILES=true
-		GIT_PS1_SHOWUPSTREAM="auto"
-	else
-		echo "/etc/bash_completion.d/git exists but doesn't seem to have been sourced by your env"
-	fi
-     else
-        #PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
-        export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w \[\e[0;31m\]]\$\[\e[0m\] '
-fi
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM="auto"
 
 
 # Python
