@@ -7717,6 +7717,11 @@ sudo /usr/local/bin/pip install -U pip setuptools
 
 __envHEREDOC__
 }
+helpxlsclients(){
+cat <<'__envHEREDOC__'
+xlsclients - list client applications running on a display (x11 related)
+__envHEREDOC__
+}
 
 
 
