@@ -1676,8 +1676,9 @@ __envHEREDOC__
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
-* do - Get changes from other window into the current window.
-* dp - Put the changes from current window into the other window.
+* do - Get block changes from other window into the current window.
+* dp - Put the block changes from current window into the other window.
+* c-v - visual mode to select the line(s) desired, after which, command ":diffput" or ":diffget"
 NEXT/PREVIOUS CHANGE
 * ]c - Jump to the next change.
 * [c - Jump to the previous change.
@@ -7137,6 +7138,10 @@ The "blockinfile" module is not a standard module.
 
 The "blockinfile" module works like the (standard) "lineinfile" module but
 allows to operate on multi-line blocks of text instead of just one.
+
+ TODO STUB: THIS DOESN'T SEEM LIKE THE CORRECT WAY OR I DON'T KNOW HOW TO PROPERLY USE THE MODULE AFTER INSTALLATION
+ but i def know, in order to see the documentation (ansible-doc blockinfile), when I do the following, it works. but
+ I'd like to know the proper intended way to install/use galaxy modules...
 
 To install:
 ansible-galaxy install yaegashi.blockinfile
