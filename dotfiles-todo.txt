@@ -23,7 +23,14 @@ when in a git working copy, on shazam, i get a nice supporting bash prompt...
 
 
 
-change terminal prompt colors (vibv) for newjack...
+change terminal prompt colors (vibv) for...
+* <color ideas>: that bright green on like default mint 
+* newjack: 
+* bump: silvery, brand colors
+* phi: purpley
+* intel: bluey
+* ipoowid: 
+
 
 aliases
 logp
