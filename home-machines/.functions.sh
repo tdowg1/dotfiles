@@ -5800,7 +5800,7 @@ zpool remove     - Removes specified device from the pool. Currently, only perta
 zpool detach     - Detaches device from a mirror. Operation is refused if there are no other valid replicas of the data.
 zpool destroy    - Destroys the pool.
 
-zpool clear
+zpool clear      - When errors occur (should become a fault or degrade), once resolved, clears the error status of that zpool
 zpool labelclear - Removes ZFS label information from the specified device.
 
 zpool get all
@@ -5814,7 +5814,6 @@ zfs get origin   - For cloned file systems or volumes, the snapshot from which t
 
 zpool events [-v]   - UNDOCUMENTED.
 zpool history [-il] - Displays internally logged zfs events.
-
 __envHEREDOC__
 }
 helpzfs2(){
