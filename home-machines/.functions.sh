@@ -5636,7 +5636,9 @@ hive> DESCRIBE FORMATTED [db_name.]table_name column_name PARTITION (partition_s
 
 See https://cwiki.apache.org/confluence/display/Hive/StatsDev#StatsDev-ExistingTables for more information about the ANALYZE TABLE command.
 
-beeline -u 'jdbc:hive2://vm-hdp23-d1.wmanalytics.io:10000/default;principal=hive/_HOST@WMANALYTICS.IO'
+beeline -u 'jdbc:hive2://hostname:10000/default;principal=hive/_HOST@DOMAIN.COM'
+beeline -u 'jdbc:hive2://'
+
 __envHEREDOC__
 }
 helpambari(){
