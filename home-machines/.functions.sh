@@ -349,12 +349,22 @@ greptxtfiles(){
 grepdotfiles(){
 	# SYNOPSYS grepdotfiles SINGLE-STRING-SEARCH-QUERY
 	local searchquery="$1"
-        # TODO STUB: exclude files with trailing ~ characters.
+        # TODO STUB: exclude files with trailing ~ characters as well as things within a git repo's .git/ directory.
 	local searchpath="$ZOMG_DOTFILES"
 
 	#greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
 	greptxtfiles "$searchquery" "$searchpath" 
 	#greptxtfiles "$searchquery" "$searchpath"  |  grep -v "$( basename "$specialignorecase" )" | grep "$searchquery"
+}
+grepinstfiles(){
+	# SYNOPSYS grepinstfiles SINGLE-STRING-SEARCH-QUERY
+	local searchquery="$1"
+	local searchpath="$dbi"
+
+	#greptxtfiles SINGLE-STRING-SEARCH-QUERY SEARCH-PATH
+	#greptxtfiles "$searchquery" "$searchpath" 
+        # try limit search to just text files:
+        find "$searchpath" -type f -size -10M  -print0 | xargs -0 grep --with-filename -i "$searchquery" | grep -i "$searchquery"
 }
 
 
