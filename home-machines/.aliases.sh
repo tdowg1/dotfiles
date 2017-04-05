@@ -196,6 +196,7 @@ alias gitcommitauto='git commit -m "auto commit"'
 alias gitcommitautoa='git commit -m -a "auto commit"'
 alias gitcommitmisc='git commit -m "misc dotfile changes ($HOSTNAME)"'
 alias gitcommitmisca='git commit -m -a "misc dotfile changes ($HOSTNAME)"'
+alias pps='git pull ; git push ; git status'
 alias gitupstreamUrl='git config --list | grep remote.origin.url'
 
 alias br='git branch'
