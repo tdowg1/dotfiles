@@ -6703,11 +6703,16 @@ cat /proc/net/bonding/bond0
 cat /proc/net/vlan/config
 cat /proc/sys/fs/file-max  - global file limit (check local limits with ulimit -Hn and ulimit -Sn)
 
-echo level 0 > /proc/acpi/ibm/fan - fan off
-echo level 2 > /proc/acpi/ibm/fan - low speed
-echo level 4 > /proc/acpi/ibm/fan - medium speed
-echo level 7 > /proc/acpi/ibm/fan - maximum speed
-echo level auto > /proc/acpi/ibm/fan - automatic (default)
+
+== Thinkpad-specific ==
+cat /proc/acpi/ibm/fan               - stats and help.
+echo level 0 > /proc/acpi/ibm/fan    - fan off (WARNING).
+echo level 2 > /proc/acpi/ibm/fan    - low speed.
+echo level 4 > /proc/acpi/ibm/fan    - medium speed.
+echo level 7 > /proc/acpi/ibm/fan    - maximum speed; 3800rpm.
+echo level full-speed > /proc/acpi/ibm/fan - 100% duty-cycle (WARNING) ?
+echo level disengaged > /proc/acpi/ibm/fan - 100% duty-cycle (WARNING) ? possible undefined behaviour.
+echo level auto > /proc/acpi/ibm/fan - automatic (default).
 
 
 = See also =
