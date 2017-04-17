@@ -2180,6 +2180,9 @@ $ nmap [-v] -p 623 192.168.1.1/24
 HTTPS/SSL/TLS-related things ( works with at least nmap-7.25BETA1-1.x86_64.rpm )
 Shows copious infomation about certificate, encryption protocols, and ciphers in use:
 $ nmap --script ssl-cert,ssl-enum-ciphers -p 6182,443,55-100 host
+ 
+Test UDP port 123 ( NTP ) is open on a host:
+sudo nmap -v -sU -p 123 host
 
 = See also =
 helpopenssl
