@@ -6709,10 +6709,10 @@ cat /proc/sys/fs/file-max  - global file limit (check local limits with ulimit -
 
 == Thinkpad-specific ==
 cat /proc/acpi/ibm/fan               - stats and help.
-echo level 0 > /proc/acpi/ibm/fan    - fan off (WARNING).
-echo level 2 > /proc/acpi/ibm/fan    - low speed.
-echo level 4 > /proc/acpi/ibm/fan    - medium speed.
-echo level 7 > /proc/acpi/ibm/fan    - maximum speed; 3800rpm.
+echo level 0 > /proc/acpi/ibm/fan    - fan off (WARNING); 0rpm.
+echo level 2 > /proc/acpi/ibm/fan    - low speed;      2500rpm.
+echo level 4 > /proc/acpi/ibm/fan    - medium speed;   3000rpm.
+echo level 7 > /proc/acpi/ibm/fan    - maximum speed;  3800rpm.
 echo level full-speed > /proc/acpi/ibm/fan - 100% duty-cycle (WARNING) ?
 echo level disengaged > /proc/acpi/ibm/fan - 100% duty-cycle (WARNING) ? possible undefined behaviour.
 echo level auto > /proc/acpi/ibm/fan - automatic (default).
