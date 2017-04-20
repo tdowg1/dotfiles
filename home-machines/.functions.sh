@@ -2973,9 +2973,12 @@ $ apt-mark unhold synergy                         # This will get applied to apt
 [Un]Hold:
 $ aptitude [un]hold synergy                       # This will NOT get applied to apt-get's db; only aptitude's.
 
-== SEARCH + SHOW PACKAGE(S) GIVEN A SEARCH STRING ==
+== SEARCH + SHOW PACKAGE(S) NFO GIVEN A SEARCH STRING ==
 $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
-$ apt-cache madison ^apache2     # See which versions of apache2 are available
+$ apt-cache madison ^apache2     # See WHICH VERSIONS of apache2 ARE AVAILABLE
+$ apt-cache showpkg apache2
+$ apt-cache policy apache2       # what does it want to upgrade to?
+$ apt-get install ansible=2.2.1.0-1ppa~precise   # install a specific version
 $ apt-get install apache2=2.2\*  # Install a specific version found in previous cmdln...
 $ apt-get install apache2=2.2.20-1ubuntu1
 $ dpkg -l 'apache2*' | grep ^i   # Check which version installed
