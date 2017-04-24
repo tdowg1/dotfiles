@@ -1987,10 +1987,15 @@ $ ssh -o "ForwardAgent=yes" remote.local
 $ ssh -D 9797 remote.local  # set up a proxy on localhost using port 9797.
 $ cssh --options "-o ForwardAgent=yes" host1 [host2 [hostN]]
 
-Connect to a commonly accessible server from a non-commonly accessible server in order to allow for creation of a tunnel:
-$ ssh -A common.server.com [-p 443] -R 7777:localhost:22
+Connect to a commonly accessible server from a non-commonly accessable server in order to allow for creation of a tunnel:
+( -R : Specifies that the given port on the remote (server) host is to be forwarded to the given host and port on the local side. )
+[you@non-commonly-accessable-server] $ ssh -A common.server.com [-p 443] -R 7777:localhost:22
 Now can connect to non-commonly accessible server from a third machine via common.server.com with:
 $ ssh -Aq common.server.com nc localhost 7777
+
+Setup a local port that connects to a remote machine:
+( -L : Specifies that the given port on the local (client) host is to be forwarded to the given host and port on the remote side. )
+ssh -A remote-machine  -L 7780:localhost:22 
 __envHEREDOC__
 }
 helpsshconfig(){
