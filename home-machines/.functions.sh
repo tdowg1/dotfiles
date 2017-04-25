@@ -1998,6 +1998,10 @@ $ ssh -Aq common.server.com nc localhost 7777
 Setup a local port that connects to a remote machine:
 ( -L : Specifies that the given port on the local (client) host is to be forwarded to the given host and port on the remote side. )
 ssh -A remote-machine  -L 7780:localhost:22 
+
+Setup a local port that RDP's to a machine only accessible on the same network as the machine to which youve ssh'd to:
+ssh -A network1-machine1  -L 7778:network1-machine2-w7:3389
+... then can RDP to: localhost:7778
 __envHEREDOC__
 }
 helpsshconfig(){
