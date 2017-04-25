@@ -1686,9 +1686,11 @@ __envHEREDOC__
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
-* do - Get block changes from other window into the current window.
-* dp - Put the block changes from current window into the other window.
-* c-v - visual mode to select the line(s) desired, after which, command ":diffput" or ":diffget"
+* do - Get BLOCK changes from other window into the current window.
+* dp - Put the BLOCK changes from current window into the other window.
+
+* c-v - to make NON BLOCK changes (more granular) go into visual mode to select the line(s) desired, followed by ":diffput" or ":diffget".
+
 NEXT/PREVIOUS CHANGE
 * ]c - Jump to the next change.
 * [c - Jump to the previous change.
