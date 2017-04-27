@@ -4975,6 +4975,11 @@ __envHEREDOC__
 }
 helpwodim(){
 cat <<'__envHEREDOC__'
+https://bugs.launchpad.net/ubuntu/+source/cdrtools/+bug/556595/comments/4
+https://bugs.launchpad.net/ubuntu/+source/cdrkit/+bug/530141/comments/5
+some ppl also claiming that wodim does not do dual layer dvd's.
+
+* 8580b51ab99fecd7c5463b0895046904be31927e
 $ wodim --devices
 
 * If dev=device is omitted and only 1 optical device exists, by default wodim will use the device.
