@@ -2037,7 +2037,8 @@ it in linux but you can do like
   ifconfig eth0 172.27.8.13 alias
 to get on a second network with the same interface."
 
-what is my ip?
+# what is my ip?
+dig +short myip.opendns.com @resolver1.opendns.com
 curl ifconfig.me             # whatismyip?
 curl icanhazip.com           # whatismyip?
 curl ident.me                # whatismyip?
@@ -4882,9 +4883,11 @@ __envHEREDOC__
 }
 helpdig(){
 cat <<'__envHEREDOC__'
-how to say to the dig command to determine an ip address of a hostname, and specify which dns server to use:
-$ dig @server name
-$ dig @dnsserver hostname
+# how to say to the dig command to determine an ip address of a hostname, and specify which dns server to use:
+dig @server name
+dig @dnsserver hostname
+
+dig +short myip.opendns.com @resolver1.opendns.com # determine current ipaddr
 __envHEREDOC__
 }
 helpidentify(){
