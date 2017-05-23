@@ -2517,6 +2517,7 @@ helpps(){
 $ ps L | sort -k2       # List format codes, sorted by rhs (rhs
                         # has many dupes, lhs has none).
 $ ps -fp $( pgrep str ) # -fp gives relevant nfo on only PIDs you want.
+$ ps fww -fp $( pgrep str ) # -fp gives relevant nfo on only PIDs you want.
 $ ps fwww $( pgrep str) # use instead of -fp if want lines to wrap.
 
 $ ps ww PID             # use if need lines to wrap.
@@ -5977,6 +5978,11 @@ $ zpool detach your_pool_name new_device  # which detaches the new device and st
 $ zpool scrub -s your_pool_name           # which stops the scrub/resilver.
 ^^^TODO STUB: mv this content elsewhere.
 
+
+2017-05-22
+# steps to remove a single device-backed zpool whose device has been physically removed but is currently shown as FAULTED:
+#  ( ran into this problem when a bad hdd locked up the os as far as storage cmds were concerened; physically removed device; bounced machine (possibly hard) ).
+zpool destroy
 __envHEREDOC__
 }
 helpzfs6sending(){
