@@ -5146,7 +5146,7 @@ __envHEREDOC__
 }
 helppdf(){
 cat <<'__envHEREDOC__'
-pdfunite pdfseparate pdfimages tiff2pdf tiff2ps
+pdfunite pdfseparate pdfimages tiff2pdf tiff2ps okular xournal
 
 PDF files too large? Try this and adjust -quality value:
 $ convert *tif -compress jpeg -quality 1 pdf.pdf
