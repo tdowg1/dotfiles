@@ -5983,6 +5983,20 @@ $ zpool scrub -s your_pool_name           # which stops the scrub/resilver.
 # steps to remove a single device-backed zpool whose device has been physically removed but is currently shown as FAULTED:
 #  ( ran into this problem when a bad hdd locked up the os as far as storage cmds were concerened; physically removed device; bounced machine (possibly hard) ).
 zpool destroy
+
+2017-05-23
+# steps to resolve:
+## state: ONLINE
+## status: One or more devices are faulted in response to IO failures.
+## errors: 8194 data errors, use '-v' for a list
+# By default, the _failmode_ property is set to _readonly_. so you can't do anything basically at this point.
+# Will need to set it to _continue_.
+zpool clear a134
+zpool status -v a134               # to list errors
+#zpool set failmode continue a134
+zfs set copies 3 a134/fs1
+
+lol bad disk still locked up system wrt disk tools concerning particular zpool :/
 __envHEREDOC__
 }
 helpzfs6sending(){
