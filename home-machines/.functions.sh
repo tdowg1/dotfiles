@@ -6141,7 +6141,29 @@ __envHEREDOC__
 #helpomnios2_cmdln_equivalents(){
 helpomnios2_equivalents(){
 cat <<'__envHEREDOC__'
-== cmdln ==
+== system start and stop cmdln ==
+shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0
+shutdown -y -i0 -g0 # does NOT turn machine off and power off (just stops OS apparently). ; POSSIBLY RESTART
+                 # ^^tried this (along with reboot -lnd) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
+
+reboot -l
+reboot -l -n     # avoids calling sync but still attempts to sync filesystems
+                 # ^^tried this and DIDNT WORK when stalled storage-related cmds for zpool.
+                 # - cannot ssh back in, however is pingable.
+
+reboot -l -n -d  # avoids calling sync (and does not attempt to sync filesystems).
+                 # ^^tried this (along with shutdown -i0) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
+
+reboot -l -q     # reboot ungracefully, without shutting down running processes first.
+
+
+init 5         # like init 0 (well, at least on Solaris proper, I think this is true, but does NOT turn machine off and power off)
+init 1         # like init 1
+init 4         # like init 2-5*  ( *=normal states )
+init 6         # like init 6
+
+
+== misc cmdln ==
 notes synopsis: omnios/solaris cmdln   # the equivalent cmdln in Linux.
 prstat         # like top
 svcs           # like service --status-all
@@ -6155,16 +6177,8 @@ prtconf | grep Mem # like free; prints physical memory size
 vmstat         # like free.... sort of?... am not pleased lol
 vmstat 5 10    # like free.... ? let it run ~30s. free ram in KiB is last number in free col.
 
-shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0
-shutdown -y -g 0 -i 0 # does NOT turn machine off and power off (just stops OS apparently).
-init 5         # like init 0 (well, at least on Solaris proper, I think this is true, but does NOT turn machine off and power off)
-init 1         # like init 1
-init 4         # like init 2-5*  ( *=normal states )
-init 6         # like init 6
-
 psrinfo -vp    # like less /proc/cpuinfo
 isainfo -x     # like arch
-
 
 # Steps to get ram usage:
 sar -r 1 1     # get number under 'freemem' column. This measurement is wrt the pagesize.
@@ -6513,6 +6527,29 @@ http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/  - GPG Cheat Sheet *** (good)
 http://www.cyberciti.biz/tips/linux-how-to-encrypt-and-decrypt-files-with-a-password.html - webpost
 http://xmodulo.com/2013/09/how-to-create-encrypted-zip-file-on-linux.html How to create an encrypted zip file on Linux - Linux FAQ
 http://xmodulo.com/2013/08/how-to-pgp-encrypt-decrypt-digitally-sign-files-via-gnupg-gui.html How to PGP encrypt, decrypt or digitally sign files via GnuPG GUI
+__envHEREDOC__
+}
+helpgpg2(){
+cat <<'__envHEREDOC__'
+Encrypting archive data on the fly
+: src : https://askubuntu.com/a/829835
+
+== symmetric ==
+==== encrypt ====
+: -c     Encrypt with a symmetric cipher using a PASSPHRASE. The default symmetric cipher used is CAST5, but may be chosen with the --cipher-algo option. 
+tar -cz dir | gpg -c -o archive.tgz.gpg
+==== decrypt ====
+gpg -d archive.tgz.gpg | tar xz
+
+
+== asymmetric ==
+==== encrypt ====
+: -e     Encrypt data (using a KEY). Optionally, this option may be combined with --symmetric (for a message that may be decrypted via a secret key or a passphrase).
+: -r     Recipient or key to use.
+tar -cvz . | gpg -e -r recipient234567 -o archive.tgz.gpg
+==== decrypt ====
+gpg -d archive.tgz.gpg | tar -xz        # to decrypt to cwd.
+gpg -o archive.tgz -d archive.tgz.gpg   # to decrypt to a standard tgz file for later unpacking.
 __envHEREDOC__
 }
 helptcpdump(){
