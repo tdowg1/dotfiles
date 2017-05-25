@@ -6679,6 +6679,9 @@ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE'   # gives p
 ec2-describe-instances <instance id> -v
 # then search for XML node <stateReason>.  There should be <code> and <message> nodes describing
 # the reason that the instance terminated, for example, VolumeLimitExceeded.
+
+== See also ==
+helpec2snippets helpaws
 __envHEREDOC__
 }
 helpec2snippets(){
@@ -6713,6 +6716,15 @@ An attempt at an improved version of [v1] from above...
 How about also getting the instance id?
 [v4] $ ec2-describe-instances --show-empty-fields  -H | grep -P '^INSTANCE|^TAG' | grep -vP '\teip\t' | grep --after-context=1 vpc-6379d406 | grep -v -- '--' | sed 'N;s/\n/\t/'  | awk '{ print $18 " " $35 " " $33 }'
 
+__envHEREDOC__
+}
+helpaws(){
+cat <<'__envHEREDOC__'
+# List of all running instance ids:
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --output json | grep -P InstanceId | awk '{ print $2 }' | sed 's/[",]//g'
+
+# List of all running instance public and private ip addrs:
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --output json | grep -P IpAddress\" | awk '{ print $2 }' | sed 's/[",]//g' | uniq
 __envHEREDOC__
 }
 helpfalcon(){
