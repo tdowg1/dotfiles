@@ -7846,6 +7846,12 @@ cat <<'__envHEREDOC__'
 xlsclients - list client applications running on a display (x11 related)
 __envHEREDOC__
 }
+helppowertop(){
+cat <<'__envHEREDOC__'
+: http://xmodulo.com/how-to-monitor-power-usage-in-linux.html
+powertop is an ncurses-based command-line tool developed by Intel to monitor process-level power consumption, and to provide suggestions to optimize power management.
+__envHEREDOC__
+}
 
 
 
