@@ -1509,6 +1509,11 @@ comment first line beginning like "mirrorlist"
 
 TODO STUB: whats the path to the files that should be deleted when yum db or whtaever gets corrupted???
 
+== Specific version of a package, Install ==
+yum --showduplicates list httpd | expand
+yum install <package name>-<version info>
+yum install java-1.8.0-openjdk-headless-1.8.0.65-2.b17.7.amzn1.x86_64
+
 = See also =
 helprpm
 __envHEREDOC__
