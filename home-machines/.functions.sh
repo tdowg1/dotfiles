@@ -5875,12 +5875,18 @@ dnamefull=a107-2787
 #dname=a107
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
-sudo zpool create \
- -o ashift=12 \  # Only if using AF/4096-byte size for physical sector disks; http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
- -m /mnt/${dname} $dname ${d}
+# Only if using AF/4096-byte size for physical sector disks; http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
+sudo zpool create -o ashift=12 -m /mnt/${dname} $dname ${d}
+# Otherwise:
+sudo zpool create              -m /mnt/${dname} $dname ${d}
+
 
 sudo zfs create ${dname}/fs1
 sudo zfs create ${dname}/iam--${dnamefull}--$( basename ${d} )
+
+sudo zpool set delegation=on $dname
+sudo zfs allow everyone readonly ${dname}/fs1
+sudo zfs allow everyone readonly ${dname}/iam--${dnamefull}--$( basename ${d} )
 
 
 == ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
@@ -6009,13 +6015,18 @@ __envHEREDOC__
 }
 helpzfs6sending(){
 cat <<'__envHEREDOC__'
-Backup an entire pool including all snapshots and properties and dedupeish:
-Create snapshot:
+# Backup an entire pool including all snapshots and properties and dedupeish:
+# Create snapshot:
 sudo zfs snapshot -r a46-467@2014-03-08_01-05-30--for-sending
 
-Do the dump:
+# Do the dump:
 time sudo zfs send -v -P  -R -D  a46-467@2014-03-08_01-05-30--for-sending  >a46-467-at-2014-03-08_01-05-30--for-sending.zfs-send-dump
 
+# Another
+dname=a122
+sname="${dname}@$( date +'%Y-%m-%d_%H.%M.%S' )"
+sudo zfs snapshot -r ${sname}
+time sudo zfs send -vPR ${sname} | sudo zfs receive -e a155
 __envHEREDOC__
 }
 
