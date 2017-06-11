@@ -5866,23 +5866,24 @@ __envHEREDOC__
 helpzfs2(){
 cat <<'__envHEREDOC__'
 == ZFS CREATION ==
-# <assumes brand new, blank drive with first partition being the id partition and second partition being blank>.
+# NOTE: assumes brand new blank drive.
 # NOTE: OmniOS (at least 5.11 omnios-8d266aa 2013.05.04) does not support this 'ashift' option.
 # NOTE: on Sun/Illumos/Omni, first call cfgadm.
 d=c7t1d0               # e.g. on Solaris.
 d=/dev/sdc             # e.g. on Linux.
 dnamefull=a107-2787
-#dname=a107
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
-# Only if using AF/4096-byte size for physical sector disks; http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
-sudo zpool create -o ashift=12 -m /mnt/${dname} $dname ${d}
-# Otherwise:
+# Only if physical 512-byte size for physical sectors.
 sudo zpool create              -m /mnt/${dname} $dname ${d}
+# Only if using AF/4096-byte size for physical sector disks: http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
+sudo zpool create -o ashift=12 -m /mnt/${dname} $dname ${d}
 
 
 sudo zfs create ${dname}/fs1
+sudo zfs set mountpoint=none ${dname}
 sudo zfs create ${dname}/iam--${dnamefull}--$( basename ${d} )
+sudo zfs set mountpoint=none ${dname}/iam--${dnamefull}--$( basename ${d} )
 
 sudo zpool set delegation=on $dname
 sudo zfs allow everyone readonly ${dname}/fs1
@@ -6023,10 +6024,26 @@ sudo zfs snapshot -r a46-467@2014-03-08_01-05-30--for-sending
 time sudo zfs send -v -P  -R -D  a46-467@2014-03-08_01-05-30--for-sending  >a46-467-at-2014-03-08_01-05-30--for-sending.zfs-send-dump
 
 # Another
-dname=a122
-sname="${dname}@$( date +'%Y-%m-%d_%H.%M.%S' )"
-sudo zfs snapshot -r ${sname}
-time sudo zfs send -vPR ${sname} | sudo zfs receive -e a155
+destinname=a155
+sourcename=a122
+snapshotname="${sourcename}@$( date +'%Y-%m-%d_%H.%M.%S' )"
+sudo zfs snapshot -r ${snapshotname}
+sudo zfs unmount $destinname
+
+# dont use this.... seemed to do weird stuff afterwards with automounting not working (try solution where destination isnt mounted):
+#time sudo zfs send -vPR ${snapshotname} | sudo zfs receive -e $destinname
+
+# same shit:
+time sudo zfs send -vP ${snapshotname} | sudo zfs receive -Fv $destinname/fs1
+
+# IN PROGRESS ; try this next(assumes destination filesystems arent mounted)::
+sudo zfs export a135 
+sudo zfs import -N a135
+time sudo zfs send -vP a134/fs1@2017-06-10_01.42.19 | sudo zfs receive -vF a135/fs1
+# receiving full stream of a123/fs1@2017-06-10_22.49.35 into a135/fs1@2017-06-10_22.49.35
+
+zfs receive -n -v  # doesn't actually receive a stream but allows to verify the name the receive operation would use.
+
 __envHEREDOC__
 }
 
