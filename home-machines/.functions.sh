@@ -2202,6 +2202,12 @@ $ nmap --script ssl-cert,ssl-enum-ciphers -p 6182,443,55-100 host
 Test UDP port 123 ( NTP ) is open on a host:
 sudo nmap -v -sU -p 123 host
 
+Find probable Linux machines on the network:
+for i in $( nmap -sP -n --osscan-guess 10.100.10.0-199 | grep "report for" | awk '{print $NF}' ) ; do
+   nc -vnw 1 $i 22 >/dev/null 2>&1
+   [[ $? = 0 ]] && echo $i is a linux box
+don
+
 = See also =
 helpopenssl
 __envHEREDOC__
