@@ -6137,6 +6137,9 @@ echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readabl
 
 # alternatively...
 >>> re.search( r' THE REGULAR EXPRESIONISMS ', paragraph, re.MULTILINE).string
+
+== See also ==
+helpvirtualenv
 __envHEREDOC__
 }
 helpalternatives(){
@@ -7892,6 +7895,15 @@ helppowertop(){
 cat <<'__envHEREDOC__'
 : http://xmodulo.com/how-to-monitor-power-usage-in-linux.html
 powertop is an ncurses-based command-line tool developed by Intel to monitor process-level power consumption, and to provide suggestions to optimize power management.
+__envHEREDOC__
+}
+helpvirtualenv(){
+cat <<'__envHEREDOC__'
+install package: python-virtualenv
+python -m virtualenv the-what-now
+cd the-what-now ; source bin/activate
+
+# at this point, can run pip (at bin/pip) and whatever and it will install pips within this virtualenv.
 __envHEREDOC__
 }
 
