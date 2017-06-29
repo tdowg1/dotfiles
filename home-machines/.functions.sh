@@ -4565,6 +4565,7 @@ __envHEREDOC__
 }
 helpman(){
 cat <<'__envHEREDOC__'
+ /usr/bin/mandb -cq
 catman   # builds windex files which are used by keyword searches, i.e. apropos === man -k.
 makewhatis
 nroff -mdoc tmux.1 | less # reading man pages without calling "man"
