@@ -5888,13 +5888,13 @@ dnamefull=a107-2787
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
 # Only if physical 512-byte size for physical sectors.
-sudo zpool create              -m /mnt/${dname} $dname ${d}
+#sudo zpool create              -m /mnt/${dname} $dname ${d}
 # Only if using AF/4096-byte size for physical sector disks: http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
-sudo zpool create -o ashift=12 -m /mnt/${dname} $dname ${d}
+sudo zpool create -f -o ashift=12 -m /mnt/${dname} $dname ${d}
 
 
 sudo zfs create ${dname}/fs1
-sudo zfs set mountpoint=none ${dname}
+#sudo zfs set mountpoint=none ${dname}
 sudo zfs create ${dname}/iam--${dnamefull}--$( basename ${d} )
 sudo zfs set mountpoint=none ${dname}/iam--${dnamefull}--$( basename ${d} )
 
