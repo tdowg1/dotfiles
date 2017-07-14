@@ -2158,14 +2158,20 @@ __envHEREDOC__
 }
 helpnetstat(){
 	cat <<'__envHEREDOC__'
-Show open connections
-	netstat -e
-Show open connections specifically for ftp
-	netstat -e | grep ftp
-Show all *T*cp ports being *L*istened to
-	netstat -tl
-Sort of like a "top" for network connections made (is not actively refreshed, new output is generated every so many seconds)
-	netstat -tcp -apc 10
+# Show open connections
+netstat -e
+# Show open connections specifically for ftp
+netstat -e | grep ftp
+# Show *T*cp ports being *L*istened to
+netstat -tl
+# Sort of like a "top" for network connections made (is not actively refreshed, new output is generated every so many seconds):
+netstat -tcp -apc 10
+
+# Show *N*umeric *T*cp ports being *L*istened to along with responsible *P*ID:
+sudo netstat -tlnp
+
+# Show *A*ll opened *N*umeric *T*cp ports:
+netstat -ant
 __envHEREDOC__
 }
 helpnslookup(){
