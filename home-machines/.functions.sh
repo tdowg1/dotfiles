@@ -6045,18 +6045,23 @@ sudo zfs unmount $destinname
 
 # dont use this.... seemed to do weird stuff afterwards with automounting not working (try solution where destination isnt mounted):
 #time sudo zfs send -vPR ${snapshotname} | sudo zfs receive -e $destinname
-
-# same shit:
+# same (dont use this):
 time sudo zfs send -vP ${snapshotname} | sudo zfs receive -Fv $destinname/fs1
 
-# IN PROGRESS ; try this next(assumes destination filesystems arent mounted)::
-sudo zfs export a135 
-sudo zfs import -N a135
-time sudo zfs send -vP a134/fs1@2017-06-10_01.42.19 | sudo zfs receive -vF a135/fs1
-# receiving full stream of a123/fs1@2017-06-10_22.49.35 into a135/fs1@2017-06-10_22.49.35
+# COMPLETE; this works correctly!::
+#  `-> methinks the big thing was... the export followed by the import *without* any kind of mounting.
+destinname=a134
+sourcename=a114
+snapshotname="${sourcename}/fs1@$( date +'%Y-%m-%d_%H.%M.%S' )"
+sudo zpool export ${destinname} 
+sudo zpool import -N ${destinname}
+time sudo zfs send -vP $snapshotname | sudo zfs receive -vF ${destinname}/fs1
+# receiving full stream of a123/fs1@2017-06-10_22.49.35 into ${destinname}/fs1@2017-06-10_22.49.35
+#   receive full stream of a114/fs1@2017-06-10_01.42.19 into          a134/fs1@2017-06-10_01.42.19
 
-zfs receive -n -v  # doesn't actually receive a stream but allows to verify the name the receive operation would use.
 
+# Doesnt actually receive a stream but ALLOWS TO VERIFY THE NAME the receive operation WOULD use:
+zfs receive -n -v
 __envHEREDOC__
 }
 
