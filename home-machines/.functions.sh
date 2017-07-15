@@ -7145,13 +7145,24 @@ inventory_hostname - this will be the value of the current machine as specified 
   - set_fact: hiveuserpassword="{{ lookup('password', hiveuserpasswordfilepath + ' length=15') }}"
     when: generate_passwords=='yes'
   - debug: msg="hiveuserpassword is {{ hiveuserpassword }}"
+
   - user: name=hiveuserpasswordtest password={{ hiveuserpassword }}
+    fail: msg="the command failed"
+    when: "'FAILED' in command_result.stderr"
 
   - shell: /usr/bin/foo
     register: foo_result
     ignore_errors: True
+
   - shell: /usr/bin/bar
     when: foo_result.rc == 5
+    failed_when: bar_result.rc not in [0,22]
+    #failed_when: bar_result.rc == 0 or bar_result.rc >= 2
+    register: bar_result
+
+  - name: fail the play if the previous command did not succeed
+    fail: msg="the command failed"
+    when: "'FAILED' in bar_result.stderr"
 
   - name: add home dirs to the backup spooler
     file: path=/mnt/bkspool/{{ item }} src=/home/{{ item }} state=link
@@ -7250,16 +7261,16 @@ cat <<'__envHEREDOC__'
   hosts: all
   tags: [tag,your,it]
   vars:
-    - thekey: "and the value"
+   - thekey: "and the value"
   tasks:
-    - git: repo=git@git.example.com:repos/scripts.git dest=/tmp/scripts
-      sudo: False  # other valid values: false, true, yes, no
+   - git: repo=git@git.example.com:repos/scripts.git dest=/tmp/scripts
+     sudo: False  # other valid values: false, true, yes, no
 
-    - debug: msg="the above can also be written like..."
-    - git:
-      repo: git@git.example.com:repos/scripts.git
-      dest: /tmp/scripts
-      sudo: False
+   - debug: msg="the above can also be written like..."
+   - git:
+     repo: git@git.example.com:repos/scripts.git
+     dest: /tmp/scripts
+     sudo: False
 __envHEREDOC__
 }
 helpansibleplaybook3(){
