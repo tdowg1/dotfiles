@@ -2719,8 +2719,7 @@ while true ; do
    let loopcounter+=1
 done
 
-
-== set ==
+== set -o ==
 allexport             histexpand            noexec                pipefail
 braceexpand           history               noglob                posix
 emacs                 ignoreeof             nolog                 privileged
@@ -2759,6 +2758,9 @@ FUNCNAME :  An array variable containing the names of all shell functions curren
 * ~ln3900: buildin cmd:: set
 * ~ln4400: end section:: SHELL BUILTIN COMMANDS
 * ~ln
+
+== Execute an already defined function within subshell and use output ==
+use the "eval" command (not expr, not exec):
 
 == See also ==
 * [[Shell bash]]
@@ -4524,26 +4526,66 @@ __envHEREDOC__
 }
 helptypeset(){
 cat <<'__envHEREDOC__'
--f [function name] : display [specific] function(s) and its defn
+: src : https://unix.stackexchange.com/a/370169
+: typeset is analogous to declare.
 -F [function name] : display [specific] function(s)
 
 $ typeset -p VARIABLE     # Displays definition.
+$ typeset -p              # Displays all variables and their definition.
 $ set      # Without options, the name and value of each shell variable are 
            # displayed in a format that can  be reused as input for setting 
-		     # or resetting the currently-set variables.
+           # or resetting the currently-set variables.
 $ shopt    # Toggle the values of variables controlling optional shell behavior.
            # With no options or with -p, a list of all settable options is displayed
 $ alias ALIAS             # Similarly, displays alias definition.
 $ export -p               # If no names are given, or if the -p option is 
                           # supplied, a list of all names that are 
-								  # exported in this shell is printed.
+                          # exported in this shell is printed.
 
-how to get the definition for a function displayed???
+== display function definition ==
 ANSWER: type
 $ type FUNCTION_NAME
+ALSO: typeset -f FUNCTION_NAME
+
+== List all defined shell functions *names* ==
+typeset -F
+
+== List all defined shell variables *names* ==
+: multiple approaches offered.
+
+# all variables and their definitions:
+(set -o posix; set)
+
+# compgen was created to aid cmdln completion:
+compgen -v
+
+# noticing that set dumps variables first, then functions, just stop the output at the first line that doesnt contain an equals sign:
+set | awk -F '=' '! /^[0-9A-Z_a-z]+=/ {exit} {print $1}'
+# similarly:
+set | grep "^\([[:alnum:]]\|[[:punct:]]\)\+="
+
+compgen -v | while read var; do printf "%s=%q\n" "$var" "${!var}"; done  # showing variable names along with their definitions.
+printenv      # shows exported (environment) variables and non-exported (shell) variables.
+env           # shows exported (environment) variables and non-exported (shell) variables.
+# diffing against a clean shell to ensure also variables from rc scripts get left out:
+diff <(bash -cl 'set -o posix && set') \
+   <(set -o posix && set && set +o posix) | \
+   grep -E "^>|^\+" | \
+   grep -Ev "^(>|\+|\+\+) ?(BASH|COLUMNS|LINES|HIST|PPID|SHLVL|PS(1|2)|SHELL|FUNC)" | \
+   sed -r 's/^> ?|^\+ ?//'
 
 == See also ==
 helpcommand
+
+=== all these give varying outputs although are similar ==
+set
+typeset
+typeset -x
+typeset -p    # only prints variables but with some ugly attributes
+comm -3 <(declare | sort) <(declare -f | sort)
+declare -p | cut -d " " -f 3 | sort
+
+comm -3 <(comm -3 <(declare | sort) <(declare -f | sort)) <(env | sort)  # i have no clue... but supposively is supposed to just show variable names (and not their definitions).
 __envHEREDOC__
 }
 helpcommand(){
