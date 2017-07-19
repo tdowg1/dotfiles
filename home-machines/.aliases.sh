@@ -59,7 +59,8 @@ alias sshsvn='ssh -2XC tyler@svn'
 alias Less='less'
 #alias less='less -FX --tabs=3'
 #alias less='less --quit-if-one-screen --no-init --tabs=3'   # no-init sometimes prevents clearing of display
-alias less='less --quit-if-one-screen --tabs=3'
+#alias less='less --quit-if-one-screen --tabs=3'
+alias less='less --tabs=3'
 #alias le=' ... '
 
 # Quickly change behaviour of the Apple keyboard's [F]unction keys:
