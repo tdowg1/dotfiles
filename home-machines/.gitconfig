@@ -40,15 +40,15 @@
 		# use date sorting=--date-order (useful; diff graph generation algorithm)
 	plog1sortdateorder = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative   --date-order
 	
-	plog2    = log --graph --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
+	plog2    = log --graph --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, %s'
 	
 	plog3    = log --graph --pretty=format:'%h %C(bold blue)<%an>%Creset %Cgreen(%cr)%Creset %s'
 	
-	plog8    = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
-	plog8iso = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%ci)%Creset, message: %s'
+	plog4    = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
+	plog4iso = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%ci)%Creset, message: %s'
 
-	plog9    = log --pretty=format:'%h %Cgreen(%cr)%Creset %s %C(bold blue)<%an>%Creset'
-	plog9iso = log --pretty=format:'%h %Cgreen(%ci)%Creset %s %C(bold blue)<%an>%Creset'
+	plog5    = log --pretty=format:'%h %Cgreen(%cr)%Creset %s %C(bold blue)<%an>%Creset'
+	plog5iso = log --pretty=format:'%h %Cgreen(%ci)%Creset %s %C(bold blue)<%an>%Creset'
 
 	
 	who = shortlog -s --
