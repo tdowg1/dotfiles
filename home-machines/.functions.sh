@@ -343,7 +343,7 @@ greptxtfiles(){
 		file -b  "$i"  |  grep -i ASCII >/dev/null 2>&1
 		
 		if [[ $? = 0 ]] ; then
-			grep --with-filename $specialignorecase "$searchquery" "$i"
+			grep --with-filename -i $specialignorecase "$searchquery" "$i"
 		fi
 	done
 }
