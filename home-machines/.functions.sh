@@ -7978,6 +7978,12 @@ cd the-what-now ; source bin/activate
 # at this point, can run pip (at bin/pip) and whatever and it will install pips within this virtualenv.
 __envHEREDOC__
 }
+helpzsh(){
+cat <<'__envHEREDOC__'
+bindkeys - shows current keyboard shortcuts
+
+__envHEREDOC__
+}
 
 
 
