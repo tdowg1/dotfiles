@@ -2207,6 +2207,12 @@ $ nmap --script ssl-cert,ssl-enum-ciphers -p 6182,443,55-100 host
  
 Test UDP port 123 ( NTP ) is open on a host:
 sudo nmap -v -sU -p 123 host
+Test UDP port 53 ( DNS ) is open on a host:
+sudo nmap -v -sU -p 53 host
+Test UDP port 53 ( DNS ) is open on a host, which currently looks closed:
+: "Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn"
+sudo nmap -v -sU -p 53 host -Pn
+
 
 Find probable Linux machines on the network:
 for i in $( nmap -sP -n --osscan-guess 10.100.10.0-199 | grep "report for" | awk '{print $NF}' ) ; do
@@ -2215,7 +2221,7 @@ for i in $( nmap -sP -n --osscan-guess 10.100.10.0-199 | grep "report for" | awk
 don
 
 = See also =
-helpopenssl
+helpopenssl helpnc
 __envHEREDOC__
 }
 helparping(){
@@ -6491,6 +6497,7 @@ $ nc -vnz -w 1 192.168.1.102 1-1000
 $ nc -vnz -w 1 192.168.1.102 2000-3000 
 
 == See also ==
+helpnmap
 http://xmodulo.com/2014/01/useful-netcat-examples-linux.html
 socat
 __envHEREDOC__
