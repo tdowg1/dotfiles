@@ -7984,6 +7984,11 @@ bindkeys - shows current keyboard shortcuts
 
 __envHEREDOC__
 }
+helpconfigure(){
+cat <<'__envHEREDOC__'
+time ./configure --prefix=/usr/local/ --option-flag1 ...
+__envHEREDOC__
+}
 
 
 
