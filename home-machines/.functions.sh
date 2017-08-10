@@ -7917,6 +7917,10 @@ __envHEREDOC__
 }
 helpvideo(){
 cat <<'__envHEREDOC__'
+# Important/Helpful packages that can easily manually compile:
+libav  git://git.libav.org/libav.git     https://libav.org/download/ (major releases are cut every 4-6 months)
+ffmpeg https://git.ffmpeg.org/ffmpeg.git https://trac.ffmpeg.org/
+
 # Get a video files run length/duration time:
 ffprobe  -show_format  inputfile 2>&1  | grep -i duration | sed 's/.*=//')
 # Looped:
@@ -7925,6 +7929,22 @@ for i in $( find . -type f -size +100M ) ; do
    echo $i
    ffprobe -show_format $i 2>&1 | grep -i duration | sed 's/.*=//'
 done > video-runtime-lengths.txt
+
+# To extract only a small segment in the middle of a movie... (https://trac.ffmpeg.org/wiki/Seeking#Cuttingsmallsections)
+#   will cut from 00:01:00 to 00:03:00 (in the original), using the faster seek.
+ffmpeg -ss 00:01:00 -i video.mp4 -to 00:02:00 -c copy cut.mp4
+#   will cut from 00:01:00 to 00:02:00, as intended, using the slower seek.
+ffmpeg -i video.mp4 -ss 00:01:00 -to 00:02:00 -c copy cut.mp4
+#   will cut from 00:01:00 to 00:02:00, as intended, using the faster seek.
+ffmpeg -ss 00:01:00 -i video.mp4 -to 00:02:00 -c copy -copyts cut.mp4
+# If you cut with stream copy (-c copy) you need to use the -avoid_negative_ts 1 (https://ffmpeg.org/ffmpeg-all.html#Format-Options) option if you want to use that segment with the concat demuxer (https://trac.ffmpeg.org/wiki/How%20to%20concatenate%20(join,%20merge)%20media%20files#demuxer):
+#   For Example:
+ffmpeg -ss 00:03:00 -i video.mp4 -t 60 -c copy -avoid_negative_ts 1 cut.mp4
+
+# To concatenate 
+# If you have media files with exactly the same codec and codec parameters you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#samecodec
+# If you have media with different codecs you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#differentcodec
+
 
 == See also ==
 helpmkvmerge
