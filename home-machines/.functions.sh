@@ -3889,16 +3889,22 @@ __envHEREDOC__
 
 
 
-
+helpmodprobe(){
+cat <<'__envHEREDOC__'
+/calling helpdevices()/
+__envHEREDOC__
+	helpdevices
+}
 helpdevices(){
 cat <<'__envHEREDOC__'
-== Device and Driver and Hardware-related commands ==
-$ dmidecode
-$ udevadm trigger --verbose --dry-run
-$ modprobe --list
+== Device and Driver Info and Hardware-related commands ==
+dmidecode
+udevadm trigger --verbose --dry-run
+modprobe --list  # Shows all modules (but from where?  all built into kernel?  all available on system, but not in kernel(if that is even a thing)?  all that are known about to my OS (from like some master list or something lol?)? ??)
+modprobe <TAB-TAB>  # Same as --list
 
 # Find all mounted USB CD-ROM's
-$ awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
+awk '$1 ~ /\/dev\/sr[0-9]+$/ { print $2 }' < /proc/mounts
 
 
 == The ls's ==
@@ -3918,8 +3924,8 @@ lss16toppm (1)       - Convert an LSS-16 image to PPM
 lstopo (1)           - Show the topology of the system (note that hwloc-bind(1) provides a detailed explanation of the hwloc system; it should be read before reading this man page).
 lsusb (8)            - list USB devices
 
-Example:
-$ lsusb --verbose ; lspci, lscpu, etc.
+# Example:
+lsusb --verbose ; lspci, lscpu, etc.
 
 == USB ==
 usb-devices          - print USB device details.  Aggregates nfo from...
