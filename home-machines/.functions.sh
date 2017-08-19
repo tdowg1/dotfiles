@@ -5221,6 +5221,9 @@ convert *[pretty much most image formats, AWESOMELY!] -compress jpeg -quality 1 
 
 == PDF to plain text ==
 pdftotext
+
+== remove PDF 'protections' ==
+qpdf --decrypt i.pdf o.pdf
 __envHEREDOC__
 }
 helpwget(){
