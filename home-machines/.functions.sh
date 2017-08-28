@@ -641,7 +641,7 @@ setSparksServersVariablesForRemote(){
 	remote_string="remote-"
 	remote_string="proxy-"
 
-	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
+	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}phobos"
 	export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
 }
 
