@@ -1709,6 +1709,8 @@ MISC
 * zo - open folded text
 * zc - close folded text
 * C-w= - make window width equal
+* :se diffopt+=iwhite - ignore whitespace
+** vimdiff -c 'se diffopt+=iwhite'
 __envHEREDOC__
 }
 helpxargs(){
