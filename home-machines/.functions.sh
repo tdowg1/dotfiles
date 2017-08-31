@@ -1514,6 +1514,12 @@ yum --showduplicates list httpd | expand
 yum install <package name>-<version info>
 yum install java-1.8.0-openjdk-headless-1.8.0.65-2.b17.7.amzn1.x86_64
 
+== yum history ==
+# list transaction id's for previous yum operations:
+yum history
+# undo a previous yum operation
+yum history undo <transaction id>
+
 = See also =
 helprpm
 __envHEREDOC__
