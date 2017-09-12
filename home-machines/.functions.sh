@@ -5238,6 +5238,9 @@ pdftotext
 
 == remove PDF 'protections' ==
 qpdf --decrypt i.pdf o.pdf
+
+= See also =
+catdoc - behaves much like cat(1) but it reads MS-Word file and produces human-readable text on standard output. microsoft docx office
 __envHEREDOC__
 }
 helpwget(){
