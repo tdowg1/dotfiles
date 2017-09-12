@@ -4126,6 +4126,7 @@ env (1)              - run a program in a modified environment
 
 == See also ==
 $ apropos getconf env   # gives a bunch of interesting env, variable, etc. programs
+helptypeset
 __envHEREDOC__
 }
 
