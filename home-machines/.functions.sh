@@ -2657,6 +2657,9 @@ sed "/\/\//d" infile
 # Prepend/insert text/a line to a file
 sed -i "1i Prepended line" /tmp/newfile
 
+# Print the previous line for the specified matched pattern:
+sed -n '/PATTERN TO MATCH/{x;p;d;}; x' infile
+
 == FIND/REPLACE ==
 # PREVIEW find/replace on files:
 sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
