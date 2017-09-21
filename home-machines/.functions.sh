@@ -634,6 +634,7 @@ createSymlinkTogms_pvobCCView(){
 setSparksServersVariablesForLocal(){
    export sparksMajorServers="stardust voyager vega2 phobos"
    export sparksMinorServers="remote print-server"
+   export sparksVmwareHosts="stardust voyager phobos"
 }
 setSparksServersVariablesForRemote(){
    local remote_string=""
@@ -641,6 +642,7 @@ setSparksServersVariablesForRemote(){
    remote_string="proxy-"
    export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
    export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
+   export sparksVmwareHosts="stardust voyager phobos"
 }
 # the Local vs Remote thing was more applicable in the past, prior to the network presence steps taken ~2015.
 # going to just enable the _Local_ mode now since that's what's usually needed:
@@ -649,21 +651,16 @@ setSparksServersVariablesForLocal
 
 
 listAllRunningSparksVmguests(){
-   for i in $sparksMajorServers ; do
+   for i in $sparksVmwareHosts ; do
       echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+      #ssh -A $i  'ps fwww $(pgrep -f /usr/lib/vmware/bin/vmware-vmx)'
       ssh -A $i  'sudo vmrun list'
-   done
-}
-listAllRunningSparksVmguests2_original(){
-   for i in $sparksMajorServers ; do
-      echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
-      ssh -A $i  'ps fwww $(pgrep -f /usr/lib/vmware/bin/vmware-vmx)'
    done
 }
 listAllSparksVmguests(){
    # shows the vmguests that are present on a vmhosts filesystem.
    local defaultVmguestFilesLocation="/opt/vms/"
-   for i in $sparksMajorServers ; do 
+   for i in $sparksVmwareHosts; do 
       echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
       ssh -A $i  "ls -1 $defaultVmguestFilesLocation" | grep -v ^archive$ | grep -v ^bu$
    done
