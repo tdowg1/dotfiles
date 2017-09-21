@@ -323,6 +323,7 @@ alias mwstatus='dropbox status ; sudo service mysqld status ; sudo service httpd
 
 ##
 ## [com.spryinc.]MAGNIFICENT-specific
+## [com.spryinc.]SHAZAM-specific
 # ... I'm thinking I might like these. So, at least for now, define
 # for all host machines.
 alias cddev='cd $HOME/dev'
@@ -331,15 +332,11 @@ alias cdsvn='cd $HOME/dev/svn'
 alias cdmisc='cd $HOME/dev/misc'
 alias cdwork='cd $HOME/work'
 alias cdw='cd $HOME/work'
+alias cdwaa='cd $HOME/work/ansible/ansible/misc-playbooks'
 # NOW, it's getting pretty HOST-specific...
 alias cdwa1='cd $HOME/work/_ark.1-2011'
 alias cdwa2='cd $HOME/work/_ark.2-2012'
 
-if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
-	alias cdsuper='cd $HOME/dev/git/sprySuperGitRepo'
-	alias cdec2='cd "$ec2"'
-
-fi
 ## /[com.spryinc.]MAGNIFICENT-specific
 ##
 

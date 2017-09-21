@@ -635,15 +635,16 @@ setSparksServersVariablesForLocal(){
 	export sparksMajorServers="stardust voyager vega2 phobos"
 	export sparksMinorServers="remote print-server"
 }
-
 setSparksServersVariablesForRemote(){
 	local remote_string=""
 	remote_string="remote-"
 	remote_string="proxy-"
-
-	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}phobos"
+	export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
 	export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
 }
+# the Local vs Remote thing was more applicable in the past, prior to the network presence steps taken ~2015.
+# going to just enable the _Local_ mode now since that's what's usually needed:
+setSparksServersVariablesForLocal
 
 
 
