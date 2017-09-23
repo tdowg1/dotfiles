@@ -1693,6 +1693,15 @@ not exactly "simple"
 like it's a bit lengthy but not too tough if you do it only once in a while
 __envHEREDOC__
 }
+helpvim7(){
+      cat <<'__envHEREDOC__'
+   lkj
+# WINDOW SPLITTING AND EDITING
+c-w    - switch between splits.
+:S     - splits curr screen and (!) presents view of cwd... which you can scroll(!) through and hit enter to open the desired file!
+:Se    - splits curr screen and i guess _e_ means edit the curr opened file.
+__envHEREDOC__
+}
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
