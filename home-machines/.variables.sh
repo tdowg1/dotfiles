@@ -14,6 +14,8 @@ export MAIL=/var/spool/mail/$USER
 export EDITOR=vim
 export SVN_EDITOR=vim
 export PAGER="less"
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
 
 
 ## 

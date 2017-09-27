@@ -7981,10 +7981,21 @@ ffmpeg -ss 00:03:00 -i video.mp4 -t 60 -c copy -avoid_negative_ts 1 cut.mp4
 # If you have media files with exactly the same codec and codec parameters you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#samecodec
 # If you have media with different codecs you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#differentcodec
 
+# Video stabilization1
+  i've not actually had good results with the following; havent exactly put in any time to investigate either.
+  https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
+ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
+ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
+ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
+
+# Video stabilization2
+http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
+
 
 == See also ==
 helpmkvmerge
 helphandbrake
+blender / https://wiki.blender.org/index.php/Dev:Doc/Building_Blender/Linux/Ubuntu/CMake
 __envHEREDOC__
 }
 helpmkvmerge(){
