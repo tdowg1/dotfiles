@@ -348,6 +348,8 @@ greptxtfiles(){
 	done
 }
 grepdotfiles(){
+   # bug is exhibited between these two: grepdotfiles cifs ; VS ; grep -i cifs -R ~/dotfiles
+   echo THIS FUNCTION IS BUGGY
 	# SYNOPSYS grepdotfiles SINGLE-STRING-SEARCH-QUERY
 	local searchquery="$1"
         # TODO STUB: exclude files with trailing ~ characters as well as things within a git repo's .git/ directory.
