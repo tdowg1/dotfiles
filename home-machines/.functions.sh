@@ -2136,6 +2136,17 @@ ip route list
 
 # Delete an entry in the route table:
 sudo ip route delete 192.168.0.0/16
+
+# Create a direct connection between two nics: an example::
+   first:
+      ip ad add 10.0.0.1/24 dev eth1
+      sudo ifdown eth1 ; sudo ifup eth1
+   second:
+      ip ad add 10.0.0.2/24 dev eth1
+      sudo ifdown eth1 ; sudo ifup eth1
+
+# Disassociate an ip from ethernet device: an example::
+ip ad del 192.168.0.70/24 dev eth1
 __envHEREDOC__
 }
 helpnetwork2(){
@@ -2146,7 +2157,13 @@ cat <<'__envHEREDOC__'
 interfaces(5)
 bridge-utils-interfaces(5)
 
-/etc/network/interfaces
+/etc/network/interfaces  an example
+   iface eth0 inet static
+      address 10.100.10.200
+      netmask 255.255.255.0
+      network 10.100.10.0
+      gateway 10.100.10.1
+
 /etc/network/run/ifstate
 /etc/network/run/ifup.br0
 
@@ -2156,8 +2173,19 @@ sudo service network-manager restart
 sudo ifconfig up eth0
 sudo ip link delete br0
 
-== See also ==
+= When system is idiot and denies network restart =
+for me, this generally seems to be caused by the same thing. I think the solution is:
+   # Realize that the system is in funky state. fix it by changing the eth in question (eth1) in /etc/network/devices like:
+   auto eth1
+   iface eth1 inet dhcp
+   # then run:
+   sudo ifup [-v] eth1
+   # now can go back into /etc/network/interfaces and modify eth1 defn as desired. then can run:
+   sudo ifdown eth1 ; sudo ifup eth1
+
+= See also =
 http://unix.stackexchange.com/questions/50602/cant-ifdown-eth0-main-interface
+helpip
 __envHEREDOC__
 }
 helpreversetunnel(){
