@@ -1005,6 +1005,18 @@ $ smbtree (1)          - A text based smb network browser
 $ testparm (1)         - check an smb.conf configuration file for internal correctness
 $ testparm.samba3 (1)  - check an smb.conf configuration file for internal correctness
 
+# vfs_* things
+vfs_acl_tdb         vfs_commit          vfs_linux_xfs_sgid  vfs_shell_snap
+vfs_acl_xattr       vfs_crossrename     vfs_media_harmony   vfs_snapper
+vfs_aio_fork        vfs_default_quota   vfs_netatalk        vfs_streams_depot
+vfs_aio_linux       vfs_dirsort         vfs_offline         vfs_streams_xattr
+vfs_aio_pthread     vfs_extd_audit      vfs_prealloc        vfs_syncops
+vfs_audit           vfs_fake_perms      vfs_preopen         vfs_time_audit
+vfs_btrfs           vfs_fileid          vfs_readahead       vfs_tsmsm
+vfs_cacheprime      vfs_fruit           vfs_readonly        vfs_unityed_media
+vfs_cap             vfs_full_audit      vfs_recycle         vfs_worm
+vfs_catia           vfs_glusterfs       vfs_shadow_copy     vfs_xattr_td
+
 == net USERSHARE ==
 # net USERSHARE ADD sharename path [comment] [acl] [guest_ok=[y|n]]
 net usershare add <share name> <share path> guest_ok=y
