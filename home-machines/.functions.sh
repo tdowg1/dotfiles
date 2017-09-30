@@ -2565,6 +2565,19 @@ Assuming cwd is the repository root directory, can probably do:
 base=$( basename $PWD ) ; git remote set-url origin git@git.bitbucket.wmanalytics.io:${base::2}/${base}.git
 __envHEREDOC__
 }
+helpgitterminology(){
+cat <<'__envHEREDOC__'
+If don't use git super often, sometimes forget what some of the basic terms mean.  Here's some topics that need notes on them...
+* index
+* tree'ish
+* working tree
+** ?same as? working directory
+* refs
+** ?same as? references
+* reflog
+* wip/WIP: work in progress.
+__envHEREDOC__
+}
 
 
 helptree(){
