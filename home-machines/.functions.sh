@@ -2569,6 +2569,7 @@ helpgitterminology(){
 cat <<'__envHEREDOC__'
 If don't use git super often, sometimes forget what some of the basic terms mean.  Here's some topics that need notes on them...
 * index
+** full-index (seen in git-diff)
 * tree'ish
 * working tree
 ** ?same as? working directory
@@ -2576,6 +2577,8 @@ If don't use git super often, sometimes forget what some of the basic terms mean
 ** ?same as? references
 * reflog
 * wip/WIP: work in progress.
+
+* cached vs staged or unstaged (what is cached an alias for?)
 __envHEREDOC__
 }
 
