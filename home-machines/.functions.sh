@@ -2563,6 +2563,12 @@ git rev-parse --show-toplevel
 git remote set-url origin <new url>
 Assuming cwd is the repository root directory, can probably do:
 base=$( basename $PWD ) ; git remote set-url origin git@git.bitbucket.wmanalytics.io:${base::2}/${base}.git
+
+? How to *move* an entire unrelated git repository into another, while retaining history?
+To limit the contents being moved to only a subdirectory or file within the repo to be moved check out:
+   https://www.simplicidade.org/notes/2009/04/21/merging-two-unrelated-repositories/
+To move *everything* from one repo to another, check out:
+   http://bpeirce.me/moving-one-git-repository-into-another.html
 __envHEREDOC__
 }
 helpgitterminology(){
