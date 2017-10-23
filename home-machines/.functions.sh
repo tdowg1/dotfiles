@@ -7799,6 +7799,7 @@ echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readabl
 
 == See also ==
 cmdln program: jq (ive cloned its git repo and is in cdb)
+helpjq
 __envHEREDOC__
 }
 helpjson(){
@@ -8148,6 +8149,23 @@ comm -13 a.sorted.txt b.sorted.txt
 x="a b c"
 comm -13  <(echo a) <(echo $x | tr " " "\n")
 # ^^result is: b c  ( removed "a" from "a b c" )
+__envHEREDOC__
+}
+helpjq(){
+cat <<'__envHEREDOC__'
+<any json> | jq  # to produce pretty print equivalent.
+
+echo '{
+  "Tags": [ { "Value": "TRASH", "Key": "Name" }, ],
+  "Encrypted": false,
+  "VolumeType": "standard",
+  "VolumeId": "vol-01103d27fb2fd09a8",
+}' | jq '.VolumeId'
+# -> "vol-01103d27fb2fd09a8"
+{<SAME>}' | jq -r '.VolumeId'
+# -> vol-01103d27fb2fd09a8  (no quotes)
+
+
 __envHEREDOC__
 }
 
