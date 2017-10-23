@@ -6926,6 +6926,22 @@ aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --
 
 # List of all running instance public and private ip addrs:
 aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --output json | grep -P IpAddress\" | awk '{ print $2 }' | sed 's/[",]//g' | uniq
+
+
+
+# shows all instanceids of instancetypes disallowed by AWS for network scanning:
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small" --output json --query 'Reservations[*].Instances[*][InstanceId,InstanceType,Tags]'
+
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small" --query 'Reservations[*].Instances[*][InstanceId]' --output text
+
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small"  --query 'Reservations[*].Instances[*][InstanceId]' --output text
+
+
+# BETTER list of all running instances (which excludes instance types disallowed by AWS for network scanning):
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small" --query 'Reservations[*].Instances[*][InstanceId,Tags[*].Key.Name]' --output text | sort > excluded-running-instances.txt
+aws ec2 describe-instances --filter "Name=instance-state-name,Values=running"  --query 'Reservations[*].Instances[*][InstanceId]' --output text | sort > all-running-instances.txt
+# comm -13 suppress 'column 3' which is lines that appear in both files:
+comm -13 excluded-running-instances.txt all-running-instances.txt
 __envHEREDOC__
 }
 helpfalcon(){
@@ -7780,6 +7796,9 @@ helppostgres
 helpjavascript(){
 cat <<'__envHEREDOC__'
 echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readable format.
+
+== See also ==
+cmdln program: jq (ive cloned its git repo and is in cdb)
 __envHEREDOC__
 }
 helpjson(){
@@ -8118,6 +8137,12 @@ __envHEREDOC__
 helpconfigure(){
 cat <<'__envHEREDOC__'
 time ./configure --prefix=/usr/local/ --option-flag1 ...
+__envHEREDOC__
+}
+helpcomm(){
+cat <<'__envHEREDOC__'
+# For union'ing and intersecting datasets, comm -13 suppress 'column 3' which is lines that appear in both files::
+comm -13 a.sorted.txt b.sorted.txt
 __envHEREDOC__
 }
 
