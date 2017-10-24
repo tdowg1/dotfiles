@@ -4201,6 +4201,7 @@ env (1)              - run a program in a modified environment
 == See also ==
 $ apropos getconf env   # gives a bunch of interesting env, variable, etc. programs
 helptypeset
+helpkpathsea
 __envHEREDOC__
 }
 
@@ -8164,8 +8165,12 @@ echo '{
 # -> "vol-01103d27fb2fd09a8"
 {<SAME>}' | jq -r '.VolumeId'
 # -> vol-01103d27fb2fd09a8  (no quotes)
+__envHEREDOC__
+}
 
-
+helpkpathsea(){
+cat <<'__envHEREDOC__'
+Kpathsea - a library for path searching!?
 __envHEREDOC__
 }
 
