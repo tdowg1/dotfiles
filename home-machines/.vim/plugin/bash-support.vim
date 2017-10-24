@@ -113,8 +113,10 @@ let s:BASH_GuiSnippetBrowser       = 'gui'										" gui / commandline
 let s:BASH_Printheader             = "%<%f%h%m%<  %=%{strftime('%x %X')}     Page %N"
 let s:BASH_Wrapper                 = s:plugin_dir.'bash-support/scripts/wrapper.sh'
 "
-let s:BASH_FormatDate						= '%x'
-let s:BASH_FormatTime						= '%X %Z'
+"let s:BASH_FormatDate						= '%x'
+let s:BASH_FormatDate						= '%F'
+"let s:BASH_FormatTime						= '%X %Z'
+let s:BASH_FormatTime						= '%T%z'
 let s:BASH_FormatYear						= '%Y'
 "
 "
@@ -2171,7 +2173,7 @@ function! BASH_InsertDateAndTime ( format )
 		return strftime( s:BASH_FormatTime )
 	end
 	if a:format == 'dt'
-		return strftime( s:BASH_FormatDate ).' '.strftime( s:BASH_FormatTime )
+		return strftime( s:BASH_FormatDate ).'T'.strftime( s:BASH_FormatTime )
 	end
 	if a:format == 'y'
 		return strftime( s:BASH_FormatYear )
