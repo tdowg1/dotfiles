@@ -13,12 +13,13 @@
 #       CREATED:  |DATETIME|
 #      REVISION:  ---
 #===============================================================================
-#PS4='[${LINENO}]+'
-#typeset -ft $(typeset +f)
-#set -o xtrace
-#set -o errexit
+#typeset -ft $(typeset +f)  ... not sure what this was for...
+
+#set -o xtrace                               # After expanding each simple command, for command, case command, select command, or arithmetic for command, display the expanded value of PS4, followed by the command and its expanded arguments or associated word list.
+#PS4=' { ${LINENO} } '                       # The value of this parameter is expanded as with PS1 and the value is printed before each command bash displays during an execution trace.  The first character of PS4 is replicated multiple times, as necessary, to indicate multiple levels of indirection.  The default is ``+ ''.
+#set -o errexit                              # Exit immediately if a pipeline (which may consist of a single simple command), a subshell command enclosed in parentheses, or one of the commands executed as part of a command list enclosed by braces (see SHELL GRAMMAR above) exits with a non-zero status.
 set -o nounset                              # Treat unset variables as an error
-set -o pipefail                             # with pipefail enabled, the pipelines return status is the value of the last (rightmost) command to exit with a  non-zero  status,  or zero if all commands exit successfully. 
+set -o pipefail                             # with pipefail enabled, the pipelines return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully. 
 
 f_usage(){
    local scriptname="$( basename "$0" )"
