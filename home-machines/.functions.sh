@@ -8174,6 +8174,21 @@ Kpathsea - a library for path searching!?
 __envHEREDOC__
 }
 
+helpsnap(){
+cat <<'__envHEREDOC__'
+= PACKAGE MANAGEMENT =
+# Sort of works like all the other package managers... aptitude, apt, yum, etc...
+snap search vlc
+snap info vlc
+snap install vlc
+snap install vlc --channel=beta
+snap install vlc --channel=edge
+
+== See also ==
+flatpak
+__envHEREDOC__
+}
+
 
 
 
