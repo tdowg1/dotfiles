@@ -3000,6 +3000,9 @@ cat <<'__envHEREDOC__'
 zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
 zip -T|--test        archive.zip
 
+# Extract a set of zipfiles, each to its own directory:
+for i in zipfiles* ; do d="${i%%.zip}"; echo $d; mkdir "$d"; unzip "$i" -d "$d"; done
+
 == See also ==
 helpgpg() for info on creating an encrypted zip file.
 __envHEREDOC__
