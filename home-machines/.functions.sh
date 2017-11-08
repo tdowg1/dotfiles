@@ -2997,6 +2997,8 @@ __envHEREDOC__
 }
 helpzip(){
 cat <<'__envHEREDOC__'
+unzip -d extractiondirectory zipfile
+
 zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
 zip -T|--test        archive.zip
 
@@ -4300,8 +4302,9 @@ __envHEREDOC__
 }
 helpunzip(){
 cat <<'__envHEREDOC__'
-unzip -d extractiondirectory zipfile
+/calling helpzip()/
 __envHEREDOC__
+	helpzip
 }
 helptar(){
 cat <<'__envHEREDOC__'
