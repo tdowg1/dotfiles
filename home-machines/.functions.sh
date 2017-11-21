@@ -2997,6 +2997,7 @@ __envHEREDOC__
 }
 helpzip(){
 cat <<'__envHEREDOC__'
+zip zipfile file1 [file2 [...]]
 unzip -d extractiondirectory zipfile
 
 zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
