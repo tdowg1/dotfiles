@@ -3332,6 +3332,9 @@ curl --silent whatismyip.org | xargs echo   # display WAN ipaddr
 # --fail Fail silently (no output at all) on HTTP errors
 # -o     Write output to <file> instead of stdout
 curl  --connect-timeout 10  --fail  -o /dev/null www.example.org  >/dev/null 2>&1
+
+# do a POST with the following key-value pairs:
+curl x.com/some.php  -d key1=daniel  -d key4=ayyyfour
 __envHEREDOC__
 }
 helpgeditmultieditmode(){
