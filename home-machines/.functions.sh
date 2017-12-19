@@ -653,10 +653,19 @@ setSparksServersVariablesForLocal
 
 
 listAllRunningSparksVmguests(){
+   printhostnamesonly=$1
+
    for i in $sparksVmwareHosts ; do
-      echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+      #echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
+      echo -e "\e[0;32m${i}\e[0m"
       #ssh -A $i  'ps fwww $(pgrep -f /usr/lib/vmware/bin/vmware-vmx)'
-      ssh -A $i  'sudo vmrun list'
+      currlist=$( ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs" )
+      if [[ -z "$currlist" ]] ; then continue; fi
+      if [[ -z "$printhostnamesonly" ]] ; then
+         ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs"
+      else
+         ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs" | xargs -n 1 basename | sed 's/.vmx//'
+      fi
    done
 }
 listAllSparksVmguests(){
@@ -705,8 +714,8 @@ setSparksServersVariablesForRemote
 = See also =
 locateAcrossSparksMajors
 updatedbAcrossSparksMajors
-listAllRunningSparksVmguests
-listAllSparksVmguests
+listAllRunningSparksVmguests [justhostnames]
+listAllSparksVmguests [justhostnames]
 __envHEREDOC__
 }
 helpvmware(){
