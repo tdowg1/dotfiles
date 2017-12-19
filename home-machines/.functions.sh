@@ -5998,6 +5998,9 @@ __envHEREDOC__
 helpkde(){
 cat <<'__envHEREDOC__'
 kde4-config  --kde-version
+qdbus org.kde.klipper /
+qdbus org.kde.klipper /klipper  # shows function prototypes.
+qdbus org.kde.klipper /klipper getClipboardContents # calls one of the functions.
 __envHEREDOC__
 }
 
