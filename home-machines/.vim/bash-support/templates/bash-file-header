@@ -130,6 +130,16 @@ while [ "$#" -gt "0" ] ; do
          STARTINGPATH=$1
          shift
          ;;
+      #*) # why cant you just have it set some of these variables dynamically?! so like
+      ##   # $this --key1=value1   ends up defining "key1" with "value1" ?!
+      ##   # ... ^^this would releive huge pain in butt.
+      #   #cmdln="--xyz=abc"
+      #   value=${1#--*=}  # abc
+      #   tmp=${1%=*}
+      #   key=${tmp#--}    # xyz
+      #   
+      #   eval ${key}=${value}
+      #   # should now have the variable xyz set to abc
    esac
 done
 
