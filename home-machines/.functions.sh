@@ -7549,10 +7549,10 @@ cat <<'__envHEREDOC__'
 kinit username && aklog
 
 == information ==
-"vos listpart bhouse.tcreech.com" you can see that we've got just the one
-"vos listpart dozer.tcreech.com" has 3 partitions on a few zpools
+"vos listpart bhse.tc.example.com" you can see that we've got just the one
+"vos listpart dozer.tc.example.com" has 3 partitions on a few zpools
 
-"vos partinfo dozer.tcreech.com" shows the sizes
+"vos partinfo dozer.tc.example.com" shows the sizes
 
 
 == regarding AFS space ==
@@ -7561,12 +7561,12 @@ you can always put something in a volume backed only by bump if you want
 some stuff is already like that
 
 from anywhere in the world on any AFS client you can query stuff like this though
-"vos listvol bhouse.domain.com" will list all of the volumes on bump
+"vos listvol bhse.domain.com" will list all of the volumes on bump
 and how much space they represent.  this includes readonly clones and backups though
 
 to see actual space used/available you can 
 "vos partinfo $server"
-e.g., vos partinfo bhouse.domain.com
+e.g., vos partinfo bhse.domain.com
 
 
 or if you just know a path and want AFS to figure out which volume/host/partition it's on you can ask with "fs"
@@ -7606,25 +7606,25 @@ its about what is the best way to backup afs content.
 sudo zfs create -o mountpoint=/vicebX zpool/vicebX  # where X is the next alpha in use for this system.
 
 # Now youve got to tell afs about it.  maybe this requires restarting fs service...
-"bos status bhouse.tcreech.com" will tell you that the fs server is running
+"bos status bhse.tc.example.com" will tell you that the fs server is running
 (hooray)
-if you run "bos restart bhouse.tcreech.com fs" then it will restart the fs server
+if you run "bos restart bhse.tc.example.com fs" then it will restart the fs server
 can do that from anything, like a laptop or something
-then "vos partinfo bhouse.tcreech.com" should know about the "b" partition
+then "vos partinfo bhse.tc.example.com" should know about the "b" partition
 
 
 # Now create the volume:
-vos create -server bhouse.tcreech.com -partition /vicepb -name shared.tv.$i;
+vos create -server bhse.tc.example.com -partition /vicepb -name shared.tv.$i;
 # ^^this will create the Volume as you expect, but it's not mounted anywhere.
 
 # Now, to corrolate this Volume with an actual path on a usable filesystem
-# e.g. how to associate /afs/tcreech.com/shared/tv/Adam Ruins Everything/ with shared.tv.$i[.*] used in the vos cmd?
+# e.g. how to associate /afs/tc.example.com/shared/tv/Adam Ruins Everything/ with shared.tv.$i[.*] used in the vos cmd?
 
 # You actually store mount points to Volumes /IN/ other Volumes, like in the Filesystem.
 # To create a mountpoint, you could do something like
-fs mkmount -dir /afs/.tcreech.com/shared/tv/simpsons -vol shared.tv.jeopardy
+fs mkmount -dir /afs/.tc.example.com/shared/tv/simpsons -vol shared.tv.jeopardy
 
-# Then you have to Release shared.tv in order for the mountpoint to show up in the RO version of shared.tv, at /afs/tcreech.com/shared/tv/
+# Then you have to Release shared.tv in order for the mountpoint to show up in the RO version of shared.tv, at /afs/tc.example.com/shared/tv/
 it's a bit tricky cuz there can be multiple mountpoints of the same volume
 and the mountpoints are treated exactly the same way as regular files in terms of their RO/RW parent volumes
 
@@ -7634,7 +7634,7 @@ i forget if that includes the .readonly/.backup suffixes)
 
 since there is a relatively small limit for the total volume name length
 the command to add a RO copy (which you can do at the beginning before fs mkmount) would be like
-vos addsite -server bhouse.tcreech.com -partition b -id shared.tv.jeopardy
+vos addsite -server bhse.tc.example.com -partition b -id shared.tv.jeopardy
 that would wind up creating a shared.tv.jeopardy.readonly
 which is sort of a copy on write snapshot of shared.tv.jeopardy
 
@@ -7648,6 +7648,30 @@ files just get the ACL of whatever directory they're in
 
 that's why you end up sometimes with stilly stuff in AFS like /afs/athena.mit.edu/contrib/bitbucket/README.bitbucket/README.bitbucket
 the README.bitbucket directory only exists to make it so that people can't delete the README.bitbucket file
+
+
+
+== if getting connection timed out errors ==
+me:
+any ideas why the AFS resources on bump dont show up when you try to get at them from the front end? (horribley worded question)
+
+like, when i ls /afs/tc.example.com/shared/tv/ get errors for all the stuff that's on bump :(  also tried from a machine that is on an external network/not at my house with same results
+
+
+TC:
+ah
+yeah I'm pretty sure it's that your IP address changed
+so for example if you do "vos listvldb shared.tv.viks"
+it will show the volume as sitting on your old IP address, which of course doesn't work
+since bump is just a fileserver I think you can fix this by just restarting the fileserver and it will fix the volume entries
+since you're an administrator on bump, you can restart its fileserver from any AFS client machine once authenticated
+so from a laptop, you could do like "bos restart bhse.tc.example.com fs"
+I've just done that
+ah nope
+first need to update the address in file /usr/afs/local/NetInfo
+now when I restart the "fs" server it fixes the vldb
+the clients should eventually figure out the update, but you can force it by doing an "fs flush /afs/tc.example.com/shared/xyz/"
+that wipes your client cache
 
 
 
