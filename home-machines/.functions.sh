@@ -7129,6 +7129,9 @@ is resumed from disk without data loss.
 
 s2ram --test
 s2ram
+
+
+sudo pm-hibernate
 __envHEREDOC__
 }
 helpbashseq(){
