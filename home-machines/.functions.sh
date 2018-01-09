@@ -7131,6 +7131,8 @@ s2ram --test
 s2ram
 
 
+# i think for this to work, you need a swap space that is at least
+# equal to the size of physical RAM:
 sudo pm-hibernate
 __envHEREDOC__
 }
