@@ -1725,6 +1725,14 @@ c-w    - switch between splits.
 :Se    - splits curr screen and i guess _e_ means edit the curr opened file.
 __envHEREDOC__
 }
+helpvim8_bashlikecodecompletion(){
+      cat <<'__envHEREDOC__'
+src : https://superuser.com/questions/575085/bash-like-code-completion-in-vim
+:se completeopt=menu,longest
+
+while in Insert mode, can do variable completion with c-n
+__envHEREDOC__
+}
 helpvimdiff(){
       cat <<'__envHEREDOC__'
 COPY LEFT / RIGHT
