@@ -3104,6 +3104,15 @@ __envHEREDOC__
 }
 helpaptitude2(){
 cat <<'__envHEREDOC__'
+== List all installed packages ==
+dpkg -l                       # all packages, including depenancies.
+/var/lib/apt/extended_states  # Auto-Installed: 0 indicates that the package was expressly installed and is not just a dependency.
+(zcat $(ls -tr /var/log/apt/history.log*.gz); cat /var/log/apt/history.log) 2>/dev/null |
+  egrep '^(Start-Date:|Commandline:)' |
+  grep -v aptdaemon |
+  egrep -B1 '^Commandline:'   # To list all packages intentionally installed (not as dependencies) by apt commands
+                              # This provides a reverse time based view, with older commands listed first
+
 == Removing packages ==
 The following package was automatically installed and is no longer required:
   linux-image-3.2.0-34-generic
