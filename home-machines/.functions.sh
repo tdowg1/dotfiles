@@ -3136,6 +3136,10 @@ $ apt-get install apache2=2.2\*  # Install a specific version found in previous 
 $ apt-get install apache2=2.2.20-1ubuntu1
 $ dpkg -l 'apache2*' | grep ^i   # Check which version installed
 
+==== NOTE ====
+apt-cache search also searches within package description.  aptitude does not unless search term
+prepended with ~d.
+
 ==== See also ====
 * Search Term Reference : http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html
 * Cool aptitude search patterns : http://lwn.net/Articles/179754/
