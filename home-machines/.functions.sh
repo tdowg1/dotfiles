@@ -644,7 +644,7 @@ setSparksServersVariablesForRemote(){
    remote_string="proxy-"
    export sparksMajorServers="${remote_string}stardust ${remote_string}voyager ${remote_string}vega2 ${remote_string}phobos"
    export sparksMinorServers="${remote_string}remote ${remote_string}print-server"
-   export sparksVmwareHosts="stardust voyager phobos"
+   export sparksVmwareHosts="$sparksMajorServers"
 }
 # the Local vs Remote thing was more applicable in the past, prior to the network presence steps taken ~2015.
 # going to just enable the _Local_ mode now since that's what's usually needed:
@@ -654,6 +654,7 @@ setSparksServersVariablesForLocal
 
 listAllRunningSparksVmguests(){
    printhostnamesonly=$1
+   export sparksVmwareGuests=""
 
    for i in $sparksVmwareHosts ; do
       #echo -e "\e[0;32m${i}\e[0m" >/dev/stderr
@@ -665,6 +666,8 @@ listAllRunningSparksVmguests(){
          ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs"
       else
          ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs" | xargs -n 1 basename | sed 's/.vmx//'
+         tempcapture=$( ssh -A $i  'sudo vmrun list' | grep -v "Total running VMs" | xargs -n 1 basename | sed 's/.vmx//' )
+         sparksVmwareGuests="$tempcapture $sparksVmwareGuests"
       fi
    done
 }
@@ -711,10 +714,26 @@ setSparksServersVariablesForLocal
 setSparksServersVariablesForRemote
 # in order to set the sparksMajorServers and sparksMinorServers variables appropriately.
 
+= Notes =
+# To get a list of vm's and shut them down, could do like
+# choose local or remote:
+setSparksServersVariablesForRemote | setSparksServersVariablesForLocal
+listAllRunningSparksVmguests justhostnames
+
+# takes care of windows boxes: (youll probably have to run this from the ansible machine since it's the only one that can connect to windows on the WinRM port or whatever:
+time ansible \*sparks_ms\* -m raw -a "shutdown.exe /s /t 4" --list-hosts
+time ansible $( echo $sparksVmwareGuests | tr ' ' ':' ) -m raw -a "shutdown.exe /s /t 4" --list-hosts
+
+# takes care of linux boxes: (youll probably have to run this from the ansible machine if local)
+time ansible \*sparks\*shared\*:net\*:\!proxy\*:\!vm-ubu1404-ansible -m command -a "init 0" --list-hosts
+
+time ansible $( echo $sparksVmwareGuests | sed 's/vm-ubu1404-ansible//' | tr ' ' ':' ) -m command -a "init 0" --sudo
+
+
 = See also =
 locateAcrossSparksMajors
 updatedbAcrossSparksMajors
-listAllRunningSparksVmguests [justhostnames]
+listAllRunningSparksVmguests [justhostnames]  # when justhostnames arg is supplied, a new global variale will also be set containing a space delimited string of running machines hostnames.
 listAllSparksVmguests [justhostnames]
 __envHEREDOC__
 }
