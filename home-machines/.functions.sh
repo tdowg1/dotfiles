@@ -8279,6 +8279,14 @@ snap install vlc --channel=edge
 flatpak
 __envHEREDOC__
 }
+helpsnap2(){
+cat <<'__envHEREDOC__'
+= APPARMOR-RELATED =
+/var/lib/snapd/apparmor/profiles/
+
+__envHEREDOC__
+}
+
 helpimages(){
 cat <<'__envHEREDOC__'
 # Losslessly transform jpeg, i, 90 degrees clockwise using jpegtran (of libjpeg-turbo-progs):
