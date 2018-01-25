@@ -235,6 +235,54 @@ alias taga='git tag -l -n'
 
 
 
+##
+## HDFS/YARN/Hadoop-related
+alias            hcat='hdfs dfs -cat'
+alias          hchgrp='hdfs dfs -chgrp'
+alias          hchmod='hdfs dfs -chmod'
+alias          hchown='hdfs dfs -chown'
+alias          hcount='hdfs dfs -count'
+alias             hcp='hdfs dfs -cp'
+alias             hdf='hdfs dfs -df'
+alias             hdu='hdfs dfs -du'
+alias           hfind='hdfs dfs -find'
+alias             hls='hdfs dfs -ls'
+alias          hmkdir='hdfs dfs -mkdir'
+alias             hmv='hdfs dfs -mv'
+alias             hrm='hdfs dfs -rm'
+alias            hrmr='hdfs dfs -rm -r'
+alias           hrmrs='hdfs dfs -rm -r -skipTrash'
+alias           hstat='hdfs dfs -stat'
+alias hstatreplication='hdfs dfs -stat %r'
+alias hstat555cmonnow='hdfs dfs -stat "       file %n
+  blocksize %o
+     blocks %b
+       type %F
+replication %r
+        uid %u
+        gid %g
+     modify %y"'
+alias        hgetfacl='hdfs dfs -getfacl'
+alias        hsetfacl='hdfs dfs -setfacl'
+alias           htest='hdfs dfs -test'
+alias          htouch='hdfs dfs -touchz'
+alias hcreatesnapshot='hdfs dfs -createSnapshot'
+alias hdeletesnapshot='hdfs dfs -deleteSnapshot'
+alias hrenamesnapshot='hdfs dfs -renameSnapshot'
+
+alias        hgetconf='hdfs getconf -confKey'
+alias         hreport='hdfs dfsadmin -report'
+alias       hsafemode='hdfs dfsadmin -safemode'
+alias    hsafemodeget='hdfs dfsadmin -safemode get'
+alias  hsafemodeleave='hdfs dfsadmin -safemode leave'
+alias           ylist='yarn application -list'
+alias           ykill='yarn application -kill'
+## HDFS/YARN/Hadoop-related
+##
+
+
+
+
 ## ### #### ###################################################################
 ##
 ## HOST-specific
