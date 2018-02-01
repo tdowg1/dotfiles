@@ -389,3 +389,14 @@ alias cdwa2='cd $HOME/work/_ark.2-2012'
 ##
 
 
+
+## SoC environments. Busybox is used.
+actual_ls=$( basename $( readlink  $( which ls ) ) )
+if [[ "$actual_ls" = "busybox" ]] ; then
+   unalias ls
+   #alias ls='ls --classify --color=auto --time-style=iso'
+   alias ls='ls -F --color=auto'
+fi
+## /SoC environments. Busybox is used.
+##
+
