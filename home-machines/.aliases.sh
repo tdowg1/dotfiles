@@ -398,6 +398,14 @@ if [[ -n "$which_ls" ]] ; then
       unalias ls
       #alias ls='ls --classify --color=auto --time-style=iso'
       alias ls='ls -F --color=auto'
+
+      #alias grep >/dev/null 2>&1  ||  alias grep='grep --color'
+      unalias grep
+
+      #alias df='df --human-readable --print-type'
+      unalias df
+      #alias du='du --human-readable --summarize'
+      unalias du
    fi
 fi
 ## /SoC environments. Busybox is used.
