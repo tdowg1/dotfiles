@@ -1316,6 +1316,11 @@ PRINT VARIOUS
 	> t one
 ltrim( rtrim( $1 ) )
 	awk  '{ gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1 }'
+
+prints "sector" followed by the next word(usually, a sector number) of an inputfile:
+   e.g. : Feb 01 23:41:20 kernel: mmcblk0: error -110 transferring data, sector 91072737, nr 7, cmd response 0x900, card status 0x0
+      would print "sector 91072737,"
+        awk '{for(i=1;i<=NF;i++) if($i~"sector") printf $i" " $(i+1)"\n"}' inputfile
 __envHEREDOC__
 }
 helpawk2_isodatetime(){
@@ -4987,6 +4992,7 @@ libmp3-tag-perl: Module for reading tags of MP3 audio files.
 
 madplay: MPEG audio player in fixed point. MAD is an MPEG audio decoder. There is also full support for ID3 tags.
 mpg123:  MPEG layer 1/2/3 audio player.
+taggrepper - search and match tags of audio files against regular expressions
 
 === id3-related ==
 $ aptitude search id3 --disable-columns | grep -v 386
@@ -5444,6 +5450,10 @@ sudo /usr/StorMan/StorMan.sh
 
 === NOTES ===
 * For new/blank physical devices, the "Clear" option goes over the entire disk, is not _quick_.
+
+== See also ==
+mpt-status - get RAID status out of mpt (and other) HW RAID controllers
+dpt-i2o-raidutils - Adaptec I2O hardware RAID management utilities
 __envHEREDOC__
 }
 helpstormanager(){
@@ -8291,12 +8301,18 @@ helpimages(){
 cat <<'__envHEREDOC__'
 exif - shows EXIF information in JPEG files
 exiftool - Read and write meta information in files
+perceptualdiff - perceptual image comparison tool
 
 # Losslessly transform jpeg, i, 90 degrees clockwise using jpegtran (of libjpeg-turbo-progs):
 jpegtran -copy all -rotate 90  -outfile tranned${i}  $i
 
 == See also ==
 helpidentify
+__envHEREDOC__
+}
+helpgps(){
+cat <<'__envHEREDOC__'
+qmapshack - GPS mapping (GeoTiff and vector) and GPSr management
 __envHEREDOC__
 }
 
