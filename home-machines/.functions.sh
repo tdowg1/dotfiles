@@ -5109,7 +5109,7 @@ __envHEREDOC__
 }
 helpidentify(){
 cat <<'__envHEREDOC__'
-identify is ImageMagick's image info tool.
+identify - describes the format and characteristics of one or more image files. (ImageMagick's image info tool)
 
 # get all information possible:
 $ identify -verbose image
@@ -5119,7 +5119,7 @@ $ identify -format %G image | awk --field-separator x '{ print $1 }'
 $ identify -format %G image | awk --field-separator x '{ print $2 }'
 
 = See also =
-exif
+helpimages
 __envHEREDOC__
 }
 helpburn(){
@@ -8289,6 +8289,9 @@ __envHEREDOC__
 
 helpimages(){
 cat <<'__envHEREDOC__'
+exif - shows EXIF information in JPEG files
+exiftool - Read and write meta information in files
+
 # Losslessly transform jpeg, i, 90 degrees clockwise using jpegtran (of libjpeg-turbo-progs):
 jpegtran -copy all -rotate 90  -outfile tranned${i}  $i
 
