@@ -8291,6 +8291,9 @@ helpimages(){
 cat <<'__envHEREDOC__'
 # Losslessly transform jpeg, i, 90 degrees clockwise using jpegtran (of libjpeg-turbo-progs):
 jpegtran -copy all -rotate 90  -outfile tranned${i}  $i
+
+== See also ==
+helpidentify
 __envHEREDOC__
 }
 
