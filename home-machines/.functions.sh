@@ -2418,8 +2418,33 @@ __envHEREDOC__
 helpgit2(){
       cat <<'__envHEREDOC__'
 = STASHes =
-* respect staged,unstaged when <pop|apply>
-** git stash <pop|apply> --index
+Respect staged and unstaged shtuff
+
+: src : http://mikemabey.blogspot.com/2016/03/using-git-stash-without-losing-staged.html
+# stash unstaged:
+git stash save --keep-index "Un-staged changes"
+# stash staged:
+git stash save "Staged"
+
+# Now is when you want to do any work you need to while the other changes are 
+# stashed. NOTE: If you need to make changes that are based on a file in the 
+# "Un-staged changes" stash, you will of course need to pop that stash specifically 
+# with git stash pop stash@{1}. But, in order to get the staged changes back, 
+# you'll need to do another git stash save to do things in the correct order.
+
+# unstash stuff that BELONGS IN STAGED:
+git stash apply
+# All the changes you just popped AREN'T STAGED at this point but should 
+# be, so go ahead and add all of them to the index with git add file1 file2 ...
+git status --short | grep -P '^ M' | sed -e 's/^ M//' | xargs -n 1 -I{}  git add "{}"
+   TODO STUB : ^^test this on file set that has one or more files with spaces or weird characters.
+
+# if stash applied correctly, delete it:
+git stash drop
+# unstash stuff unstaged stuff (stuff stashed in the very first step):
+git stash apply
+# if stash applied correctly, delete it:
+git stash drop
 
 = Undocumented (from git help) =
 * git ls-files --directory --others --exclude-from=.git/info/exclude
