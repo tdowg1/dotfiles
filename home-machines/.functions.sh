@@ -1106,6 +1106,7 @@ EXAMPLES --------
      629145600 bytes (629 MB) copied, 15.4169 s, 40.8 MB/s
 rewrite entire disk (with itself)
    dd if=/dev/sdc of=/dev/sdc bs=4096 conv=noerror
+      ehhh... had disastrous results after doing this with a microSD card that had been acting up.
 
 EXAMPLES hdd-REMAPPING.1 ----------------------
 WRITE-remap block sector (seemed to have good luck w this)"
