@@ -146,3 +146,6 @@ endif
 ":command Qa! qa
 ":command QA! qa!
 
+
+let g:DeleteTrailingWhitespace = 1
+

@@ -1,0 +1,1 @@
+DeleteTrailingWhitespace-1.06.vmb: call delete('/home/bdavies/.vim/autoload/DeleteTrailingWhitespace.vim')|call delete('/home/bdavies/.vim/plugin/DeleteTrailingWhitespace.vim')|call delete('/home/bdavies/.vim/doc/DeleteTrailingWhitespace.txt')

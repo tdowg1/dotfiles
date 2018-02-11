@@ -1,0 +1,162 @@
+*DeleteTrailingWhitespace.txt*	Delete unwanted whitespace at the end of lines.
+
+		 DELETE TRAILING WHITESPACE    by Ingo Karkat
+						*DeleteTrailingWhitespace.vim*
+description			|DeleteTrailingWhitespace-description|
+usage				|DeleteTrailingWhitespace-usage|
+installation			|DeleteTrailingWhitespace-installation|
+configuration			|DeleteTrailingWhitespace-configuration|
+limitations			|DeleteTrailingWhitespace-limitations|
+known problems			|DeleteTrailingWhitespace-known-problems|
+todo				|DeleteTrailingWhitespace-todo|
+history				|DeleteTrailingWhitespace-history|
+
+==============================================================================
+DESCRIPTION				*DeleteTrailingWhitespace-description*
+
+This plugin deletes whitespace at the end of each line, on demand via the
+:DeleteTrailingWhitespace command, or automatically when the buffer is
+written.
+
+SEE ALSO								     *
+
+This plugin leverages the superior detection and customization facilities of
+the companion |ShowTrailingWhitespace.vim| plugin (vimscript #3966), though it
+can also be used without it if you're not interested in highlighting and
+customizing.
+
+To quickly locate the occurrences of trailing whitespace, you can use the
+companion |JumpToTrailingWhitespace.vim| plugin (vimscript #3968).
+
+RELATED WORKS								     *
+
+The basic substitution commands as well as more elaborate scriptlets, as the
+idea of automating this can be found in this VimTip:
+    http://vim.wikia.com/wiki/Remove_unwanted_spaces
+There are already a number of plugins that define such a command; most bundle
+this functionality together with the highlighting of trailing whitespace.
+However, most of them cannot consider whitespace exceptions and are not as
+flexible.
+- trailing-whitespace (vimscript #3201) defines :FixWhitespace.
+- bad-whitespace (vimscript #3735) defines :EraseBadWhitespace.
+- Trailer Trash (vimscript #3938) defines :Trim.
+- StripWhiteSpaces (vimscript #4016) defines :StripWhiteSpaces and strips
+  automatically, too, but is way more simple than this plugin.
+- WhiteWash (vimscript #3920) provides functions that also can strip visible
+  ^M and sequential whitespacw between words.
+
+==============================================================================
+USAGE					      *DeleteTrailingWhitespace-usage*
+						   *:DeleteTrailingWhitespace*
+:[range]DeleteTrailingWhitespace
+			Delete all trailing whitespace in the current buffer
+			or [range].
+
+==============================================================================
+INSTALLATION			       *DeleteTrailingWhitespace-installation*
+
+This script is packaged as a |vimball|. If you have the "gunzip" decompressor
+in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
+the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
+vimball or via the |:UseVimball| command. >
+    vim DeleteTrailingWhitespace*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES			       *DeleteTrailingWhitespace-dependencies*
+
+- Requires Vim 7.0 or higher.
+- The |ShowTrailingWhitespace.vim| plugin (vimscript #3966) complements this
+  script, but is not required. With it, this plugin considers the whitespace
+  exceptions for certain filetypes.
+
+==============================================================================
+CONFIGURATION			      *DeleteTrailingWhitespace-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+
+					   *DeleteTrailingWhitespace-mappings*
+This plugin doesn't come with predefined mappings, but if you want some, you
+can trivially define them yourself: >
+    nnoremap <Leader>d$ :<C-u>%DeleteTrailingWhitespace<CR>
+    vnoremap <Leader>d$ :DeleteTrailingWhitespace<CR>
+<
+						  *g:DeleteTrailingWhitespace*
+By default, trailing whitespace is processed before writing the buffer when it
+has been detected and is currently being highlighted by the
+|ShowTrailingWhitespace.vim| plugin.
+To turn off the automatic deletion of trailing whitespace, use: >
+    let g:DeleteTrailingWhitespace = 0
+If you want to eradicate all trailing whitespace all the time, use: >
+    let g:DeleteTrailingWhitespace = 1
+<
+					   *g:DeleteTrailingWhitespace_Action*
+For processing, the default action is aborting the write, unless ! is given.
+To automatically eradicate the trailing whitespace, use: >
+    let g:DeleteTrailingWhitespace_Action = 'delete'
+To ask whether to remove or keep the whitespace (either for the current
+buffer, or all buffers in the entire Vim session), use: >
+    let g:DeleteTrailingWhitespace_Action = 'ask'
+<
+			*g:DeleteTrailingWhitespace_ChoiceAffectsHighlighting*
+When the plugin is configured to ask the user, and she answers the query with
+"Never" or "Nowhere", the |ShowTrailingWhitespace.vim| highlighting is turned
+off automatically; when you ignore it, there's typically no sense in still
+highlighting it. If you don't want that, turn it off via: >
+    let g:DeleteTrailingWhitespace_ChoiceAffectsHighlighting = 0
+<
+
+	      *b:DeleteTrailingWhitespace* *b:DeleteTrailingWhitespace_Action*
+The global detection and processing behavior can be changed for individual
+buffers by setting the corresponding buffer-local variables.
+
+==============================================================================
+LIMITATIONS				*DeleteTrailingWhitespace-limitations*
+
+KNOWN PROBLEMS			     *DeleteTrailingWhitespace-known-problems*
+
+TODO					       *DeleteTrailingWhitespace-todo*
+
+IDEAS					      *DeleteTrailingWhitespace-ideas*
+
+==============================================================================
+HISTORY					    *DeleteTrailingWhitespace-history*
+
+1.06	24-Feb-2015
+- FIX: Warning for nomodifiable buffer does not consider buffer-local
+  b:DeleteTrailingWhitespace_Action (after version 1.05).
+
+1.05	12-Dec-2014
+- Corner case: Avoid "E21: Cannot make changes, 'modifiable' is off" on a
+  nomodifiable buffer when g:DeleteTrailingWhitespace_Action = 'delete', and
+  instead just show a warning. Thanks to Enno Nagel for raising this issue.
+
+1.04	14-Dec-2013
+- Minor: Make substitute() robust against 'ignorecase'.
+- Minor: Correct lnum for no-modifiable buffer check.
+- Handle local exception regular expressions that contain a "/" character.
+  This must be escaped for the :substitute/ command.
+
+1.03	19-Apr-2012
+Handle readonly and nomodifiable buffers by printing just the warning / error,
+without the multi-line function error.
+
+1.02	14-Apr-2012
+FIX: Avoid polluting search history.
+
+1.01	04-Apr-2012
+Define command with -bar so that it can be chained.
+
+1.00	16-Mar-2012
+First published version.
+
+0.01	05-Mar-2012
+Started development.
+
+==============================================================================
+Copyright: (C) 2012-2015 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
