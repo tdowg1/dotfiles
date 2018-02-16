@@ -1,0 +1,27 @@
+
+~/backup-moto-g1--EVERYTHING-and-not-external.sh [FORMAT=unix] [TYPE=SH] [ASCII=000] [HEX=00] [POS=0018,0001][100%] [LEN=18]
+:se
+--- Options ---
+  autoindent          expandtab           mouse=a             shiftround          tabpagemax=50       wildmenu
+  autoread            filetype=sh         nrformats=bin,hex   shiftwidth=3        ttimeout            t_Co=16
+  background=dark     history=475         relativenumber      sidescrolloff=5     ttimeoutlen=100
+  commentstring=#%s   hlsearch            ruler               smarttab            ttyfast
+  cursorline          incsearch           scroll=25           softtabstop=3       ttymouse=xterm
+  display=lastline    laststatus=2        scrolloff=5         syntax=sh           wildcharm=^Z
+  backspace=indent,eol,start
+  complete=.,w,b,u,t
+  dictionary=~/.vim/bash-support/wordlists/bash.list
+  formatoptions=tcqj
+  indentexpr=GetShIndent()
+  indentkeys=0{,0},!^F,o,O,e,0=then,0=do,0=else,0=elif,0=fi,0=esac,0=done,0=end,),0=;;,0=;&,0=fin,0=fil,0=fip,0=fir,0=fix
+  listchars=tab:> ,trail:-,extends:>,precedes:<,nbsp:+
+  runtimepath=~/.vim,~/.vim/bundle/vundle,~/.vim/bundle/Solarized,/data/data/com.termux/files/usr/share/vim/vimfiles,/data/data/com.termux
+/files/usr/share/vim/vim80,/data/data/com.termux/files/usr/share/vim/vim80/pack/dist/opt/matchit,/data/data/com.termux/files/usr/share/vim
+/vimfiles/after,~/.vim/after,~/.vim/bundle/vundle/,~/.vim/bundle/vundle/after,~/.vim/bundle/Solarized/after
+  sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize
+  statusline=%F%m%r%h%w [FORMAT=%{&ff}] [TYPE=%Y] [ASCII=%03.3b] [HEX=%02.2B] [POS=%04l,%04v][%p%%] [LEN=%L]
+  tags=./tags;,./TAGS,tags,TAGS
+  viminfo=!,'100,<50,s10,h
+Press ENTER or type command to continue
+
+
