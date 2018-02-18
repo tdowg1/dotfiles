@@ -3573,6 +3573,8 @@ dnamefull=a107-2787
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
 diskId=$dnamefull
+subdevice=$( basename $d )1
+subdevice=$( basename $d )2
 
 == HDD Initialization Steps ==
 
@@ -3590,12 +3592,29 @@ $ sudo parted $d
 # Alternatively, make an mbr/dos/msdos partition table:
 (parted) mktable msdos
 
-(parted) mkpart primary ntfs 38912s 118783s
+(parted) mkpart primary ntfs 38912s 122879s
 
 # Normally, use entire rest of hdd:
-(parted) mkpart primary ext4 118784s 100%
+(parted) mkpart primary ext4 122880s 100%
 # Alternatively, if you know there is hdd controller meta at tail end of drive:
-(parted) mkpart primary ext4 118784s -5G
+(parted) mkpart primary ext4 118800s -5G
+
+
+===== --script'ed version =====
+# GPT:
+sudo parted $d --script mktable gpt
+# or DOS:
+sudo parted $d --script mktable msdos
+sudo parted $d --script mkpart primary ntfs 38912s 122879s
+sudo parted $d --script mkpart primary ext4 122880s 100%
+
+sudo parted $d --script mkpart primary ext4 122880s -5G
+
+sudo mkfs.xfs -L ${dname} ${d}2
+sudo mkfs.xfs -f -L $subdevice /dev/${subdevice}
+sudo su -c "echo \"LABEL=${subdevice}             /mnt/${subdevice}              xfs     defaults,nofail,noatime,nodiratime        0 0\" >> /etc/fstab"
+sudo mkdir /mnt/${subdevice}
+sudo mount -v /mnt/${subdevice}
 
 
 
