@@ -1415,6 +1415,10 @@ Opts to OpenSSH to machine as yourself while executing rsync with sudo so can e.
 	sudo rsync -av -e "ssh -i /home/phife-dawg/.ssh/id_rsa" [phife-dawg@]queens-server:/etc/ansible/hosts /etc/ansible/hosts
 Opts to OpenSSH running on custom port 443:
 	rsync -av -e "ssh -p 443 -l phife-dawg"  phife-dawg@queens-server:. /tmp
+Synchronize Last Modified times for Directories, e.g. from previous Dropbox.off/ (which has times want to transfer) to new Dropbox/ (which has, presumably, all the same exact times, that is, times that Dropbox created them, which would all be the same and probably very recent):
+# first, generate a list of directories under Dropbox.off:
+find ~/Dropbox.off -type d | sed -e 's/Dropbox.off\///' > Dropbox.off-directory-listing.log
+rsync -t  --files-from=Dropbox.off-directory-listing.log  Dropbox.off/ Dropbox/ -i --existing -n
 __envHEREDOC__
 }
 helprename(){
