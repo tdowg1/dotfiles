@@ -8364,6 +8364,45 @@ cat <<'__envHEREDOC__'
 qmapshack - GPS mapping (GeoTiff and vector) and GPSr management
 __envHEREDOC__
 }
+helppaste(){
+cat <<'__envHEREDOC__'
+= paste - merges lines of files :: Write lines consisting of the sequentially corresponding lines from each FILE, separated by TABs, to standard output. =
+file1
+-----
+1
+2
+3
+
+file2
+-----
+a
+b
+c
+
+$ paste file1 file2
+1       a
+2       b
+3       c
+
+= some interesting behaviour =
+$ paste -   < file1
+1
+2
+3
+
+$ paste - - < file1
+1       2
+3
+
+$ paste - - - < file1
+1       2       3
+
+$ paste - - - - < file1 file2
+1       2       3               a
+                                b
+                                c
+__envHEREDOC__
+}
 
 
 
