@@ -94,3 +94,6 @@
 #[log]
 #	date = iso8601
 
+[credential]
+	helper = !aws --profile avis codecommit credential-helper $@
+	UseHttpPath = true
