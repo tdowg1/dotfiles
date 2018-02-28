@@ -8403,6 +8403,11 @@ $ paste - - - - < file1 file2
                                 c
 __envHEREDOC__
 }
+helpsqlite(){
+cat <<'__envHEREDOC__'
+sqlite3 dbname .dump > dbname.dump.txt
+__envHEREDOC__
+}
 
 
 
