@@ -7091,6 +7091,9 @@ aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Nam
 aws ec2 describe-instances --filter "Name=instance-state-name,Values=running"  --query 'Reservations[*].Instances[*][InstanceId]' --output text | sort > all-running-instances.txt
 # comm -13 suppress 'column 3' which is lines that appear in both files:
 comm -13 excluded-running-instances.txt all-running-instances.txt
+
+== See also ==
+helppythonaws
 __envHEREDOC__
 }
 helpfalcon(){
@@ -8433,6 +8436,11 @@ __envHEREDOC__
 helpsqlite(){
 cat <<'__envHEREDOC__'
 sqlite3 dbname .dump > dbname.dump.txt
+__envHEREDOC__
+}
+helppythonaws(){
+cat <<'__envHEREDOC__'
+http://boto3.readthedocs.io/en/latest/reference/services/
 __envHEREDOC__
 }
 
