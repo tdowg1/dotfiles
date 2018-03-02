@@ -6401,6 +6401,19 @@ python -c 'import socket; print socket.gethostbyname(socket.getfqdn())'  # get h
 
 echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readable format.
 
+== dynamic interpretter ==
+use ptpython - https://github.com/jonathanslenders/ptpython/ - pip install ptpython
+use bpython  - https://github.com/bpython/bpython            - pip install bpython
+
+=== functions ===
+dir( [object] ) - shows current env objects[, shows objects properties].
+help( [object] ) - API docs [for object].
+type( object )  - shows object type.
+
+== dumping variables ==
+import pprint
+pprint.pprint( var )
+
 == Regex ==
 : src : http://www.thegeekstuff.com/2014/07/advanced-python-regex/
 >>> paragraph = \
@@ -6417,6 +6430,20 @@ echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readabl
 
 == See also ==
 helpvirtualenv
+__envHEREDOC__
+}
+helppythonic(){
+cat <<'__envHEREDOC__'
+3 in [1, 2, 3] # => True     https://stackoverflow.com/questions/9542738/python-find-in-list
+
+a = [ {'name':'pippo', 'age':'5'} , {'name':'pluto', 'age':'7'} ]
+[d for d in a if d['name']=='pluto'][0]      # =>  {'age': '7', 'name': 'pluto'}
+[d for d in a if d['name'] == 'pluto']       # => [{'age': '7', 'name': 'pluto'}]
+filter(lambda x: x.get('name') == 'pluto',a) # => [{'age': '7', 'name': 'pluto'}]
+[d['age'] for d in a if d['name']=='pluto']  # => ['7']
+
+existing_snaps = ec2.describe_snapshots(OwnerIds=account_ids)["Snapshots"]
+found_snaps = [ d for d in existing_snaps if d['SnapshotId'] == snapshotid ]
 __envHEREDOC__
 }
 helpalternatives(){
