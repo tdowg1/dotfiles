@@ -8443,6 +8443,29 @@ cat <<'__envHEREDOC__'
 http://boto3.readthedocs.io/en/latest/reference/services/
 __envHEREDOC__
 }
+helphdd8_network_direct_blk_dev_access(){
+cat <<'__envHEREDOC__'
+Network Block Device
+== FreeBSD ==
+: src : https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/geom-ggate.html
+ggatec ggated -
+   GEOM provides a simple mechanism for providing unencrypted remote access to devices such
+   as disks, CDs, and file systems through the use of the GEOM Gate network daemon, _ggated_.
+   The system with the device runs the server daemon which handles requests made by clients
+   using _ggatec_
+
+== Linux ==
+: src : https://nbd.sourceforge.io/
+nbd nbd-client nbd-server
+when compiled into your kernel, Linux can use a remote server as one of its block devices.
+
+=== see also ===
+http://www.linux-mag.com/id/7118/ - Network Block Devices: Using Hardware Over a Network
+https://web.archive.org/web/20071026061326/http://w3.linux-magazine.com/issue/70/Network_Block_Devices.pdf - discusses not just NBD, but other implementations as well
+http://www.microhowto.info/howto/export_a_block_device_using_nbd.html
+[[wikipedia: Network block device]]
+__envHEREDOC__
+}
 
 
 
