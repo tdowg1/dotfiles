@@ -4145,7 +4145,7 @@ service
 * e.g.:
 sudo systemctl {start|stop|restart|enable} docker
 
-== Ubuntu-related ==
+== Debian-related ==
 chkconfig /seems/ to be workable, but isn't exactly like rhel (also, I think its just a convenience program... and probably shouldnt really be used--USE the deb shtuff instead!)... when do --list, it generates the list of services directly from the files existing under /etc/init.d (with rhel, you explicitly --add  and  --del the list of registered OS services.
 
 see also : insserve update-rc.d helpupdatercd
@@ -4162,6 +4162,7 @@ other keywords : lsb upstart lsb-header
 * initctl - can use in place of "service" with the commands bellow. Run initctl help.
 ** initctl list === `service --status-all' in RHEL
 * start - start a service
+** sudo start <service>
 * stop - stop a service
 * reload - sends a SIGHUP signal to running process
 * restart - restarts a service without reloading its job config file
@@ -4171,7 +4172,8 @@ other keywords : lsb upstart lsb-header
 == See also ==
 * https://help.ubuntu.com/community/UbuntuBootupHowto
 * http://wiki.debian.org/LSBInitScripts
-* helpsystemctl
+* helpsystemctl[23]
+* helpupdatercd
 __envHEREDOC__
 }
 helprenice(){
