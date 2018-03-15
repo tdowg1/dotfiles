@@ -4565,7 +4565,8 @@ sudo mount -t tmpfs -o size=256m tmpfs $RAMDISK
 #chown -R user:group $RAMDISK
 
 == iso9660 : Mount ISO image file ==
-$ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
+mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
+mount -t msdos -o loop,offset=$((2048 * 512 )) image.dd /mnt/tmp
 
 == iso9660 : Mount CD-ROM (or some other optical media) ==
 $ mkdir /media/cdrom
