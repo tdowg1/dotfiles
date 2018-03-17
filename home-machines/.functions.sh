@@ -1329,6 +1329,10 @@ prints "sector" followed by the next word(usually, a sector number) of an inputf
    e.g. : Feb 01 23:41:20 kernel: mmcblk0: error -110 transferring data, sector 91072737, nr 7, cmd response 0x900, card status 0x0
       would print "sector 91072737,"
         awk '{for(i=1;i<=NF;i++) if($i~"sector") printf $i" " $(i+1)"\n"}' inputfile
+DELETE REMOVE LAST COLUMN
+	awk 'NF{--NF};1'  < in
+        awk 'NF{NF-=1};1' < in
+        awk 'NF{NF--};1'  < in
 __envHEREDOC__
 }
 helpawk2_isodatetime(){
