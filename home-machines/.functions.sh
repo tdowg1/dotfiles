@@ -1132,18 +1132,14 @@ See also
 
 
 $ dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
+$ dd </dev/zero >/dev/sdXX
 
 
 MISC ----
 MONITORING progress
    dd ... & pid=$! ; watch kill -USR1 $pid
    while [ 1 ] ; do kill -USR1 $pid ; sleep 5 ; done
-	HELP!  if I obtain the pid, and then go to another terminal
-	 in order to minitor progress, i always seem to end up killing
-	 --actually--killing-- the dd process... what gives?!
-	 	ANSWER: it's called a variable.
-	  ok ok.. it turns out that when you use sudo, the $pid
-	  is that of the sudo process!!
+      when you use sudo, the $pid is that of the sudo process!!
 LBA approximations (assumes 512-byte block size (bs) ; uses iA18 as subject disk)
    iA18 is 698GiB;
    slightly more than 12876374016 bytes (~13GB) were written before completing
@@ -1157,7 +1153,7 @@ Dump typical MBR location in hex ; first 512-bytes of device
    dd if=/dev/sda bs=512 count=1 | hexdump -C
 Backup device
    dd if=/dev/sda6 bs=4096 conv=notrunc,noerror | gzip > rsnapshot.dd.gz
-TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
+      TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
 __envHEREDOC__
 }
 helpdd2(){
@@ -1175,7 +1171,18 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 
 * hdrecover.sf.net
 
-* ddrescue tries hard to rescue data in case of read errors. (Similarly, gddrescue)
+* ddrescue / dd_rescue tries hard to rescue data in case of read errors. (Similarly, gddrescue)
+** ddrescue is newest
+
+* dd_rhelp - http://www.kalysto.org/utilities/dd_rhelp/index.en.html
+** tries to recover as much as possible, as fast as possible, using ddrescue / dd_rescue
+*** In short, dd_rhelp will use dd_rescue on your entire disc, BUT it will try to gather the maximum valid data before trying for ages on bunches
+*** of badsectors.
+*** So if you leave dd_rhelp work for infinite time, it'll have the same effect as a simple dd_rescue.
+*** But because you might not have this infinite time (this could indeed take really long in some cases... ), dd_rhelp will come to help.
+*** It works by "jumping" to another part of the disk whenever it encounters too much read errors in a row.
+*** Of course, it keeps a map of what have been parsed, and in the long run, it garantees you that dd_rescue will be used to parse all the surface of your device.
+** GNU ddrescue is a newer tool doing the same thing as dd_rhelp without needing dd_rescue.
 
 * safecopy is a data recovery tool which tries to extract as much data as possible from a problematic (i.e. damaged sectors) source - like floppy drives, harddisk partitions, CDs, tape devices, ..., where other tools like dd would fail doe to I/O errors.
 
