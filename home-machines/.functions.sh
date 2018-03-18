@@ -6109,11 +6109,53 @@ Package Description: Utilities for manipulating filesystem extended attributes
 
 == python-xattr: /usr/bin/xattr ==
 Package Description: module for manipulating filesystem extended attributes
- This module allows manipulation of the filesystem extended attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these attributes.
-  xattr - sets or lists extended attributes on a file or directory
+This module allows manipulation of the filesystem extended attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these attributes.
+   xattr - sets or lists extended attributes on a file or directory.
+
+= filesystem confusion, etc =
+   attr - is aimed specifically at users of the XFS filesystem!!!
+   getfattr/setfattr - for filesystem __independent__ extended attribute manipulation.
+
+= examples =
+getfattr -d file > file.getfattrdump # dump.
+setfattr --restore=file.getfattrdump # restore.
+setfattr -n user.ya -v 77            # do a thing.
+
 
 = See also =
 * [http://www.linux-mag.com/id/8741/ Extended File Attributes Rock! | Linux Magazine]
+* [http://www.linux-mag.com/id/8794/ Checksumming Files to Find Bit-Rot | Linux Magazine]
+
+* a metadata dumping tool : metastore - Store and restore metadata from a filesystem
+?metamonger - Save, diff, and restore filesystem metadata
+?extract - displays meta-data from files of arbitrary type
+
+== other meta-related but not necessarily extended attribute-related ==
+metacam - extract EXIF information from digital camera files
+atomicparsley - read, parse and set metadata of MPEG-4 and 3gp files
+exempi - command line tool to manipulate XMP metadata
+exifprobe - read metadata from digital pictures
+exiv2 - EXIF/IPTC/XMP metadata manipulation tool
+oidua - audio file metadata lister
+pngmeta - Display metadata information from PNG images
+pypy-mutagen - audio metadata editing library (PyPy)
+python-enzyme - video metadata parser (Python 2)
+yamdi - a utility for adding metadata to flash video files
+
+python3-enzyme - video metadata parser (Python 3)
+python3-libxmp - Python3 library for XMP metadata
+python3-mutagen - audio metadata editing library (Python 3)
+python3-pafy - Download videos and retrieve metadata from YouTube
+python-extractor - extracts meta-data from files of arbitrary type (Python bindings)
+python-hachoir-metadata - Program to extract metadata using Hachoir library
+python-kaa-metadata - Media Metadata for Python
+python-libxmp - Python library for XMP metadata
+python-mutagen - audio metadata editing library
+
+tracker-extract - metadata database, indexer and search tool - metadata extractors
+tracker-gui - metadata database, indexer and search tool - GNOME frontends
+tracker - metadata database, indexer and search tool
+tracker-miner-fs - metadata database, indexer and search tool - filesystem indexer
 __envHEREDOC__
 }
 helpxpra(){
@@ -7872,6 +7914,17 @@ xdotool getactivewindow type 'jijijijij password ayyy lmao'
 # other misc
 xdotool key alt+Tab
 xdotool key "Return"
+
+== See also ==
+helpxnee
+__envHEREDOC__
+}
+helpxnee(){
+cat <<'__envHEREDOC__'
+xnee - http://www.sandklef.com/xnee/ - a suite of programs that can record, replay and distribute user actions under the X11 environment. Think of it as a robot that can imitate the job you just did.
+
+== See also ==
+helpxdotool
 __envHEREDOC__
 }
 helpchmod(){
