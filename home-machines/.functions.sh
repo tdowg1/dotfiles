@@ -6079,8 +6079,23 @@ rsync -av --delete --stats --progress --human-readable --xattrs --hard-links --d
 # Perform a long diff--same as previous but just add the --checksum option.
 __envHEREDOC__
 }
+helpgetfattr(){
+cat <<'__envHEREDOC__'
+/calling helpxattrs()/
+__envHEREDOC__
+   helpxattrs
+__envHEREDOC__
+}
+helpattr(){
+cat <<'__envHEREDOC__'
+/calling helpxattrs()/
+__envHEREDOC__
+   helpxattrs
+__envHEREDOC__
+}
 helpxattrs(){
 cat <<'__envHEREDOC__'
+= various extended attributes tools =
 == e2fsprogs: /usr/bin/lsattr ==
 ^^? (is this *really* what i was looking for? not sure...)
   lsattr - list file attributes on a Linux second extended file system
@@ -6088,14 +6103,17 @@ cat <<'__envHEREDOC__'
 == attr: /usr/bin/getfattr ==
 Package Description: Utilities for manipulating filesystem extended attributes
  A set of tools for manipulating extended attributes on filesystem objects, in particular getfattr(1) and setfattr(1). An attr(1) command is also provided which is largely compatible with the SGI IRIX tool of the same name.
-  getfattr - get extended attributes of filesystem objects
-  setfattr - set extended attributes of filesystem objects
-  attr - extended attributes on XFS filesystem objects     (lol, k... XFS, huh?...)
+   getfattr - get extended attributes of filesystem objects
+   setfattr - set extended attributes of filesystem objects
+   attr - extended attributes on XFS filesystem objects     (lol, k... XFS, huh?...)
 
 == python-xattr: /usr/bin/xattr ==
 Package Description: module for manipulating filesystem extended attributes
  This module allows manipulation of the filesystem extended attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these attributes.
   xattr - sets or lists extended attributes on a file or directory
+
+= See also =
+* [http://www.linux-mag.com/id/8741/ Extended File Attributes Rock! | Linux Magazine]
 __envHEREDOC__
 }
 helpxpra(){
