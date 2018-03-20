@@ -8397,8 +8397,9 @@ __envHEREDOC__
 }
 helpzsh(){
 cat <<'__envHEREDOC__'
-bindkeys - shows current keyboard shortcuts
-
+bindkeys - shows current keyboard shortcuts.
+history - shows last 16 cmdlns (wtf? why 16?).
+history N - where N is number of lines you want to see, e.g. history 100 would show the last 100 cmdlns.
 __envHEREDOC__
 }
 helpconfigure(){
