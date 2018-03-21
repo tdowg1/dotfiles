@@ -6426,6 +6426,7 @@ sudo service ntpd stop || sudo service ntp stop; sudo ntpdate -v 2.north-america
 # For Ubuntu (debian too?):
 sudo apt-get install ntp
 # Note that if the machine is WAY out of sync, prob must manually sync first using ntpdate (above).
+# Note by default ntp uses UDP port 123.
 
 == Public NTP servers (from the pool.ntp.org proj) ==
  -> Project asks that queries to pub servers do not occur >once/4s.
