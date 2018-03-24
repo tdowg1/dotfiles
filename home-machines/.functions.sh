@@ -2319,13 +2319,16 @@ HTTPS/SSL/TLS-related things ( works with at least nmap-7.25BETA1-1.x86_64.rpm )
 Shows copious infomation about certificate, encryption protocols, and ciphers in use:
 $ nmap --script ssl-cert,ssl-enum-ciphers -p 6182,443,55-100 host
 
-Test UDP port 123 ( NTP ) is open on a host:
+# Test UDP port 123 ( NTP ) is open on a host:
 sudo nmap -v -sU -p 123 host
-Test UDP port 53 ( DNS ) is open on a host:
+# Test UDP port 53 ( DNS ) is open on a host:
 sudo nmap -v -sU -p 53 host
-Test UDP port 53 ( DNS ) is open on a host, which currently looks closed:
-: "Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn"
+# Test UDP port 53 ( DNS ) is open on a host, which currently looks closed:
+# : "Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn"
 sudo nmap -v -sU -p 53 host -Pn
+# Test that NTP is running on UDP port 123:
+nmap -sU 10.10.10.10 -p 123            ==> port 123 is for NTP and '-sU' is for scanning UDP ports.
+
 
 
 Find probable Linux machines on the network:
