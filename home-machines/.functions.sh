@@ -8286,7 +8286,7 @@ cat <<'__envHEREDOC__'
 apg - generates several random passwords  # (search string matching; ignore: passwd)
 
 apg -m 8 -x 8
-apg -a 1 -M SNCL -m 32
+apg -a 1 -M SNCL -m 32 -s
 __envHEREDOC__
 }
 helpgeneratepasswords(){
