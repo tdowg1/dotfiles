@@ -2025,7 +2025,10 @@ $ ssh
 	[user@]host1
 
 == FINGERPRINTs ==
-$ ssh-keygen -l -f  private-OpenSSH-key
+ssh-keygen -l -f  private-OpenSSH-key
+# get fingerprint of each line of public key:
+cat ~/.ssh/authorized_keys | xargs -n1 -I% bash -c 'ssh-keygen -l -f /dev/stdin <<<"%"'
+
 
 == Convert putty-formatted public key to OpenSSH ==
 ssh-keygen -i -f ssh2.pub > openssh.pub
