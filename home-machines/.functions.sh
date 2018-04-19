@@ -7316,6 +7316,8 @@ sudo su -c 'echo check > /sys/block/md0/md/sync_action'
 # This module parameter allows special arrays (SEE md(4)) to be started at boot time:
 /sys/module/md_mod/parameters/start_dirty_degraded
 
+# Thermal information, (in C * 1000) (at least on Thinkpad w520 on 3.2.0-126-generic)
+/sys/class/thermal/thermal_zone0/temp
 
 
 = See also =
