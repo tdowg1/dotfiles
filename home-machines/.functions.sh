@@ -710,6 +710,7 @@ helpsparks(){
 cat <<'__envHEREDOC__'
 # call...
 setSparksServersVariablesForLocal
+#   ^^^this is set by default.
 # or
 setSparksServersVariablesForRemote
 # in order to set the sparksMajorServers and sparksMinorServers variables appropriately.
@@ -731,6 +732,10 @@ time ansible $( echo $sparksVmwareGuests | sed 's/vm-ubu1404-ansible//' | tr ' '
 
 
 = See also =
+$sparksMajorServers
+$sparksMinorServers
+$sparksVmwareHosts=
+
 locateAcrossSparksMajors
 updatedbAcrossSparksMajors
 listAllRunningSparksVmguests [justhostnames]  # when justhostnames arg is supplied, a new global variable, sparksVmwareGuests , will also be set containing a space delimited string of running machines hostnames.
@@ -2172,6 +2177,7 @@ helpip
 /etc/udev/rules.d/70-persistent-net.rules
 helppktstat
 helpsysfs
+nmcli
 __envHEREDOC__
 }
 helpip(){
@@ -6821,6 +6827,12 @@ Perform TCP port scan in the ranges of [1-1000] and [2000-3000] to check which p
 $ nc -vnz -w 1 192.168.1.102 1-1000
 $ nc -vnz -w 1 192.168.1.102 2000-3000
 
+# Immediately exit upon success:
+nc -vz HOST PORT
+
+# Exit after trying for 1s:
+nc -w1 HOST PORT
+
 == See also ==
 helpnmap
 http://xmodulo.com/2014/01/useful-netcat-examples-linux.html
@@ -8290,8 +8302,14 @@ helpapg(){
 cat <<'__envHEREDOC__'
 apg - generates several random passwords  # (search string matching; ignore: passwd)
 
-apg -m 8 -x 8
-apg -a 1 -M SNCL -m 32 -s
+apg -m 8 -x 8                # 8 characters long, _exactly_.
+apg    -m 32                 # 32 characters long, at least.
+apg -s                       # Prompt user for some entropy.
+apg           -a 1           # random character password generation (i.e. not pronounceable, the default)
+apg                -M SNCL   # include Special, Number, Capital, and Lowercase characters.
+apg -s -m 32  -a 1 -M SNCL   # best. all the things.
+
+apg -s -m 32  -a 1 -M NCL    # include Numbers, Capital characters, and Lowercase characters.
 __envHEREDOC__
 }
 helpgeneratepasswords(){
