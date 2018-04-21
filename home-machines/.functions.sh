@@ -1402,7 +1402,9 @@ say like rsync -E: to preserve ONLY the executability and not -p, --perms, for
 instance.... idk.
 * man page also says -a performs some kind of compression, but doesnt
 mention --compress as one of the options that -a is an alias for....
+__envHEREDOC__
 }
+
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
 Misc:
