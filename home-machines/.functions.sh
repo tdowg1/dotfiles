@@ -1430,7 +1430,11 @@ Opts to specify OpenSSH, login:
 	rsync -av -e "ssh -i ~/.ssh/aaliyah.id_rsa -l aaliyah" hostname:/host/path/ /local/path/
 	rsync -av -e "ssh -l phife-dawg"  phife-dawg@queens-server:. /tmp
 Opts to OpenSSH to machine as yourself while executing rsync with sudo so can e.g. update an /etc/ file:
+   SUDO LOCALLY REQUIRED:
 	sudo rsync -av -e "ssh -i /home/phife-dawg/.ssh/id_rsa" [phife-dawg@]queens-server:/etc/ansible/hosts /etc/ansible/hosts
+   SUDO REMOTELY REQUIRED:
+	rsync --rsync-path='sudo rsync' -av KeyStore.jks [phife-dawg@]queens-server:/etc/pki/java/KeyStore.jks
+
 Opts to OpenSSH running on custom port 443:
 	rsync -av -e "ssh -p 443 -l phife-dawg"  phife-dawg@queens-server:. /tmp
 Synchronize Last Modified times for Directories, e.g. from previous Dropbox.off/ (which has times want to transfer) to new Dropbox/ (which has, presumably, all the same exact times, that is, times that Dropbox created them, which would all be the same and probably very recent):
