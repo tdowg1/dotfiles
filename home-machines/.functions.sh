@@ -8296,6 +8296,7 @@ openssl s_client -state -host host -port 443 -cipher AES128-SHA256
 
 == See also ==
 helpnmap
+helpkeytool
 __envHEREDOC__
 }
 helpssl(){
@@ -8584,6 +8585,15 @@ http://www.linux-mag.com/id/7118/ - Network Block Devices: Using Hardware Over a
 https://web.archive.org/web/20071026061326/http://w3.linux-magazine.com/issue/70/Network_Block_Devices.pdf - discusses not just NBD, but other implementations as well
 http://www.microhowto.info/howto/export_a_block_device_using_nbd.html
 [[wikipedia: Network block device]]
+__envHEREDOC__
+}
+helpkeytool(){
+cat <<'__envHEREDOC__'
+# import PEM formatted certificate (generally used with openssl) into a Java KeyStore file:
+keytool -import -v -alias 1 -file certificate.cer -keystore KeyStore.jks
+
+= See also =
+helpopenssl
 __envHEREDOC__
 }
 
