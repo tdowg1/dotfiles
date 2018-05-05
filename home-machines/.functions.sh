@@ -697,6 +697,13 @@ updatedbAcrossSparksMajors(){
 
 
 
+awshelp(){
+   local args="$*"
+   aws $args help
+}
+
+
+
 
 ## ### #### ###################################################################
 ##
