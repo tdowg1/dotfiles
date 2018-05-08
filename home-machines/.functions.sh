@@ -701,6 +701,8 @@ awshelp(){
    local args="$*"
    aws $args help
 }
+# enable shell bash_completion as if awshelp were the same as aws:
+complete -C aws_completer awshelp
 
 
 
