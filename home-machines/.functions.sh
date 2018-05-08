@@ -7193,13 +7193,17 @@ aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Nam
 
 
 # BETTER list of all running EC2 instance ids: (which excludes instance types disallowed by AWS for network scanning)::
-aws ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small" --query 'Reservations[*].Instances[*][InstanceId,Tags[*].Key.Name]' --output text | sort > excluded-running-instances.txt
-aws ec2 describe-instances --filter "Name=instance-state-name,Values=running"  --query 'Reservations[*].Instances[*][InstanceId]' --output text | sort > all-running-instances.txt
+aws --output text ec2 describe-instances --filter "Name=instance-state-name,Values=running,Name=instance-type,Values=t2.nano,t1.micro,m1.small" --query 'Reservations[*].Instances[*][InstanceId,Tags[*].Key.Name]' | sort > excluded-running-instances.txt
+aws --output text ec2 describe-instances --filter "Name=instance-state-name,Values=running"                                                     --query 'Reservations[*].Instances[*][InstanceId]'                  | sort > all-running-instances.txt
 # comm -13 suppress 'column 3' which is lines that appear in both files:
 comm -13 excluded-running-instances.txt all-running-instances.txt
 
 # List of all running RDS instance ids:
 aws rds describe-db-instances --query 'DBInstances[*].DbiResourceId' --output json | jq -r '.[]'
+
+# BETTER list of all running RDS instance ids: (which excludes instance types disallowed by AWS for network scanning)::
+# exclude any line containing  nano, small or micro :
+aws --output text rds describe-db-instances --query 'DBInstances[*].[DBInstanceClass,DbiResourceId]' | grep -vP 'nano|micro|small' | awk '{ print $2 }'
 
 
 # List all linked accounts within Organizations:
