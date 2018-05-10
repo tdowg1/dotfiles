@@ -8330,13 +8330,13 @@ cat <<'__envHEREDOC__'
 apg - generates several random passwords  # (search string matching; ignore: passwd)
 
 apg -m 8 -x 8                # 8 characters long, _exactly_.
-apg    -m 32                 # 32 characters long, at least.
-apg -s                       # Prompt user for some entropy.
+apg -m 32                    # 32 characters long, at least.
+apg                     -s   # Prompt user for some entropy.
 apg           -a 1           # random character password generation (i.e. not pronounceable, the default)
-apg                -M SNCL   # include Special, Number, Capital, and Lowercase characters.
-apg -s -m 32  -a 1 -M SNCL   # best. all the things.
+apg             -M SNCL      # include Special, Number, Capital, and Lowercase characters.
+apg -m 32  -a 1 -M SNCL -s   # best. all the things.
 
-apg -s -m 32  -a 1 -M NCL    # include Numbers, Capital characters, and Lowercase characters.
+apg -m 32  -a 1 -M NCL  -s   # include Numbers, Capital characters, and Lowercase characters.
 __envHEREDOC__
 }
 helpgeneratepasswords(){
