@@ -6532,6 +6532,7 @@ pprint.pprint( var )
 
 == See also ==
 helpvirtualenv
+configparser - a library for modifying ini-based files as a dictionary
 __envHEREDOC__
 }
 helppythonic(){
