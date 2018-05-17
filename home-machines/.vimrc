@@ -1,8 +1,8 @@
 " check out https://github.com/scrooloose/nerdtree
-" 
+"
 " SEE ALSO : /etc/vim/*
-" 
-" 
+"
+"
 
 " 2012-08-07 use Vundle ( src : https://github.com/gmarik/vundle/blob/master/doc/vundle.txt )
 "set nocompatible               " be iMproved
@@ -37,7 +37,7 @@ Bundle 'Solarized'
 "" ...
 
 filetype plugin indent on     " required!
-" or 
+" or
 " filetype plugin on          " to not use the indentation settings set by plugins
 "
 " Brief help
@@ -148,4 +148,6 @@ endif
 
 
 let g:DeleteTrailingWhitespace = 1
+
+:command Dw :execute ':DeleteTrailingWhitespace' | :w
 
