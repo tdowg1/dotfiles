@@ -5469,6 +5469,10 @@ convert *[pretty much most image formats, AWESOMELY!] -compress jpeg -quality 1 
 == PDF to plain text ==
 pdftotext
 
+pdftotext pdf -          # default
+pdftotext -layout pdf -  # better than above.  -layout           : maintain original physical layout
+pdftotext -layout pdf - -nopgbrk  # better than above.  -nopgbrk          : don't insert page breaks between pages
+
 == remove PDF 'protections' ==
 qpdf --decrypt i.pdf o.pdf
 
