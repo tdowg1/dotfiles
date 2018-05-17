@@ -7222,6 +7222,32 @@ aws organizations list-accounts   --output text   --query 'Accounts[?Status==`AC
 helppythonaws
 __envHEREDOC__
 }
+helpawsbillparsing(){
+cat <<'__envHEREDOC__'
+=== only top-level sections ===
+for i in *.pdf ; do
+   pdftotext -layout $i -nopgbrk - \
+      | sed '/about:blank/d' \
+      | sed '/^\s\{6,\}/d' \
+      | sed '/^$/d' \
+      | sed 's/[ \t]*$//;s/^[ \t]*//' \
+      | sed 's/\s\{7,\}/\t/'   >  $i.csv
+done
+
+=== only EC2 top-level and subsections ===
+# TODO: make more generic by not assuming next top-level will be Elastic File System:
+for i in *.pdf ; do
+   pdftotext -layout $i -nopgbrk - \
+      | sed '/about:blank/d' \
+      | sed -n '/Elastic Compute Cloud/,/Elastic File System/p' \
+      | sed '/Elastic File System/d' \
+      | sed '/^$/d' \
+      | sed 's/[ \t]*$//;s/^[ \t]*//' \
+      | sed 's/\s\{6,\}/\t/g' \
+      | sed -n '/\t/p'      >  $i-ec2-only.csv
+done
+__envHEREDOC__
+}
 helpfalcon(){
 cat <<'__envHEREDOC__'
 [sudo -u ambari-qa] falcon entity -type cluster  -list
