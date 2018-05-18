@@ -7995,6 +7995,9 @@ xdotool getactivewindow type 'jijijijij password ayyy lmao'
 xdotool key alt+Tab
 xdotool key "Return"
 
+# used to exhaust autopaging when you scroll to the bottom of a list:
+while true; do sleep 5s ; xdotool key "End"; done
+
 == See also ==
 helpxnee
 __envHEREDOC__
