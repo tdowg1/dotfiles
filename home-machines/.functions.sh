@@ -2898,7 +2898,7 @@ $ dpkg --search `which gethostip`
 syslinux: /usr/bin/gethostip
 
 == Misc ==
-$ aptitude --disable-columns search zfs
+$ aptitude --disable-columns search zfs     # disable automatic string formatting wrt window size.
 $ aptitude search .*-desktop
 $ dpkg -i --force-all debfile   # forces an installation (I think)
 __envHEREDOC__
