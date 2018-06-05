@@ -1319,6 +1319,8 @@ __envHEREDOC__
 }
 helpawk(){
 cat <<'__envHEREDOC__'
+SPECIFY FIELD SEPARATOR
+        awk --field-separator x '{ print $1 }'
 PRINT LAST COLUMN
 	$ svn info | grep 'Last Changed Rev:' | awk '{ print $NF }'
 	> 1200
