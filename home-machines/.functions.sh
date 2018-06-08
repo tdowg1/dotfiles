@@ -3116,6 +3116,7 @@ unzip -d extractiondirectory zipfile
 
 zip -sf|--show-files archive.zip   # list or [S]how [F]iles ; === tar tfv archive.tar
 zip -T|--test        archive.zip
+zip -o                             # always overwrite files.
 
 # Extract a set of zipfiles, each to its own directory:
 for i in zipfiles* ; do d="${i%%.zip}"; echo $d; mkdir "$d"; unzip "$i" -d "$d"; done
