@@ -7218,9 +7218,13 @@ aws rds describe-db-instances --query 'DBInstances[*].DbiResourceId' --output js
 # exclude any line containing  nano, small or micro :
 aws --output text rds describe-db-instances --query 'DBInstances[*].[DBInstanceClass,DbiResourceId]' | grep -vP 'nano|micro|small' | awk '{ print $2 }'
 
+# RDS nfo
+aws rds describe-db-instances --output json --query \
+  'DBInstances[*].Engine,DBName,DBInstanceIdentifier,AllocatedStorage,BackupRetentionPeriod,DBInstanceClass,AvailabilityZone]'
 
 # List all linked accounts within Organizations:
 aws organizations list-accounts   --output text   --query 'Accounts[?Status==`ACTIVE`][Status,JoinedTimestamp,Id,Email,Name]' |   sort |   cut -f2-
+
 
 == See also ==
 helppythonaws
