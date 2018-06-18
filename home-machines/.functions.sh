@@ -7226,6 +7226,9 @@ aws rds describe-db-instances --output json --query \
 aws organizations list-accounts   --output text   --query 'Accounts[?Status==`ACTIVE`][Status,JoinedTimestamp,Id,Email,Name]' |   sort |   cut -f2-
 
 
+aws guardduty list-findings  --sort-criteria '{ "AttributeName": "updatedAt", "OrderBy": "ASC" }' \
+   --detector-id $( aws --output text guardduty list-detectors | awk '{ print $2 }' )
+
 == See also ==
 helppythonaws
 __envHEREDOC__
