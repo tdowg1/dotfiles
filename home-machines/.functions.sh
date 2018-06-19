@@ -6934,7 +6934,7 @@ qemu-img resize vm-centos6.img 60G
 qemu-img convert  -p -f qcow2 -O qcow2  original.img  new.img
 
 == See also ==
-helpkvm() helpvirsh() virt-install virt-top virt-df
+helpkvm() helpvirsh() virt-install virt-top virt-df libvirt.conf libvirtd.conf qemu.conf
 __envHEREDOC__
 }
 helpvirsh(){
@@ -6966,7 +6966,7 @@ virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2 --pe
 virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2
 
 == See also ==
-helpkvm() helpvirsh() virt-install virt-top virt-df
+helpkvm() helpvirsh() virt-install virt-top virt-df libvirt.conf libvirtd.conf qemu.conf
 * https://raymii.org/s/tutorials/KVM_add_disk_image_or_swap_image_to_virtual_machine_with_virsh.html
 * https://raymii.org/s/tutorials/KVM_with_bonding_and_VLAN_tagging_setup_on_Ubuntu_12.04.html - learn how to set up a proper KVM hypervisor host.
 __envHEREDOC__
