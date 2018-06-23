@@ -7226,8 +7226,20 @@ aws rds describe-db-instances --output json --query \
 aws organizations list-accounts   --output text   --query 'Accounts[?Status==`ACTIVE`][Status,JoinedTimestamp,Id,Email,Name]' |   sort |   cut -f2-
 
 
-aws guardduty list-findings  --sort-criteria '{ "AttributeName": "updatedAt", "OrderBy": "ASC" }' \
-   --detector-id $( aws --output text guardduty list-detectors | awk '{ print $2 }' )
+# MISC GUARDDUTY:
+detector="--detector-id $( aws --profile $p  guardduty list-detectors | awk '{ print $2 }' )"
+
+# guardduty finding id's:
+aws --profile $p guardduty list-findings  --sort-criteria '{ "AttributeName": "updatedAt", "OrderBy": "ASC" }' \
+   $detector
+
+# enabling/disabling ip lists:
+threatIntelSets=$( aws --profile $p guardduty list-threat-intel-sets $detector --output json --query "ThreatIntelSetIds[*]" | jq -r '.[]' )
+for i in $threatIntelSets ; do echo $i ; aws --profile $p guardduty get-threat-intel-set $detector --threat-intel-set $i ; done
+
+aws --profile $p guardduty update-threat-intel-set --threat-intel-set <threat intel set id> --activate|--no-activate \
+   $detector
+
 
 == See also ==
 helppythonaws
