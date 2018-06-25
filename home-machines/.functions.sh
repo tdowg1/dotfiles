@@ -6589,6 +6589,7 @@ __envHEREDOC__
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
+ipmitool sdr type Temperature
 ipmitool sensor  # Similar to sdr, but with more data.
 immitool fru     # Prints nfo about the sensors.
 
