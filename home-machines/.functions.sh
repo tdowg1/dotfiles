@@ -6588,7 +6588,7 @@ __envHEREDOC__
 # Solaris-like operating system help texts would be more precise, methinks
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
-ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info.
+ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
 ipmitool sensor  # Similar to sdr, but with more data.
 immitool fru     # Prints nfo about the sensors.
 
@@ -6749,6 +6749,8 @@ iostat -xnp   # Generates partition and device statistics for each disk.
 fsstat -F 1   # Filesystem statistics organized by whichever process is reading/writing.
 
 fsstat $(awk '{ print $2 }' /etc/mnttab | xargs) 1   # FS statistics broken down by FS.
+
+ipmitool sdr | grep hdd    # displays state of each hdd slot, humanly numbered by physical slot layout.
 
 
 == See also ==
