@@ -6590,7 +6590,10 @@ helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
 ipmitool sdr type Temperature
+ipmitool sdr type Temperature | awk '{ print $9 }' | xargs echo    # Just a single line of output.
+
 ipmitool sensor  # Similar to sdr, but with more data.
+
 immitool fru     # Prints nfo about the sensors.
 
 ipmitool sunoem fan speed 0   # Sets fan speed to 0%  ; avg 3900RPM; <base wattage>w
