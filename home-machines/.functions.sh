@@ -1208,6 +1208,7 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 ** (eta status) Status output - dcfldd can update the user of its progress in terms of the amount of data transferred and how much longer operation will take.
 ** (pattern writing) Flexible disk wipes - dcfldd can be used to wipe disks quickly and with a known pattern if desired.
 ** (integrity verif) Image/wipe Verify - dcfldd can verify that a target drive is a bit-for-bit match of the specified input file or pattern.
+*** dcfldd if=/dev/sr0 vf=kubuntu-18.04-desktop-amd64.iso
 ** Multiple outputs - dcfldd can output to multiple files or disks at the same time.
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
@@ -5290,6 +5291,7 @@ See Also
 --------
 * helpwodim*
 * helpgrowisofs
+* helpdd2 - use dcfldd to post-burn verif.
 * devdump, isoinfo, isovfy, isodump - Utility programs for dumping and verifying iso9660 images.
 * isomaster - gui program allows for modification of [bootable] ISO's.
 * genisoimage
