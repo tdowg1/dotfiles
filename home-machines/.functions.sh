@@ -734,8 +734,8 @@ listAllRunningSparksVmguests justhostnames
 time ansible \*sparks_ms\* -m raw -a "shutdown.exe /s /t 4" --list-hosts
 time ansible $( echo $sparksVmwareGuests | tr ' ' ':' ) -m raw -a "shutdown.exe /s /t 4" --list-hosts
 
-# takes care of linux boxes: (youll probably have to run this from the ansible machine if local)
-time ansible \*sparks\*shared\*:net\*:\!proxy\*:\!vm-ubu1404-ansible -m command -a "init 0" --sudo --list-hosts
+# takes care of linux boxes (on stardust): (youll probably have to run this from the ansible machine if local)
+time ansible \*sparks\*shared\*:net\*:\!proxy\*:\!vm-ubu1404-ansible\!vm-ubu-3 -m command -a "init 0" --sudo --list-hosts
 
 time ansible $( echo $sparksVmwareGuests | sed 's/vm-ubu1404-ansible//' | tr ' ' ':' ) -m command -a "init 0" --sudo
 
