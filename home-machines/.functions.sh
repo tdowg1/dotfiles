@@ -1300,12 +1300,19 @@ ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 ln -sf /usr/share/zoneinfo/UTC   /etc/localtime
  note: this works for RHEL and deb-based machines.
 
-CONVERT a given locale-->to the current (iow: convert a diff-TZ into curr-TZ):
-$ date --date="2012-05-24 18:08:56 UTC"   # current locale is EDT
+CONVERT a given locale-->to the current (e.g.: convert a diff-TZ into curr-TZ):
+$ TZ=US/Eastern  date --date="2012-05-24 18:08:56 UTC"   # current locale is set to TZ
 # `--> Thu May 24 14:08:56 EDT 2012
-CONVERT between locale's:
-$ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08:56 UTC"`"
-# `--> Jaisalmer, India: Thu May 24 23:38:56 IST 2012
+
+   what this do, exactly?
+   CONVERT between locale's: ???
+   $ export TZ=Asia/Kolkata; echo "Jaisalmer, India: `date --date="2012-05-24 18:08:56 UTC"`"
+   # `--> Jaisalmer, India: Thu May 24 23:38:56 IST 2012
+
+CONVERT a current locale-->to a different locale (e.g.: convert curr-TZ into a diff-TZ):
+$ TZ=UTC  date                 --date="2018-06-30T21:37:51-04:00"
+$ TZ=UTC  date                 --date="2018-06-30T21:37:51 EDT"
+$ TZ=UTC  date --date='TZ="US/Eastern" 2018-06-30T21:37:51'
 
 START AND END TIME VARIABLES
 t1=$( date --rfc-3339 sec )
