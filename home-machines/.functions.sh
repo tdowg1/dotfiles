@@ -2034,12 +2034,22 @@ __envHEREDOC__
 
 helptune2fs(){
 	cat <<'__envHEREDOC__'
-$ tune2fs -l /dev/sda4 | grep -iP 'mount|check'  # Display mount counts && checks info.
-$ tune2fs device -m 0                # Set %'age of reserved FS space to 0 (default=5).
-$ tune2fs -c 5 -i 5d DEVICE          # Check every MIN(5 mounts or 5d).
-$ tune2fs -e remount-ro DEVICE       # Change errors behaviour.
-$ tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL DEVICE
-$ tune2fs -l DEVICE                  # Display info about filesystem.
+tune2fs $DEVICE -l | grep -iP 'mount|check'  # Display mount counts && checks info.
+tune2fs $DEVICE -m 0                # Set %'age of reserved FS space to 0 (default=5).
+tune2fs -c 5 -i 5d $DEVICE          # Check every MIN(5 mounts or 5d).
+tune2fs -C 5 $DEVICE                # Sets mount count to 5 so that check is at least forced, soon.
+tune2fs -e remount-ro $DEVICE       # Change errors behaviour.
+tune2fs -c 5 -i 5d -e remount-ro -m 1 -L LBL $DEVICE
+
+== SNIPPETS ==
+gives only ext4 filesystem subdevice fs meta:  df --type=ext4 | sed "1d"
+gives only ext4 filesystem subdevices:         df --type=ext4 | sed "1d" | awk '{ print $1 }'
+
+for DEVICE in $( df --type=ext4 | sed "1d" | awk '{ print $1 }' ); do
+   echo $DEVICE
+   sudo tune2fs -c 5 -i 5d $DEVICE
+   sudo tune2fs -C 5 $DEVICE
+done
 __envHEREDOC__
 }
 
