@@ -6610,14 +6610,19 @@ helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
 ipmitool sdr type Temperature
-ipmitool sdr type Temperature | awk '{ print $9 }' | xargs echo    # Just a single line of output.
+ipmitool sdr type Temperature | awk '{ print $9 }' | xargs echo $( date --rfc-3339 sec )     # Just a single line of output.
 
 ipmitool sensor  # Similar to sdr, but with more data.
 
 immitool fru     # Prints nfo about the sensors.
 
+# latest installed ipmitool doesn't work anymore for some absolutely unknown and mind boggling
+# reason, something about doesn't know about "fan" option for "sunoem" lol bullocks.
 ipmitool sunoem fan speed 0   # Sets fan speed to 0%  ; avg 3900RPM; <base wattage>w
 ipmitool sunoem fan speed 100 # Sets fan speed to 100%; avg 7900RPM; <base wattage>w+150w
+# luckily, have a copy of an older working ipmitool...
+/opt/ipmitool-1.8.12/sbin/ipmitool sunoem fan speed 0   # Sets fan speed to 0%  ; avg 3900RPM; <base wattage>w
+/opt/ipmitool-1.8.12/sbin/ipmitool sunoem fan speed 100 # Sets fan speed to 100%; avg 7900RPM; <base wattage>w+150w
 
 ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN THIS!
 
