@@ -1321,8 +1321,9 @@ echo "starttime: $t1"
 echo " stoptime: $t2"
 
 = SEE ALSO =
-$ xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
+xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
 helplogrotate_of_files()
+helpbackup[singlefiles]
 __envHEREDOC__
 }
 helpawk(){
