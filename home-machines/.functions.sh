@@ -6965,6 +6965,16 @@ qemu-img resize vm-centos6.img 60G
 # -> man page only mentions qcow i.e. NOT qcow2... not sure what's supported.
 qemu-img convert  -p -f qcow2 -O qcow2  original.img  new.img
 
+# Mount qcow2 image file:
+modprobe nbd max_part=8
+qemu-nbd --connect=/dev/nbd0 qcow2-file
+parted -l /dev/nbd0                        # to determine which partition want to mount.
+mount /dev/nbd0p1 /mnt/tmp
+mount /dev/nbd0p2 /mnt/tmp  # or like.
+umount /mnt/tmp             # finished?
+qemu-nbd --disconnect /dev/nbd0
+modprobe -r nbd
+
 == See also ==
 helpkvm() helpvirsh() virt-install virt-top virt-df libvirt.conf libvirtd.conf qemu.conf
 __envHEREDOC__
