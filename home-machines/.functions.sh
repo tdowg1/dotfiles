@@ -8590,6 +8590,17 @@ echo '{
 {<SAME>}' | jq -r '.VolumeId, .VolumeType'
 # -> "vol-01103d27fb2fd09a8"
 # -> "standard"
+echo '{
+    "AccessKeyMetadata": [
+        {
+            "UserName": "SVC",
+            "Status": "Active",
+            "CreateDate": "2017-04-19T14:53:49Z",
+            "AccessKeyId": "AKIAJ5ZDNO7BR4FIKPOQ"
+        }
+    ]
+}' | jq '.AccessKeyMetadata[].AccessKeyId'
+# -> "AKIAJ5ZDNO7BR4FIKPOQ"
 __envHEREDOC__
 }
 
