@@ -8731,6 +8731,14 @@ keytool -import -v -alias 1 -file certificate.cer -keystore KeyStore.jks
 helpopenssl
 __envHEREDOC__
 }
+helplpr(){
+cat <<'__envHEREDOC__'
+/calling helpman()/
+__envHEREDOC__
+	helpman
+}
+
+
 
 
 
