@@ -7384,6 +7384,7 @@ cat /proc/net/bonding/bond0
 cat /proc/net/vlan/config
 cat /proc/sys/fs/file-max  - global file limit (check local limits with ulimit -Hn and ulimit -Sn)
 
+echo 1 > /proc/sys/vm/drop_caches - drop disk cache that's stored in RAM right now.
 
 == Thinkpad-specific ==
 cat /proc/acpi/ibm/fan               - stats and help.
