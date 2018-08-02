@@ -3400,6 +3400,8 @@ $ i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=
 $ # ... output from looping over echo...
 $ #
 $ IFS=$SAVEIFS
+
+echo -n "${IFS}" | sha1sum ; echo -n "${SAVEIFS}" | sha1sum ; echo -en "\n\b" | sha1sum
 __envHEREDOC__
 }
 helpdropbox(){
