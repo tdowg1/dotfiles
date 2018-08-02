@@ -1,4 +1,4 @@
-#!/bin/bash - 
+#!/bin/bash -
 #===============================================================================
 #          FILE:  |FILENAME|
 #         USAGE:  <see f_usage()>
@@ -19,7 +19,7 @@
 #PS4=' { ${LINENO} } '                       # The value of this parameter is expanded as with PS1 and the value is printed before each command bash displays during an execution trace.  The first character of PS4 is replicated multiple times, as necessary, to indicate multiple levels of indirection.  The default is ``+ ''.
 #set -o errexit                              # Exit immediately if a pipeline (which may consist of a single simple command), a subshell command enclosed in parentheses, or one of the commands executed as part of a command list enclosed by braces (see SHELL GRAMMAR above) exits with a non-zero status.
 set -o nounset                              # Treat unset variables as an error
-set -o pipefail                             # with pipefail enabled, the pipelines return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully. 
+set -o pipefail                             # with pipefail enabled, the pipelines return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully.
 
 f_usage(){
    local scriptname="$( basename "$0" )"
@@ -43,7 +43,7 @@ Examples
   $scriptname -a --long-opt-b
 
 Enhancement Ideas
-force           Simply 
+force           Simply
 and next line continuing
 __usageHEREDOC__
    exit 1
@@ -76,7 +76,7 @@ while [[ "$1" = -* ]] ; do
          force="force"
          shift
          ;;
-      *)  
+      *)
         echo "ERROR case matched wildcard"
         f_usage
         ;;
@@ -119,13 +119,13 @@ while [ "$#" -gt "0" ] ; do
          ;;
       -q|--quiet) # specified like: -k, or like: --key
          ISQUIET="TRUE"
-			shift
+         shift
          ;;
       -u|--usage|-h|--help) # specified like: -k, or like: --key
          f_usage
          ;;
-      *) # if user input didn't match any of the prior flags, 
-         # going to assume it's the starting path. A sanity 
+      *) # if user input didn't match any of the prior flags,
+         # going to assume it's the starting path. A sanity
          # check will be performed after all cmdln args parsed.
          STARTINGPATH=$1
          shift
@@ -137,14 +137,38 @@ while [ "$#" -gt "0" ] ; do
       #   value=${1#--*=}  # abc
       #   tmp=${1%=*}
       #   key=${tmp#--}    # xyz
-      #   
+      #
       #   eval ${key}=${value}
       #   # should now have the variable xyz set to abc
+      --*=?*) # specified like: --key=value
+         # $this --key1=value1   ends up defining "key1" with "value1"
+
+         # for example: --xyz=abc
+         value=${1#--*=}  # abc
+         tmp=${1%=*}
+         key=${tmp#--}    # xyz
+
+         # set the variable xyz to abc
+         eval ${key}="\"${value}\""
+
+         # TODO STUB: development print::
+         echo "DEFINED VARIABLE BASED ON PARSE FROM CMDLN : ${key}=\"${value}\""
+         shift
+         ;;
+      *) # anything else.
+         echo "not sure what to do with: $1"
+         echo "bai"
+         exit 1
    esac
+
+   let loopcount+=1
+   if [[ $loopcount = 40 ]] ; then
+      echo "problem parsing cmdln args.  entered infinite loop.  bai."
+      exit 5
+   fi
 done
 
-
-#     <perhaps some test conditions make sense to check inputs, prior to the main 
+#     <perhaps some test conditions make sense to check inputs, prior to the main
 #      variable param/error block...>
 : ${STARTINGPATH:?ERROR: STARTINGPATH variable must be set}
 # Is this path garbage or not?  bail if so.
