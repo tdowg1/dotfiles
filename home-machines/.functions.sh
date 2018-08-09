@@ -3244,6 +3244,10 @@ $ apt-mark unhold synergy                         # This will get applied to apt
 [Un]Hold:
 $ aptitude [un]hold synergy                       # This will NOT get applied to apt-get's db; only aptitude's.
 
+== hold multiple Packages ==
+If theres like 5 packages that match the query, 4.15.0-29-generic, and all should be held:
+$ aptitude --disable-columns search  '~i4.15.0-29-generic'  | awk '{print $3}' | xargs -n 1 -I{} echo {} hold | sudo dpkg --set-selections
+
 == SEARCH + SHOW PACKAGE(S) NFO GIVEN A SEARCH STRING ==
 $ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
 $ apt-cache madison ^apache2     # See WHICH VERSIONS of apache2 ARE AVAILABLE
