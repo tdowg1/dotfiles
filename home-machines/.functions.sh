@@ -1428,6 +1428,7 @@ __envHEREDOC__
 helprsyncexamples(){
 cat <<'__envHEREDOC__'
 Misc:
+        --omit-dir-times
 	--stats --human-readable --progress
 Opts to capture *as much as possible* (acls, hard, xatt,...):
 	rsync --archive --xattrs --acls --hard-links  \
