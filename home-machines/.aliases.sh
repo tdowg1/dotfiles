@@ -6,7 +6,7 @@
 ##
 ## ### #### ###################################################################
 
-## 
+##
 ## TEMPORARY
 #alias vibo='vim $dbi/collection-of-essential-packages/ongoing.txt'
 alias dbdnb='vim $db/db.dox/next.Buy.txt'
@@ -130,7 +130,7 @@ alias trll='ls -ltr'    # same as ltr
 ##
 
 
-## 
+##
 ## Places (`cd'-related)
 #alias cdb='cd ~/bin ; ls -l'
 alias cdb='cd ~/bin ; pwd'
@@ -183,13 +183,13 @@ alias installsoftos2='cd "$installsoftos2"'
 ##
 
 
-## 
+##
 ## Things (`vim'-file-editing-related)
 alias vibx='sudo vim "$xorg"'
 alias vibuy='vim "$db/db.dox/next.Buy.txt"'
 alias vibuyarchive='vim "$db/db.dox/next.Buy.txt.archive.txt"'
 ## /Things (`vim'-file-editing-related)
-## 
+##
 
 
 ##
@@ -290,12 +290,12 @@ alias           ykill='yarn application -kill'
 ##
 ## ### #### ###################################################################
 
-## 
+##
 ## PHISATA-specific
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	alias a32='cd /mnt/a32-555 ; pwd'
 	alias t='cd /mnt/a32-555/t ; pwd'
-	
+
 	alias tu='$TUTILS'
 	alias cdtu='cd /opt/teelah-utils/bin/; pwd'
 fi
@@ -320,7 +320,7 @@ if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
 	#echo "[reminder of essential aliases...]"
 	#echo "alias | grep -i phy"
 	#alias | grep -i phy
-	
+
 	alias tu='$TUTILS'
 	alias cdtu='cd /opt/teelah-utils/bin/; pwd'
 fi
