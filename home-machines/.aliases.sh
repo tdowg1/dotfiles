@@ -46,6 +46,7 @@ alias k9='kill -9'
 alias kn='kill -9'
 #STUB alias pgr='ps -ef | grep'
 alias psaxfww='ps axfww'
+alias di='di -x squashfs -x tmpfs'
 alias df='df --human-readable --print-type'
 alias du='du --human-readable --summarize'
 # how about also including sshfs and cifs mounts?
