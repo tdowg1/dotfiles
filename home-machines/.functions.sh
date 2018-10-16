@@ -2264,6 +2264,15 @@ sudo ip route delete 192.168.0.0/16
 
 # Disassociate an ip from ethernet device: an example::
 ip ad del 192.168.0.70/24 dev eth1
+
+# to resolve issues around ifup and ifdown'ing, e.g.:
+   $ sudo ifdown br0
+   ifdown: interface br0 not configured
+   $ sudo ifup br0
+   RTNETLINK answers: File exists
+   Failed to bring up br0.
+# try this instead:
+sudo ip link set br0 down
 __envHEREDOC__
 }
 helpnetwork2(){
