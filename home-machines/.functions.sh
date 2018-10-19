@@ -1632,6 +1632,7 @@ NOTES
 :<c-d>                              # shows all of the available options that you can set
 :set nonu                           # disable line numbering
 :se relativenumbering
+:se mouse=                          # stop vim from taking OS clipboard (was probably :se mouse=a)
 
 http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
 # '%' is a shortcut for '1,$' (beginning to start). .
