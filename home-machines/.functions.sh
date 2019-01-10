@@ -6541,6 +6541,10 @@ EXIT STATUS
 FILES
        /proc/apm         APM status information file
        /proc/acpi        ACPI status information directory
+
+
+== See also ==
+upower
 __envHEREDOC__
 }
 helppython(){
