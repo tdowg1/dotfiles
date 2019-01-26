@@ -4380,6 +4380,10 @@ __envHEREDOC__
 helpjava(){
 cat <<'__envHEREDOC__'
 bsh - Java scripting environment (BeanShell) Version 2
+
+== See also ==
+- NOTE the following $db paths containing snippets, etc.:
+-- find $db/db.scripts-snippets/ -name *.java 
 __envHEREDOC__
 }
 helpenv(){
