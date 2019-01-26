@@ -4383,7 +4383,7 @@ bsh - Java scripting environment (BeanShell) Version 2
 
 == See also ==
 - NOTE the following $db paths containing snippets, etc.:
--- find $db/db.scripts-snippets/ -name *.java 
+-- find $db/db.scripts-snippets/ -name *.java
 __envHEREDOC__
 }
 helpenv(){
@@ -4911,29 +4911,30 @@ __envHEREDOC__
 helpman(){
 cat <<'__envHEREDOC__'
  /usr/bin/mandb -cq
-catman   # builds windex files which are used by keyword searches, i.e. apropos === man -k.
+catman                     # builds windex files which are used by keyword searches, i.e. apropos === man -k.
 makewhatis
-nroff -mdoc tmux.1 | less # reading man pages without calling "man"
+nroff -mdoc tmux.1 | less  # reading man pages without calling "man".
 
 == Finding ==
-apropos cmd                     # Search the manual page names and descriptions.
-man -k cmd                      # === to apropos
-whatis cmd                      # Display manual page descriptions.
-man -f cmd                      # === to whatis
-whatis -r cmd                   # Interpret each name as a regular expression.  If a name matches any part of a page name, a match will be made.
+apropos cmd                # Search the manual page names and descriptions.
+man -k cmd                 # === to apropos
+whatis cmd                 # Display manual page descriptions.
+man -f cmd                 # === to whatis
+whatis -r cmd              # Interpret each name as a regular expression.
+                           # If a name matches any part of a page name, a match will be made.
+man --manpath=/usr/share/bcc/man/ biosnoop  # specify custom man path.
 
-== Printing and Viewing ==
+== Printing and Viewing Escapades ==
 man -t iptables > iptables.ps   # saves the manpage to postscruipt file.
 man -t iptables | lpr -P HP690C # print manpage to printer.
 
-                                # gives a plaintext manpage version
-										  # uses col to strip out backspaces and reverse linefeeds, uses sed to strip out 'm' escape codes:
-man iptables | col -b | sed 's/[0-9]\{1,\}m//g' > iptables.txt
+man iptables | col -b | \       # uses col to strip out backspaces and reverse linefeeds,
+   sed 's/[0-9]\{1,\}m//g' \    #    uses sed to strip out 'm' escape codes.
+   > iptables.txt
 
-                                # ... although I also had luck with just doing
-										  # this, straight up: (gives a plaintext manpage version):
-										  # (I suspect this could be due to MAN_KEEP_FORMATTING variable (see man man))
-man iptables > iptables.txt
+man iptables > iptables.txt     # ... although I also had luck with just doing
+                                # this, straight up: (gives a plaintext manpage version):
+                                # (I suspect this could be due to MAN_KEEP_FORMATTING variable (see man man))
 
 == Locations ==
 /usr/share/man/      # main man docs location.
@@ -4957,15 +4958,16 @@ xmltoman              - simple XML to man converter
 == Notable manpage topics ==
 man proc   # docs for processes information pseduo-file sys ( /proc ).
 
-/calling helpcommand().../
+/calling helpcommand()...//////////
 __envHEREDOC__
 	helpcommand
 
 cat <<'__envHEREDOC__'
-/...calling helpcommand() --> DONE!/
+/////////////////////////--> DONE!/
 
 == See also ==
 * helpless()
+* helpprocfs()
 __envHEREDOC__
 }
 
