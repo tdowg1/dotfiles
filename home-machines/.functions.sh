@@ -2892,7 +2892,7 @@ sed -n "s/frommmmmm/tooooooo/gp" $( grep --files-with-match frommmmmm $( find PA
 sed -i "s/frommmmmm/tooooooo/g" $( grep --files-with-match frommmmmm $( find PATH -type f ) )
 __envHEREDOC__
 }
-helpaptitude(){
+helpaptitude2(){
 cat <<'__envHEREDOC__'
 == PACKAGE DISPLAY NFOs ==
 The first character
@@ -2924,12 +2924,6 @@ $ aptitude remove        - Remove packages.
 $ aptitude purge         - Remove packages and their configuration files.
 $ aptitude search ~ahold - Show held packages
 $ dpkg -l | grep ^h      - Show held packages
-
-== Searching: Determine which package provides a file ==
-$ dpkg --search /etc/bash_completion
-bash-completion: /etc/bash_completion
-$ dpkg --search `which gethostip`
-syslinux: /usr/bin/gethostip
 
 == Misc ==
 $ aptitude --disable-columns search zfs     # disable automatic string formatting wrt window size.
@@ -3231,7 +3225,7 @@ Reinstall of grub + RECHECK
 set pager=1     # /really/ grub guys? this couldn't have been enabled by default?
 __envHEREDOC__
 }
-helpaptitude2(){
+helpaptitude(){
 cat <<'__envHEREDOC__'
 == List all installed packages ==
 dpkg -l                       # all packages, including depenancies.
@@ -3288,10 +3282,12 @@ List files installed by a given package:
 $ dpkg -L package
 $ dpkg --contents package.deb
 
-Find which package provides a file that is already on system:
-$ dpkg -S /path/to/file
+Which package provides a file that is already on system:
+$ dpkg --search /path/to/file
+ ^^ !! NOTE !! if path is funky, undesired results;
+         e.g. /path/to/file  matches  while  /path/to///file  does _NOT_ !!
 
-Find which package provides a file that is not currently on system:
+Which package provides a file that is _NOT_ currently on system:
 $ apt-file search /path/to/file
 __envHEREDOC__
 }
