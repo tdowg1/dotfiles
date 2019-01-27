@@ -1405,6 +1405,26 @@ helpsetuid(){
 
 helprsync(){
 cat <<'__envHEREDOC__'
+--itemize-changes : ( see also : --info=FLAGS ) produces that splendid little LHS of hashing applicability marks representing some attribute that has [not] changed for each file syustem object.
+   UPDATE TYPES
+      ~ A < means that a file is being transferred to the remote host (sent).
+      ~ A > means that a file is being transferred to the local host (received).
+      ~ A c means that a local change/creation is occurring for the item.
+      ~ A h means that the item is a hard link to another item (requires --hard-links).
+      ~ A . means that the item is not being updated (though it might have modified attributes).
+      ~ A * means that the rest of the itemized-output area contains a message (e.g. "deleting").
+
+   ATTRIBUTES
+      ~ A c means either that a regular file has a different checksum (requires --checksum).
+      ~ A s means the size of a regular file is different and will be updated by the file transfer.
+      ~ A  t means the modification time is different and is being updated to the senders value (requires --times). (see man page regarding times and symlink issues).
+      ~ A p means the permissions are different and are being updated to the senders value (requires --perms).
+      ~ An o means the owner is different and is being updated to the senders value (requires --owner).
+      ~ A g means the group is different and is being updated to the senders value (requires --group)
+      ~ The u slot is reserved for future use.
+      ~ The a means that the ACL information changed.
+      ~ The x means that the extended attribute information changed.
+
 --checksum : have used this to detect file differences (especially in xls / Excel
     Spreadsheet files) that werent detected, otherwise.
 
