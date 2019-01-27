@@ -18,7 +18,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 
 
-## 
+##
 ## Places (`cd'-related) 1of2
 export db="$HOME/Dropbox"				# dropbox
 export dbbkmks="$HOME/Dropbox/rLIFE/bookmarks"
@@ -37,7 +37,8 @@ export installsoft="/mnt/va49/"
 export installsoftos="${installsoft}/os"
 export installsoftos2="${installsoft}/os2"
 ## /Places (`cd'-related) 1of2
-## 
+##
+
 
 
 
@@ -136,7 +137,7 @@ shopt -s histappend
 # 2011-06-17: tweak bash history
 # 2011-08-24: OK, IDK why these aren't working...
 ### trying without using bash math operators and without 'exporting'
-### if /that/ doesn't even seem to work, maybe these are special? for 
+### if /that/ doesn't even seem to work, maybe these are special? for
 ### some reason?? =---maybe they ACTUALLY HAVE TO BE set in the .bashrc
 ### and/or /etc/bash.bashrc file?...
 # 2011-08-25: ZOMFG: .bashrc (the default that was installed to my
@@ -160,7 +161,7 @@ HISTFILESIZE=100000
 
 
 # Stringish
-#$ echo $_scp_path_esc 
+#$ echo $_scp_path_esc
 #[][(){}<>",:;^&!$=?`|\\'[:space:]]
 
 
@@ -172,7 +173,7 @@ HISTFILESIZE=100000
 ##
 ## ### #### ###################################################################
 
-## 
+##
 ## PHISATA-specific ...........................................................
 if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	# Override default bc special on this host.
@@ -193,9 +194,9 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 	export PYTHONPATH=/opt/teelah-utils/bin:$PYTHON_EXTERNALS_PATH
 
 
-	
+
 	# 2012-04-14 bash tweakers shamelessly stolen from magnificent eshtupido.
-	
+
 	# %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
 	# %T     The time in 24-hour notation (%H:%M:%S). (SU)
 	#
@@ -219,14 +220,14 @@ if [[ x"${IS_I_ON_PHISATA}" = x"true" ]] ; then
 fi
 
 
-## 
+##
 ## SVN-specific ...............................................................
 if [[ x"${IS_I_ON_SVN}" = x"true" ]] ; then
 	[[ -f /etc/teelah-utils.conf ]] && source /etc/teelah-utils.conf
 	tu="$TUTILS"
 	update_PATH_with_teelah_utils=:/opt/teelah-utils/bin:/opt/teelah-utils/bin/sys-config:/opt/teelah-utils/bin/sys-config/trac:/opt/teelah-utils/bin/sys-config/svn:/opt/teelah-utils/bin/trac:/opt/teelah-utils/bin/muzik:/opt/teelah-utils/bin/svn:/opt/teelah-utils/bin/filename_transformations:/opt/teelah-utils/bin/filemanagement:/opt/teelah-utils/bin/custom:/opt/teelah-utils/bin/php:/opt/teelah-utils/bin/in-development:/opt/teelah-utils/bin/in-development/tmp
 	export PATH=${PATH}:${update_PATH_with_teelah_utils}
-	
+
 	export PYTHONPATH=/opt/teelah-utils/bin
 fi
 
@@ -249,7 +250,7 @@ if [[ x"${IS_I_ON_SHAZAM}" = x"true" ]] ; then
 
 
 	# 2012-11-26 temporary variables.
-	# 2014-06-14 ya. they were /temporary/ alright.  keeping around tho, just because 
+	# 2014-06-14 ya. they were /temporary/ alright.  keeping around tho, just because
 	# that hadoop instance is still around.
 	CDH=/home/bdavies/cdh3
 	HADOOP=$CDH/hadoop
@@ -268,7 +269,7 @@ fi
 ##
 ## [com.spryinc.]MAGNIFICENT-specific .........................................
 if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
-	
+
 	# 2012-03-29: removing this jdk (and maybe re-installing 6u31?), so
 	# in the meantime, use the openjdk joint.
 	#JAVA_HOME=/opt/jdk1.6.0_25
@@ -282,7 +283,7 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	# 2011-06-08: NOTE JAVA_HOME already set in /etc/profile
 	#export JAVA_HOME=/opt/jdk1.6.0_25
 
-	
+
 	# Git-preferences:
 	# If (this script) executing on work machine, use work email.
 	# Else use the personal email which is specified in my .gitconfig.
@@ -333,7 +334,7 @@ if [[ x"${IS_I_ON_MAGNIFICENT}" = x"true" ]] ; then
 	## git-related
 
 	# 2011-06-24: git
-	# for nfo, see: /etc/bash.completion.d/git 
+	# for nfo, see: /etc/bash.completion.d/git
 	#PREV_PS1="$PS1"
 	#PS1='\u@\h \W$(__git_ps1 " (%s)")\$ '
 	#
@@ -356,7 +357,7 @@ fi # /IS_I_ON_MAGNIFICENT
 
 
 
-## 
+##
 ## Places (`cd'-related) 2of2
 ## (NOTE as to why the 'Places' variable defn.'s require 2 different sections:
 ##    There's prob a better way to do it, but...: there
@@ -380,7 +381,7 @@ dork="${dswww}/root/LIFE.dork/"
 proj="${dswww}/root/proj/"
 
 ## /Places (`cd'-related) 2of2
-## 
+##
 
 
 
