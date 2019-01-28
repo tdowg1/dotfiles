@@ -45,6 +45,11 @@ export installsoftos2="${installsoft}/os2"
 
 # PATH modifications
 PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
+
+# need the next two because bcc-tools doesn't install orderly:
+PATH=$PATH:/usr/share/bcc/tools
+MANPATH=":/usr/share/bcc/man"
+
 _pathupdates=""
 
 # add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )
