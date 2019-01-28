@@ -8605,7 +8605,15 @@ __envHEREDOC__
 }
 helpconfigure(){
 cat <<'__envHEREDOC__'
-time ./configure --prefix=/usr/local/ --option-flag1 ...
+# generally:
+./configure --prefix=/usr/local/ --option-flag1 ...
+
+# to pass any special compiler flags, before executing ./configure , modify it so that the
+# cmake cmdln in it looks sort of like:
+cmake -D CMAKE_CXX_FLAGS="<whatever flags you want... e.g. -std=c++03>"
+# ^^hrm... that didnt seem to actually work.  ended up manually editing a generated makefile
+# to actually get the effect :(
+
 __envHEREDOC__
 }
 helpcomm(){
