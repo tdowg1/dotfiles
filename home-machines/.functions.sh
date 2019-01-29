@@ -6715,7 +6715,8 @@ __envHEREDOC__
 
 
 # TODO STUB: Determine better function names... or remove these entirely.
-# Solaris-like operating system help texts would be more precise, methinks
+# Solaris-like operating system help texts would be more precise, methinks.
+# or better yet: Illumos.
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
@@ -6812,6 +6813,8 @@ swap -s [-h]   # like swapon -s; list amt of swap space available [in human-read
 == See also ==
 http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
 helpafs
+Comparison Map: ifconfig and ipadm Commands::
+   https://docs.oracle.com/cd/E26502_01/html/E28987/gmait.html#scrolltoc
 __envHEREDOC__
 }
 helpomnios3_basicSysnfo(){
@@ -6825,6 +6828,8 @@ psrinfo -vp    # Like 'less /proc/cpuinfo'.  The bonus with psrinfo is that you 
 lgrpinfo       # If really curious about how the system schedules work across the CPUs. Displays the NUMA topology of the system. The scheduler attempts to schedule threads "near" (in NUMA terms) their associated memory allocations and potential cache entries.
 isainfo -x     # Like 'arch'. Identifies various attributes of the instruction set architectures of the system.
 pgstat -pv 1   # Displays realtime CPU information.
+
+kstat          # Display kernel statistics.
 __envHEREDOC__
 }
 helpomnios4_hdd_and_storage_related(){
