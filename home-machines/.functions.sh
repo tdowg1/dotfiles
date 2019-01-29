@@ -2120,8 +2120,8 @@ $ ssh -XC -c blowfish-cbc,arcfour  host
 * c-q resumes the terminal
 
 == Escape character sequences (defaults) ==
-NOTE: escapes are only recognized immediately after newline.
-  ~.  - terminate session
+NOTE: the following escapes are only recognized  ¡¡immediately!!  after a  NEWLINE / ENTER.
+  ~.  - terminate session (thats: enter, squigly, and then dot) http://superuser.com/a/98565
   ~#  - list forwarded connections
   ~B  - send a BREAK to the remote system
   ~R  - Request rekey (SSH protocol 2 only)
