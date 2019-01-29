@@ -1324,6 +1324,9 @@ echo " stoptime: $t2"
 xclock -digital  -strftime "%Y-%m-%d %H-%M-%S" -update 1 -twentyfour
 helplogrotate_of_files()
 helpbackup[singlefiles]
+man localedef    # - compile locale definition files
+man locale       # - get locale-specific information
+man 5 locale     # - describes a locale definition file
 __envHEREDOC__
 }
 helpawk(){
