@@ -6238,20 +6238,17 @@ rsync -av --delete --stats --progress --human-readable --xattrs --hard-links --d
 # Perform a long diff--same as previous but just add the --checksum option.
 __envHEREDOC__
 }
+
 helpgetfattr(){
-cat <<'__envHEREDOC__'
-/calling helpxattrs()/
-__envHEREDOC__
+   echo "/calling helpxattrs()/"
    helpxattrs
-__envHEREDOC__
 }
+
 helpattr(){
-cat <<'__envHEREDOC__'
-/calling helpxattrs()/
-__envHEREDOC__
+   echo "/calling helpxattrs()/"
    helpxattrs
-__envHEREDOC__
 }
+
 helpxattrs(){
 cat <<'__envHEREDOC__'
 = various extended attributes tools =
