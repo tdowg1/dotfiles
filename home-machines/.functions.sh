@@ -2243,6 +2243,7 @@ helpip
 helppktstat
 helpsysfs
 nmcli
+http://ubuntuforums.org/showthread.php?t=2172359 - noteworthy troubleshooting cmdlns.
 __envHEREDOC__
 }
 helpip(){
@@ -2306,8 +2307,6 @@ __envHEREDOC__
 helpnetwork2(){
 cat <<'__envHEREDOC__'
 /usr/share/doc/bridge-utils/README.Debian
-
-/usr/share/doc/bridge-utils/README.Debian
 interfaces(5)
 bridge-utils-interfaces(5)
 
@@ -2328,14 +2327,22 @@ sudo ifconfig up eth0
 sudo ip link delete br0
 
 = When system is idiot and denies network restart =
-for me, this generally seems to be caused by the same thing. I think the solution is:
-   # Realize that the system is in funky state. fix it by changing the eth in question (eth1) in /etc/network/devices like:
+# for me, this generally seems to be caused by the same thing. I think the solution is:
+# realize that the system is in funky state. Fix it by changing the eth in question (eth1)
+# in /etc/network/devices like:
    auto eth1
    iface eth1 inet dhcp
-   # then run:
+# then run:
    sudo ifup [-v] eth1
-   # now can go back into /etc/network/interfaces and modify eth1 defn as desired. then can run:
+# now can go back into /etc/network/interfaces and modify eth1 defn as desired. then can run:
    sudo ifdown eth1 ; sudo ifup eth1
+
+= Not sure if this is still relevant =
+# Seems that if you dont do the following when doing funky stuff with hardline ethernet
+# wires, network, have to hard stop machine so that the eth card can reset:
+sudo ifconfig eth0 down
+# <funk, it is safe to do some at this time>
+sudo ifconfig eth0 up
 
 = See also =
 http://unix.stackexchange.com/questions/50602/cant-ifdown-eth0-main-interface
