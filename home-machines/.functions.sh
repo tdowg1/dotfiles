@@ -2501,6 +2501,15 @@ done
 * Print most recent tag
 ** git describe
 
+* Print tags along with date
+** git log --tags --simplify-by-decoration --pretty="format:%ai %d"
+* Print tags along with date plus pretty ascii graphy!
+** git log --tags --simplify-by-decoration --pretty=format:'%ai %h %d'  --date-order --graph
+* Print tags along with date and sha1 AND commit comment:
+** git log --decorate=full --all --pretty=format:'%h %d %s %cr %ae' --abbrev-commit|grep 'refs/tags'
+* Print tags along with date and sha1:
+** git log --date-order --tags --simplify-by-decoration --pretty='format:%C(green)%ad %C(red)%h %C(reset)%D' --date=short
+
 = IGNOREing =
 http://www.randallkent.com/development/gitignore-not-working
 or?
@@ -2509,6 +2518,15 @@ git update-index --assume-unchanged
 
 = Cloning over ssh port 443 =
 git clone ssh://user@host:443/absolute/path/to/repo.git
+
+= Get a patch/diff file for a single commit / applying some random commit elsewhere =
+# The following approach came in handy when I wanted to __backport__ a small
+# but very important change in a codebase...
+#   First, identified the sha of very important change, then supplied it:
+git format-patch -1 1f5c1872
+#   ^^This will generate a new file, a patch file.
+#   Second, apply the patch to the code that needs it:
+git apply --verbose <previously generated patch file>
 __envHEREDOC__
 }
 helpgit2(){
