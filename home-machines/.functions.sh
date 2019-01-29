@@ -1430,7 +1430,7 @@ cat <<'__envHEREDOC__'
       ~ A g means the group is different and is being updated to the senders value (requires --group)
       ~ The u slot is reserved for future use.
       ~ The a means that the ACL information changed.
-      ~ The x means that the extended attribute information changed.
+      ~ The x means that the Extended Attribute information changed.
 
 --checksum : have used this to detect file differences (especially in xls / Excel
     Spreadsheet files) that werent detected, otherwise.
@@ -6251,42 +6251,49 @@ helpattr(){
 
 helpxattrs(){
 cat <<'__envHEREDOC__'
-= various extended attributes tools =
-== e2fsprogs: /usr/bin/lsattr ==
-^^? (is this *really* what i was looking for? not sure...)
-  lsattr - list file attributes on a Linux second extended file system
+= various tools that interact with Extended Attributes =
+== youtube-dl option ==
+   --xattrs  Write metadata to the video file's xattrs (using dublin core and xdg standards)
 
 == attr: /usr/bin/getfattr ==
-Package Description: Utilities for manipulating filesystem extended attributes
- A set of tools for manipulating extended attributes on filesystem objects, in particular getfattr(1) and setfattr(1). An attr(1) command is also provided which is largely compatible with the SGI IRIX tool of the same name.
-   getfattr - get extended attributes of filesystem objects
-   setfattr - set extended attributes of filesystem objects
-   attr - extended attributes on XFS filesystem objects     (lol, k... XFS, huh?...)
+Package Description: Utilities for manipulating filesystem Extended Attributes
+ A set of tools for manipulating Extended Attributes on filesystem objects, in particular getfattr(1) and setfattr(1). An attr(1) command is also provided which is largely compatible with the SGI IRIX tool of the same name.
+   getfattr - get Extended Attributes of filesystem objects
+   setfattr - set Extended Attributes of filesystem objects
+   attr - Extended Attributes on XFS filesystem objects     (lol, k... XFS, huh?...)
 
 == python-xattr: /usr/bin/xattr ==
-Package Description: module for manipulating filesystem extended attributes
-This module allows manipulation of the filesystem extended attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these attributes.
-   xattr - sets or lists extended attributes on a file or directory.
+Package Description: module for manipulating filesystem Extended Attributes
+This module allows manipulation of the filesystem Extended Attributes present in some operating systems (GNU/Linux included). It is compatible to python-pyxattr but also provides a dictionary like interfaces for manipulating these Attributes.
+   xattr - sets or lists Extended Attributes on a file or directory.
+
 
 = filesystem confusion, etc =
    attr - is aimed specifically at users of the XFS filesystem!!!
-   getfattr/setfattr - for filesystem __independent__ extended attribute manipulation.
+   getfattr/setfattr - for filesystem __independent__ Extended Attribute manipulation.
+
+== e2fsprogs: lsattr and chattr ==
+^^? (is this *really* what i was looking for? not sure...)
+  lsattr - list file attributes on a Linux second Extended file system; apart of e2fsprogs.
+  chattr - list file attributes on a Linux second Extended file system; apart of e2fsprogs.
+... hrm... Im thinking this has nothing to do with Extended Attributes.
+
 
 = examples =
 getfattr -d file > file.getfattrdump # dump.
 setfattr --restore=file.getfattrdump # restore.
 setfattr -n user.ya -v 77            # do a thing.
 
-
 = See also =
 * [http://www.linux-mag.com/id/8741/ Extended File Attributes Rock! | Linux Magazine]
 * [http://www.linux-mag.com/id/8794/ Checksumming Files to Find Bit-Rot | Linux Magazine]
+* $ aptitude search xattr
 
 * a metadata dumping tool : metastore - Store and restore metadata from a filesystem
 ?metamonger - Save, diff, and restore filesystem metadata
 ?extract - displays meta-data from files of arbitrary type
 
-== other meta-related but not necessarily extended attribute-related ==
+== other meta-related but not necessarily Extended Attribute-related ==
 metacam - extract EXIF information from digital camera files
 atomicparsley - read, parse and set metadata of MPEG-4 and 3gp files
 exempi - command line tool to manipulate XMP metadata
