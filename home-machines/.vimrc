@@ -149,5 +149,6 @@ endif
 
 let g:DeleteTrailingWhitespace = 1
 
-:command Dw :execute ':DeleteTrailingWhitespace' | :w
+:command Dw :execute  ':DeleteTrailingWhitespace' | :w
+:command Dwq :execute ':DeleteTrailingWhitespace' | :wq
 
