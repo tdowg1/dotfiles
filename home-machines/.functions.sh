@@ -4310,18 +4310,21 @@ see also2 :
 * REFUSED(buggy or obsolete) rcconf(must also manually install 'dialog') - displays a menu of all the services which could be started at boot
 * sysv-rc-conf(or ksysv for KDE)
 * sysvconfig
+* bootchart bootchart2
+* bum
+* menu-l10n ktsuss sux
 
 other keywords : lsb upstart lsb-header
 
-==== upstart commands ====
-* initctl - can use in place of "service" with the commands bellow. Run initctl help.
-** initctl list === `service --status-all' in RHEL
-* start - start a service
-** sudo start <service>
-* stop - stop a service
-* reload - sends a SIGHUP signal to running process
-* restart - restarts a service without reloading its job config file
-* status - requests status of service
+   OBSOLETE ==== upstart commands ====
+   OBSOLETE * initctl - can use in place of "service" with the commands bellow. Run initctl help.
+   OBSOLETE ** initctl list === `service --status-all' in RHEL
+   OBSOLETE * start - start a service
+   OBSOLETE ** sudo start <service>
+   OBSOLETE * stop - stop a service
+   OBSOLETE * reload - sends a SIGHUP signal to running process
+   OBSOLETE * restart - restarts a service without reloading its job config file
+   OBSOLETE * status - requests status of service
 
 
 == See also ==
@@ -8386,7 +8389,7 @@ the only brute force/hammer (instead of scalpel) way i know how to solve this is
 = See also =
 helpsystemctl2 helpsystemctl3
 helpsystemd
-helpchkconfig
+helpchkconfig helpupdatercd
 journalctl
 __envHEREDOC__
 }
