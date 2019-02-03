@@ -8883,6 +8883,38 @@ Dest Brother_HL-4150CDN_series_br-script33 Resolution=2400x1200dpi TonerSaveMode
 Default Brother_HL-4150CDN_series_br-script33
 __envHEREDOC__
 }
+helppacman(){
+cat <<'__envHEREDOC__'
+Arch Linux Package Management
+-----------------------------
+# query package database for pm:
+pacman -Ss pm
+
+# upgrade system and packages:
+pacman -Syyu
+
+# [re]installs bind package [if it's already installed]:
+pacman -S bind
+
+# installs bind package if not already installed: yaourt::
+pacman -S --needed bind
+pacman -S --needed yaourt
+
+# search AUR repository for chrome: google-chrome::
+package-query --aur --search chrome
+package-query --aur --search google-chrome
+
+# Which package provides a file that is already on system:
+pacman -Qo $( which dig )
+/usr/bin/dig is owned by bind-tools 9.13.5-4
+
+
+makepkg - package build utility
+package-query - Query alpm database and/or AUR
+namcap - package analysis utility
+__envHEREDOC__
+}
+
 
 
 
