@@ -4139,6 +4139,12 @@ p
 w" | fdisk /dev/xvda
 # next can do resize2fs -p /dev/xvda1
 
+= Newer fdisk disallowing certain things =
+: src : http://tomas.solamail.no/2017/03/26/fdisk-force-start-sector-63/
+When you try to create a partition on newer distributions you get "out of range" error
+message when trying to create a new partition starting at sector 63.  To force the use
+of the now deprecated "dos style":
+fdisk -c=dos /dev/sda
 __envHEREDOC__
 }
 
