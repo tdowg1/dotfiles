@@ -2455,6 +2455,11 @@ __envHEREDOC__
 
 helpgit(){
 	cat <<'__envHEREDOC__'
+# git-clean - Remove untracked files from the working tree (useful when working in a src code directory and want to clean it all up)
+git clean -fx
+git ls-files --directory --others --exclude-from=.git/info/exclude
+find . -name \*.deps\*   # in some circumstances, might find some garbage.
+
 = LOGs =
 * There are separate fields for ppl...
 ** "Author" - the person who created the change, and
