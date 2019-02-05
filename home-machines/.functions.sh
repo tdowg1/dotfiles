@@ -5803,10 +5803,21 @@ tmux attach [-t session-number-index] - attach to tmux session.
 c-a d   - unattach curr tmux session
 c-a ?   - shows currently bound/bind'ed keys
 c-a :   - tmux command mode e.g. can say like 'show-environment'; BONUS: has tab-completion
-c-a ,   - rename curr tmux window/pane
+c-a ,   - rename curr tmux WINDOW/pane
 c-a x   - kill curr tmux window/pane (it uses actual window name)
-c-a &   - kill curr tmux window/pane (it just uses the word "pane" 0)
+c-a &   - kill curr tmux WINDOW/pane (it just uses the word "pane" 0); "kill-window"
 c-a ???   - kill entire curr tmux session
+
+c-a w   - seems to give you a nifty selectable hierarchical breakdown of all sessions; "choose-tree"
+
+c-a "   - splits current WINDOW/pane horizontally
+c-a !   - "break-pane"
+c-a ;   - "last-pane"
+c-a q   - "display-panes"
+c-a h   - "select-pane -L" (vim-mode Left)
+c-a j   - "select-pane -D" (vim-mode Down)
+c-a k   - "select-pane -U" (vim-mode Up)
+c-a l   - "select-pane -R" (vim-mode Right)
 
 == Commands ==
 show-environment [-g] - lists environment variables [on a global basis (! this is neat though, its puts each entry ON A SINGLE LINE)]
