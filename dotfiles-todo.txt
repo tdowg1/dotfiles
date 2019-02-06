@@ -1,12 +1,9 @@
 
-COMPLETE figure out wtf is up with that fucking vundle sub repo
-COMPLETE deal with git stashies within primary dotfiles repo on shazam...
-
 deal with changes made to dotfiles on bump
 
 
 
-NEW non-repo fixup'ing SHIT::
+NEW non-repo fixup'ing ::
 
 deal with "dotfiles--to-add" text file on newjack
 
@@ -24,12 +21,12 @@ when in a git working copy, on shazam, i get a nice supporting bash prompt...
 
 
 change terminal prompt colors (vibv) for...
-* <color ideas>: that bright green on like default mint 
-* newjack: 
+* <color ideas>: that bright green on like default mint
+* newjack:
 * bump: silvery, brand colors
 * phi: purpley
 * intel: bluey
-* ipoowid: 
+* ipoowid:
 
 
 aliases

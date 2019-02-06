@@ -8408,7 +8408,8 @@ TODO STUB: what to do?
 
 systemctl disable <svc>
 systemctl stop <svc>
-anope. ITS STILL FUCKING RUNNING!  Dood, why cannot I find *anything* about this on google?  Ive had this issue multiple times on multiple machines for a varying degree of different applicatuions/services....
+anope. ITS STILL RUNNING!  ¿why cannot I find *anything* about this on google?
+Ive had this issue multiple times on multiple machines for a varying degree of different applicatuions/services....
 
 the only brute force/hammer (instead of scalpel) way i know how to solve this is:
 * uninstall the responsible package, or
@@ -8660,7 +8661,7 @@ __envHEREDOC__
 }
 helpglances(){
 cat <<'__envHEREDOC__'
-fucking python/pip/glances-installation problems
+freaking python/pip/glances-installation problems
 
 pip install -U pip setuptools
 or might be
