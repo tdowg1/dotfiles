@@ -8934,6 +8934,17 @@ package-query - Query alpm database and/or AUR
 namcap - package analysis utility
 __envHEREDOC__
 }
+helpkdeconnect(){
+cat <<'__envHEREDOC__'
+# idk what the deal is but kde connect seems almost so perfect but constantly crashes...
+rm -rf ~/.config/kdeconnect
+killall kdeconnectd
+killall -s KILL kdeconnectd
+ps -fp $(pgrep kdeconnectd)
+kdeconnectd
+__envHEREDOC__
+}
+
 
 
 
