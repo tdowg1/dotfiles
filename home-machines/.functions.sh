@@ -828,10 +828,6 @@ VALIDATE:: (shows only failures) # cd $DIR
 $ md5sum --check md5sum.md5 | grep ' FAILED'
 __envHEREDOC__
 }
-#helpshasum(){
-#	cat <<'__envHEREDOC__'
-#__envHEREDOC__
-#}
 helpsynergy(){
 	cat <<'__envHEREDOC__'
 renice -14 $(ps -ef | grep /usr/bin/synergyc | grep -v grep | awk '{print $2}')
