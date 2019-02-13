@@ -6747,7 +6747,7 @@ ipmitool sdr type Temperature | awk '{ print $9 }' | xargs echo $( date --rfc-33
 
 ipmitool sensor  # Similar to sdr, but with more data.
 
-immitool fru     # Prints nfo about the sensors.
+ipmitool fru     # Prints nfo about the sensors.
 
 # latest installed ipmitool doesn't work anymore for some absolutely unknown and mind boggling
 # reason, something about doesn't know about "fan" option for "sunoem" lol bullocks.
