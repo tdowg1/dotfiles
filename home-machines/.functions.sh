@@ -878,11 +878,51 @@ times may reflect times that are not desired.  If noatime was enabled, this can 
 for i in hourly.* daily.* weekly.* monthly.* ; do echo $i ; sudo touch -m --date="$( stat   --printf "%x\n" $i )"  $i ; sleep 1s; done
 __envHEREDOC__
 }
+
+
 pssynergy(){
    #ps -ef | grep -i -P "[s]ynergyc|[s]ynergys"
-   echo '  PID TTY          TIME  NI COMMAND'
-   ps -eo "%p %y %x %n %c" | grep synergy
+
+   #echo '  PID TTY          TIME  NI COMMAND'
+   #ps -eo "%p %y %x %n %c" | grep synergy
+
+   ps -o "%p %y %x %n %c" -p $( pgrep synergy )
 }
+pswsynergy(){
+   # and remove only the first line
+   ps www -o "%a" $( pgrep synergy ) | sed -e '1,1d'
+}
+synergycmdln(){
+   pswsynergy
+}
+restartsynergy(){
+   runningprocs=$( pswsynergy | wc -l )
+   if [[ $runningprocs != 1 ]] ; then
+      echo "multiple synergy processes running... you probably need to deal with that first"
+      return
+   fi
+
+   prevcmdln="$( pswsynergy )"
+   pkill synergy
+   eval "$( echo $prevcmdln )"
+}
+
+
+# TODO STUB:: TEST THESE 2 FUNCTIONS
+startsynergyserver(){
+   #synergys --address 192.168.1.77:24800 --config /home/teelah/Dropbox/synergy-active-configs/server-newjack-wireless/newjack.conf --name newjack  --no-restart  --log /var/log/synergy.log
+   networkmedium=$1
+   [[ -z $networkmedium ]] && networkmedium=wired
+   systemtype="server"
+   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.conf )"
+}
+
+startsynergyclient(){
+   [[ -z $networkmedium ]] && networkmedium=wired
+   systemtype="client"
+   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.conf )"
+}
+
 
 
 
