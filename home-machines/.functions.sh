@@ -879,9 +879,9 @@ for i in hourly.* daily.* weekly.* monthly.* ; do echo $i ; sudo touch -m --date
 __envHEREDOC__
 }
 pssynergy(){
-	#ps -ef | grep -i -P "[s]ynergyc|[s]ynergys"
-	echo '  PID TTY          TIME  NI COMMAND'
-	ps -eo "%p %y %x %n %c" | grep synergy
+   #ps -ef | grep -i -P "[s]ynergyc|[s]ynergys"
+   echo '  PID TTY          TIME  NI COMMAND'
+   ps -eo "%p %y %x %n %c" | grep synergy
 }
 
 
