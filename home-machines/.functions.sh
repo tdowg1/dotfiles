@@ -914,13 +914,13 @@ startsynergyserver(){
    networkmedium=$1
    [[ -z $networkmedium ]] && networkmedium=wired
    systemtype="server"
-   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.conf )"
+   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.txt )"
 }
 
 startsynergyclient(){
    [[ -z $networkmedium ]] && networkmedium=wired
    systemtype="client"
-   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.conf )"
+   eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.txt )"
 }
 
 
