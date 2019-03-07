@@ -340,7 +340,8 @@ greptxtfiles(){
 
 	for i in $( find "$searchpath" -type f ) ; do
 		# limit resultset to files appearing to only contain text:
-		file -b  "$i"  |  grep -i ASCII >/dev/null 2>&1
+		#file -b  "$i"  |  grep -i ASCII >/dev/null 2>&1  # WONT MATCH : UTF-8 Unicode text, with very long lines
+		file -b --mime-type "$i"  |  grep "text/plain"  >/dev/null 2>&1
 
 		if [[ $? = 0 ]] ; then
 			grep --with-filename -i $specialignorecase "$searchquery" "$i"
