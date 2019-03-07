@@ -3574,6 +3574,9 @@ $ find . -type f -not -size +10M  -print0 | xargs -0 grep --null-data --files-wi
 Print the line matching "lol jk....  Use it." plus the line that follows:
 $ grep --after-context=1 "lol jk....  Use it."
 
+# List all my current shell working directories:
+lsof -u $USER | grep ^bash | grep cwd
+
 == Syntax ==
 $ ll /dev/disk/by-label/ | grep -P "mnt|Oa|Va"     # grep with regex.
 $ yum deplist hadoop | grep --color -E 'hadoop|'   # Dear grep, Highlight, don't grep (!)
