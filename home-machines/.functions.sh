@@ -4118,13 +4118,12 @@ __envHEREDOC__
 
 helpfdisk(){
 cat <<'__envHEREDOC__'
-Default fdisk output has...
-~~~~~* the Start and End columns given in cylinders, as multiples of 512 bytes.~~~~~
-	lol ^^ya for the tutorial the guy is giving... but on mine, its given IN SECTORS!!!
-	NOT CYLINDERS!!!!!!!
-	lol... aw boy. and the confusion never ends.
-* the Start and End columns show the starting and ending __SECTORS__
-** hint: just run the 'u' command and it will toggle+display the unit being used.
+Default fdisk has units in cylinders or sectors.  Seems like it depends on which OS youre on.
+* within fdisk just run the 'u' command and it will toggle+display the unit being used.
+* from cmdln, i think just pass -u option to ensure units are in sectors.
+** depending on which version, could additionally specify like...
+*** -u=sectors   or   --units=sectors
+*** -u=cylinders   or   --units=cylinders
 
 * the Blocks column shows the number of 1K (1024 byte) blocks in the partition
 
