@@ -4222,6 +4222,15 @@ parted $d --script mkpart primary ext4 11444MiB 105858MiB
 parted $d --script mkpart primary ext4 12.0GB   111GB
 parted $d --script mkpart primary ext4 11.2GiB  103GiB
 
+-> make first partition bootable:
+parted $d --script set 1 boot on
+
+=== some snipplet ===
+d=/dev/sdd
+sudo parted ${d} --script mktable msdos
+sudo parted ${d} --script mkpart primary fat32 0% 100%
+sudo mkfs.exfat ${d}1 -n LABEL
+
 === loop for printing all machine devices ===
 for d in /dev/sd[a-z] ; do  sudo parted $d --script unit s print  ; done
 
