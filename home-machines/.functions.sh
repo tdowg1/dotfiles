@@ -1259,6 +1259,9 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 ** Error grouping. Produces one error message for identical sequential errors
 ** (integrity verif) Verify mode. Able to repeat any transformations done to the input file and compare it to an output.
 ** (split output) Ability to split the output into chunks with numerical or alphabetic extensions
+
+* ddpt copies data between files and storage devices. Support for devices that understand the SCSI command set.
+** can issue SCSI commands in pass-through ("pt") mode.
 __envHEREDOC__
 }
 
