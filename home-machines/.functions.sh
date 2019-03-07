@@ -2970,6 +2970,10 @@ sed -i "1i Prepended line" /tmp/newfile
 # Print the previous line for the specified matched pattern:
 sed -n '/PATTERN TO MATCH/{x;p;d;}; x' infile
 
+# Print all except the first line, except the first two lines
+sed -e '1,1d'
+sed -e '1,2d'
+
 == FIND/REPLACE ==
 # PREVIEW find/replace on files:
 sed -n "s/192.168.8.3/bryn-pc/gp" file1 [fileN]
