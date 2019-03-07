@@ -127,7 +127,9 @@ alias lt='ls -lt'
 alias lta='ls -lta'
 #alias lr='ls -ltr'
 alias ltr='ls -ltr'
+alias ltrh='ls -ltrh'
 alias ltra='ls -ltra'
+alias ltrah='ls -ltrah'
 alias ltrr='ls -lt'     # same as alias lt
 alias trll='ls -ltr'    # same as ltr
 ## /ls-related
