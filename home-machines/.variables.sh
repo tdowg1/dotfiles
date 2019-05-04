@@ -44,7 +44,10 @@ export installsoftos2="${installsoft}/os2"
 
 
 # PATH modifications
-PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils
+PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bin.teelah-utils:$HOME/bin.scripts
+
+# local/user-based _pip install <...>_ places executables here:
+PATH=$PATH:$HOME/.local/bin
 
 # need the next two because bcc-tools doesn't install orderly:
 PATH=$PATH:/usr/share/bcc/tools
