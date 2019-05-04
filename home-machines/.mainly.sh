@@ -181,3 +181,7 @@ fSourceIfThere "$ZOMG_DOTFILES/.functions.sh"
 fSourceIfThere "$ZOMG_DOTFILES/.git-prompt.sh"
 fSourceIfThere "$ZOMG_DOTFILES/.variables.sh"
 
+#fSourceIfThere "$ZOMG_DOTFILES/.bash_completion"
+fSourceIfThere "$ZOMG_DOTFILES/bash_completion.d/virsh-bash-completion/virsh_bash_completion"
+
+
