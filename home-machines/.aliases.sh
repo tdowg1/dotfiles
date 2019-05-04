@@ -76,6 +76,10 @@ alias keyboardBefruity="sudo su -c \"echo '1' > /sys/module/hid_apple/parameters
 
 alias runvmware="vmware-gksu  --user root  --preserve-env  vmware"
 alias vmwarerunvmware="vmware-gksu  --user root  --preserve-env  vmware"
+
+
+alias ffprobe="ffprobe -hide_banner"
+alias ffmpeg="ffmpeg -hide_banner"
 ## /misc
 ##
 

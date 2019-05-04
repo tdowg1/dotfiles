@@ -5246,8 +5246,10 @@ cat <<'__envHEREDOC__'
 abcde: Command Line Music CD Ripping for Linux
 icedax: stands for InCrEdible Digital Audio eXtractor
  * It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
+fapg: generates playlist of audio files (Wav, MP2, MP3, Ogg, etc) in various formats (M3U, PLS, XSPF, HTML, RSS, etc).
 flac: Flac encoder/decoder
 lame: mp3 encoder/decoder    LAME AINT AN MP3 ENCODER, duh
+ffmpeg: M4A / AAc files
 mpgtx: is a tool to manipulate MPEG files.
  * ( video ) mpgtx can currently split and join MPEG 1 video files and most MPEG audio files.
  * ( video ) mpgtx can fetch detailed information from MPEG 1 and MPEG 2.
@@ -5311,6 +5313,7 @@ python-eyed3 - Python module for id3-tags manipulation
 
 == See also ==
 helplame helpflac helpmuzik helpsox
+mediainfo
 __envHEREDOC__
 }
 helpmuzik2snippets_flac_to_mp3_conversion(){
@@ -5409,6 +5412,7 @@ $ identify -format %G image | awk --field-separator x '{ print $2 }'
 
 = See also =
 helpimages
+mediainfo
 __envHEREDOC__
 }
 helpburn(){
@@ -8650,6 +8654,7 @@ cat <<'__envHEREDOC__'
 # Important/Helpful packages that can easily manually compile:
 libav  git://git.libav.org/libav.git     https://libav.org/download/ (major releases are cut every 4-6 months)
 ffmpeg https://git.ffmpeg.org/ffmpeg.git https://trac.ffmpeg.org/
+   ( to hide header version nfo being printed out each execution, include : -hide_banner )
 
 # Get a video files run length/duration time:
 ffprobe  -show_format  inputfile 2>&1  | grep -i duration | sed 's/.*=//')
@@ -8659,6 +8664,9 @@ for i in $( find . -type f -size +100M ) ; do
    echo $i
    ffprobe -show_format $i 2>&1 | grep -i duration | sed 's/.*=//'
 done > video-runtime-lengths.txt
+
+# Get a files nfo + streams:
+ffprobe -show_streams  -of json  inputfile | jq
 
 
 # To EXTRACT only a small segment in the middle of a movie... (https://trac.ffmpeg.org/wiki/Seeking#Cuttingsmallsections)
@@ -8676,9 +8684,23 @@ ffmpeg -ss 00:01:00 -i video.mp4 -to 00:02:00 -c copy -copyts cut.mp4
 #   for example:
 ffmpeg -ss 00:03:00 -i video.mp4 -t 60 -c copy -avoid_negative_ts 1 cut.mp4
 
-# To CONCATenate
-# If you have media files with exactly the same codec and codec parameters you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#samecodec
-# If you have media with different codecs you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#differentcodec
+# To CONCATenate...
+#    If you have media files with exactly the same codec and codec parameters you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#samecodec
+#    If you have media with different codecs you can concatenate: https://trac.ffmpeg.org/wiki/Concatenate#differentcodec
+# ...files of SAME type (lossless):
+# : src : https://amiaopensource.github.io/ffmprovisr/#join_files
+ffmpeg -f concat -safe 0 -i mylist.txt -c copy out.mov   #  mylist.txt : file './first_file.ext'\n...
+ ^^?? any way to do the same BUT ALSO say to drop the audio???
+     .
+     |-- # tried and failed :
+     |-- ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][1:v:0]concat=n=2:v=1:a=0[video_out]" -map "[video_out]" -c copy out.mov
+     `-- # with : >>> Streamcopy requested for output stream 0:0, which is fed from a complex filtergraph. Filtering and streamcopy cannot be used together.
+
+# ...files of DIFF type (transcode):
+# : src : https://amiaopensource.github.io/ffmprovisr/#join_different_files
+ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[video_out][audio_out]" \
+   -map "[video_out]" -map "[audio_out]"  out.mov
+
 
 # Video stabilization1
   i've not actually had good results with the following; havent exactly put in any time to investigate either.
@@ -8690,11 +8712,17 @@ ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilize
 # Video stabilization2
 http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
 
+# Demux out just the _V_ideo portion from a media file:
+ffmpeg -i f1 -c:v copy -map 0:0 video.mov
 
 == See also ==
 helpmkvmerge
 helphandbrake
 blender / https://wiki.blender.org/index.php/Dev:Doc/Building_Blender/Linux/Ubuntu/CMake
+mediainfo
+
+=== ffmpeg ===
+https://amiaopensource.github.io/ffmprovisr/
 __envHEREDOC__
 }
 helpmkvmerge(){
