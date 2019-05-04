@@ -39,6 +39,8 @@ alias reloadenv='echo ". ~/.bashrc" ; . ~/.bashrc'
 
 ##
 ## misc
+alias sudo='sudo '  # allow shell to expand my aliases, i.e. make "sudo ll" work like how youd expect it to.
+
 #alias epwd='echo `pwd`/'
 alias grep >/dev/null 2>&1  ||  alias grep='grep --color'
 alias kill9='kill -9'
