@@ -54,8 +54,8 @@ filetype plugin indent on     " required!
 syntax on
 
 
-"set nu   " regular numbering
 set relativenumber
+set nu   " regular numbering after relative numbering sets curr line to actual file line number.
 
 
 
