@@ -15,6 +15,75 @@ cdzfs(){
    cd /mnt/a${idNumber}/fs1
 }
 
+# print out in unambiguous IEC as well as traditional SI amounts.
+lba2IECandSI(){
+   local lba=$1
+   local bytes=$( lba2bytes $lba )
+   # print out in MiB
+   echo $( bytes2MiB $bytes )MiB
+
+   # print out in GiB / GB
+   echo $( bytes2GiB $bytes )GiB/$( bytes2GB $bytes )GB
+
+   # print out in TiB / TB
+   echo $( bytes2TiB $bytes )TiB/$( bytes2TB $bytes )TB
+}
+lba2bytes(){
+   local lba=$1
+   echo "$lba * 512" | bc
+}
+lba2MiB(){
+   local lba=$1
+   local bytes=$( lba2bytes $lba )
+   bytes2MiB $bytes
+}
+bytes2MiB(){
+   local bytes=$1
+   echo "$bytes / 1024 / 1024" | bc
+}
+bytes2GiB(){
+   local bytes=$1
+
+   echo "$bytes / 1024 / 1024 / 1024" | bc
+}
+bytes2TiB(){
+   local bytes=$1
+
+   echo "scale = 2
+   $bytes / 1024 / 1024 / 1024 / 1024" | bc
+   #clac.py "$bytes / 1024 / 1024 / 1024 / 1024"
+}
+bytes2GB(){
+   local bytes=$1
+
+   echo "$bytes / 1000 / 1000 / 1000" | bc
+}
+bytes2TB(){
+   local bytes=$1
+
+   echo "scale = 2
+   $bytes / 1000 / 1000 / 1000 / 1000" | bc
+   #clac.py "$bytes / 1000 / 1000 / 1000 / 1000"
+}
+bytes2lba(){
+   local bytes=$1
+   echo "scale = 2
+   $bytes / 512" | bc
+}
+GB2lba(){
+   local gb=$1
+   echo "scale = 2
+   $gb * 1000 * 1000 * 1000 / 512" | bc
+}
+GiB2lba(){
+   local gib=$1
+   echo "scale = 2
+   $gib * 1024 * 1024 * 1024 / 512" | bc
+}
+
+
+
+
 update_auth_sock() {
     local socket_path="$(tmux show-environment | sed -n 's/^SSH_AUTH_SOCK=//p')"
 
