@@ -8341,6 +8341,13 @@ the clients should eventually figure out the update, but you can force it by doi
 that wipes your client cache
 
 
+== bump: root crontab entries found: ==
+10 3 * * * /usr/sbin/logadm
+15 3 * * 0 [ -x /usr/lib/fs/nfs/nfsfind ] && /usr/lib/fs/nfs/nfsfind
+30 3 * * * [ -x /usr/lib/gss/gsscred_clean ] && /usr/lib/gss/gsscred_clean
+30 0,4,8,12,14,18 * * * PATH=$PATH:/usr/afsws/etc /afs/tc.com/usr/tcreech/pub/bin/autorankservers | /usr/afsws/bin/fs sp -stdin ; /usr/afsws/bin/fs sp bhouse.tc.com 20000
+* * * * * /usr/afsws/bin/fs setcrypt -crypt on
+
 
 = See also =
 helpomnios*
