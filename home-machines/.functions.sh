@@ -2689,6 +2689,8 @@ git stash apply
 # be, so go ahead and add all of them to the index with git add file1 file2 ...
 git status --short | grep -P '^ M' | sed -e 's/^ M//' | xargs -n 1 -I{}  git add "{}"
    TODO STUB : ^^test this on file set that has one or more files with spaces or weird characters.
+# similarly, for removed files:
+git status --short | grep -P '^ D' | sed -e 's/^ D//' | xargs -n 1 -I{}  git rm "{}"
 
 # if stash applied correctly, delete it:
 git stash drop
@@ -2823,6 +2825,10 @@ git submodule update --init *
 git submodule update --init --recursive
 # To get a particular submodules content, do:
 git submodule update --init Dusk
+
+== See also ==
+- gitman - aims to serve as a submodules replacement and provides advanced options for managing versions of nested Git repositories.
+-- https://gitman.readthedocs.io/en/latest/
 __envHEREDOC__
 }
 helpgit5(){
@@ -2902,6 +2908,16 @@ To limit the contents being moved to only a subdirectory or file within the repo
    https://www.simplicidade.org/notes/2009/04/21/merging-two-unrelated-repositories/
 To move *everything* from one repo to another, check out:
    http://bpeirce.me/moving-one-git-repository-into-another.html
+
+# Get a revision log for each individual file: (the IFS part is necessary if any file has a space in it)::
+SAVEIFS=$IFS ; IFS=$(echo -en "\n\b")
+for i in $( find . -type f | grep -v .git) ; do
+   echo "$i"
+   git log --pretty=format:'%Cgreen  %s %Creset' $i
+   echo
+done
+IFS=$SAVEIFS
+
 __envHEREDOC__
 }
 helpgitterminology(){
