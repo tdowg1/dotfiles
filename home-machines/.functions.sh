@@ -7164,6 +7164,21 @@ ipadm show-if e1000g0
 sudo svcadm restart svc:/network/physical:default   # Restart the network.
 __envHEREDOC__
 }
+helpomnios8_sambasmbcifs(){
+cat <<'__envHEREDOC__'
+smb(4) - configuration properties for Solaris CIFS server
+   |-- Behavior of the Solaris CIFS server is defined by property values that are stored in the Service Management Facility, smf(5).
+   |   `- smf(5)
+   |-- An authorized user can use the sharectl(1M) command to set global values for these properties in SMF.
+   |   `- sharectl(1M)
+   |-- smbadm(1M)
+   |-- smbd(1M)
+   `-- smbstat(1M)
+
+zfs property : sharesmb
+
+__envHEREDOC__
+}
 
 #/TODO STUB
 
