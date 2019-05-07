@@ -1283,6 +1283,8 @@ Dump typical MBR location in hex ; first 512-bytes of device
 Backup device
    dd if=/dev/sda6 bs=4096 conv=notrunc,noerror | gzip > rsnapshot.dd.gz
       TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
+Shorthand
+   dd if=/dev/zero of=/swap bs=1MiB count=$((4*1024))  # 4GiB swapfile
 __envHEREDOC__
 }
 helpdd2(){
@@ -1293,6 +1295,9 @@ $ dcfldd if=/dev/sr0 of=knoppix.iso   md5log=md5sum status=on sizeprobe=if
 Hexdump of first 64 sectors of DEVICE (this is relevant to grub shtuffs):
 $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
   ^^and after running grub-install, for instance, the contents of this area will be modified.
+
+Create a 100G sparse file:
+$ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 
 
 == See Also ==
@@ -1327,6 +1332,7 @@ $ dd if=DEVICE count=64 | hexdump -Cv > dd-DEVICE-64.txt
 ** Multiple outputs - dcfldd can output to multiple files or disks at the same time.
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
+** NOTE: the size designation of units are completely wrong... e.g. it outputs "Mb" which should be MiB
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
 ** "patched version of GNU dd with forensic features"
