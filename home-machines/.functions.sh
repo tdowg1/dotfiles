@@ -4799,10 +4799,22 @@ cat <<'__envHEREDOC__'
 --existing
 
 == EXAMPLES ==
-$ locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
-$ for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do   echo rm $i blah; done
-$ for i in `locate -r /mnt/rsnapshot/.*/Downloads/NVIDIA-Linux-x86_64-295.33.run` ; do   echo rm $i blah; done
-$ locate -r home.*aesop-rock.*bash_history
+locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]
+for i in `locate --limit 2 --database /var/lib/mlocate/mlocate-all.db  -r  the/blah/blah/dir/file.txt.[123]` ; do   echo rm $i blah; done
+for i in `locate -r /mnt/rsnapshot/.*/Downloads/NVIDIA-Linux-x86_64-295.33.run` ; do   echo rm $i blah; done
+locate -r home.*aesop-rock.*bash_history
+
+# multiple -d args are additive...
+locate -d /var/lib/mlocate/mlocate.db   -d /var/lib/mlocate/downloads-dir.db
+# for example:
+[ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/custom.db  -d /var/lib/mlocate/mlocate.db the | wc -l
+32662
+[ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/custom.db  the | wc -l
+16311
+[ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/mlocate.db the | wc -l
+16351
+[ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/mlocate.db -d /var/lib/mlocate/custom.db the | wc -l
+32662
 __envHEREDOC__
 }
 helpapplekeyboard(){
