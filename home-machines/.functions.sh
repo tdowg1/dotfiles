@@ -7824,6 +7824,10 @@ restarthosts2='vm-hdp23-a1'
 
 * regex usage
 ~(web|db).*\.example\.com
+
+== /etc/ansible/hosts -less ==
+host=
+ansible $host -i $host, --become  -m apt -a "upgrade=dist"  -vvvv
 __envHEREDOC__
 }
 helpansible(){
