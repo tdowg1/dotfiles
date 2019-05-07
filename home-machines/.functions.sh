@@ -5491,9 +5491,10 @@ __envHEREDOC__
 }
 helpsox(){
 cat <<'__envHEREDOC__'
+       SoX - Sound eXchange, the Swiss Army knife of audio manipulation
 == from sox manpage, slightly modified ==
-Here is an overview of SoX's capabilities; detailed explanations of how to use all SoX  parameters,
-file formats, and effects can be found in sox(1), in soxformat(7), and in soxi(1).
+capabilities, detailed explanations of use, all parameters,
+file formats, and effects can be found in sox(1), soxformat(7), and soxi(1).
 
 Here is a selection of examples of how SoX might be used.
 The simple:
