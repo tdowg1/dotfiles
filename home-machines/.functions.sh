@@ -9294,6 +9294,37 @@ grub-install --recheck --no-floppy  ${BASE-DEVICE-OF-root-filesystem-to-perform-
 grub-install --root-directory=/mnt/@/ /dev/sda1
 __envHEREDOC__
 }
+helphdd9_btrfs(){
+cat <<'__envHEREDOC__'
+d=/dev/sdd
+dname=a58-458
+sudo mkdir /mnt/$dname/
+
+sudo mkfs.btrfs -L $dname  $d    # NOTICE : using entire device / no partition table in this example.
+
+sudo btrfs device scan [--all]
+
+sudo mount -t btrfs LABEL=$dname /mnt/$dname   # this is just some sort of meta container for management and creation of subvolumes (thatll be created next).
+
+# the fs mounted at /mnt/$dname is the freshly created filesystem and is also a subvolume, called top-level.
+#    A Btrfs filesystem has a default subvolume, which is initially set to be the top-level subvolume and which is mounted if no subvol or subvolid option is specified.
+#    Changing the default subvolume with btrfs subvolume default will make the top level of the filesystem inaccessible, except by use of the subvol=/ or subvolid=5 mount options.
+
+
+sudo btrfs device usage /mnt/$dname
+sudo btrfs device stats /mnt/$dname
+
+sudo btrfs filesystem show -d
+sudo btrfs filesystem usage /mnt/$dname   ====   sudo btrfs filesystem df /mnt/$dname
+
+sudo btrfs subvolume create /mnt/$dname/svol
+sudo btrfs subvolume list /mnt/$dname
+
+sudo umount /mnt/$dname
+sudo mount -t btrfs -o subvol=svol LABEL=$dname /mnt/$dname
+
+__envHEREDOC__
+}
 
 
 
