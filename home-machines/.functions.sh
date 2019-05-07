@@ -4113,6 +4113,18 @@ src : https://wiki.archlinux.org/index.php/Badblocks#read-write_Test
 
 badblocks writes and then verifies, read-write Test:
 # badblocks -wsv /dev/<device>
+
+== System not seeing latest hotswap/hotplugged hdd ==
+echo "- - -" > /sys/class/scsi_host/host*/scan
+
+for i in /sys/class/scsi_host/host*/scan ; do
+   sudo su -c "echo '- - -' > $i"
+done
+
+echo 1 > /sys/class/scsi_device/
+echo 1 > /sys/devices/pc
+echo 0 0 0 | tee /sys/class/scsi_host/host*/scan
+
 __envHEREDOC__
 }
 helphdd6_resize2fs_and_partition_tables(){
