@@ -10,6 +10,11 @@
 #get that echoandexec method I wrote
 
 
+cdzfs(){
+   local idNumber=$1
+   cd /mnt/a${idNumber}/fs1
+}
+
 update_auth_sock() {
     local socket_path="$(tmux show-environment | sed -n 's/^SSH_AUTH_SOCK=//p')"
 
@@ -6446,14 +6451,14 @@ zpool destroy    - Destroys the pool.
 zpool clear      - When errors occur (should become a fault or degrade), once resolved, clears the error status of that zpool
 zpool labelclear - Removes ZFS label information from the specified device.
 
-zpool get all
-zfs get all
-zpool-features
-
+zpool get all [zpool] - Gives properties [of specified zpool].
+zfs get all [fs] - Gives properties [of specified filesystem].
 zpool set        - Set a property pertaining to a pool. (lists properties if dataset provided)
 zfs set          - Set a property pertaining to <filesystem|volume|snapshot>. (lists properties if dataset provided)
 
 zfs get origin   - For cloned file systems or volumes, the snapshot from which the clone was created. See also the clones property.
+
+zpool-features   - Supposidly, displays the available features included with the running ZFS version.
 
 zpool events [-v]   - UNDOCUMENTED.
 zpool history [-il] - Displays internally logged zfs events.
@@ -6542,9 +6547,9 @@ cat <<'__envHEREDOC__'
 df -hT ; echo ; sudo zfs list  ; free -m ; uptime ; echo
 di ; echo ; sudo zpool list -v ; sudo zfs list -t all -r  ; free -m ; uptime ; echo
 
-sudo zpool status ; sudo zpool list -v ; sudo zfs list -t all -r
-sudo zpool status | grep -vP "^[\s]*$" ; sudo zpool list -v ; sudo zfs list -t all -r  ########
-
+zpool status ; sudo zpool list -v ; sudo zfs list -t all -r
+zpool status | grep -vP "^[\s]*$" ; sudo zpool list -v ; sudo zfs list -t all -r  ########
+zpool status | grep -v "^$" | grep -v config: | grep -v errors:
 
 iostat 1
 sudo zpool iostat 1
