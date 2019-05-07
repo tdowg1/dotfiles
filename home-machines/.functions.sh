@@ -6366,6 +6366,9 @@ $ find /target_directory -type f -mmin -60
 # Find files that have been modified in the last 7 days, but not in the last 3 days:
 $ find /target_directory -type f -mtime -7 ! -mtime -3
 
+# Find most recently modified file:
+find /target_directory -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1
+
 == See also ==
 helpcomparingdirectories
 __envHEREDOC__
