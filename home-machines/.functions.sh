@@ -9220,6 +9220,27 @@ scutil provides a command line interface to the "dynamic store" data maintained 
 
 __envHEREDOC__
 }
+helppkgin(){
+cat <<'__envHEREDOC__'
+: src : http://pkgsrc.se/ :
+The NetBSD Packages Collection (pkgsrc) is a framework for building third-party software on NetBSD and other UNIX-like systems.
+
+pkgsrc-wip (work in progress) is a project to get more people actively involved with creating packages for pkgsrc,
+a portable packaging system coming from NetBSD, but ported to many other operating systems, including
+Solaris, Linux, Darwin, FreeBSD, OpenBSD, and others.
+
+: src : https://www.pkgsrc.org/ :
+The binary packages that are produced by pkgsrc can be used without having to compile everything from source. NetBSD already contains the necessary tools for managing binary packages; on other platforms you need to bootstrap pkgsrc to get the package management tools installed.
+
+
+// this is all at least for illumos / omnios / bump //
+pkgin - A tool to manage pkgsrc binary packages.
+
+
+= See also =
+pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
+__envHEREDOC__
+}
 
 
 
