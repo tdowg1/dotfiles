@@ -6924,6 +6924,8 @@ ipmitool sensor  # Similar to sdr, but with more data.
 
 ipmitool fru     # Prints nfo about the sensors.
 
+ipmitool user set password 0x02 changeme     # Makes the ILOM login credentials root:changeme
+
 # latest installed ipmitool doesn't work anymore for some absolutely unknown and mind boggling
 # reason, something about doesn't know about "fan" option for "sunoem" lol bullocks.
 ipmitool sunoem fan speed 0   # Sets fan speed to 0%  ; avg 3900RPM; <base wattage>w
