@@ -1080,13 +1080,16 @@ sudo smartctl -t long /dev/sdc && sleep 175m
 sudo smartctl -t long /dev/sdd && sleep 175m
 
 # Enable as much monitoring and testing as possible:
-smartctl DEVICE --smart=on --offlineauto=on --saveauto=on
+smartctl $d --smart=on --offlineauto=on --saveauto=on
 
-# Example OmniOS cmdln:
+# Example Solaris / Illumos / OmniOS cmdln:
 smartctl --all -d sat,12 /dev/rdsk/c4t0d0
 
 d=${DEVICE}
 DEVICE=${d}
+
+sudo smartctl --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
 
    # LOOPS
 devicelist="a b c"
@@ -1104,7 +1107,8 @@ sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=notrunc,noerror  ;  date ; sleep 
    # REALLY STUPID SNIPPET2
 sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short ${DEVICE}  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long ${DEVICE}  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 255m ; sleep 9m ;    sudo smartctl --test offline ${DEVICE}   ;  sleep 10000s
 
-$ sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
+sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
+sudo smartctl  $DEVICE --attributes > $( date +"%F_%T")_a143-smartctl-attrs.txt; diff -d $( ls -tr *.txt | tail -2 )
 
 == SEE ALSO ==
 smart-notifierdbus - service and graphical disk health notifier
