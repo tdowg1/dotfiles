@@ -3103,7 +3103,8 @@ $ dpkg -l | grep ^h      - Show held packages
 == Misc ==
 $ aptitude --disable-columns search zfs     # disable automatic string formatting wrt window size.
 $ aptitude search .*-desktop
-$ dpkg -i --force-all debfile   # forces an installation (I think)
+$ apt-get download --download-only kino     # e.g.
+$ dpkg -i --force-all debfile               # forces an installation.
 __envHEREDOC__
 }
 helpbash(){
