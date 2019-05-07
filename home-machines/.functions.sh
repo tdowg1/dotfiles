@@ -6856,6 +6856,10 @@ pprint.pprint( var )
 # alternatively...
 >>> re.search( r' THE REGULAR EXPRESIONISMS ', paragraph, re.MULTILINE).string
 
+== non-Pythonic loop ==
+for i in range(0, len( filesArray )):
+   print( filesArray[i] )
+
 == See also ==
 helpvirtualenv
 configparser - a library for modifying ini-based files as a dictionary
@@ -6863,6 +6867,9 @@ __envHEREDOC__
 }
 helppythonic(){
 cat <<'__envHEREDOC__'
+print("\n".join(filesArray[1:4])) # K.I.M.: in slice notation, the stop value (4,
+           # here) represents the first value that is /not/ in the selected slide.
+
 3 in [1, 2, 3] # => True     https://stackoverflow.com/questions/9542738/python-find-in-list
 
 a = [ {'name':'pippo', 'age':'5'} , {'name':'pluto', 'age':'7'} ]
