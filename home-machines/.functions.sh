@@ -989,7 +989,7 @@ startsynergyserver(){
    networkmedium=$1
    [[ -z $networkmedium ]] && networkmedium=wired
    systemtype="server"
-   echo eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.txt )"
+   eval "$( cat /home/teelah/Dropbox/synergy-active-configs/${systemtype}-$( hostname -s )-${networkmedium}/cmdln.txt )"
 }
 
 startsynergyclient(){
