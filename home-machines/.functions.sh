@@ -9263,6 +9263,31 @@ SIGTERM ( 15) tells an application to terminate.
 SIGKILL ( 9 ) tells the kernel to remove an application.
 __envHEREDOC__
 }
+helpgrub2(){
+cat <<'__envHEREDOC__'
+# Steps to reinstall / rebuild the grub2 so the system can boot on its own, once again:
+# within a live session...
+
+mount ${root-filesystem-to-perform-the-reinstall-of-grub2-for}  /mnt/
+# ^^for example:  $ mount /dev/sda1  /mnt/
+# or perhaps   :  $ mount LABEL=id-9-ubu1204  /mnt/
+
+mount --bind /dev/  /mnt/dev/
+mount --bind /proc/  /mnt/proc/
+mount --bind /sys/  /mnt/sys/
+chroot /mnt/
+update-grub
+# ^^but sometimes, running update-grub is not enough.  When this is the case, must also do:
+
+# Install the boot loader files to the boot sector (+some additional contiguous
+# area from the boot sector, methinks) of the base device:
+grub-install --recheck --no-floppy  ${BASE-DEVICE-OF-root-filesystem-to-perform-the-reinstall-of-grub2-for}
+# ^^for example:  $ grub-install --recheck --no-floppy  /dev/sda
+
+# If youre running btrfs, instead run grub-install something like:
+grub-install --root-directory=/mnt/@/ /dev/sda1
+__envHEREDOC__
+}
 
 
 
