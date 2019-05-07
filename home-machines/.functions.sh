@@ -9336,6 +9336,22 @@ sudo mount -t btrfs -o subvol=svol LABEL=$dname /mnt/$dname
 
 __envHEREDOC__
 }
+helpmediainfo(){
+cat <<'__envHEREDOC__'
+# Video codec of file
+mediainfo "$i" --Inform="Video;%CodecID%"
+
+# Video codec of all files in cwd :
+for i in * ; do echo "$( mediainfo "$i" --Inform="Video;%CodecID%" ) : $i"; done
+
+
+__envHEREDOC__
+}
+
+
+
+
+
 
 
 
