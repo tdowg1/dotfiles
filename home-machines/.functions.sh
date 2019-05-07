@@ -3193,8 +3193,11 @@ FUNCNAME :  An array variable containing the names of all shell functions curren
 use the "eval" command (not expr, not exec):
 
 == See also ==
-* [[Shell bash]]
-* helpIFS()
+[[Shell bash]]
+helpIFS
+helptypeset helpcommand helpenv
+vttest - program for testing the VT100 compat of terminal emulators.
+vtutils - utils for testing and working with virtual terminals.
 __envHEREDOC__
 }
 helpbashstrings(){
@@ -5146,6 +5149,7 @@ diff <(bash -cl 'set -o posix && set') \
 
 == See also ==
 helpcommand
+helpbash
 
 === all these give varying outputs although are similar ==
 set
@@ -5162,9 +5166,7 @@ helpcommand(){
 cat <<'__envHEREDOC__'
 
 == See also ==
-$
-$ command $ help command
-
+helpbash
 helpenv helptypeset which
 
 == Related ==
