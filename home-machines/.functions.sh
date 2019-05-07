@@ -9257,6 +9257,12 @@ pkgin - A tool to manage pkgsrc binary packages.
 pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
 __envHEREDOC__
 }
+helpkill(){
+cat <<'__envHEREDOC__'
+SIGTERM ( 15) tells an application to terminate.
+SIGKILL ( 9 ) tells the kernel to remove an application.
+__envHEREDOC__
+}
 
 
 
