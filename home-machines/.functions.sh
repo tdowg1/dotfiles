@@ -4745,6 +4745,7 @@ cat <<'__envHEREDOC__'
 List of cmds I just happen to randomly come across and make me say "WHOA! WTF!! :) cmd, u blow my mind..."
 fuser - identify processes using files or sockets (similar to lsof)
    fuser -v -m /
+helphdd8_network_direct_blk_dev_access # geom-ggate
 __envHEREDOC__
 }
 helpfdupes(){
