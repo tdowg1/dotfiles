@@ -4781,7 +4781,7 @@ __envHEREDOC__
 helparchivesnippets(){
 cat <<'__envHEREDOC__'
 CONVERT ZIP ARCHIVES TO RAR
-Convert stupid zip files with their stupid 4GB limit with their getting usable as backups to do with their... erm... JUST 	kill yourself, zip archives!!!  TWICE!
+Convert stupid old zip files with their stupid 4GB limit with :
 $ cd <directory containing stupid 4GB-limit-reachy-fied zip files>
 $ destdir=/mnt/intelduo-s/tmp/rearchive    # use my fast sas'ies
 $ for izip in *.zip ; do echo $izip; i="${izip%.zip}" ; sudo unzip -d "${destdir}/${i}" "$izip"  ;  sudo rardefault.sh "${destdir}/${i}"  ;  echo ; done
