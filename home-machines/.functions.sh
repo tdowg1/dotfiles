@@ -9087,7 +9087,8 @@ helplpr(){
 cat <<'__envHEREDOC__'
 # for some reason, this is the only error-free way I can
 # print to brother.local from newjack.local :
-lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  FILE
+lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  $FILE
+   -o page-ranges=
 
 # print cups status information...
 # -l Shows a long listing of printers, classes, or jobs.
@@ -9107,6 +9108,9 @@ Default Brother_HL-4150CDN_series_br-script33
 
 # for printing of media with images:
 lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On FILE-WITH-IMAGES
+
+# filename of most recently modified file:
+FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 )
 __envHEREDOC__
 }
 helppacman(){
