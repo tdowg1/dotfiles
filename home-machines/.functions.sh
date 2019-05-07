@@ -8899,6 +8899,9 @@ http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-v
 # Demux out just the _V_ideo portion from a media file:
 ffmpeg -i f1 -c:v copy -map 0:0 video.mov
 
+# Strip any potentially insane metadata from media files:
+ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
+
 == See also ==
 helpmkvmerge
 helphandbrake
