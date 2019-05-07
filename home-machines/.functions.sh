@@ -4719,29 +4719,6 @@ Xephyr -query vega2 :1
 __envHEREDOC__
 }
 
-
-
-
-
-
-
-
-
-
-_help6(){
-cat <<'__envHEREDOC__'
-
-__envHEREDOC__
-}
-
-
-
-
-
-
-
-#
-# mergeconflictavoiddothismeow : here add from phisata ONLY
 helpwHOA_wtf_cmd__u_blow_my_mind(){
 	# whoa
 cat <<'__envHEREDOC__'
@@ -4873,27 +4850,6 @@ need to edit some file within ...
 	/etc/X11/Default
 __envHEREDOC__
 }
-
-
-
-
-
-
-_help6(){
-cat <<'__envHEREDOC__'
-
-__envHEREDOC__
-}
-
-# mergeconflictavoiddothismeow : here add from phisata ONLY
-#
-
-
-
-
-
-#
-# mergeconflictavoiddothismeow : here add from lap ONLY
 helpmount(){
 cat <<'__envHEREDOC__'
 = /etc/fstab Entry Examples =
@@ -5022,11 +4978,6 @@ sync ; sudo umount /dev/sdj1 ; sudo eject /dev/sdj ; sync
 __envHEREDOC__
 }
 
-
-
-
-# mergeconflictavoiddothismeow : here add from lap ONLY
-#
 helpsudo(){
 	local pathToFunctionsDotfile="$( echo $ZOMG_DOTFILES/.functions.sh )"
 	if [[ ! -f "$pathToFunctionsDotfile" ]] ; then
@@ -7683,6 +7634,11 @@ for i in *.pdf ; do
 done
 __envHEREDOC__
 }
+
+
+
+
+
 helpfalcon(){
 cat <<'__envHEREDOC__'
 [sudo -u ambari-qa] falcon entity -type cluster  -list
@@ -7720,6 +7676,11 @@ $ /usr/lib/hue/build/env/bin/hue config_help | less
 
 __envHEREDOC__
 }
+
+
+
+
+
 helpcron(){
 cat <<'__envHEREDOC__'
 == Crontab entry examples ==
@@ -9112,11 +9073,17 @@ cat <<'__envHEREDOC__'
 sqlite3 dbname .dump > dbname.dump.txt
 __envHEREDOC__
 }
+
+
+
 helppythonaws(){
 cat <<'__envHEREDOC__'
 http://boto3.readthedocs.io/en/latest/reference/services/
 __envHEREDOC__
 }
+
+
+
 helphdd8_network_direct_blk_dev_access(){
 cat <<'__envHEREDOC__'
 Network Block Device

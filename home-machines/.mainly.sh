@@ -62,7 +62,7 @@ svnloghead(){
 
 
 
-# 
+#
 # [Re-]Sets hostname portion of terminal prompt to the contents of ~/.whereami
 #if [[ -f ~/.whereami ]]; then
 #        where="$(cat ~/.whereami)"
@@ -71,7 +71,7 @@ svnloghead(){
 #fi
 
 
-# 
+#
 # [Re-]Sets title of whichever terminal program you're using.
 # Obviously, the ~/.whereami file is unnecessary.
 # Usually, could put this in ~/.bash_profile like so...
@@ -100,7 +100,7 @@ svnloghead(){
 if tty -s ; then
 	#echo "still todo: separate vib / .mainly.sh into alias,func, and var profiles"
 
-	
+
 	## THEN--ITS OKAY TO TALK!  HOORAY FISH! (IS_I_CAN_TALK
 	##MAKE FUNCTION:
 	#echoifok()

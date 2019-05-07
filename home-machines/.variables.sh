@@ -53,6 +53,8 @@ PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:/usr/share/bcc/tools
 MANPATH=":/usr/share/bcc/man"
 
+
+
 _pathupdates=""
 
 # add hostname-specific bin scripts to PATH if exists (i.e. bin/$( hostname ) )

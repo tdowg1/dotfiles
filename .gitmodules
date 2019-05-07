@@ -3,6 +3,6 @@
    url = http://github.com/gmarik/vundle.git
 
 [submodule "home-machines/bash_completion.d/virsh-bash-completion"]
-	path = home-machines/bash_completion.d/virsh-bash-completion
-	url = https://github.com/LuyaoHuang/virsh-bash-completion.git
+   path = home-machines/bash_completion.d/virsh-bash-completion
+   url = https://github.com/LuyaoHuang/virsh-bash-completion.git
 
