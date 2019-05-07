@@ -7458,6 +7458,8 @@ for i in `grep -v hadoopcl ~/active-nodes-list.txt | grep -v $( hostname -s )` ;
 # Execute commands on remote hosts:
 for i in `grep -v hadoopcl ~/active-nodes-list.txt | grep -v $( hostname -s )` ; do echo -n "$i:" ; ssh $i  sudo service logstash status ; done
 
+# Read a file.txt line by line:
+while read line; do echo $line; done < file.txt
 __envHEREDOC__
 }
 helpredis(){
