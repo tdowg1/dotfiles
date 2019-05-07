@@ -6512,6 +6512,9 @@ host2 is WHERE its desired to view the window.
 host1~ sleep 7s ; tail -F ~/.xpra/*.log
 host1~ xpra {start|upgrade} :100 --start-child=konsole
 host2~ xpra attach ssh:host1:100
+
+= kubu1804 =
+- two machines, both with xpra v2.1.3-r17247M, are unable to perform the above, out of the box.
 __envHEREDOC__
 }
 helpkde(){
