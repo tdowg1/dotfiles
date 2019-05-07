@@ -9181,6 +9181,41 @@ ps -fp $(pgrep kdeconnectd)
 kdeconnectd
 __envHEREDOC__
 }
+helposxHELPPPPPP(){
+cat <<'__envHEREDOC__'
+having the most bizzaire and confusing situation ever within the so called
+   GNU bash v3.2.57(1)-RELEASE-(X86_64-APPLE-DARWIN15)
+whereby upon (attempting) to load my usual shell environment preferences,
+the osx bash just flat out regurgitates... and refuses with:
+   argument list too long
+
+UPDATE: hrm... loading these 4 files manually appeared to succeed fine... did
+like (NOTE: not sure if tried this in the past or not... something else in this
+machine state /could/ have changed):
+   source .aliases.sh
+   source .functions.sh
+   source .git-prompt.sh
+   source .variables.sh
+
+but... hrm... lol this is going to require some re-jiggering... a lot of the linux/gnu-
+based cmdlns am used to, specifically like the alias'ing of cmdlns like _du_, youve
+aliased this with options that are not valid in osx bash....... so... ya, have fun
+Bob Barkering that out.
+__envHEREDOC__
+}
+helposx(){
+cat <<'__envHEREDOC__'
+= random notes =
+launchctl interfaces with launchd to load, unload daemons/agents and generally control launchd.
+ launchctl list
+
+from hostname(1):
+To keep the hostname between reboots, run `scutil --set HostName name-of-host'.
+     scutil -- Manage system configuration parameters
+scutil provides a command line interface to the "dynamic store" data maintained by configd(8).
+
+__envHEREDOC__
+}
 
 
 
