@@ -5468,6 +5468,12 @@ Wind Parade
 lame -V 0 --verbose --tl "Places and Spaces" --ty "1975" --tc "-V 0" --ta "Donald Byrd" --tt "Wind Parade" 02 Donald Byrd - Wind Parade.wav
 __envHEREDOC__
 }
+helpmuzik4(){
+cat <<'__envHEREDOC__'
+for iTunes and stupid Apple forced interfaces for getting audio files onto playing devices, easiest way to generate a playlist of files youre trying to add and then drag it over the iTunes.  And the so-called playlist in this case only really needs to be a simple file listing.
+
+__envHEREDOC__
+}
 helpmuzik3detecterrors(){
 cat <<'__envHEREDOC__'
 = MP3 =
