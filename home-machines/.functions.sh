@@ -7384,6 +7384,10 @@ $ echo 39938 / 60 / 24 | bc
 27
 $ echo scale=2 \; 39938 / 60 / 24 | bc
 27.73
+
+== See also ==
+clac.py
+wcalc - a capable calculator
 __envHEREDOC__
 }
 helpselinux(){
