@@ -3008,6 +3008,7 @@ $ echo /e/s/conf | sed "y/\//|/"    # transliterate src to dest
   `--> |e|s|conf
 $ sed 'N;s/\n/\t/'          # join alternate lines/join every 2 lines ( 'N' joins 2 lins.  Then replace the newline with a tab. )
 $ sed 's/\(\/\w\+\/[a-z]\+\)\(.\)*/\1/'  # gives root device, /dev/xyz ( not subdevices, /dev/abc55 )
+$ sed -n -e "/regex/p"              # sed like grep.
 
 == SNIPPETS ==
 # Parse text between two delimiters or markers (START and END):
