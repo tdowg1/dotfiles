@@ -10,6 +10,20 @@
 #get that echoandexec method I wrote
 
 
+function gy-in-quotes {
+    [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
+        strips the google prefix (up to url=) and suffix (from &usg=) from the argument,
+        translates various common %nn sequences in the URL, and retrieves it." >&2 && return 1
+    echo youtube-dl $(sed -e 's/http.*url=//;s/&usg=.*$//;s/%2F/\//g;s/%3A/:/g;s/%3D/=/g;s/%3F/?/g;s/%25/%/g' <<<"$1") # % characters must be edited last
+}
+
+function wg-in-quotes {
+    [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
+        strips the google prefix (up to url=) and suffix (from &usg=) from the argument,
+        translates various common %nn sequences in the URL, and retrieves it." >&2 && return 1
+    echo wget $(sed -e 's/http.*url=//;s/&usg=.*$//;s/%2F/\//g;s/%3A/:/g;s/%3D/=/g;s/%3F/?/g;s/%25/%/g' <<<"$1") # % characters must be edited last
+}
+
 cdzfs(){
    local idNumber=$1
    cd /mnt/a${idNumber}/fs1
