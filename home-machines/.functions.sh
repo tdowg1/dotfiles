@@ -7292,6 +7292,7 @@ modprobe -r nbd
 
 == See also ==
 helpkvm() helpvirsh() virt-install virt-top virt-df libvirt.conf libvirtd.conf qemu.conf
+virt-cat virt-edit virt-filesystems virt-inspector virt-ls virt-make-fs virt-rescue virt-resize virt-tar virt-win-reg
 __envHEREDOC__
 }
 helpvirsh(){
@@ -7323,7 +7324,7 @@ virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2 --pe
 virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2
 
 == See also ==
-helpkvm() helpvirsh() virt-install virt-top virt-df libvirt.conf libvirtd.conf qemu.conf
+helpkvm()
 * https://raymii.org/s/tutorials/KVM_add_disk_image_or_swap_image_to_virtual_machine_with_virsh.html
 * https://raymii.org/s/tutorials/KVM_with_bonding_and_VLAN_tagging_setup_on_Ubuntu_12.04.html - learn how to set up a proper KVM hypervisor host.
 __envHEREDOC__
