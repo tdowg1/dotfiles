@@ -1,4 +1,4 @@
-#!/bin/bash -
+#!/bin/bash -p
 #===============================================================================
 #          FILE:  |FILENAME|
 #         USAGE:  <see f_usage()>
@@ -51,7 +51,7 @@ __usageHEREDOC__
 
 
 if [[ $# != 3 ]] && [[ $# != 4 ]] ; then
-   echo "ERROR: $# is not enough cmdln arguments"
+   echo "ERROR: $# is not a valid amount of cmdln arguments"
    f_usage
 fi
 
@@ -61,85 +61,70 @@ fi
 # PARSE CMDLN, VARIABLE DEFINITIONS, SANITY CHECKS && META GENERATION
 #====================================================================
 #
-ARGC="$#"
-while [[ "$1" = -* ]] ; do
-   case $1 in
-      --pidfile) # specified like: --key value
-         pid_file=$2
-         shift 2
-         ;;
-      --pidfile=?*) # specified like: --key=value
-         pid_file=${1#--pidfile=}
-         shift
-         ;;
-      --force) # no-value arg / flag ; specified like: --key
-         force="force"
-         shift
-         ;;
-      *)
-        echo "ERROR case matched wildcard"
-        f_usage
-        ;;
-   esac
-done
-
+#ARGC="$#"
+#while [[ "$1" = -* ]] ; do
+#   case $1 in
+#      --pidfile) # specified like: --key value
+#         pid_file=$2
+#         shift 2
+#         ;;
+#      --pidfile=?*) # specified like: --key=value
+#         pid_file=${1#--pidfile=}
+#         shift
+#         ;;
+#      --force) # no-value arg / flag ; specified like: --key
+#         force="force"
+#         shift
+#         ;;
+#      *)
+#        echo "ERROR case matched wildcard"
+#        f_usage
+#        ;;
+#   esac
+#done
+#
+#while [ "$#" -gt "0" ] ; do
+#   case $1 in
+#      --force) # specified like: --key
+#         ISFORCED="TRUE"
+#         ;;
+#      --path-to-runner-script=?*) # specified like: --key=value
+#         PATH_TO_RUNNER_SCRIPT="${1#--path-to-runner-script=}"
+#         ;;
+#      -u|--usage|-h|--help) # specified like: --key
+#         f_usage
+#         ;;
+#      *)
+#         echo "ERROR: invalid cmdln arguments $1"
+#         f_usage
+#         ;;
+#   esac
+#   shift
+#done
+#
+## A perhaps improved upon version of the previous while loop block?
+loopcount=0
 while [ "$#" -gt "0" ] ; do
    case $1 in
-      --force) # specified like: --key
-         ISFORCED="TRUE"
-         ;;
-      --path-to-runner-script=?*) # specified like: --key=value
-         PATH_TO_RUNNER_SCRIPT="${1#--path-to-runner-script=}"
-         ;;
-      -u|--usage|-h|--help) # specified like: --key
-         f_usage
-         ;;
-      *)
-         echo "ERROR: invalid cmdln arguments $1"
-         f_usage
-         ;;
-   esac
-   shift
-done
-
-# A perhaps improved upon version of the previous while loop block?
-while [ "$#" -gt "0" ] ; do
-   case $1 in
-      --block-size=?*) # specified like: --key=value
-         BLOCKSIZE=${1#--block-size=}
-         shift
-         ;;
+      #--block-size=?*) # specified like: --key=value
+      #   BLOCKSIZE=${1#--block-size=}
+      #   shift
+      #   ;;
       #-b) # specified like: -k value
       #   BLOCKSIZE=$2
       #   shift 2
       #   ;;
-      -b|--block-size) # specified like: -k value, or like: --key value
-         BLOCKSIZE=$2
-         shift 2
-         ;;
-      -q|--quiet) # specified like: -k, or like: --key
-         ISQUIET="TRUE"
-         shift
-         ;;
+      #-b|--block-size) # specified like: -k value, or like: --key value
+      #   BLOCKSIZE=$2
+      #   shift 2
+      #   ;;
+      #-q|--quiet) # specified like: -k, or like: --key
+      #   ISQUIET="TRUE"
+      #   shift
+      #   ;;
       -u|--usage|-h|--help) # specified like: -k, or like: --key
          f_usage
          ;;
-      *) # if user input didn't match any of the prior flags,
-         # going to assume it's the starting path. A sanity
-         # check will be performed after all cmdln args parsed.
-         STARTINGPATH=$1
-         shift
-         ;;
-      #*) # why cant you just have it set some of these variables dynamically?! so like
-      ##   # $this --key1=value1   ends up defining "key1" with "value1" ?!
-      ##   # ... ^^this would releive huge pain in butt.
-      #   #cmdln="--xyz=abc"
-      #   value=${1#--*=}  # abc
-      #   tmp=${1%=*}
-      #   key=${tmp#--}    # xyz
-      #
-      #   eval ${key}=${value}
-      #   # should now have the variable xyz set to abc
       --*=?*) # specified like: --key=value
          # $this --key1=value1   ends up defining "key1" with "value1"
 
@@ -150,9 +135,12 @@ while [ "$#" -gt "0" ] ; do
 
          # set the variable xyz to abc
          eval ${key}="\"${value}\""
-
-         # TODO STUB: development print::
-         echo "DEFINED VARIABLE BASED ON PARSE FROM CMDLN : ${key}=\"${value}\""
+         shift
+         ;;
+      *) # if user input didn't match any of the prior flags,
+         # going to assume it's the starting path. A sanity
+         # check will be performed after all cmdln args parsed.
+         STARTINGPATH=$1
          shift
          ;;
       *) # anything else.
@@ -190,8 +178,7 @@ fi
 : ${TEMPDIR:=/tmp}
 
 # required to be defined by now; think "<cfparam=* required=yes..."
-: ${TEMPDIR2:?ERROR: not specified}
-: ${HOME:?ERROR: HOME variable must be set}
+#: ${TEMPDIR2:?ERROR: not specified}
 
 # e.g. ../amazondev/runsparqlizerODSE.sh
 : ${PATH_TO_RUNNER_SCRIPT:? "ERROR: --path-to-runner-script is required"}
