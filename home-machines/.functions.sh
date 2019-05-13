@@ -9163,6 +9163,9 @@ Arch Linux Package Management
 # query package database for pm:
 pacman -Ss pm
 
+# query package database for locally installed packages like "pm":
+pacman -Qs pm
+
 # upgrade system and packages:
 pacman -Syyu
 
@@ -9172,6 +9175,9 @@ pacman -S bind
 # installs bind package if not already installed: yaourt::
 pacman -S --needed bind
 pacman -S --needed yaourt
+
+# removes package:
+pacman --remove package
 
 # search AUR repository for chrome: google-chrome::
 package-query --aur --search chrome
