@@ -11,6 +11,7 @@
 
 # Misc (again)
 export MAIL=/var/spool/mail/$USER
+export VISUAL="vim"
 export EDITOR=vim
 export SVN_EDITOR=vim
 export PAGER="less"
