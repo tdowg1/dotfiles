@@ -8794,19 +8794,29 @@ apg -m 32  -a 1 -M SNCL -s   # best. all the things.
 apg -m 32  -a 1 -M NCL  -s   # include Numbers, Capital characters, and Lowercase characters.
 __envHEREDOC__
 }
+
 helpgeneratepasswords(){
 cat <<'__envHEREDOC__'
 /calling helpapg()/
 __envHEREDOC__
 	helpapg
 }
+
 helppasswordgeneration(){
 cat <<'__envHEREDOC__'
 /calling helpapg()/
 __envHEREDOC__
 	helpapg
 }
+
 helpvideo(){
+cat <<'__envHEREDOC__'
+/calling helpffmpeg()/
+__envHEREDOC__
+	helpffmpeg
+}
+
+helpffmpeg(){
 cat <<'__envHEREDOC__'
 # Important/Helpful packages that can easily manually compile:
 libav  git://git.libav.org/libav.git     https://libav.org/download/ (major releases are cut every 4-6 months)
@@ -8851,13 +8861,18 @@ ffmpeg -f concat -safe 0 -i mylist.txt -c copy out.mov   #  mylist.txt : file '.
      .
      |-- # tried and failed :
      |-- ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][1:v:0]concat=n=2:v=1:a=0[video_out]" -map "[video_out]" -c copy out.mov
-     `-- # with : >>> Streamcopy requested for output stream 0:0, which is fed from a complex filtergraph. Filtering and streamcopy cannot be used together.
+     |-- # with : >>> Streamcopy requested for output stream 0:0, which is fed from a complex filtergraph. Filtering and streamcopy cannot be used together.
+     |
+     `-- #ok, so I'm pretty sure (from "Stream copy" (ffmpeg(1))) the answer is _NO_ because : "Applying
+         #   filters is obviously also impossible, since filters work on uncompressed data."
 
 # ...files of DIFF type (transcode):
 # : src : https://amiaopensource.github.io/ffmprovisr/#join_different_files
 ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[video_out][audio_out]" \
    -map "[video_out]" -map "[audio_out]"  out.mov
 
+# Video stabilization0
+  for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
 
 # Video stabilization1
   i've not actually had good results with the following; havent exactly put in any time to investigate either.
@@ -8874,6 +8889,7 @@ ffmpeg -i f1 -c:v copy -map 0:0 video.mov
 
 # Strip any potentially insane metadata from media files:
 ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
+for i in * ; do echo $i;  ffmpeg -i "$i" -map_metadata -1 -c:v copy -c:a copy "stripped.$i"; done
 
 == See also ==
 helpmkvmerge
