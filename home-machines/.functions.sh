@@ -9270,6 +9270,7 @@ The binary packages that are produced by pkgsrc can be used without having to co
 // this is all at least for illumos / omnios / bump //
 pkgin - A tool to manage pkgsrc binary packages.
 
+https://pkgsrc.joyent.com/install-on-illumos/
 
 = See also =
 pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
