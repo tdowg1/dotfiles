@@ -9147,9 +9147,19 @@ __envHEREDOC__
 helplpr(){
 cat <<'__envHEREDOC__'
 # for some reason, this is the only error-free way I can
-# print to brother.local from newjack.local :
+# print to brother from newjack :
 lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  $FILE
    -o page-ranges=
+   -o BRPrintQuality=Black -o "Color/mono=Mono"     # greyscale printing.
+
+# other options whose behaviour have not been hammered down:
+   -o BRColorMode=False     ... actual valid values appear to be : BRColorMode=Normal  BRColorMode=Vivid
+   -o Color/mono=Auto       ... can also try : Color/mono=Color  Color/mono=Mono  Color/mono=Black
+   -o BRPrintQuality=Mono   ... BRPrintQuality=Color
+   -o BRPrintQuality=Black
+         BRProcessColor=1
+         BRColorAdapt=false
+         BRRenderMode=true
 
 # print cups status information...
 # -l Shows a long listing of printers, classes, or jobs.
