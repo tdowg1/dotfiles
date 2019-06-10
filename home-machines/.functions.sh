@@ -6834,6 +6834,8 @@ python -c 'import socket; print socket.gethostbyname(socket.getfqdn())'  # get h
 
 echo '{"numRows": "-1"}' | python -mjson.tool  # reformats JSON to human readable format.
 
+python -m SimpleHTTPServer 9999   #  To "http" serve current working directory on the network, port 9999.
+
 == dynamic interpretter ==
 use ptpython - https://github.com/jonathanslenders/ptpython/ - pip install ptpython
 use bpython  - https://github.com/bpython/bpython            - pip install bpython
