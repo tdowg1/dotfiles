@@ -2334,6 +2334,8 @@ helpnetwork(){
 cat <<'__envHEREDOC__'
 arp -v                              # get mac address from ip address. ping it first. only works if both hosts are on the same network, if it is in a virtual network for example it will not work.
 
+ip neigh                     # useful little summary of network neighborhood.
+
 "You can add that network ip address (thats not in the networks range) to
 another machine on the network and try to get at it... i forget how to do
 it in linux but you can do like
