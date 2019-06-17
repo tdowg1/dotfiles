@@ -5062,6 +5062,19 @@ uid=500(u-god) gid=500(u-god) groups=500(u-god),497(hdfs)
 [u-god@vm-hdp2-x1 ~]$ sudo usermod -g wu-tang -G hdfs u-god
 [u-god@vm-hdp2-x1 ~]$ id
 uid=500(u-god) gid=1007(wu-tang) groups=1007(wu-tang),497(hdfs)
+
+== add yourself to various groups by doing some group appends ==
+usermod -aG docker $USER
+usermod -aG adm $USER
+usermod -aG xpra $USER
+usermod -aG lpadmin $USER
+usermod -aG sambashare $USER
+usermod -aG libvirt $USER
+usermod -aG sudo $USER
+usermod -aG audio $USER
+usermod -aG fuse $USER
+usermod -aG cdrom $USER
+
 __envHEREDOC__
 }
 helptypeset(){
