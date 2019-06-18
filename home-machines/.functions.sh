@@ -6475,11 +6475,21 @@ This module allows manipulation of the filesystem Extended Attributes present in
    attr - is aimed specifically at users of the XFS filesystem!!!
    getfattr/setfattr - for filesystem __independent__ Extended Attribute manipulation.
 
+
 == e2fsprogs: lsattr and chattr ==
-^^? (is this *really* what i was looking for? not sure...)
   lsattr - list file attributes on a Linux second Extended file system; apart of e2fsprogs.
   chattr - list file attributes on a Linux second Extended file system; apart of e2fsprogs.
-... hrm... Im thinking this has nothing to do with Extended Attributes.
+... !!! ... this has nothing to do with Extended Attributes; theyre simply _file attributes_.
+
+== xfs and chattr ==  xfs(5)
+  The XFS filesystem supports setting the following file attributes on Linux systems using the chattr(1) utility:
+     a - append only
+     A - no atime updates
+     d - no dump
+     i - immutable
+     S - synchronous updates
+  refer to chattr(1) for descriptions of these attribute flags.
+... !!! ... this has nothing to do with Extended Attributes; theyre simply _file attributes_.
 
 
 = examples =
