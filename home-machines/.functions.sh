@@ -8858,7 +8858,7 @@ ffmpeg https://git.ffmpeg.org/ffmpeg.git https://trac.ffmpeg.org/
    ( to hide header version nfo being printed out each execution, include : -hide_banner )
 
 # Get a video files run length/duration time:
-ffprobe  -show_format  inputfile 2>&1  | grep -i duration | sed 's/.*=//')
+ffprobe  -show_format  inputfile  2>&1  | grep -i duration | sed 's/.*=//'
 # Looped:
 # first, have to change the shells IFS variable (see helpIFS), then can execute:
 for i in $( find . -type f -size +100M ) ; do
