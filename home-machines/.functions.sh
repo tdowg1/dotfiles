@@ -1348,6 +1348,7 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
 ** NOTE: the size designation of units are completely wrong... e.g. it outputs "Mb" which should be MiB
+*** MORE NOTE: honestly, this program seems to say outright bizzaire things... sizes are ALL out of wack... it also doesnt output current throughput or final throughput.  not great.
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
 ** "patched version of GNU dd with forensic features"
@@ -9176,7 +9177,7 @@ helplpr(){
 cat <<'__envHEREDOC__'
 # for some reason, this is the only error-free way I can
 # print to brother from newjack :
-lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  $FILE
+lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  "$FILE"
    -o page-ranges=
    -o BRPrintQuality=Black -o "Color/mono=Mono"     # greyscale printing.
 
@@ -9206,10 +9207,10 @@ Dest Brother_HL-4150CDN_series_br-script33 Resolution=2400x1200dpi TonerSaveMode
 Default Brother_HL-4150CDN_series_br-script33
 
 # for printing of media with images:
-lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On FILE-WITH-IMAGES
+lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On  "$FILE"
 
 # filename of most recently modified file:
-FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 )
+FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 ) ; echo "$FILE"
 __envHEREDOC__
 }
 helppacman(){
