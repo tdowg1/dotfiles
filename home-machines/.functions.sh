@@ -1347,6 +1347,7 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
 ** NOTE: the size designation of units are completely wrong... e.g. it outputs "Mb" which should be MiB
+*** MORE NOTE: honestly, this program seems to say outright bizzaire things... sizes are ALL out of wack... it also doesnt output current throughput or final throughput.  not great.
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
 ** "patched version of GNU dd with forensic features"
