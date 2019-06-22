@@ -240,6 +240,7 @@ let g:pymode_rope_autoimport_import_after_complete = 0
 " perltity - pearl
 " stylish-haskell - haskell
 " shfmt - shell  ( https://github.com/mvdan/sh )
+"     sudo apt install golang-go
 "     go get -u mvdan.cc/sh/cmd/shfmt
 " sqlformat - sql
 "
