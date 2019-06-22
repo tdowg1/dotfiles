@@ -1262,7 +1262,8 @@ WRITE-rewrite entire disk.1-trying this on a disk that has 1000+ bad sectors... 
 WRITE-rewrite entire disk.2-dcfldd
 $ dcfldd if=/dev/sda of=/dev/sda bs=4096 conv=notrunc,noerror  status=on sizeprobe=if
 WRITE-rewrite entire disk.3-dc3dd
-$
+$ dc3dd if=/dev/sda of=/dev/sda rec=off
+
 ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
    smartctl --test offline /dev/sda
 ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
@@ -1357,6 +1358,8 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** Error grouping. Produces one error message for identical sequential errors
 ** (integrity verif) Verify mode. Able to repeat any transformations done to the input file and compare it to an output.
 ** (split output) Ability to split the output into chunks with numerical or alphabetic extensions
+** EXAMPLE: raw copy a partition to regular file, fail if read errors occur (rec=off), and log md5 hash of input output
+$ dc3dd if=/dev/sdb2 hof=sdb2.dd.img  log=sdb2.dd.img.dc3dd.log rec=off hash=md5
 
 * ddpt copies data between files and storage devices. Support for devices that understand the SCSI command set.
 ** can issue SCSI commands in pass-through ("pt") mode.
