@@ -1,6 +1,7 @@
 "
 " SEE ALSO : /etc/vim/*
 "
+" https://vimawesome.com/
 "
 
 " 2012-08-07 use Vundle ( src : https://github.com/gmarik/vundle/blob/master/doc/vundle.txt )
