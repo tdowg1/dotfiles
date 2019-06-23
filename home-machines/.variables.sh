@@ -54,7 +54,7 @@ PATH=$PATH:$HOME/go/bin
 
 # need the next two because bcc-tools doesn't install orderly:
 PATH=$PATH:/usr/share/bcc/tools
-MANPATH=":/usr/share/bcc/man"
+MANPATH="$MANPATH:/usr/share/bcc/man"
 
 
 
