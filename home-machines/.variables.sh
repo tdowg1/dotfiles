@@ -51,6 +51,7 @@ PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bi
 PATH=$PATH:$HOME/.local/bin
 
 PATH=$PATH:$HOME/go/bin
+PATH=$PATH:/opt/local/bin
 
 # need the next two because bcc-tools doesn't install orderly:
 PATH=$PATH:/usr/share/bcc/tools
