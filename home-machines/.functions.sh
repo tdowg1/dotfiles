@@ -2199,6 +2199,7 @@ Notable configs:
 
 == See also ==
 * goog"less termcap"
+* helptail
 __envHEREDOC__
 }
 
@@ -9394,6 +9395,12 @@ for i in * ; do echo "$( mediainfo "$i" --Inform="Video;%CodecID%" ) : $i"; done
 __envHEREDOC__
 }
 
+helptail(){
+cat <<'__envHEREDOC__'
+# Concatenate multiple files but include filename as section headers ( https://stackoverflow.com/q/5917413 )
+tail  -n +1  file1.txt file2.txt...
+__envHEREDOC__
+}
 
 
 
