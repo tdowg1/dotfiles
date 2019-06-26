@@ -6977,11 +6977,12 @@ ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN 
 ipmitool -V      # Print version
 __envHEREDOC__
 }
-#helpomnios2_cmdln_equivalents(){
 helpomnios2_equivalents(){
 cat <<'__envHEREDOC__'
 == system start and stop cmdln ==
-shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0
+shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0; can take ~4-5mins, fyi.
+shutdown -y -i6 -g0 # restart like init 6;
+
 shutdown -y -i0 -g0 # does NOT turn machine off and power off (just stops OS apparently). ; POSSIBLY RESTART
                  # ^^tried this (along with reboot -lnd) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
 
