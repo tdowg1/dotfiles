@@ -1104,6 +1104,8 @@ DEVICE=${d}
 
 sudo smartctl --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
 sudo smartctl --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
 
    # LOOPS
 devicelist="a b c"
