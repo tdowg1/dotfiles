@@ -61,9 +61,11 @@ Bundle 'Valloric/YouCompleteMe'
 "    https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
 " so be sure you follow them.
 "    for most of my machines, this should work:
-"       sudo apt install build-essential cmake python3-dev
+"       sudo apt install -y build-essential cmake python3-dev
 "       cd ~/.vim/bundle/YouCompleteMe
 "       python3 install.py --clang-completer
+"    for arch:
+" TODO
 
 
 " The first line ensures that the auto-complete window goes away when you’re
