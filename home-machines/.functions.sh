@@ -7135,6 +7135,18 @@ fsstat $(awk '{ print $2 }' /etc/mnttab | xargs) 1   # FS statistics broken down
 ipmitool sdr | grep hdd    # displays state of each hdd slot, humanly numbered by physical slot layout.
 
 
+== sector size ==
+echo ::sd_state | mdb -k | egrep '(^un|_blocksize)'
+# ^^will return output like the following:
+un 1: ffffff0d0c58cd40
+    un_sys_blocksize = 0x200
+    un_tgt_blocksize = 0x200
+    un_phy_blocksize = 0x1000
+    un_f_tgt_blocksize_is_valid = 0x1
+# ^^This is for a disk with a physical sector size of 4K (0x1000) and a logical sector size of 512b (0x200).
+#
+# If you see 0x1000 for the tgt or sys blocksize, you have a disk with 4K logical sector size.
+
 == See also ==
 helpsmartctl
 helpafs
