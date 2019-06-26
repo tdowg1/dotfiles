@@ -55,7 +55,7 @@ PATH=$PATH:/opt/local/bin
 
 # need the next two because bcc-tools doesn't install orderly:
 PATH=$PATH:/usr/share/bcc/tools
-MANPATH="$MANPATH:/usr/share/man:/usr/share/bcc/man"
+MANPATH="$MANPATH:/usr/share/man:/usr/share/bcc/man:/opt/local/man"
 
 
 
