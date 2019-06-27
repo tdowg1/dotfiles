@@ -1492,8 +1492,7 @@ PRINT 2rd TO-LAST COLUMN
 	> Rev:
 PRINT 2nd COLUMN and ALL REMAINING COLUMNS
 	# _note_ prob better off using `cut'
-	$ echo 'one two three and to the fo' |  awk '{ for(i = 2; i <= NF; i++) { printf("%s ", $i) }
-printf("\n") }'
+	$ echo 'one two three and to the fo' |  awk '{ for(i = 2; i <= NF; i++) { printf("%s ", $i) } printf("\n") }'
 	> two three and to the fo
 PRINT VARIOUS
 	$ echo 'one t z' | awk '{ print $2 " " $1 }'
