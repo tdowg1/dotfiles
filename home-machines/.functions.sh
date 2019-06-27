@@ -7230,6 +7230,17 @@ zfs property : sharesmb
 
 __envHEREDOC__
 }
+helpomnioslogging(){
+cat <<'__envHEREDOC__'
+/var/log/   - nothing happens here or below
+/etc/syslog.conf  - configuration file for syslogd system log daemo
+/var/adm/messages  - kernel logging
+
+svcs -xv svc:/some/svc - display explanations for service state
+svcs -L svc:/some/svc - display path of this services logfile
+
+__envHEREDOC__
+}
 
 #/TODO STUB
 
