@@ -169,7 +169,14 @@ set clipboard=unnamed
 " from the comments section...
 " https://news.ycombinator.com/item?id=11780824
 Plugin 'majutsushi/tagbar'
-Plugin 'xolox/vim-easytags'
+
+" fun times with this because of external dependancies and various operating
+" systems... :"easytags.vim 3.11: Plug-in not loaded because Exuberant Ctags
+" isn't installed! Please download & install Exuberant Ctags from
+" http://ctags.sf.net"  except this website seems up to date with 2009 :(
+"Plugin 'xolox/vim-easytags'
+
+
 Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 " F8 will toggle the tagbar:
