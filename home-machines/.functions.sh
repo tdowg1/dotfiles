@@ -2388,9 +2388,8 @@ helparping
 helpreversetunnel
 helpip
 /etc/udev/rules.d/70-persistent-net.rules
-helppktstat
 helpsysfs
-nmcli
+helppktstat nmcli iptraf nethogs vnstat nmon
 http://ubuntuforums.org/showthread.php?t=2172359 - noteworthy troubleshooting cmdlns.
 __envHEREDOC__
 }
@@ -2567,6 +2566,8 @@ sudo nmap -v -sU -p 53 host -Pn
 # Test that NTP is running on UDP port 123:
 nmap -sU 10.10.10.10 -p 123            ==> port 123 is for NTP and '-sU' is for scanning UDP ports.
 
+# Scan a host for UDP services
+nmap -sU <host/ipaddr>
 
 
 Find probable Linux machines on the network:
@@ -2592,7 +2593,7 @@ sudo pktstat -i eth0
 # increases refresh rate
 sudo pktstat -i eth0 -w 1
 
-# a single-shot mode which runs without screenoutput for -w seconds, quits and displays iverview of connections
+# a single-shot mode which runs without screenoutput for -w seconds, quits and displays overview of connections
 sudo pktstat -i eth0 -1 -w 10
 
 == See also ==
@@ -7398,6 +7399,20 @@ virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2 --pe
 
 # Attach a qcow2-formatted vdisk temporarily(i havent tried this yet but I guess upon reboot/shutdown or upon a virsh destroy, this vdisk will no longer be associated):
 virsh attach-disk <domain> centos_test0_preallc.qcow2 vdX --subdriver qcow2
+
+# get net facts regarding guests:
+virsh net-info  # --> choose desired network... (will assume its just the first one, for simpley):
+netName=$( virsh net-list --name | head -1 )
+virsh net-info $netName
+virsh net-dhcp-leases $netName
+
+# get net addresses for domain
+virsh domifaddr $domain
+
+# get net addresses for all domains:
+virsh list --name | while read n ; do
+  [[ ! -z $n ]] && virsh domifaddr $n
+done
 
 == See also ==
 helpkvm()
