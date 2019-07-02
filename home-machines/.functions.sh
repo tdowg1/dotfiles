@@ -2249,6 +2249,8 @@ ssh-keygen -i -f ssh2.pub > openssh.pub
 
 == AGENTs ==
 $ exec ssh-agent bash
+or
+$ eval $(ssh-agent)
 $ env | grep ^SSH           # Ensure SSH_AUTH_SOCK defined?
 $ ssh-add ~/.ssh/some-key   # If so, then can add keys!
 
