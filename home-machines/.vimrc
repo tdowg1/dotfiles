@@ -1,6 +1,7 @@
 "
 " SEE ALSO : /etc/vim/*
 "
+" https://vimawesome.com/
 "
 
 " 2012-08-07 use Vundle ( src : https://github.com/gmarik/vundle/blob/master/doc/vundle.txt )
@@ -60,9 +61,11 @@ Bundle 'Valloric/YouCompleteMe'
 "    https://github.com/Valloric/YouCompleteMe#mac-os-x-super-quick-installation
 " so be sure you follow them.
 "    for most of my machines, this should work:
-"       sudo apt install build-essential cmake python3-dev
+"       sudo apt install -y build-essential cmake python3-dev
 "       cd ~/.vim/bundle/YouCompleteMe
 "       python3 install.py --clang-completer
+"    for arch:
+" TODO
 
 
 
@@ -220,6 +223,60 @@ let g:pymode_rope_autoimport = 0
 let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime']
 let g:pymode_rope_autoimport_import_after_complete = 0
 
+
+
+
+"
+" Format code with one button press (or automatically on save).
+" https://vimawesome.com/plugin/vim-autoformat
+"
+" First you should install an external program that can format code of the
+" programming language you are using.
+"
+" astyle - c*, java
+" autopep8 - python
+" yapf - python
+" black - python
+" fixjson - json
+" js-beautify - javascript, json
+" JSCS - javascript
+" standard - javascript
+" ESlint - javascript
+" xo - javascript
+" html-beautify - html
+" css-beautify - css
+" tidy - html, xhtml, xml
+" remark - markdown
+" rbeautify - ruby
+" rubocop - ruby
+" gofmt - golang
+" rustfmt - rust
+" dartfmt - dart
+" perltity - pearl
+" stylish-haskell - haskell
+" shfmt - shell  ( https://github.com/mvdan/sh )
+"     sudo apt install golang-go
+"     go get -u mvdan.cc/sh/cmd/shfmt
+" sqlformat - sql
+"
+Plugin 'Chiel92/vim-autoformat'
+
+" To use, do
+" :Autoformat
+"   (or assign shortcut key:
+"      noremap <F3> :Autoformat<CR>
+"   )
+"   (or format upon save:
+"      au BufWrite * :Autoformat
+"   )
+"
+" To disable the fallback to vim's indent file, retabbing and removing
+" trailing whitespace, set the following variables to 0.
+"
+"   let g:autoformat_autoindent = 0
+"   let g:autoformat_retab = 0
+"   let g:autoformat_remove_trailing_spaces = 0
+"
 
 
 

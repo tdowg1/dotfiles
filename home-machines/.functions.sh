@@ -1104,6 +1104,8 @@ DEVICE=${d}
 
 sudo smartctl --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
 sudo smartctl --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
 
    # LOOPS
 devicelist="a b c"
@@ -1262,7 +1264,8 @@ WRITE-rewrite entire disk.1-trying this on a disk that has 1000+ bad sectors... 
 WRITE-rewrite entire disk.2-dcfldd
 $ dcfldd if=/dev/sda of=/dev/sda bs=4096 conv=notrunc,noerror  status=on sizeprobe=if
 WRITE-rewrite entire disk.3-dc3dd
-$
+$ dc3dd if=/dev/sda of=/dev/sda rec=off
+
 ALTERNATIVELY.1-smartctl offline testing should remap bad sectors, if supported
    smartctl --test offline /dev/sda
 ALTERNATIVELY.2-if offline testing not supported, check out hdrecover
@@ -1347,6 +1350,7 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
 ** NOTE: the size designation of units are completely wrong... e.g. it outputs "Mb" which should be MiB
+*** MORE NOTE: honestly, this program seems to say outright bizzaire things... sizes are ALL out of wack... it also doesnt output current throughput or final throughput.  not great.
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
 ** "patched version of GNU dd with forensic features"
@@ -1357,6 +1361,8 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** Error grouping. Produces one error message for identical sequential errors
 ** (integrity verif) Verify mode. Able to repeat any transformations done to the input file and compare it to an output.
 ** (split output) Ability to split the output into chunks with numerical or alphabetic extensions
+** EXAMPLE: raw copy a partition to regular file, fail if read errors occur (rec=off), and log md5 hash of input output
+$ dc3dd if=/dev/sdb2 hof=sdb2.dd.img  log=sdb2.dd.img.dc3dd.log rec=off hash=md5
 
 * ddpt copies data between files and storage devices. Support for devices that understand the SCSI command set.
 ** can issue SCSI commands in pass-through ("pt") mode.
@@ -1486,8 +1492,7 @@ PRINT 2rd TO-LAST COLUMN
 	> Rev:
 PRINT 2nd COLUMN and ALL REMAINING COLUMNS
 	# _note_ prob better off using `cut'
-	$ echo 'one two three and to the fo' |  awk '{ for(i = 2; i <= NF; i++) { printf("%s ", $i) }
-printf("\n") }'
+	$ echo 'one two three and to the fo' |  awk '{ for(i = 2; i <= NF; i++) { printf("%s ", $i) } printf("\n") }'
 	> two three and to the fo
 PRINT VARIOUS
 	$ echo 'one t z' | awk '{ print $2 " " $1 }'
@@ -2195,6 +2200,7 @@ Notable configs:
 
 == See also ==
 * goog"less termcap"
+* helptail
 __envHEREDOC__
 }
 
@@ -6605,6 +6611,9 @@ d=/dev/sdc             # e.g. on Linux.
 dnamefull=a107-2787
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
+# Only if on Thumper:
+sudo cfgadm -c configure <Ap_Id>   # (e.g. sata5/1)
+
 # Only if physical 512-byte size for physical sectors.
 #sudo zpool create              -m /mnt/${dname} $dname ${d}
 # Only if using AF/4096-byte size for physical sector disks: http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
@@ -6613,8 +6622,8 @@ sudo zpool create -f -o ashift=12 -m /mnt/${dname} $dname ${d}
 
 sudo zfs create ${dname}/fs1
 #sudo zfs set mountpoint=none ${dname}
-sudo zfs create ${dname}/iam--${dnamefull}--$( basename ${d} )
-sudo zfs set mountpoint=none ${dname}/iam--${dnamefull}--$( basename ${d} )
+sudo zfs create  -o mountpoint=none  ${dname}/iam--${dnamefull}--$( basename ${d} )
+#sudo zfs set mountpoint=none ${dname}/iam--${dnamefull}--$( basename ${d} )
 
 sudo zpool set delegation=on $dname
 sudo zfs allow everyone readonly ${dname}/fs1
@@ -6967,11 +6976,12 @@ ipmitool firewall info  # Sort of caused the system to lock up... PROB DONT RUN 
 ipmitool -V      # Print version
 __envHEREDOC__
 }
-#helpomnios2_cmdln_equivalents(){
 helpomnios2_equivalents(){
 cat <<'__envHEREDOC__'
 == system start and stop cmdln ==
-shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0
+shutdown -y -i5 -g0 # (USE THIS!! to turn machine OFF) like init 0; can take ~4-5mins, fyi.
+shutdown -y -i6 -g0 # restart like init 6;
+
 shutdown -y -i0 -g0 # does NOT turn machine off and power off (just stops OS apparently). ; POSSIBLY RESTART
                  # ^^tried this (along with reboot -lnd) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
 
@@ -7124,6 +7134,18 @@ fsstat $(awk '{ print $2 }' /etc/mnttab | xargs) 1   # FS statistics broken down
 ipmitool sdr | grep hdd    # displays state of each hdd slot, humanly numbered by physical slot layout.
 
 
+== sector size ==
+echo ::sd_state | mdb -k | egrep '(^un|_blocksize)'
+# ^^will return output like the following:
+un 1: ffffff0d0c58cd40
+    un_sys_blocksize = 0x200
+    un_tgt_blocksize = 0x200
+    un_phy_blocksize = 0x1000
+    un_f_tgt_blocksize_is_valid = 0x1
+# ^^This is for a disk with a physical sector size of 4K (0x1000) and a logical sector size of 512b (0x200).
+#
+# If you see 0x1000 for the tgt or sys blocksize, you have a disk with 4K logical sector size.
+
 == See also ==
 helpsmartctl
 helpafs
@@ -7204,6 +7226,17 @@ smb(4) - configuration properties for Solaris CIFS server
    `-- smbstat(1M)
 
 zfs property : sharesmb
+
+__envHEREDOC__
+}
+helpomnioslogging(){
+cat <<'__envHEREDOC__'
+/var/log/   - nothing happens here or below
+/etc/syslog.conf  - configuration file for syslogd system log daemo
+/var/adm/messages  - kernel logging
+
+svcs -xv svc:/some/svc - display explanations for service state
+svcs -L svc:/some/svc - display path of this services logfile
 
 __envHEREDOC__
 }
@@ -8851,7 +8884,7 @@ ffmpeg https://git.ffmpeg.org/ffmpeg.git https://trac.ffmpeg.org/
    ( to hide header version nfo being printed out each execution, include : -hide_banner )
 
 # Get a video files run length/duration time:
-ffprobe  -show_format  inputfile 2>&1  | grep -i duration | sed 's/.*=//')
+ffprobe  -show_format  inputfile  2>&1  | grep -i duration | sed 's/.*=//'
 # Looped:
 # first, have to change the shells IFS variable (see helpIFS), then can execute:
 for i in $( find . -type f -size +100M ) ; do
@@ -9173,7 +9206,7 @@ helplpr(){
 cat <<'__envHEREDOC__'
 # for some reason, this is the only error-free way I can
 # print to brother from newjack :
-lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  $FILE
+lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  "$FILE"
    -o page-ranges=
    -o BRPrintQuality=Black -o "Color/mono=Mono"     # greyscale printing.
 
@@ -9203,10 +9236,10 @@ Dest Brother_HL-4150CDN_series_br-script33 Resolution=2400x1200dpi TonerSaveMode
 Default Brother_HL-4150CDN_series_br-script33
 
 # for printing of media with images:
-lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On FILE-WITH-IMAGES
+lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On  "$FILE"
 
 # filename of most recently modified file:
-FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 )
+FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 ) ; echo "$FILE"
 __envHEREDOC__
 }
 helppacman(){
@@ -9387,6 +9420,12 @@ for i in * ; do echo "$( mediainfo "$i" --Inform="Video;%CodecID%" ) : $i"; done
 __envHEREDOC__
 }
 
+helptail(){
+cat <<'__envHEREDOC__'
+# Concatenate multiple files but include filename as section headers ( https://stackoverflow.com/q/5917413 )
+tail  -n +1  file1.txt file2.txt...
+__envHEREDOC__
+}
 
 
 

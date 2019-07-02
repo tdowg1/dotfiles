@@ -21,6 +21,8 @@
 set -o nounset                              # Treat unset variables as an error
 set -o pipefail                             # with pipefail enabled, the pipelines return status is the value of the last (rightmost) command to exit with a non-zero status, or zero if all commands exit successfully.
 
+# TIP : can run finished script through  shellcheck  (a lint tool for shell scripts).
+
 f_usage(){
    local scriptname="$( basename "$0" )"
    cat <<__usageHEREDOC__
