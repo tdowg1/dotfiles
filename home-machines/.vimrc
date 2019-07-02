@@ -65,6 +65,11 @@ Bundle 'Valloric/YouCompleteMe'
 "       python3 install.py --clang-completer
 
 
+
+"       sudo pacman -S --needed cmake
+"       cd ~/.vim/bundle/YouCompleteMe
+"       python3 install.py --clang-completer
+
 " The first line ensures that the auto-complete window goes away when you’re
 " done with it, and the second defines a shortcut for goto definition.
 let g:ycm_autoclose_preview_window_after_completion=1
