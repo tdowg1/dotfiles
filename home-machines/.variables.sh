@@ -51,10 +51,14 @@ PATH=$PATH:/sbin:/usr/sbin:$HOME/bin:$HOME/bin/go/bin:$HOME/bin.contrib:$HOME/bi
 PATH=$PATH:$HOME/.local/bin
 
 PATH=$PATH:$HOME/go/bin
-PATH=$PATH:/opt/local/bin
+
+PATH=$PATH:/opt/local/bin:/opt/local/sbin
 
 
 # OmniOS Community Edition userlands
+if [[ -d /opt/ooce/sbin ]] ; then
+   PATH=$PATH:/opt/ooce/sbin
+fi
 if [[ -d /opt/ooce/bin ]] ; then
    PATH=$PATH:/opt/ooce/bin
 fi
@@ -62,7 +66,8 @@ fi
 
 # need the next two because bcc-tools doesn't install orderly:
 PATH=$PATH:/usr/share/bcc/tools
-MANPATH="$MANPATH:/usr/share/man:/usr/share/bcc/man:/opt/local/man"
+
+MANPATH="$MANPATH:/usr/share/man:/usr/share/bcc/man:/opt/local/man:/opt/ooce/share/man"
 
 
 
