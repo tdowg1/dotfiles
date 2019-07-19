@@ -9249,6 +9249,9 @@ cat <<'__envHEREDOC__'
 # for some reason, this is the only error-free way I can
 # print to brother from newjack :
 lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  "$FILE"
+   -o sides=one-sided
+   -o number-up={2|4|6|9|16}
+      -o number-up=2
    -o page-ranges=
    -o BRPrintQuality=Black -o "Color/mono=Mono"     # greyscale printing.
 
