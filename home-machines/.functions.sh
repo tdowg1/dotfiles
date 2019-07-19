@@ -9143,6 +9143,7 @@ cat <<'__envHEREDOC__'
 exif - shows EXIF information in JPEG files
 exiftool - Read and write meta information in files
 perceptualdiff - perceptual image comparison tool
+posterazor - splits an image across multiple pages for assembly into a poster
 
 # Losslessly transform jpeg, i, 90 degrees clockwise using jpegtran (of libjpeg-turbo-progs):
 jpegtran -copy all -rotate 90  -outfile tranned${i}  $i
