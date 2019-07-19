@@ -146,6 +146,7 @@ alias trll='ls -ltr'    # same as ltr
 ## Places (`cd'-related)
 #alias cdb='cd ~/bin ; ls -l'
 alias cdb='cd ~/bin ; pwd'
+alias cdbs='cd ~/bin.scripts ; pwd'
 #alias cdt='cd ~/tmp ; ls -l'
 alias cdt='cd ~/tmp ; pwd'
 alias tmp='cd /tmp ; echo "cd "`pwd`'
