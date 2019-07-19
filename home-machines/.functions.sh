@@ -6603,6 +6603,9 @@ zpool-features   - Supposidly, displays the available features included with the
 
 zpool events [-v]   - UNDOCUMENTED.
 zpool history [-il] - Displays internally logged zfs events.
+
+zdb              - display zpool debugging and consistency information
+
 __envHEREDOC__
 }
 helpzfs2(){
@@ -7232,6 +7235,23 @@ smb(4) - configuration properties for Solaris CIFS server
 
 zfs property : sharesmb
 
+
+
+src : https://wiki.openindiana.org/oi/Using+OpenIndiana+as+a+storage+server
+
+zfs set "sharesmb=name=myshare,description=My ZFS share" yourpool/shares/bob
+
+# check status:
+zfs get sharesmb pool/share/bob
+
+
+-->> Am assuming this is just 1 time setup thing <<--
+# enable "pam_smb_passwd" to make regular users have smb passwords: append to /etc/pam.conf the following:
+other password required pam_smb_passwd.so.1 nowarn
+
+# change user's password with passwd.  After this, their smb password will also be set so they can connect via smb with the same username and password.
+
+.... hrm... not working..
 __envHEREDOC__
 }
 helpomnioslogging(){
