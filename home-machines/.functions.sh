@@ -3157,6 +3157,20 @@ $ aptitude --disable-columns search zfs     # disable automatic string formattin
 $ aptitude search .*-desktop
 $ apt-get download --download-only kino     # e.g.
 $ dpkg -i --force-all debfile               # forces an installation.
+
+
+== See packages installed compared to whats in a clean install? ==
+: src : https://askubuntu.com/q/462577
+
+apt-show-versions | grep 'No available version'   # Show all package not coming from repo
+aptitude search '~o'                              # Similar
+
+apt-show-versions | grep -v uptodate        # All packages that are not up-to-date
+
+apt-show-versions -a $(apt-show-versions | grep -v uptodate | sed -r 's/:.*//')
+
+deborphan -a                                # List all packages that have no reverse dependencies
+
 __envHEREDOC__
 }
 helpbash(){
