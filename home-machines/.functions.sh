@@ -3147,16 +3147,16 @@ A, the package was automatically installed.
 == NOTES FOR YOU == http://www.cyberciti.biz/tips/linux-debian-package-management-cheat-sheet.html
 
 == MOAR NOTES FOR YOU == http://www.cyberciti.biz/ref/apt-dpkg-ref.html
-$ aptitude remove        - Remove packages.
-$ aptitude purge         - Remove packages and their configuration files.
-$ aptitude search ~ahold - Show held packages
-$ dpkg -l | grep ^h      - Show held packages
+aptitude remove                           # Remove packages.
+aptitude purge                            # Remove packages and their configuration files.
+aptitude search ~ahold                    # Show held packages
+dpkg -l | grep ^h                         # Show held packages
 
 == Misc ==
-$ aptitude --disable-columns search zfs     # disable automatic string formatting wrt window size.
-$ aptitude search .*-desktop
-$ apt-get download --download-only kino     # e.g.
-$ dpkg -i --force-all debfile               # forces an installation.
+aptitude --disable-columns search zfs     # Disable automatic string formatting wrt window size.
+aptitude search .*-desktop
+apt-get download --download-only kino     # e.g.
+dpkg -i --force-all debfile               # Forces an installation.
 
 
 == See packages installed compared to whats in a clean install? ==
@@ -3165,11 +3165,11 @@ $ dpkg -i --force-all debfile               # forces an installation.
 apt-show-versions | grep 'No available version'   # Show all package not coming from repo
 aptitude search '~o'                              # Similar
 
-apt-show-versions | grep -v uptodate        # All packages that are not up-to-date
+apt-show-versions | grep -v uptodate      # All packages that are not up-to-date
 
 apt-show-versions -a $(apt-show-versions | grep -v uptodate | sed -r 's/:.*//')
 
-deborphan -a                                # List all packages that have no reverse dependencies
+deborphan -a                              # List all packages that have no reverse dependencies
 
 __envHEREDOC__
 }
@@ -3487,30 +3487,30 @@ The following package was automatically installed and is no longer required:
 Use 'apt-get autoremove' to remove them.
 
 == [un]hold a Package ==
-Hold:
-$ echo synergy hold | sudo dpkg --set-selections  # This will get applied to apt-get's db as well as aptitude's.
-Unhold:
-$ apt-mark unhold synergy                         # This will get applied to apt-get's db as well as aptitude's.
-[Un]Hold:
-$ aptitude [un]hold synergy                       # This will NOT get applied to apt-get's db; only aptitude's.
+# Hold:
+echo synergy hold | sudo dpkg --set-selections  # This will get applied to apt-get's db as well as aptitude's.
+# Unhold:
+apt-mark unhold synergy                         # This will get applied to apt-get's db as well as aptitude's.
+# [Un]Hold:
+aptitude [un]hold synergy                       # This will NOT get applied to apt-get's db; only aptitude's.
 
 == hold multiple Packages ==
-If theres like 5 packages that match the query, 4.15.0-29-generic, and all should be held:
-$ aptitude --disable-columns search  '~i4.15.0-29-generic'  | awk '{print $3}' | xargs -n 1 -I{} echo {} hold | sudo dpkg --set-selections
+# If theres like 5 packages that match the query, 4.15.0-29-generic, and all should be held:
+aptitude --disable-columns search  '~i4.15.0-29-generic'  | awk '{print $3}' | xargs -n 1 -I{} echo {} hold | sudo dpkg --set-selections
 
 == SEARCH + SHOW PACKAGE(S) NFO GIVEN A SEARCH STRING ==
-$ aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
-$ apt-cache madison ^apache2     # See WHICH VERSIONS of apache2 ARE AVAILABLE
-$ apt-cache showpkg apache2
-$ apt-cache policy apache2       # what does it want to upgrade to?
-$ apt-get install ansible=2.2.1.0-1ppa~precise   # install a specific version
-$ apt-get install apache2=2.2\*  # Install a specific version found in previous cmdln...
-$ apt-get install apache2=2.2.20-1ubuntu1
-$ dpkg -l 'apache2*' | grep ^i   # Check which version installed
+aptitude search PACKAGE | awk '{ print $2 }' | xargs --verbose  aptitude show | less
+apt-cache madison ^apache2     # See WHICH VERSIONS of apache2 ARE AVAILABLE
+apt-cache showpkg apache2
+apt-cache policy apache2       # what does it want to upgrade to?
+apt-get install ansible=2.2.1.0-1ppa~precise   # install a specific version
+apt-get install apache2=2.2\*  # Install a specific version found in previous cmdln...
+apt-get install apache2=2.2.20-1ubuntu1
+dpkg -l 'apache2*' | grep ^i   # Check which version installed
 
 ==== NOTE ====
-apt-cache search also searches within package description.  aptitude does not unless search term
-prepended with ~d.
+# apt-cache search also searches within package description.  aptitude does not unless search term
+# prepended with ~d.
 
 ==== See also ====
 * Search Term Reference : http://algebraicthunk.net/~dburrows/projects/aptitude/doc/en/ch02s03s05.html
@@ -3523,17 +3523,17 @@ goldie@inst/xpra$ echo xpra hold | sudo dpkg --set-selections
 goldie@inst/xpra$ sudo aptitude hold xpra
 
 == Package file info ( http://serverfault.com/a/96965 ) ==
-List files installed by a given package:
-$ dpkg -L package
-$ dpkg --contents package.deb
+# List files installed by a given package:
+dpkg -L package
+dpkg --contents package.deb
 
-Which package provides a file that is already on system:
-$ dpkg --search /path/to/file
+# Which package provides a file that is already on system:
+dpkg --search /path/to/file
  ^^ !! NOTE !! if path is funky, undesired results;
          e.g. /path/to/file  matches  while  /path/to///file  does _NOT_ !!
 
-Which package provides a file that is _NOT_ currently on system:
-$ apt-file search /path/to/file
+# Which package provides a file that is _NOT_ currently on system:
+apt-file search /path/to/file
 __envHEREDOC__
 }
 helpionice(){
