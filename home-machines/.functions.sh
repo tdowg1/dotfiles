@@ -9404,6 +9404,13 @@ pkgin - A tool to manage pkgsrc binary packages.
 
 https://pkgsrc.joyent.com/install-on-illumos/
 
+
+== on bump ==
+pkgin help
+pkgin search fio
+pkgin install fio-2.19nb1          # Flexible IO Tester
+
+
 = See also =
 pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
 __envHEREDOC__
