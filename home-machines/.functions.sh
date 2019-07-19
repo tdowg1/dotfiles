@@ -7263,6 +7263,7 @@ cat <<'__envHEREDOC__'
 svcs -xv svc:/some/svc - display explanations for service state
 svcs -L svc:/some/svc - display path of this services logfile
 
+fmadm
 __envHEREDOC__
 }
 
