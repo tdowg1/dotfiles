@@ -5399,6 +5399,8 @@ libmp3-tag-perl: Module for reading tags of MP3 audio files.
 madplay: MPEG audio player in fixed point. MAD is an MPEG audio decoder. There is also full support for ID3 tags.
 mpg123:  MPEG layer 1/2/3 audio player.
 taggrepper - search and match tags of audio files against regular expressions
+mpv - fork of mplayer2/MPlayer; shares features with the former and introduces more, supports wide variety video file formats, audio, video codecs, subtitle types. https://mpv.io
+
 
 === id3-related ==
 $ aptitude search id3 --disable-columns | grep -v 386
