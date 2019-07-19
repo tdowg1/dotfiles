@@ -132,7 +132,10 @@ call togglebg#map("<F5>")   " them very easy with F5
 " If you want a proper file tree, then NERDTree is the way to go:
 Plugin 'scrooloose/nerdtree'  " :NERDTree [startdirectory | bookmark]
 " https://www.pkimber.net/howto/vim/plugin/nerd-tree.html
-map <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
+" KDE's Dolphin LHS filesystem browser shortcut to show/hide is F7; make it
+" so...
+map <F7> :NERDTreeToggle<CR>
 
 
 " If you want to use tabs, utilize vim-nerdtree-tabs:
@@ -188,7 +191,10 @@ Plugin 'majutsushi/tagbar'
 Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 " F8 will toggle the tagbar:
-nmap <F8> :TagbarToggle<CR>
+"nmap <F8> :TagbarToggle<CR>
+" KDE's Dolphin LHS single-level places shortcuts links to show/hide is F9;
+" make it so...
+nmap <F9> :TagbarToggle<CR>
 
 
 
