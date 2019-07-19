@@ -8850,6 +8850,23 @@ systemd 219
 --version                  -- Show package version
 __envHEREDOC__
 }
+helpsystemctlsuspendAndHibernation(){
+cat <<'__envHEREDOC__'
+# : src : https://wiki.debian.org/Suspend
+# Disable:
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+# Reenable:
+sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+# Prevent suspending when the lid is closed : edit /etc/systemd/logind.conf :: ( logind.conf(5) )
+[Login]
+HandleLidSwitch=ignore
+HandleLidSwitchDocked=ignore
+# and exec :
+systemctl restart systemd-logind.service
+__envHEREDOC__
+}
 helpopenssl(){
 cat <<'__envHEREDOC__'
 openssl ciphers # shows supported ciphers
