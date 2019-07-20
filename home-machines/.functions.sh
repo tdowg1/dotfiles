@@ -8506,14 +8506,11 @@ cat <<'__envHEREDOC__'
 /etc/init/
 
 = Logging =
-# systemd has its own logging system called the journal.
-
-# E.g. the logs for the docker daemon can be viewed using:
-journalctl -u docker
-journalctl -u ntpd
+: see helpjournalctl
 
 = See also =
 helpsystemctl
+helpjournalctl
 __envHEREDOC__
 }
 helpxdotool(){
@@ -9545,7 +9542,16 @@ ls -Z tabi/    # For SELinux context; modify with one of: chcon semanage fcontex
 getfacl tabi/  # To see what access control the file has.
 __envHEREDOC__
 }
+helpjournalctl(){
+cat <<'__envHEREDOC__'
+# Get logs for the docker daemon can be viewed using:
+journalctl -u docker                     # -u, --unit=UNIT|PATTERN
+journalctl -u ntpd                       # -u, --unit=UNIT|PATTERN
 
+
+journalctl --identifier=zfs-auto-snap    # -t, --identifier=SYSLOG_IDENTIFIER
+__envHEREDOC__
+}
 
 
 
