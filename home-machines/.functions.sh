@@ -9509,6 +9509,14 @@ cat <<'__envHEREDOC__'
 tail  -n +1  file1.txt file2.txt...
 __envHEREDOC__
 }
+helpparallel(){
+cat <<'__envHEREDOC__'
+seq 10 | parallel echo {} + 1 is {= '$_++' =}
+
+# if have a bunch of system files that its unclear if a known package is claiming them or not, this speeds things up significantly compared to linear:
+cat is-any-package-own-these-files.txt | parallel  apt-file search
+__envHEREDOC__
+}
 
 
 
