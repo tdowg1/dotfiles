@@ -9519,6 +9519,33 @@ __envHEREDOC__
 }
 
 
+helpsparse(){
+cat <<'__envHEREDOC__'
+ls -lsh   # prints occupied size in the new first column.  if occupied size is < apparent size(the normal size column), the file is sparse.
+
+cp --sparse=always  # copies the file smartly (the way youd want / expect it to behave if its truely a small file thats "huge")
+__envHEREDOC__
+}
+helpls(){
+cat <<'__envHEREDOC__'
+Meaning of "+" under the access permissions column, e.g.:
+   drwxr-x---+  2 root   root       6 06-16 23:43 tabi/
+
+Meaning of "." under the access permissions column, e.g.:
+   drwxr-x---.  2 root   root       6 06-16 23:43 tabi/
+
+^^^These have to do with SELinux and ACL's:
+
+   ' ' (blank) no SELinux coverage
+   '.' (dot) ordinary SELinux (ACL) context only
+   '+' (plus) general ACL
+
+= See also =
+ls -Z tabi/    # For SELinux context; modify with one of: chcon semanage fcontext restorecon
+getfacl tabi/  # To see what access control the file has.
+__envHEREDOC__
+}
+
 
 
 
