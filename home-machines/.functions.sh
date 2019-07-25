@@ -8548,16 +8548,16 @@ cat <<'__envHEREDOC__'
 == set user or group ID on execution (s) bit ==
 chmoduser=nobody
 chmodgroup=devops
-pathtochange=/opt/coolcode/
+pathtochange="/opt/coolcode/"
 
-sudo groupadd $chmodgroup
-sudo usermod -a -G $chmodgroup user, etc.
+sudo groupadd ${chmodgroup}
+sudo usermod -a -G ${chmodgroup} user, etc.
 
-sudo find $pathtochange -type d               -exec chmod 2775  '{}' \;  # ug+rwx, o=rx, g+s
-sudo find $pathtochange -type f   -executable -exec chmod  775  '{}' \;  # ug+rwx, o=rx
-sudo find $pathtochange -type f ! -executable -exec chmod  664  '{}' \;  # ug+rw,  o=r
+sudo find ${pathtochange} -type d               -exec chmod 2775  '{}' \;  # ug+rwx, o=rx, g+s
+sudo find ${pathtochange} -type f   -executable -exec chmod  775  '{}' \;  # ug+rwx, o=rx
+sudo find ${pathtochange} -type f ! -executable -exec chmod  664  '{}' \;  # ug+rw,  o=r
 
-sudo chown -R $chmoduser:$chmodgroup $pathtochange
+sudo chown -R ${chmoduser}:${chmodgroup} "${pathtochange}"
 
 # the above will result in files looking something like:
 drwxrwsr-x 3 nobody devops  20 Jan 23 23:23 somedirectory
