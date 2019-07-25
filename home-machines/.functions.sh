@@ -3523,9 +3523,13 @@ goldie@inst/xpra$ echo xpra hold | sudo dpkg --set-selections
 goldie@inst/xpra$ sudo aptitude hold xpra
 
 == Package file info ( http://serverfault.com/a/96965 ) ==
-# List files installed by a given package:
+# List files installed by a given package that is already on a system:
 dpkg -L package
 dpkg --contents package.deb
+
+# List files installed by a given package that is _NOT_ currently on system:
+apt-file list package
+
 
 # Which package provides a file that is already on system:
 dpkg --search /path/to/file
