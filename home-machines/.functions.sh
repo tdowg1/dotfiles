@@ -1191,12 +1191,15 @@ vfs_cap             vfs_full_audit      vfs_recycle         vfs_worm
 vfs_catia           vfs_glusterfs       vfs_shadow_copy     vfs_xattr_td
 
 == net USERSHARE ==
-# net USERSHARE ADD sharename path [comment] [acl] [guest_ok=[y|n]]
+# net USERSHARE ADD sharename path [comment] [acl] [guest_ok=[y|n]] - to add or change a user defined share.
+# net usershare add sharename path [comment  [acl] [guest_ok=[y|n]]]
+#    The default if no "acl" is given is "Everyone:R", which means any authenticated user has read-only access.
 net usershare add <share name> <share path> guest_ok=y
 net usershare list
 # FINALLY!  Thank you samba project!  An easy way to create a share from the cmdln
 # that is fully usable by some user:
 net usershare add doctor-dooms-share /mnt/share/ "half cocked and half baked" doctor-doom:F guest_ok=n
+net usershare add MF-DOOMs-share /mnt/share/ "later for the date than the hadron collider" vaudeville-villain:F guest_ok=n
 
 KDE/Dolphin share nfo not in smb.conf but in:
  /var/lib/samba/usershares/
