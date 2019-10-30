@@ -2183,6 +2183,8 @@ __envHEREDOC__
 }
 helpless(){
 	cat <<'__envHEREDOC__'
+less -r      # dont drop any colors.
+
 == Keyboard usage ==
 * show nfo: ^G
 * jump to line number, "N", with: Ng
