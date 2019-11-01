@@ -2806,14 +2806,21 @@ c.  $ git commit -C ORIG_HEAD  # or use -c to indicate you DO want to edit commi
 == modify any commit ==
 Using the commit hash prior to the commit you want to modify, run:
 m=         # sha of commit you want to modify.
+
 a. $   git rebase --interactive ${m}^ # ${parent_commit_of_commit_to_be_modified}
-b. change leading text to edit for each commit you want to modify
-   or change leading text to reword for each commit message you want to modify
-c. make desired changes. then change your commit history with:
+
+b. change leading text to  edit  for each commit you want to modify, or
+   change leading text to reword for each commit MESSAGE you want to modify.
+
+c. make desired changes. (do a git add to stage it, if thats what youre doing). then change your commit history with:
+
 d. $   git commit -a --amend
+
 e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
+
 f. $   git rebase --continue
-g. if you're modifying >1 commit (specified in b.),
+
+g. if you're modifying >1 commit (which you would have specified in b.),
 g1. GOTO c.
 g2. ELSE finished
 
