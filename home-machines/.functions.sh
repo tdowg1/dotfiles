@@ -9142,6 +9142,11 @@ echo '{
     ]
 }' | jq '.AccessKeyMetadata[].AccessKeyId'
 # -> "AKIAJ5ZDNO7BR4FIKPOQ"
+
+# on windows, JSON parsing seems to be a big problem; always like "
+# this helps though:  call a custom defined function:: pretty*.jq :::
+#  ( the pretty1.jq and pretty2.jq text files be in dotfiles, currently)
+jq -Rr 'include "pretty2"; pretty' some.js >some.js.pretty2
 __envHEREDOC__
 }
 
