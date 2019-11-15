@@ -117,8 +117,8 @@ Plugin 'altercation/vim-colors-solarized'
 
 " Then, just add a bit of logic to define which scheme to use based upon the
 " VIM mode:
+set background=dark
 if has('gui_running')
-  set background=dark
   colorscheme solarized
 else
   colorscheme zenburn
