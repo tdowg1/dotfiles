@@ -9581,6 +9581,19 @@ __envHEREDOC__
 
 
 
+copyFromWindowsHomeIntoDotfilesRepoBecauseStupidness(){
+   cp -vp ~/.tmux.conf $ZOMG_DOTFILES
+   cp -vp ~/.mainly.sh $ZOMG_DOTFILES
+   cp -vp ~/.bash_profile $ZOMG_DOTFILES
+   cp -vp ~/.mainly.sh $ZOMG_DOTFILES
+   cp -vp ~/.gitconfig $ZOMG_DOTFILES
+   cp -vp ~/.minttyrc $ZOMG_DOTFILES
+
+
+   cp -vp ~/.vimrc $ZOMG_DOTFILES
+   rm -rvi $ZOMG_DOTFILES/.vim/
+   cp -vrfp ~/vim/ $ZOMG_DOTFILES/
+}
 
 
 
