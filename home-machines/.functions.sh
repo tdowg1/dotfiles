@@ -2615,10 +2615,18 @@ git ls-files --directory --others --exclude-from=.git/info/exclude
 find . -name \*.deps\*   # in some circumstances, might find some garbage.
 
 = CONFIG =
+git config --local               # read and write from the repo's .git/config (DEFAULT).
 git config --list                # show all settings.
 git config --list --show-origin  # ~ + their originations.
 git config --global user.name [] # show [or set] this.
 git config --global user.email
+
+git config --replace-all ...
+git config --unset ...
+git config --unset-all ...
+
+git config --add user.email "nobody@some-bodys.domain"
+git config --add user.name "some body"
 
 = LOGs =
 * There are separate fields for ppl...
