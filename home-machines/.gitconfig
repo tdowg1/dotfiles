@@ -1,8 +1,8 @@
 [user]
-	# user.name value can be overridden by the GIT_AUTHOR_NAME and 
+	# user.name value can be overridden by the GIT_AUTHOR_NAME and
 	# GIT_COMMITTER_NAME env var's.
 	name = Bryn Davies
-	# user.email value can be overridden by the GIT_AUTHOR_EMAIL, 
+	# user.email value can be overridden by the GIT_AUTHOR_EMAIL,
 	# GIT_COMMITTER_EMAIL, and EMAIL env var's.
 	email = tdowg1@yahoo.com
 #	email = bdavies@spryinc.com
@@ -30,8 +30,8 @@
 
 	#DOESN'T WORK
 	#taghash = show -s --format='%h - %s' $1^{commit}
-	
-	
+
+
 	# Additional: goog'git log wiki pretty'
 	# git 'pretty graph log' "plog" v 1; date sorting=default
 	plog     = log --graph --pretty=format:'use gplog1 instead!! %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -40,23 +40,23 @@
 	plog1iso = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 		# use date sorting=--date-order (useful; diff graph generation algorithm)
 	plog1sortdateorder = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative   --date-order
-	
+
 	plog2    = log --graph --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, %s'
-	
+
 	plog3    = log --graph --pretty=format:'%h %C(bold blue)<%an>%Creset %Cgreen(%cr)%Creset %s'
-	
+
 	plog4    = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%cr)%Creset, message: %s'
 	plog4iso = log --pretty=format:'%h was %C(bold blue)<%an>%Creset, %Cgreen(%ci)%Creset, message: %s'
 
 	plog5    = log --pretty=format:'%h %Cgreen(%cr)%Creset %s %C(bold blue)<%an>%Creset'
 	plog5iso = log --pretty=format:'%h %Cgreen(%ci)%Creset %s %C(bold blue)<%an>%Creset'
 
-	
+
 	who = shortlog -s --
 	new = "!sh -c 'git log $1@{1}..$1@{0} \"$@\"'"
 	# See Also: http://hoagland.org/Dot.html
 	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
-	
+
 	changes = diff --name-status -r
 	diffstat = diff --stat -r
 
@@ -65,7 +65,6 @@
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 	trustmtime = true
-	recentrepo = /home/bdavies/dev/git/gadget-nyc-w-year-selector-wo-tabset
 	diffcontext = 100
 
 [color]
