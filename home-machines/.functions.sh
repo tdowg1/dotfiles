@@ -2615,7 +2615,8 @@ git ls-files --directory --others --exclude-from=.git/info/exclude
 find . -name \*.deps\*   # in some circumstances, might find some garbage.
 
 = CONFIG =
-git config --list --show-origin  # show all settings and their originations.
+git config --list                # show all settings.
+git config --list --show-origin  # ~ + their originations.
 git config --global user.name [] # show [or set] this.
 git config --global user.email
 
