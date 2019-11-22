@@ -1,0 +1,12 @@
+FontHeight=10
+CursorType=block
+BackgroundColour=48,48,48
+AllowBlinking=yes
+FontSmoothing=full
+Rows=65
+Scrollbar=none
+BellType=0
+Columns=118
+CopyAsRTF=no
+KeyFunctions=v:paste;\
+             c:copy;
