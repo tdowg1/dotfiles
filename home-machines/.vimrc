@@ -10,17 +10,17 @@ filetype off                   " required!
 
 
 " GOTTA RUN :PluginInstall whenever Bundle/Plugins are added to this file and for each machine that I havent ran it on after doing the same thing.
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"set rtp+=~/.vim/bundle/vundle/
+"call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
 
 "
 " tdowg1's Bundles here:
 " Solarized : http://ethanschoonover.com/solarized/vim-colors-solarized
-Bundle 'Solarized'
+"Bundle 'Solarized'
 
 
 "" [Vundle Developer's] Bundles here:
@@ -51,10 +51,10 @@ Bundle 'Solarized'
 
 " 2019-05-11: following write up at : https://realpython.com/vim-and-python-a-match-made-in-heaven/
 " this makes code folding work the way youd expect it to:
-Plugin 'tmhedberg/SimpylFold'
+"Plugin 'tmhedberg/SimpylFold'
 
 " The best plugin for Python auto-complete is YouCompleteMe:
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 " ^^^Under the hood, YouCompleteMe uses a few different auto-completers
 " (including Jedi for Python), and it needs some C libraries to be installed
 " for it to work correctly. The docs have very good installation instructions:
@@ -76,7 +76,7 @@ Bundle 'Valloric/YouCompleteMe'
 " The first line ensures that the auto-complete window goes away when you’re
 " done with it, and the second defines a shortcut for goto definition.
 let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 " One issue with the goto definition above is that VIM, by default, doesnt
@@ -84,14 +84,14 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " aware of your virtualenv by adding the following lines of code to .vimrc:
 
 " python with virtualenv support
-py3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py3 << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
 
 " ^^^This determines if you are running inside a virtualenv, switches to
 " that specific virtualenv, and then sets up your system path so that
@@ -100,10 +100,10 @@ EOF
 
 " You can have VIM check your syntax on each save with the syntastic
 " extension:
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 
 " Also add PEP 8 checking with this nifty little plugin:
-Plugin 'nvie/vim-flake8'
+"Plugin 'nvie/vim-flake8'
 
 
 let python_highlight_all=1
@@ -112,49 +112,49 @@ let python_highlight_all=1
 
 " Color schemes work in conjunction with the basic color scheme that you are
 " using. Check out solarized for GUI mode, and Zenburn for terminal mode:
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'jnurmine/Zenburn'
+"Plugin 'altercation/vim-colors-solarized'
 
 " Then, just add a bit of logic to define which scheme to use based upon the
 " VIM mode:
+"if has('gui_running')
 set background=dark
-if has('gui_running')
-  colorscheme solarized
-else
-  colorscheme zenburn
-endif
+  "colorscheme solarized
+"else
+  "colorscheme zenburn
+"endif
 
 
 " Solarized also ships with a dark and light theme. To make switching between
-call togglebg#map("<F5>")   " them very easy with F5
+"call togglebg#map("<F5>")   " them very easy with F5
 
 
 " If you want a proper file tree, then NERDTree is the way to go:
-Plugin 'scrooloose/nerdtree'  " :NERDTree [startdirectory | bookmark]
+"Plugin 'scrooloose/nerdtree'  " :NERDTree [startdirectory | bookmark]
 " https://www.pkimber.net/howto/vim/plugin/nerd-tree.html
 "map <F2> :NERDTreeToggle<CR>
 " KDE's Dolphin LHS filesystem browser shortcut to show/hide is F7; make it
 " so...
-map <F7> :NERDTreeToggle<CR>
+"map <F7> :NERDTreeToggle<CR>
 
 
 " If you want to use tabs, utilize vim-nerdtree-tabs:
-Plugin 'jistr/vim-nerdtree-tabs'
+"Plugin 'jistr/vim-nerdtree-tabs'
 
 " Want to hide .pyc files? Then add the following line:
-let NERDTreeIgnore=['\.pyc$', '\~$']   " ignore files in NERDTree
+"let NERDTreeIgnore=['\.pyc$', '\~$']   " ignore files in NERDTree
 
 
 
 " Want to search for basically anything from VIM? Check out ctrlP:  (initiate
 " with c-p, duh)::
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 " ^^^See it in action: http://www.youtube.com/watch?v=9XrHk3xjYsw
 
 
 " Want to perform basic git commands without leaving the comfort of VIM? Then
 " vim-fugitive is the way to go:
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 " ^^^See it in action on VIMcasts:
 " http://vimcasts.org/episodes/fugitive-vim---a-complement-to-command-line-git/
 
@@ -179,7 +179,7 @@ set clipboard=unnamed
 
 " from the comments section...
 " https://news.ycombinator.com/item?id=11780824
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 
 " fun times with this because of external dependancies and various operating
 " systems... :"easytags.vim 3.11: Plug-in not loaded because Exuberant Ctags
@@ -188,7 +188,7 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'xolox/vim-easytags'
 
 
-Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 " F8 will toggle the tagbar:
 "nmap <F8> :TagbarToggle<CR>
@@ -206,7 +206,7 @@ nmap <F9> :TagbarToggle<CR>
 " :help pymode
 " https://github.com/python-mode/python-mode
 " https://github.com/python-mode/python-mode/wiki
-Plugin 'klen/python-mode'
+"Plugin 'klen/python-mode'
 " howtodo Code refactoring: specifically just a variable rename??
 "    pymode-rope-refactoring
 " Keymap for rename method/function/class/variables under cursor:
@@ -265,7 +265,7 @@ let g:pymode_rope_autoimport_import_after_complete = 0
 "     go get -u mvdan.cc/sh/cmd/shfmt
 " sqlformat - sql
 "
-Plugin 'Chiel92/vim-autoformat'
+"Plugin 'Chiel92/vim-autoformat'
 
 " To use, do
 " :Autoformat
@@ -417,11 +417,14 @@ nnoremap <space> za
 " THESE MUST BE LAST!  DO NOT ADD STUFF AFTER THIS!
 "
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+"call vundle#end()            " required
 
 filetype plugin indent on     " required!
 " or
 " filetype plugin on          " to not use the indentation settings set by plugins
 
 
+
+set background=dark
+se noincsearch
 
