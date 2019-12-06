@@ -1,3 +1,4 @@
+
 [user]
 	# user.name value can be overridden by the GIT_AUTHOR_NAME and
 	# GIT_COMMITTER_NAME env var's.
@@ -5,11 +6,7 @@
 	# user.email value can be overridden by the GIT_AUTHOR_EMAIL,
 	# GIT_COMMITTER_EMAIL, and EMAIL env var's.
 	email = tdowg1@yahoo.com
-#	email = bdavies@spryinc.com
 
-[github]
-	user = tdowg1
-	token = e5efbf38d1a9145056c794dec3ee474c
 
 [core]
 	excludesfile = ~/.gitignore_core.excludesfile
@@ -93,6 +90,12 @@
 #[log]
 #	date = iso8601
 
-[credential]
-	helper = !aws --profile avis codecommit credential-helper $@
-	UseHttpPath = true
+#[credential]
+#	helper = !aws --profile avis codecommit credential-helper $@
+#	UseHttpPath = true
+
+
+
+
+[include]
+    path = .gitconfig-more

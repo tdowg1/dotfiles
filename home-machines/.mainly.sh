@@ -148,7 +148,8 @@ if [ x"${HOSTNAME}" = x"intelduo"  -o  x"${HOSTNAME}" = x"intelduo.home" ] ; the
 elif [ x"${HOSTNAME}" = x"laptop"  -o  x"${HOSTNAME}" = x"laptop.home" ] ; then
 	IS_I_ON_LAPTOP='true'
 
-elif [ x"$( hostname -s )" = x"newjack" ] ; then
+#elif [ x"$( hostname -s )" = x"newjack" ] ; then
+elif [ x"${HOSTNAME}" = x"newjack"  -o  x"${HOSTNAME}" = x"newjack.local" ] ; then
 	IS_I_ON_NEWJACK='true'
 
 elif [ x"${HOSTNAME}" = x"magnificent"  -o  x"${HOSTNAME}" = x"magnificent.home" ] ; then
