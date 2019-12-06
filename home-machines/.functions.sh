@@ -2652,6 +2652,7 @@ $ git log master...test # commits reachable from either test or
 
 * Make local branch track an upstream branch
 ** git branch --set-upstream e1999eternal-branch origin/e1999eternal-branch
+   git push   --set-upstream origin e1999eternal-branch
 
 * Create a local branch based on an upstream branch:
 ** ~~~~git branch --track my_branch origin/my_branch
@@ -2664,17 +2665,11 @@ $ git log master...test # commits reachable from either test or
 ** git branch -m
 
 == branching example (create new branch, push upstream and track) ==
-$ newBranchName=Environment--DEMO
-newBranchName=environment--
+newBranchName=
 git co -b  "${newBranchName}" \
  && git push origin  "${newBranchName}" \
- && git branch --set-upstream  "${newBranchName}"  origin/"${newBranchName}"
-=== branching example example :) ===
-for i in Environment--DEMO environment--dev ; do
- git co -b $i
- git push origin $i
- git branch --set-upstream $i origin/${i}
-done
+ && git push --set-upstream origin "$newBranchName"
+# && git branch --set-upstream  "${newBranchName}"  origin/"${newBranchName}"
 
 
 = TAGs =
