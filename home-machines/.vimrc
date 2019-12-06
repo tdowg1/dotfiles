@@ -424,6 +424,25 @@ filetype plugin indent on     " required!
 " filetype plugin on          " to not use the indentation settings set by plugins
 
 
+" src : https://unix.stackexchange.com/a/75438
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+" Using file extension:
+"autocmd BufWritePre *.h,*.c,*.java :call <SID>StripTrailingWhitespaces()
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" Often files are not necessarily identified by extension, if so use e.g.:
+"autocmd BufWritePre * if &ft =~ 'sh\|perl\|python' | :call <SID>StripTrailingWhitespaces() | endif
+" Or if you want it to be called when file-type i set:
+"autocmd FileType sh,perl,python  :call <SID>StripTrailingWhitespaces()
+" etc.
+
+
 
 set background=dark
 se noincsearch
