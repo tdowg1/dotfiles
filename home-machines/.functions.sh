@@ -9600,8 +9600,8 @@ copyFromWindowsHomeIntoDotfilesRepoBecauseStupidness(){
 
 
    cp -vp ~/.vimrc $ZOMG_DOTFILES
-   rm -rvi $ZOMG_DOTFILES/.vim/
-   cp -vrfp ~/vim/ $ZOMG_DOTFILES/
+   rm -vr $ZOMG_DOTFILES/.vim/
+   cp -vrfp ~/.vim/ $ZOMG_DOTFILES/
 }
 
 
