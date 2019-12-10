@@ -24,6 +24,15 @@ function wg-in-quotes {
     echo wget $(sed -e 's/http.*url=//;s/&usg=.*$//;s/%2F/\//g;s/%3A/:/g;s/%3D/=/g;s/%3F/?/g;s/%25/%/g' <<<"$1") # % characters must be edited last
 }
 
+locateAcrossAllDatabases(){
+   local query="$1"
+   local databases=""
+   for i in /var/lib/mlocate/* ; do
+      databases="$databases -d $i"
+   done
+   sudo locate $databases -i "$query"
+}
+
 cdzfs(){
    local idNumber=$1
    cd /mnt/a${idNumber}/fs1
@@ -4887,6 +4896,8 @@ locate -d /var/lib/mlocate/mlocate.db   -d /var/lib/mlocate/downloads-dir.db
 16351
 [ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/mlocate.db -d /var/lib/mlocate/custom.db the | wc -l
 32662
+
+updatedb --database-root /mnt/something -o /var/lib/mlocate/something.db
 __envHEREDOC__
 }
 helpapplekeyboard(){
