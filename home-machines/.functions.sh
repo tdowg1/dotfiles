@@ -9614,6 +9614,31 @@ journalctl --identifier=zfs-auto-snap    # -t, --identifier=SYSLOG_IDENTIFIER
 __envHEREDOC__
 }
 
+helpflatpak(){
+cat <<'__envHEREDOC__'
+
+# Run Flatpak app over an x11 forwarding situation:
+flatpak run --branch=stable --arch=x86_64 --command=sh com.makemkv.MakeMKV  -c "DISPLAY=:10.0  makemkv"
+
+__envHEREDOC__
+}
+helppythonfilesandDirectories(){
+cat <<'__envHEREDOC__'
+# WARNING on glob.glob(path) : if theres any chance a path will contain pattern matching characters (e.g. * [] etc.), youll get some unpredictable / undesirable behaviour.
+
+# nice selection of common case snippets:
+#   https://stackoverflow.com/questions/33090642/pythons-os-listdir-with-os-path-isdir-does-not-return-all-directories
+#   https://stackabuse.com/python-list-files-in-a-directory/
+#   https://stackoverflow.com/questions/3964681/find-all-files-in-a-directory-with-extension-txt-in-python
+__envHEREDOC__
+}
+helpcowsay(){
+cat <<'__envHEREDOC__'
+# demonstrate all installed cows:
+for i in /usr/share/cowsay/cows/* ; do echo $i; cowsay -f $i 'demonstrate all installed cows!!'; done |less
+__envHEREDOC__
+}
+
 
 
 
