@@ -1816,17 +1816,20 @@ http://www.worldtimzone.com/res/vi.html
 
 NOTES
 :<c-d>                              # shows all of the available options that you can set
-:set nonu                           # disable line numbering
-:se relativenumbering
+:se nonu                           # disable line numbering
+:se relativenumbering               # enable relative line numbering
+:set                                 # show ALL The Things that are set'ted in curr vim env
+:map                                 # show ALL The Things that are map'ped in curr vim env
 :se mouse=                          # stop vim from taking OS clipboard (was probably :se mouse=a)
 
-http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
+# http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
 # '%' is a shortcut for '1,$' (beginning to start). .
 :[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
 :%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar' starting at ln1
 :.,$s/foo/bar/g                     # Find each occurrence of 'foo', and replace it with 'bar' starting from curr location
 \c                                  # CASE INSENSITIVE searching
 :colorscheme slate
+
 UNDO REDO (:help undo)
 Note that (somewhat confusingly) U is undo-able with u.
 undo last change (can be repeated to undo preceding cmds)
@@ -1979,11 +1982,11 @@ __envHEREDOC__
 }
 helpvim7(){
       cat <<'__envHEREDOC__'
-   lkj
 # WINDOW SPLITTING AND EDITING
 c-w    - switch between splits.
 :S     - splits curr screen and (!) presents view of cwd... which you can scroll(!) through and hit enter to open the desired file!
 :Se    - splits curr screen and i guess _e_ means edit the curr opened file.
+c-shift-9 - split vertically
 __envHEREDOC__
 }
 helpvim8_bashlikecodecompletion(){
