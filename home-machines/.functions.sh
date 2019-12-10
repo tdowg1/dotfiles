@@ -1580,6 +1580,7 @@ cat <<'__envHEREDOC__'
       ~ A c means either that a regular file has a different checksum (requires --checksum).
       ~ A s means the size of a regular file is different and will be updated by the file transfer.
       ~ A  t means the modification time is different and is being updated to the senders value (requires --times). (see man page regarding times and symlink issues).
+      ~ A  T means that the modification time will be set to the transfer time.
       ~ A p means the permissions are different and are being updated to the senders value (requires --perms).
       ~ An o means the owner is different and is being updated to the senders value (requires --owner).
       ~ A g means the group is different and is being updated to the senders value (requires --group)
@@ -1637,6 +1638,8 @@ Opts to OpenSSH to machine as yourself while executing rsync with sudo so can e.
 	sudo rsync -av -e "ssh -i /home/phife-dawg/.ssh/id_rsa" [phife-dawg@]queens-server:/etc/ansible/hosts /etc/ansible/hosts
    SUDO REMOTELY REQUIRED:
 	rsync --rsync-path='sudo rsync' -av KeyStore.jks [phife-dawg@]queens-server:/etc/pki/java/KeyStore.jks
+Copy all dirs ONLY (i.e. exclude everything that is not a directory):
+   rsync -av   -f"+ */"   -f"- *"   src  dest
 
 Opts to OpenSSH running on custom port 443:
 	rsync -av -e "ssh -p 443 -l phife-dawg"  phife-dawg@queens-server:. /tmp
