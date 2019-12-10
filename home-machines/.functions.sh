@@ -9481,6 +9481,10 @@ pkgin install fio-2.19nb1          # Flexible IO Tester
 
 = See also =
 pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
+
+== linux-related ==
+* https://www.reddit.com/r/linux/comments/7b13x7/pkgsrc_on_linux_worth_it/
+** http://www.codeghar.com/blog/essential-pkgsrc-the-missing-mini-handbook.html
 __envHEREDOC__
 }
 helpkill(){
