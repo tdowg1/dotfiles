@@ -3696,14 +3696,14 @@ __envHEREDOC__
 }
 helpIFS(){
 cat <<'__envHEREDOC__'
-$ # This IFS stuff allows to handle file names with spaces in them:
-$ SAVEIFS=$IFS
-$ IFS=$(echo -en "\n\b")
-$ #
-$ i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
-$ # ... output from looping over echo...
-$ #
-$ IFS=$SAVEIFS
+# This IFS stuff allows to handle file names with spaces in them:
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+#
+i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
+# ... output from looping over echo...
+#
+IFS=$SAVEIFS
 
 echo -n "${IFS}" | sha1sum ; echo -n "${SAVEIFS}" | sha1sum ; echo -en "\n\b" | sha1sum
 __envHEREDOC__
@@ -3937,12 +3937,12 @@ cat <<'__envHEREDOC__'
 # _partition_ block device type
 
 == Device Labels Management ==
-dosfslabel (8)       - set or get MS-DOS filesystem label
-e2label (8)          - Change the label on an ext2/ext3/ext4 filesystem
 findfs (8)           - find a filesystem by label or UUID
-mlabel (1)           - make an MSDOS volume label
-ntfslabel (8)        - display/change the label on an ntfs file system
 ppmlabel (1)         - add text to a portable pixmap
+mlabel (1)           - make an MSDOS volume label
+dosfslabel dev lbl       - set or get MS-DOS filesystem label
+e2label dev lbl           - Change the label on an ext2/ext3/ext4 filesystem
+ntfslabel -v dev lbl        - display/change the label on an ntfs file system
 swaplabel (8)        - print or change the label or UUID of a swap area
 __envHEREDOC__
 }
