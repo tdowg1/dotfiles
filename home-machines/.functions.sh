@@ -24,6 +24,15 @@ function wg-in-quotes {
     echo wget $(sed -e 's/http.*url=//;s/&usg=.*$//;s/%2F/\//g;s/%3A/:/g;s/%3D/=/g;s/%3F/?/g;s/%25/%/g' <<<"$1") # % characters must be edited last
 }
 
+locateAcrossAllDatabases(){
+   local query="$1"
+   local databases=""
+   for i in /var/lib/mlocate/* ; do
+      databases="$databases -d $i"
+   done
+   sudo locate $databases -i "$query"
+}
+
 cdzfs(){
    local idNumber=$1
    cd /mnt/a${idNumber}/fs1
@@ -1417,6 +1426,9 @@ helpdate(){
 	cmdln="date +\"%Y%m%d_%H%M%S\"      --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t\t$cmdln"
 
+	cmdln="date +\"%Y%m%d-%H%M%S\"      --date=\"$(eval echo ${useThisDate})\""
+	echo -e "$(eval $cmdln)\t\t$cmdln"
+
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 
@@ -1571,6 +1583,7 @@ cat <<'__envHEREDOC__'
       ~ A c means either that a regular file has a different checksum (requires --checksum).
       ~ A s means the size of a regular file is different and will be updated by the file transfer.
       ~ A  t means the modification time is different and is being updated to the senders value (requires --times). (see man page regarding times and symlink issues).
+      ~ A  T means that the modification time will be set to the transfer time.
       ~ A p means the permissions are different and are being updated to the senders value (requires --perms).
       ~ An o means the owner is different and is being updated to the senders value (requires --owner).
       ~ A g means the group is different and is being updated to the senders value (requires --group)
@@ -1628,6 +1641,8 @@ Opts to OpenSSH to machine as yourself while executing rsync with sudo so can e.
 	sudo rsync -av -e "ssh -i /home/phife-dawg/.ssh/id_rsa" [phife-dawg@]queens-server:/etc/ansible/hosts /etc/ansible/hosts
    SUDO REMOTELY REQUIRED:
 	rsync --rsync-path='sudo rsync' -av KeyStore.jks [phife-dawg@]queens-server:/etc/pki/java/KeyStore.jks
+Copy all dirs ONLY (i.e. exclude everything that is not a directory):
+   rsync -av   -f"+ */"   -f"- *"   src  dest
 
 Opts to OpenSSH running on custom port 443:
 	rsync -av -e "ssh -p 443 -l phife-dawg"  phife-dawg@queens-server:. /tmp
@@ -1792,6 +1807,7 @@ __envHEREDOC__
 }
 
 helpvim(){
+   (
 	cat <<'__envHEREDOC__'
 STOP IT, NANO! (use vim by default (see also: helpvisudo)): couple of options::
 $ select-editor
@@ -1803,17 +1819,20 @@ http://www.worldtimzone.com/res/vi.html
 
 NOTES
 :<c-d>                              # shows all of the available options that you can set
-:set nonu                           # disable line numbering
-:se relativenumbering
+:se nonu                           # disable line numbering
+:se relativenumbering               # enable relative line numbering
+:set                                 # show ALL The Things that are set'ted in curr vim env
+:map                                 # show ALL The Things that are map'ped in curr vim env
 :se mouse=                          # stop vim from taking OS clipboard (was probably :se mouse=a)
 
-http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
+# http://www.thegeekstuff.com/2009/04/vi-vim-editor-search-and-replace-examples/
 # '%' is a shortcut for '1,$' (beginning to start). .
 :[range]s/foo/bar/gc                # Change each 'foo' to 'bar', but ask for confirmation first
 :%s/foo/bar/g                       # Find each occurrence of 'foo', and replace it with 'bar' starting at ln1
 :.,$s/foo/bar/g                     # Find each occurrence of 'foo', and replace it with 'bar' starting from curr location
 \c                                  # CASE INSENSITIVE searching
 :colorscheme slate
+
 UNDO REDO (:help undo)
 Note that (somewhat confusingly) U is undo-able with u.
 undo last change (can be repeated to undo preceding cmds)
@@ -1862,6 +1881,8 @@ SHTUFF
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
 __envHEREDOC__
+) | less --no-init
+#) |& less -F;
 }
 helpvim2(){
       cat <<'__envHEREDOC__'
@@ -1964,11 +1985,11 @@ __envHEREDOC__
 }
 helpvim7(){
       cat <<'__envHEREDOC__'
-   lkj
 # WINDOW SPLITTING AND EDITING
 c-w    - switch between splits.
 :S     - splits curr screen and (!) presents view of cwd... which you can scroll(!) through and hit enter to open the desired file!
 :Se    - splits curr screen and i guess _e_ means edit the curr opened file.
+c-shift-9 - split vertically
 __envHEREDOC__
 }
 helpvim8_bashlikecodecompletion(){
@@ -2037,6 +2058,7 @@ Pretty shweet!  interactive ruby can do decimals and all sorts of shtuff!
 __envHEREDOC__
 }
 helprar(){
+   (
       cat <<'__envHEREDOC__'
 ALL
    -ol # save symbolic link as the link instead of the file
@@ -2115,6 +2137,7 @@ ARCHIVE EXAMPLE5
 perhaps want to exclude some huge directory:
    rar a -m5 -r -rr4p -t -tsmca -ep1 -x/mnt/tmp/rhapsody/ 2011-08-03_cell-phone-backup.rar /mnt/tmp/
 __envHEREDOC__
+) | less --no-init
 }
 helprar2(){
    cat <<'__envHEREDOC__'
@@ -3673,14 +3696,14 @@ __envHEREDOC__
 }
 helpIFS(){
 cat <<'__envHEREDOC__'
-$ # This IFS stuff allows to handle file names with spaces in them:
-$ SAVEIFS=$IFS
-$ IFS=$(echo -en "\n\b")
-$ #
-$ i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
-$ # ... output from looping over echo...
-$ #
-$ IFS=$SAVEIFS
+# This IFS stuff allows to handle file names with spaces in them:
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+#
+i=0 ; for f in $( find . -maxdepth 1 -type f ) ; do    echo "$i $f";    let i=$i+1;     done
+# ... output from looping over echo...
+#
+IFS=$SAVEIFS
 
 echo -n "${IFS}" | sha1sum ; echo -n "${SAVEIFS}" | sha1sum ; echo -en "\n\b" | sha1sum
 __envHEREDOC__
@@ -3795,6 +3818,7 @@ __envHEREDOC__
 
 
 helphdd(){
+   (
 cat <<'__envHEREDOC__'
 == Lesser Known hdd-related cmds ==
 
@@ -3888,6 +3912,7 @@ sg_scan [-i]    # (scsi)
 == SEE ALSO ==
 helplstopo helpblkid helppv helpinotify helphdparm
 __envHEREDOC__
+) | less --no-init
 }
 helphdd2_fs_related(){
 cat <<'__envHEREDOC__'
@@ -3912,12 +3937,12 @@ cat <<'__envHEREDOC__'
 # _partition_ block device type
 
 == Device Labels Management ==
-dosfslabel (8)       - set or get MS-DOS filesystem label
-e2label (8)          - Change the label on an ext2/ext3/ext4 filesystem
 findfs (8)           - find a filesystem by label or UUID
-mlabel (1)           - make an MSDOS volume label
-ntfslabel (8)        - display/change the label on an ntfs file system
 ppmlabel (1)         - add text to a portable pixmap
+mlabel (1)           - make an MSDOS volume label
+dosfslabel dev lbl       - set or get MS-DOS filesystem label
+e2label dev lbl           - Change the label on an ext2/ext3/ext4 filesystem
+ntfslabel -v dev lbl        - display/change the label on an ntfs file system
 swaplabel (8)        - print or change the label or UUID of a swap area
 __envHEREDOC__
 }
@@ -4887,6 +4912,8 @@ locate -d /var/lib/mlocate/mlocate.db   -d /var/lib/mlocate/downloads-dir.db
 16351
 [ teelah@newjack ~ ]$ sudo locate -i -d /var/lib/mlocate/mlocate.db -d /var/lib/mlocate/custom.db the | wc -l
 32662
+
+updatedb --database-root /mnt/something -o /var/lib/mlocate/something.db
 __envHEREDOC__
 }
 helpapplekeyboard(){
@@ -9454,6 +9481,10 @@ pkgin install fio-2.19nb1          # Flexible IO Tester
 
 = See also =
 pkg_add(1), pkg_info(1), pkg_summary(5), pkgsrc(7)
+
+== linux-related ==
+* https://www.reddit.com/r/linux/comments/7b13x7/pkgsrc_on_linux_worth_it/
+** http://www.codeghar.com/blog/essential-pkgsrc-the-missing-mini-handbook.html
 __envHEREDOC__
 }
 helpkill(){
@@ -9583,6 +9614,31 @@ journalctl --identifier=zfs-auto-snap    # -t, --identifier=SYSLOG_IDENTIFIER
 __envHEREDOC__
 }
 
+helpflatpak(){
+cat <<'__envHEREDOC__'
+
+# Run Flatpak app over an x11 forwarding situation:
+flatpak run --branch=stable --arch=x86_64 --command=sh com.makemkv.MakeMKV  -c "DISPLAY=:10.0  makemkv"
+
+__envHEREDOC__
+}
+helppythonfilesandDirectories(){
+cat <<'__envHEREDOC__'
+# WARNING on glob.glob(path) : if theres any chance a path will contain pattern matching characters (e.g. * [] etc.), youll get some unpredictable / undesirable behaviour.
+
+# nice selection of common case snippets:
+#   https://stackoverflow.com/questions/33090642/pythons-os-listdir-with-os-path-isdir-does-not-return-all-directories
+#   https://stackabuse.com/python-list-files-in-a-directory/
+#   https://stackoverflow.com/questions/3964681/find-all-files-in-a-directory-with-extension-txt-in-python
+__envHEREDOC__
+}
+helpcowsay(){
+cat <<'__envHEREDOC__'
+# demonstrate all installed cows:
+for i in /usr/share/cowsay/cows/* ; do echo $i; cowsay -f $i 'demonstrate all installed cows!!'; done |less
+__envHEREDOC__
+}
+
 
 
 
@@ -9628,6 +9684,15 @@ __envHEREDOC__
 	echo "$heredocWithVariables"
 }
 
+_help8paginATE(){
+   (
+cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+) | less --no-init
+#) |& less -F;
+}
+
 unset -f _help6 _help7_vars_interpretted
 ## ### #### ###################################################################
 ##
@@ -9639,4 +9704,4 @@ unset -f _help6 _help7_vars_interpretted
 # CLEAN UP THIS FILE.  AREAS OF INTEREST::
 # grep --line-number '`' .functions.sh
 
-#32 up
+#41 up
