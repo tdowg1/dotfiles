@@ -1426,6 +1426,9 @@ helpdate(){
 	cmdln="date +\"%Y%m%d_%H%M%S\"      --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t\t$cmdln"
 
+	cmdln="date +\"%Y%m%d-%H%M%S\"      --date=\"$(eval echo ${useThisDate})\""
+	echo -e "$(eval $cmdln)\t\t$cmdln"
+
 	cmdln="date +\"%Y-%m-%d_%H,%M,%S\"  --date=\"$(eval echo ${useThisDate})\""
 	echo -e "$(eval $cmdln)\t$cmdln"
 
