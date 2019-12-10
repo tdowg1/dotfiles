@@ -1801,6 +1801,7 @@ __envHEREDOC__
 }
 
 helpvim(){
+   (
 	cat <<'__envHEREDOC__'
 STOP IT, NANO! (use vim by default (see also: helpvisudo)): couple of options::
 $ select-editor
@@ -1871,6 +1872,8 @@ SHTUFF
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
 __envHEREDOC__
+) | less --no-init
+#) |& less -F;
 }
 helpvim2(){
       cat <<'__envHEREDOC__'
@@ -2046,6 +2049,7 @@ Pretty shweet!  interactive ruby can do decimals and all sorts of shtuff!
 __envHEREDOC__
 }
 helprar(){
+   (
       cat <<'__envHEREDOC__'
 ALL
    -ol # save symbolic link as the link instead of the file
@@ -2124,6 +2128,7 @@ ARCHIVE EXAMPLE5
 perhaps want to exclude some huge directory:
    rar a -m5 -r -rr4p -t -tsmca -ep1 -x/mnt/tmp/rhapsody/ 2011-08-03_cell-phone-backup.rar /mnt/tmp/
 __envHEREDOC__
+) | less --no-init
 }
 helprar2(){
    cat <<'__envHEREDOC__'
@@ -3804,6 +3809,7 @@ __envHEREDOC__
 
 
 helphdd(){
+   (
 cat <<'__envHEREDOC__'
 == Lesser Known hdd-related cmds ==
 
@@ -3897,6 +3903,7 @@ sg_scan [-i]    # (scsi)
 == SEE ALSO ==
 helplstopo helpblkid helppv helpinotify helphdparm
 __envHEREDOC__
+) | less --no-init
 }
 helphdd2_fs_related(){
 cat <<'__envHEREDOC__'
@@ -9639,6 +9646,15 @@ __envHEREDOC__
 	echo "$heredocWithVariables"
 }
 
+_help8paginATE(){
+   (
+cat <<'__envHEREDOC__'
+
+__envHEREDOC__
+) | less --no-init
+#) |& less -F;
+}
+
 unset -f _help6 _help7_vars_interpretted
 ## ### #### ###################################################################
 ##
@@ -9650,4 +9666,4 @@ unset -f _help6 _help7_vars_interpretted
 # CLEAN UP THIS FILE.  AREAS OF INTEREST::
 # grep --line-number '`' .functions.sh
 
-#32 up
+#41 up
