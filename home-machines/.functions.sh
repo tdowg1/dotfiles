@@ -2670,6 +2670,9 @@ $ git log master...test # commits reachable from either test or
 
 
 = BRANCHes =
+* Create and checkout temp branch based on <start point>
+** git checkout -b temp 5af8b9e
+
 * Push local branch to upstream branch / remote origin (creates remote branch if DNE):
 ** git push origin e1999eternal-branch
 
@@ -2732,6 +2735,8 @@ git format-patch -1 1f5c1872
 #   ^^This will generate a new file, a patch file.
 #   Second, apply the patch to the code that needs it:
 git apply --verbose <previously generated patch file>
+# Patch wont apply if there were any prior patch errors.
+# check out --exclude option to ignore possible fail files and have it keep trying.
 __envHEREDOC__
 }
 helpgit2(){
@@ -3321,6 +3326,11 @@ d
 
 $ echo ${kv: $(( ${#kv} - 1 )) : 1 }      # get the last character
 L
+
+
+for i in FFFFFF.txt GGGGG.txt ; do
+   echo ${i%%.txt}                        # without filename extension
+done
 __envHEREDOC__
 }
 helpbashcheats(){
