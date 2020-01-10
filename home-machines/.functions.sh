@@ -5011,6 +5011,7 @@ $ sudo mount -v -t cifs -o username=tellah,dmask=770,fmask=660,user_xattr //p-8-
 = See also =
 ------------
 helpmount*()
+helpumount()
 __envHEREDOC__
 }
 helpmount2mountoptions(){
@@ -9670,6 +9671,22 @@ copyFromWindowsHomeIntoDotfilesRepoBecauseStupidness(){
    cp -vrfp ~/.vim/ $ZOMG_DOTFILES/
 }
 
+
+helpumount(){
+cat <<'__envHEREDOC__'
+# Troubleshooting umounting (at least) network things but (get that frustrating suuper shlowdown because)
+# local connection to said thing has been severed.  IF /etc/mtab of troubley mount is like :
+#
+#  //192.168.1.154/c/ /media/smb-elon-musks-pc-c cifs rw,no<...SNIP!...>
+#
+# and    sudo umount -f /media/smb-elon-musks-pc-c   gives like  "target is busy.", TRY THE OTHER SIDE
+# of that mount definition, the   //192.168.1.154/c/   :
+sudo umount -f //192.168.1.154/c/
+
+== See also ==
+helpmount*()
+__envHEREDOC__
+}
 
 
 
