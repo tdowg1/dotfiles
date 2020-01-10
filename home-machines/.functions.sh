@@ -4924,6 +4924,8 @@ locate -d /var/lib/mlocate/mlocate.db   -d /var/lib/mlocate/downloads-dir.db
 32662
 
 updatedb --database-root /mnt/something -o /var/lib/mlocate/something.db
+sudo updatedb --database-root /mnt/$dname -o /var/lib/mlocate/${dname}.db
+sudo updatedb --database-root /mnt/$dname -o /var/lib/mlocate/${dname}.$( date +"%Y%m%d%H%M%S" ).db
 __envHEREDOC__
 }
 helpapplekeyboard(){
