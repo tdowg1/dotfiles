@@ -2739,6 +2739,14 @@ git format-patch -1 1f5c1872
 git apply --verbose <previously generated patch file>
 # Patch wont apply if there were any prior patch errors.
 # check out --exclude option to ignore possible fail files and have it keep trying.
+
+== Similarly, for a stash... ==
+git stash show -p
+git stash show -p  stash@{1} > patch.txt  # e.g. ... .
+
+# but also note, git actually creates commit objects when you stash.
+# They are commits like everything else. You can check them out in a branch:
+git checkout -b with_stash  stash@{0}
 __envHEREDOC__
 }
 helpgit2(){
