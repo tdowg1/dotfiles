@@ -9167,6 +9167,9 @@ cat <<'__envHEREDOC__'
 # For union'ing and intersecting datasets, comm -13 suppress 'column 3' which is lines that appear in both files::
 comm -13 a.sorted.txt b.sorted.txt
 
+# For intersecting:
+comm -12 a.sorted.txt b.sorted.txt
+
 # For variables, instead of files:
 x="a b c"
 comm -13  <(echo a) <(echo $x | tr " " "\n")
