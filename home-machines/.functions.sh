@@ -1065,6 +1065,8 @@ mkdir /mnt/md0
 LABEL=md0             /mnt/md0              xfs     defaults,nofail        0 0
 LABEL=md0             /mnt/md0              xfs     defaults,nofail,noatime,nodiratime        0 0
 
+sudo su -c "echo \"LABEL=md0             /mnt/md0              xfs     defaults,nofail,noatime,nodiratime        0 0\" >> /etc/fstab"
+
 = Create a RAID-0 device across 2 drives =
 Follow the above instructions for JBOD, except instead of specifying "linear", specify
 "stripe".
@@ -9557,7 +9559,12 @@ sudo btrfs subvolume list /mnt/$dname
 
 sudo umount /mnt/$dname
 sudo mount -t btrfs -o subvol=svol LABEL=$dname /mnt/$dname
+#^^creates a mount like:
+#   $d on /mnt/$dname type btrfs (rw,relatime,ssd,space_cache,subvolid=257,subvol=/svol) [$dname]
+sudo chmod ugo+rwx /mnt/$dname
 
+# optionally, update fstab:
+sudo su -c "echo \"LABEL=${dname}             /mnt/${dname}              btrfs     defaults        0 0\" >> /etc/fstab"
 __envHEREDOC__
 }
 helpmediainfo(){
