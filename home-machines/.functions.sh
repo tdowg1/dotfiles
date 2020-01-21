@@ -6701,6 +6701,7 @@ dnamefull=a107-2787
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
 # Only if on Thumper:
+cfgadm -la sata                    # if necessary, to find an empty slot...
 sudo cfgadm -c configure <Ap_Id>   # (e.g. sata5/1)
 
 # Only if physical 512-byte size for physical sectors.
