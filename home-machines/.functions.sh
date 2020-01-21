@@ -4971,11 +4971,11 @@ sshfs#b@demoportal:/usr/local/tomcat/  /home/b/mnt/demoportal  fuse  user,allow_
 = Mount Via Cmdln Examples =
 ----------------------------
 == NTFS-3g : Mount NTFS volume with full user write permission ==
-$ mount -v /dev/sdg1 /media/mountpoint -t ntfs -o rw,allow_other,blocksize=4096,default_permissions
+mount -v /dev/sdg1 /media/mountpoint -t ntfs -o rw,allow_other,blocksize=4096,default_permissions
 
 == fat : Mount FAT* volume with full user write permission ==
-$ mount -v /dev/sdb1 /media/mountpoint -t vfat -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
-$ mount -v /dev/sdb1 /media/mountpoint -t vfat -o rw,nosuid,nodev,uid=$( id -u ),gid=$( id -g ),shortname=mixed,dmask=0077,utf8=1,showexec,flush
+mount -v /dev/sdb1 /media/mountpoint -t vfat -o uid=1000,gid=1000,utf8,dmask=027,fmask=137
+mount -v /dev/sdb1 /media/mountpoint -t vfat -o rw,nosuid,nodev,uid=$( id -u ),gid=$( id -g ),shortname=mixed,dmask=0077,utf8=1,showexec,flush
 
 == tmpfs : Mount/Create ramdisk/tmpfs ==
 #RAMDISK=/tmp/ramdisk
@@ -4989,14 +4989,16 @@ mount -t iso9660 -o ro,loop /path/to/isofile /mnt/mountpoint
 mount -t msdos -o loop,offset=$((2048 * 512 )) image.dd /mnt/tmp
 
 == iso9660 : Mount CD-ROM (or some other optical media) ==
-$ mkdir /media/cdrom
-$ mount -t iso9660 -o ro /dev/sr0 /media/cdrom
+mkdir /media/cdrom
+mount -t iso9660 -o ro /dev/sr0 /media/cdrom
 
 == loop : Mount dd partition image ==
-$ sudo mount -t ext4  -o ro,loop /path/to/fsimg.dd /mnt/tmp
+sudo mount -t ext4  -o ro,loop /path/to/fsimg.dd /mnt/tmp
+# mount 2nd partition that exists within a full disk image:  2nd partition starts at (512-byte) sector number 540672 ::
+sudo mount -t ext4 -o loop,offset=$(( 540672 * 512 )) image.dd /mnt/tmp
 
 == cifs : Mount samba/smb/cifs share ==
-$ sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
+sudo mount -v -t cifs //le-simba-server/$USER /mnt/tmp -o user=$USER
 
 === Notice this `mount' cmdln works for one samba server, but not the other :( ... ya but no. ===
 Performed on id-9-ubu1204 to mount local samba share (ALL FAIL):
