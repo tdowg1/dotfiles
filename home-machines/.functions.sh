@@ -1065,6 +1065,8 @@ mkdir /mnt/md0
 LABEL=md0             /mnt/md0              xfs     defaults,nofail        0 0
 LABEL=md0             /mnt/md0              xfs     defaults,nofail,noatime,nodiratime        0 0
 
+sudo su -c "echo \"LABEL=md0             /mnt/md0              xfs     defaults,nofail,noatime,nodiratime        0 0\" >> /etc/fstab"
+
 = Create a RAID-0 device across 2 drives =
 Follow the above instructions for JBOD, except instead of specifying "linear", specify
 "stripe".
@@ -2737,6 +2739,14 @@ git format-patch -1 1f5c1872
 git apply --verbose <previously generated patch file>
 # Patch wont apply if there were any prior patch errors.
 # check out --exclude option to ignore possible fail files and have it keep trying.
+
+== Similarly, for a stash... ==
+git stash show -p
+git stash show -p  stash@{1} > patch.txt  # e.g. ... .
+
+# but also note, git actually creates commit objects when you stash.
+# They are commits like everything else. You can check them out in a branch:
+git checkout -b with_stash  stash@{0}
 __envHEREDOC__
 }
 helpgit2(){
@@ -9170,6 +9180,9 @@ cat <<'__envHEREDOC__'
 # For union'ing and intersecting datasets, comm -13 suppress 'column 3' which is lines that appear in both files::
 comm -13 a.sorted.txt b.sorted.txt
 
+# For intersecting:
+comm -12 a.sorted.txt b.sorted.txt
+
 # For variables, instead of files:
 x="a b c"
 comm -13  <(echo a) <(echo $x | tr " " "\n")
@@ -9562,7 +9575,12 @@ sudo btrfs subvolume list /mnt/$dname
 
 sudo umount /mnt/$dname
 sudo mount -t btrfs -o subvol=svol LABEL=$dname /mnt/$dname
+#^^creates a mount like:
+#   $d on /mnt/$dname type btrfs (rw,relatime,ssd,space_cache,subvolid=257,subvol=/svol) [$dname]
+sudo chmod ugo+rwx /mnt/$dname
 
+# optionally, update fstab:
+sudo su -c "echo \"LABEL=${dname}             /mnt/${dname}              btrfs     defaults        0 0\" >> /etc/fstab"
 __envHEREDOC__
 }
 helpmediainfo(){
