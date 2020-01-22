@@ -7092,7 +7092,7 @@ reboot -l -n     # avoids calling sync but still attempts to sync filesystems
                  # - cannot ssh back in, however is pingable.
 
 reboot -l -n -d  # avoids calling sync (and does not attempt to sync filesystems).
-                 # ^^tried this (along with shutdown -i0) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
+                 # ^^tried this and WORKED when stalled storage-related cmds for zpool.
 
 reboot -l -q     # reboot ungracefully, without shutting down running processes first.
 
