@@ -1359,11 +1359,11 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** (eta status) Status output - dcfldd can update the user of its progress in terms of the amount of data transferred and how much longer operation will take.
 ** (pattern writing) Flexible disk wipes - dcfldd can be used to wipe disks quickly and with a known pattern if desired.
 ** (integrity verif) Image/wipe Verify - dcfldd can verify that a target drive is a bit-for-bit match of the specified input file or pattern.
-*** dcfldd if=/dev/sr0 vf=kubuntu-18.04-desktop-amd64.iso
+dcfldd if=/dev/sr0 vf=kubuntu-18.04-desktop-amd64.iso
 ** Multiple outputs - dcfldd can output to multiple files or disks at the same time.
 ** (split output) Split output - dcfldd can split output to multiple files with more configuration possibilities than the split command.
 ** (logging) Piped output and logs - dcfldd can send all its log data and output to commands as well as files.
-** NOTE: the size designation of units are completely wrong... e.g. it outputs "Mb" which should be MiB
+** !!! NOTE: THE SIZE DESIGNATION OF UNITS ARE COMPLETELY WRONG... e.g. it outputs "Mb" which should be MiB
 *** MORE NOTE: honestly, this program seems to say outright bizzaire things... sizes are ALL out of wack... it also doesnt output current throughput or final throughput.  not great.
 
 * dc3dd inspired by the dcfldd, also based on dd, with addl. features...
@@ -1376,7 +1376,8 @@ $ dd if=/dev/zero of=MY_FILE count=0 bs=1G seek=100
 ** (integrity verif) Verify mode. Able to repeat any transformations done to the input file and compare it to an output.
 ** (split output) Ability to split the output into chunks with numerical or alphabetic extensions
 ** EXAMPLE: raw copy a partition to regular file, fail if read errors occur (rec=off), and log md5 hash of input output
-$ dc3dd if=/dev/sdb2 hof=sdb2.dd.img  log=sdb2.dd.img.dc3dd.log rec=off hash=md5
+dc3dd if=/dev/sdb2 hof=sdb2.dd.img  log=sdb2.dd.img.dc3dd.log rec=off hash=md5
+dc3dd wipe=/dev/sdd
 
 * ddpt copies data between files and storage devices. Support for devices that understand the SCSI command set.
 ** can issue SCSI commands in pass-through ("pt") mode.
@@ -7091,7 +7092,7 @@ reboot -l -n     # avoids calling sync but still attempts to sync filesystems
                  # - cannot ssh back in, however is pingable.
 
 reboot -l -n -d  # avoids calling sync (and does not attempt to sync filesystems).
-                 # ^^tried this (along with shutdown -i0) and POSSIBLY WORKED when stalled storage-related cmds for zpool.
+                 # ^^tried this and WORKED when stalled storage-related cmds for zpool.
 
 reboot -l -q     # reboot ungracefully, without shutting down running processes first.
 
