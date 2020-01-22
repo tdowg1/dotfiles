@@ -133,6 +133,7 @@ export PS1git='\[\e[0;31m\][ \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\
 export PS1nogit='\[\e[0;31m\][ \[\e[1;37m\]\w \[\e[0;31m\]]\$\[\e[0m\] '
 export PS1=$PS1nogit
 
+
 # I don't think these are respected:
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=false
