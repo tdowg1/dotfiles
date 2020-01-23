@@ -9192,6 +9192,8 @@ __envHEREDOC__
 }
 helpjq(){
 cat <<'__envHEREDOC__'
+https://jqplay.org/jq?q=.foo&j=%7B%22notfoo%22%3A%20true%2C%20%22alsonotfoo%22%3A%20false%7D#
+
 <any json> | jq  # to produce pretty print equivalent.
 
 echo '{
