@@ -54,7 +54,7 @@ Bundle 'Solarized'
 Plugin 'tmhedberg/SimpylFold'
 
 " The best plugin for Python auto-complete is YouCompleteMe:
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 " ^^^Under the hood, YouCompleteMe uses a few different auto-completers
 " (including Jedi for Python), and it needs some C libraries to be installed
 " for it to work correctly. The docs have very good installation instructions:
@@ -84,14 +84,14 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " aware of your virtualenv by adding the following lines of code to .vimrc:
 
 " python with virtualenv support
-py3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py3 << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
 
 " ^^^This determines if you are running inside a virtualenv, switches to
 " that specific virtualenv, and then sets up your system path so that
@@ -186,8 +186,6 @@ Plugin 'majutsushi/tagbar'
 " isn't installed! Please download & install Exuberant Ctags from
 " http://ctags.sf.net"  except this website seems up to date with 2009 :(
 "Plugin 'xolox/vim-easytags'
-
-
 Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 " F8 will toggle the tagbar:
