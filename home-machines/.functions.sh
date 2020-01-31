@@ -1316,6 +1316,14 @@ Backup device
       TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
 Shorthand
    dd if=/dev/zero of=/swap bs=1MiB count=$((4*1024))  # 4GiB swapfile
+Combine >1 incomplete torrent files where they have different parts of the data: binary file merge torrent::
+   # blocksize should be whatever the configured torrent file defined as
+   # foo is file1
+   # bar is file2
+   # out is the new "union"'ed(if you will) combined file.
+   dd conv=sparse,notrunc if="$foo" of="$out" bs=$torrent_peices_size
+   dd conv=sparse,notrunc if="$bar" of="$out" bs=$torrent_peices_size
+
 __envHEREDOC__
 }
 helpdd2(){
@@ -9713,6 +9721,12 @@ sudo umount -f //192.168.1.154/c/
 == See also ==
 helpmount*()
 __envHEREDOC__
+}
+helpbittorrent(){
+cat <<'__envHEREDOC__'
+/calling helpdd()/
+__envHEREDOC__
+	helpdd
 }
 
 
