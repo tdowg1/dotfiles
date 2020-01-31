@@ -1378,6 +1378,7 @@ dcfldd if=/dev/sr0 vf=kubuntu-18.04-desktop-amd64.iso
 ** EXAMPLE: raw copy a partition to regular file, fail if read errors occur (rec=off), and log md5 hash of input output
 dc3dd if=/dev/sdb2 hof=sdb2.dd.img  log=sdb2.dd.img.dc3dd.log rec=off hash=md5
 dc3dd wipe=/dev/sdd
+dc3dd if=/dev/sdc of=/dev/sdd log=sdc-to-sdd.dc3dd.log rec=off hash=md5 ssz=4096
 
 * ddpt copies data between files and storage devices. Support for devices that understand the SCSI command set.
 ** can issue SCSI commands in pass-through ("pt") mode.
