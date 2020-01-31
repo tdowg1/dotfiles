@@ -6739,6 +6739,10 @@ sudo zpool set delegation=on $dname
 sudo zfs allow everyone readonly ${dname}/fs1
 sudo zfs allow everyone readonly ${dname}/iam--${dnamefull}--$( basename ${d} )
 
+sudo chmod ugo+rwx /mnt/${dname}/fs1
+
+# If this is to be a single disk-backed zpool?  Increase copies property which could possibly protect from bad blocks:
+sudo zfs set copies=2  ${dname}/fs1
 
 == ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
 # assuming a128 is the pooled device you want to add to another pool (and delete a128):
