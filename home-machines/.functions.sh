@@ -1316,6 +1316,14 @@ Backup device
       TODO STUB-- howtodo^^but send thru tar instead (-z)? is a difference?
 Shorthand
    dd if=/dev/zero of=/swap bs=1MiB count=$((4*1024))  # 4GiB swapfile
+Combine >1 incomplete torrent files where they have different parts of the data: binary file merge torrent::
+   # blocksize should be whatever the configured torrent file defined as
+   # foo is file1
+   # bar is file2
+   # out is the new "union"'ed(if you will) combined file.
+   dd conv=sparse,notrunc if="$foo" of="$out" bs=$torrent_peices_size
+   dd conv=sparse,notrunc if="$bar" of="$out" bs=$torrent_peices_size
+
 __envHEREDOC__
 }
 helpdd2(){
@@ -6713,7 +6721,7 @@ dnamefull=a107-2787
 dname=$( echo ${dnamefull} | cut --delimiter=- --fields=1 )
 
 # Only if on Thumper:
-cfgadm -la sata                    # if necessary, to find an empty slot...
+cfgadm -la sata                    # if necessary, to find an empty slot / to determine which slot hdd was plugged into.
 sudo cfgadm -c configure <Ap_Id>   # (e.g. sata5/1)
 
 # Only if physical 512-byte size for physical sectors.
@@ -6731,6 +6739,10 @@ sudo zpool set delegation=on $dname
 sudo zfs allow everyone readonly ${dname}/fs1
 sudo zfs allow everyone readonly ${dname}/iam--${dnamefull}--$( basename ${d} )
 
+sudo chmod ugo+rwx /mnt/${dname}/fs1
+
+# If this is to be a single disk-backed zpool?  Increase copies property which could possibly protect from bad blocks:
+sudo zfs set copies=2  ${dname}/fs1
 
 == ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
 # assuming a128 is the pooled device you want to add to another pool (and delete a128):
@@ -9713,6 +9725,12 @@ sudo umount -f //192.168.1.154/c/
 == See also ==
 helpmount*()
 __envHEREDOC__
+}
+helpbittorrent(){
+cat <<'__envHEREDOC__'
+/calling helpdd()/
+__envHEREDOC__
+	helpdd
 }
 
 
