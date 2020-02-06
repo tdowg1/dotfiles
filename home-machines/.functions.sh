@@ -1317,6 +1317,7 @@ Backup device
 Shorthand
    dd if=/dev/zero of=/swap bs=1MiB count=$((4*1024))  # 4GiB swapfile
 Combine >1 incomplete torrent files where they have different parts of the data: binary file merge torrent::
+   # src : https://unix.stackexchange.com/a/549966
    # blocksize should be whatever the configured torrent file defined as
    # foo is file1
    # bar is file2
@@ -9376,8 +9377,11 @@ __envHEREDOC__
 }
 helplpr(){
 cat <<'__envHEREDOC__'
-# for some reason, this is the only error-free way I can
-# print to brother from newjack :
+-# <copies>          # oddly, this doesnt get interpretted as a Bash comment.
+
+# for some reason, this is the only error-free way I can print to brother from newjack
+# (meaning, the page doesnt get stretched out and/or stupidly deformed and cutting off the
+# headers and/or footers, for some reason) :
 lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page  "$FILE"
    -o sides=one-sided
    -o number-up={2|4|6|9|16}
@@ -9410,11 +9414,26 @@ lpoptions - display or set printer options and defaults
 Dest Brother_HL-4150CDN_series_br-script33 Resolution=2400x1200dpi TonerSaveMode=On
 Default Brother_HL-4150CDN_series_br-script33
 
-# for printing of media with images:
+# for printing of media with IMAGES:
 lpr -o media=letter -o sides=two-sided-long-edge -o fit-to-page -o TonerSaveMode=Off -o BRImprovedGray=On -o UCRGCRForImage=On -o BRReducedImage=On  "$FILE"
 
-# filename of most recently modified file:
+# filename of MOST RECENTLY MODIFIED file:
 FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort -nr | cut -d: -f4- | cut -d' ' -f3- | head -1 ) ; echo "$FILE"
+
+
+== troubleshooting ==
+# sometimes, seemingly randomly, get that SO frustrating printed out GENERAL FAILURE error, instead
+# of the actual document getting printed.  Message is like:
+#    ERROR NAME;
+#       typecheck
+#    COMMAND;
+#       image
+#    OPERAND STACK;
+# Something I finally noticed about this is that the source PDF file that caused the failure says it's a:
+#    PDF document, version 1.7
+# This PDF version thing must be the reason for some if not all of these failure print-outs.
+# Can determine PDF version with the 'file' cmdln:
+file some-pdf-file.pdf
 __envHEREDOC__
 }
 helppacman(){
