@@ -1317,6 +1317,7 @@ Backup device
 Shorthand
    dd if=/dev/zero of=/swap bs=1MiB count=$((4*1024))  # 4GiB swapfile
 Combine >1 incomplete torrent files where they have different parts of the data: binary file merge torrent::
+   # src : https://unix.stackexchange.com/a/549966
    # blocksize should be whatever the configured torrent file defined as
    # foo is file1
    # bar is file2
