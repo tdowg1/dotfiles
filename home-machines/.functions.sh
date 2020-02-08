@@ -7820,6 +7820,8 @@ for i in $threatIntelSets ; do echo $i ; aws --profile $p guardduty get-threat-i
 aws --profile $p guardduty update-threat-intel-set --threat-intel-set <threat intel set id> --activate|--no-activate \
    $detector
 
+# Cleanup instances in Standby mode (cant do it via web interface for some reason)
+aws autoscaling terminate-instance-in-auto-scaling-group  --no-should-decrement-desired-capacity  --instance-id
 
 == See also ==
 helppythonaws
