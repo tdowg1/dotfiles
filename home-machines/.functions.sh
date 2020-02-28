@@ -4756,8 +4756,10 @@ __envHEREDOC__
 }
 helpshred(){
 cat <<'__envHEREDOC__'
+# securely wipe/delete/zero out files
 shred [--interations=N] --remove --verbose --zero  file
 shred [-n N]            -u       -v        -z      f
+time find . -type f -exec  echo shred -n1 -v -u -z '{}' \;
 __envHEREDOC__
 }
 helpjava(){
