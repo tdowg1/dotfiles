@@ -6894,6 +6894,7 @@ time sudo zfs send -vP ${snapshotname} | sudo zfs receive -Fv $destinname/fs1
 
 # COMPLETE; this works correctly!::
 #  `-> methinks the big thing was... the export followed by the import *without* any kind of mounting.
+# NOTE: this does not include any snapshots other than the one that is sent.
 destinname=a134
 sourcename=a114
 snapshotname="${sourcename}/fs1@$( date +'%Y-%m-%d_%H.%M.%S' )"
@@ -6902,6 +6903,7 @@ sudo zpool import -N ${destinname}
 time sudo zfs send -vP $snapshotname | sudo zfs receive -vF ${destinname}/fs1
 # receiving full stream of a123/fs1@2017-06-10_22.49.35 into ${destinname}/fs1@2017-06-10_22.49.35
 #   receive full stream of a114/fs1@2017-06-10_01.42.19 into          a134/fs1@2017-06-10_01.42.19
+# to receive /ALL/ snapshots, use -R in the send
 
 
 # Doesnt actually receive a stream but ALLOWS TO VERIFY THE NAME the receive operation WOULD use:
