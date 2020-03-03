@@ -1,8 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import click
 import boto3
 import logging
+import datetime
 import sys
+from pprint import pformat
+from pprint import pprint
 
 logger = logging.getLogger()
 
@@ -34,8 +37,10 @@ def ghi(ec2, instance):
 @click.option("--ip", "-i", help="IP Address to quarantine", required=True)
 @click.option("--loglevel", "-l", type=click.Choice(['DEBUG','INFO','WARN','ERROR'], case_sensitive=True), default="INFO")
 def jkl(ip, loglevel):
+    #logging.basicConfig(filename=__file__ + ".log")
     logging.basicConfig()
     logger.setLevel(loglevel)
+    logger.info(datetime.datetime.now().isoformat())
     ec2 = boto3.resource("ec2")
     ec2_client = boto3.client("ec2")
     ip, tag_map = abc(ip, ec2)

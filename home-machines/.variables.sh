@@ -127,7 +127,7 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 OLDPS1="$PS1"
 #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 #PS1='\[${COLOR_RED}\][\[${COLOR_GREEN}\]\u@\h \[${COLOR_WHITE}\]\W$(__git_ps1 " (%s)") \$\[${COLOR_RED}\]] '
-export PS1='\[\e[0;31m\][ \[\e[0;32m\]\u@\h \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
+export PS1='\[\e[0;31m\][ \[\e[1;35m\]\u@\h \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
 export PS1git='\[\e[0;31m\][ \[\e[1;37m\]\w$(__git_ps1 " (%s)") \[\e[0;31m\]]\$\[\e[0m\] '
 # no git'ish :
 export PS1nogit='\[\e[0;31m\][ \[\e[1;37m\]\w \[\e[0;31m\]]\$\[\e[0m\] '
