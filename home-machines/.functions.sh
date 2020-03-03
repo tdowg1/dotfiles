@@ -7304,6 +7304,8 @@ un 1: ffffff0d0c58cd40
 == See also ==
 helpsmartctl
 helpafs
+hd      -x (Generate hd_map.html)
+hdadm
 __envHEREDOC__
 }
 helpomnios5_cfgadm(){
@@ -7346,9 +7348,19 @@ __envHEREDOC__
 }
 helpomnios7_adm_cmdlns(){
 cat <<'__envHEREDOC__'
+fmadm   # see also : helpomnios6_fault_manager
+logadm
+cfgadm  # see also : helpomnios5_cfgadm
+svcadm
+flowadm
+dladm
+ipadm
+smbadm  # see also : helpomnios8_sambasmbcifs
+hdadm   # pkgin search hdadm  # if dont have
+
+
 == Network-related ==
-flowstat is in bytes for some reason
-but maxbw is bits
+# flowstat is in bytes for some reason-but maxbw is bits.
 # Once a "flow" is defined, can do nifty things like:
 flowstat -i 1    # Show current network i/o.  Like iostat -m 1 but for network.
 flowadm set-flowprop -t -p maxbw=1200K  afs3-volser-udp    # Throttle network i/o.
@@ -7367,6 +7379,10 @@ ipadm show-if e1000g0
 
 # restart networking:  see also http://wiki.openindiana.org/oi/Static+IP
 sudo svcadm restart svc:/network/physical:default   # Restart the network.
+
+==== configuration ====
+/kernel/drv/e1000g.conf       # To configure jumbo frames, edit and change MaxFramesize to 3 :: MaxFrameSize=3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3;
+
 __envHEREDOC__
 }
 helpomnios8_sambasmbcifs(){
@@ -7403,14 +7419,13 @@ __envHEREDOC__
 }
 helpomnioslogging(){
 cat <<'__envHEREDOC__'
-/var/log/   - nothing happens here or below
-/etc/syslog.conf  - configuration file for syslogd system log daemo
+/var/log/          - nothing happens here or within descendants...
+/etc/syslog.conf   - configuration file for syslogd system log daemon
 /var/adm/messages  - kernel logging
+/etc/logadm.conf   - configuration file for logadm command; see also : https://wiki-bsse.ethz.ch/display/ITDOC/Solaris+log+rotation
 
 svcs -xv svc:/some/svc - display explanations for service state
 svcs -L svc:/some/svc - display path of this services logfile
-
-fmadm
 __envHEREDOC__
 }
 
