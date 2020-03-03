@@ -51,6 +51,19 @@ lba2IECandSI(){
    # print out in TiB / TB
    echo $( bytes2TiB $bytes )TiB/$( bytes2TB $bytes )TB
 }
+# likewise, except lba sector size is 4096 bytes instead of 512
+4klba2IECandSI(){
+   local lba=$1
+   local bytes=$(( 13107200 * 4096 ))
+   # print out in MiB
+   echo $( bytes2MiB $bytes )MiB
+
+   # print out in GiB / GB
+   echo $( bytes2GiB $bytes )GiB/$( bytes2GB $bytes )GB
+
+   # print out in TiB / TB
+   echo $( bytes2TiB $bytes )TiB/$( bytes2TB $bytes )TB
+}
 lba2bytes(){
    local lba=$1
    echo "$lba * 512" | bc
@@ -100,9 +113,27 @@ GB2lba(){
 }
 GiB2lba(){
    local gib=$1
+   local bytes=$( GiB2bytes $gib )
    echo "scale = 2
-   $gib * 1024 * 1024 * 1024 / 512" | bc
+   $bytes / 512" | bc
 }
+# likewise, except lba sector size is 4096 bytes instead of 512
+GiB24klba(){
+   local gib=$1
+   local lba512=$( GiB2lba $gib )
+   echo "scale = 2
+   $lba512 / 8" | bc
+   # trim trailing zeros, if there's a decimal point:
+   # | sed '/\./ s/\.\{0,1\}0\{1,\}$//'
+}
+GiB2bytes(){
+   local gib=$1
+   echo "$gib * 1024 * 1024 * 1024" | bc
+}
+
+
+
+
 
 
 
