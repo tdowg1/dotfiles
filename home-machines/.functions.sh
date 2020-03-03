@@ -6764,7 +6764,7 @@ cfgadm -la sata                    # if necessary, to find an empty slot / to de
 sudo cfgadm -c configure <Ap_Id>   # (e.g. sata5/1)
 
 # Only if physical 512-byte size for physical sectors.
-#sudo zpool create              -m /mnt/${dname} $dname ${d}
+sudo zpool create                 -m /mnt/${dname} $dname ${d}
 # Only if using AF/4096-byte size for physical sector disks: http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
 sudo zpool create -f -o ashift=12 -m /mnt/${dname} $dname ${d}
 
