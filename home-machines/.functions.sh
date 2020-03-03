@@ -7130,6 +7130,10 @@ __envHEREDOC__
 # TODO STUB: Determine better function names... or remove these entirely.
 # Solaris-like operating system help texts would be more precise, methinks.
 # or better yet: Illumos.
+
+#### add this somewhere too:
+#### - https://wiki-bsse.ethz.ch/display/ITDOC/Solaris+tips+and+tricks
+
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
