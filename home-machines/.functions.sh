@@ -9808,6 +9808,19 @@ cat <<'__envHEREDOC__'
 __envHEREDOC__
 	helpdd
 }
+helphex(){
+cat <<'__envHEREDOC__'
+== tools and snippets pertaining to hexadecimal data / file manipulation ==
+
+# reverse a binary file (but not text files?)
+< infile  xxd -p -c1 | tac | xxd -p -r  >  outfile
+
+==== See also ====
+hexdump
+xxd
+__envHEREDOC__
+}
+
 
 
 
