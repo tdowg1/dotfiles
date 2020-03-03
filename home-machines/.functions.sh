@@ -7227,8 +7227,10 @@ swap -s [-h]   # like swapon -s; list amt of swap space available [in human-read
 /var/adm/messages  # like /var/log/syslog or /var/log/messages
 
 == See also ==
-http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
 helpafs
+https://wiki-bsse.ethz.ch/display/ITDOC/Major+difference+between+Linux+and+Solaris
+Sysadmin's Unixersal Translator:
+   http://bhami.com/rosetta.html
 Comparison Map: ifconfig and ipadm Commands::
    https://docs.oracle.com/cd/E26502_01/html/E28987/gmait.html#scrolltoc
 __envHEREDOC__
