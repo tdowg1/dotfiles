@@ -1143,19 +1143,21 @@ smartctl --all -d sat,12 /dev/rdsk/c4t0d0
 
 d=${DEVICE}
 DEVICE=${d}
+OPTS=""
+OPTS="-d sat,12"
 
-sudo smartctl --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
-sudo smartctl --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
-sudo smartctl --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
-sudo smartctl --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl ${OPTS} --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl ${OPTS} --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl ${OPTS} --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl ${OPTS} --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
 
    # LOOPS
 devicelist="a b c"
-for i in $devicelist ; do   sudo smartctl --all  /dev/sd${i} | less ; done
-for i in $devicelist ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
-for i in $devicelist ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
-for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m;
-for i in $devicelist ; do   sudo smartctl --test=offline /dev/sd${i};  done; sleep 300m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --all  /dev/sd${i} | less ; done
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=short /dev/sd${i};  done; sleep 15m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=conveyance /dev/sd${i};  done; sleep 30m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=long /dev/sd${i};  done; sleep 300m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=offline /dev/sd${i};  done; sleep 300m;
 
    # REALLY STUPID SNIPPET
 	# dd overwrite self with self, all smart tests x2, dd again, all smart tests (x1)
@@ -1165,8 +1167,8 @@ sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=notrunc,noerror  ;  date ; sleep 
    # REALLY STUPID SNIPPET2
 sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short ${DEVICE}  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long ${DEVICE}  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 255m ; sleep 9m ;    sudo smartctl --test offline ${DEVICE}   ;  sleep 10000s
 
-sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
-sudo smartctl  $DEVICE --attributes > $( date +"%F_%T")_a143-smartctl-attrs.txt; diff -d $( ls -tr *.txt | tail -2 )
+sudo smartctl $OPTS $DEVICE --attributes > attributes ; sudo smartctl $OPTS $DEVICE --log selftest > selftest ; git diff
+sudo smartctl $OPTS $DEVICE --attributes > $( date +"%F_%T")_a143-smartctl-attrs.txt; diff -d $( ls -tr *.txt | tail -2 )
 
 == SEE ALSO ==
 smart-notifierdbus - service and graphical disk health notifier
