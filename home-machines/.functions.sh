@@ -1324,8 +1324,11 @@ See also
 * fddBadLbaAndSurrounding1000Sectors
 
 
-$ dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
-$ dd </dev/zero >/dev/sdXX
+dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
+dd < /dev/zero >/dev/sdXX
+pv -pterb < /dev/zero | dd of=zerofile.dd count=1                  # 512-byte file with zeros (in bin)
+tr '\0' '\377' < /dev/zero | pv -pterb | dd of=onefile.dd count=1  # likewise, but with ones; 377(8) == 255(10) == 0xFF == 1111 1111
+tr '\0' '\377' < /dev/zero | pv -pterb | dd of=/some/device count=1 iflag=fullblock oflag=sync conv=notrunc  # likewise, but for sector remapping
 
 
 MISC ----
