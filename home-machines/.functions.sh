@@ -6785,6 +6785,28 @@ sudo chmod ugo+rwx /mnt/${dname}/fs1
 # If this is to be a single disk-backed zpool?  Increase copies property which could possibly protect from bad blocks:
 sudo zfs set copies=2  ${dname}/fs1
 
+# SMB / SAMBA / CIFS sharing
+sudo zfs set "sharesmb=name=${dname},description=${dname}" ${dname}/fs1
+
+# NFS sharing
+sudo zfs set sharenfs=on export/home
+sudo zfs share export/home
+
+# Set desired zfs-auto-snapshot behaviour:
+sudo zfs set com.sun:auto-snapshot=false ${dname}
+sudo zfs set com.sun:auto-snapshot=false ${dname}/fs1
+sudo zfs set com.sun:auto-snapshot=false ${dname}/iam--${dnamefull}--$( basename ${d} )
+sudo zfs set com.sun:auto-snapshot=true ${dname}
+sudo zfs set com.sun:auto-snapshot=true ${dname}/fs1
+sudo zfs set com.sun:auto-snapshot=true ${dname}/iam--${dnamefull}--$( basename ${d} )
+
+
+== create a raidz1 device ==
+sudo zpool create -n  -m /mnt/$poolname  $poolname  raidz  c7t1d0  c7t5d0  c4t6d0
+
+
+
+
 == ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
 # assuming a128 is the pooled device you want to add to another pool (and delete a128):
 old_pool_full_name=a128-2786
