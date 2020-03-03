@@ -1360,6 +1360,8 @@ Combine >1 incomplete torrent files where they have different parts of the data:
    # out is the new "union"'ed(if you will) combined file.
    dd conv=sparse,notrunc if="$foo" of="$out" bs=$torrent_peices_size
    dd conv=sparse,notrunc if="$bar" of="$out" bs=$torrent_peices_size
+      # something else im thinking of... generate cksums for each peice of the two torrent files... out
+      # to txt file, and compare... could line up the files like that if having trouble with the above two dd cmdlns.
 
 __envHEREDOC__
 }
