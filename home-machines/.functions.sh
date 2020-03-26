@@ -9523,6 +9523,12 @@ FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort 
 file some-pdf-file.pdf
 __envHEREDOC__
 }
+helpmanjaro(){
+cat <<'__envHEREDOC__'
+= See also =
+helppacman
+__envHEREDOC__
+}
 helppacman(){
 cat <<'__envHEREDOC__'
 Arch Linux Package Management
