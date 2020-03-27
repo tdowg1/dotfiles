@@ -10,6 +10,12 @@
 #get that echoandexec method I wrote
 
 
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# local pgrepprogram="$1"
+# ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+# while true ; do kill -SIGSTOP  $( pgrep "$pgrepprogram" ); sleep 5s; kill -SIGCONT  $( pgrep "$pgrepprogram" ); sleep 2s; done
+
+
 function gy-in-quotes {
     [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
         strips the google prefix (up to url=) and suffix (from &usg=) from the argument,
