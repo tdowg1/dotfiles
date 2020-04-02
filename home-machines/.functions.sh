@@ -15,6 +15,24 @@
 # ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
 # while true ; do kill -SIGSTOP  $( pgrep "$pgrepprogram" ); sleep 5s; kill -SIGCONT  $( pgrep "$pgrepprogram" ); sleep 2s; done
 
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# round-robin the given process 20% of the real(human) time
+function rr20percent(){
+   # TODO  : ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+   local pgrepprogram="$1"
+   pgrep "$pgrepprogram" >/dev/null
+   if [[ $? = 0 ]] ; then
+      while true ; do
+         kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         sleep 5s
+         kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         sleep 1s
+      done
+   else
+      return 44
+   fi
+}
+
 
 function gy-in-quotes {
     [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
