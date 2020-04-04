@@ -1931,6 +1931,8 @@ SHTUFF
 * delete from cursor to end of line: D
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
+
+:se completefunc=     # disable autocompletion
 __envHEREDOC__
 ) | less --no-init
 #) |& less -F;
