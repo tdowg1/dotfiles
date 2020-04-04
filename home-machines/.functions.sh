@@ -9211,21 +9211,25 @@ ffmpeg -f concat -safe 0 -i mylist.txt -c copy out.mov   #  mylist.txt : file '.
 ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[video_out][audio_out]" \
    -map "[video_out]" -map "[audio_out]"  out.mov
 
-# Video stabilization0
-  for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
+     # Video stabilization0
+       for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
 
-# Video stabilization1
-  i've not actually had good results with the following; havent exactly put in any time to investigate either.
-  https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
-ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
+     # Video stabilization1
+       i've not actually had good results with the following; havent exactly put in any time to investigate either.
+       https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
+     ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
 
-# Video stabilization2
-http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
+     # Video stabilization2
+     http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
 
-# Demux out just the _V_ideo portion from a media file:
-ffmpeg -i f1 -c:v copy -map 0:0 video.mov
+# To DEMUX out just the _V_ideo portion from a media file:
+ffmpeg -i f1 -codec:v copy -map 0:0 video.mov  # or video.mkv
+
+# To DEMUX out just the _A_udio portion from a media file:
+ffmpeg -i f1 -codec:a copy -map 0:1 out.eac3   # or out.wav  out.m4a  out.aac
+
 
 # Strip any potentially insane metadata from media files:
 ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
