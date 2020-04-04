@@ -2933,8 +2933,13 @@ b. change leading text to  edit  for each commit you want to modify, or
    change leading text to reword for each commit MESSAGE you want to modify.
 
 c. make desired changes. (do a git add to stage it, if thats what youre doing). then change your commit history with:
+      c. make desired changes. (~~~~do a git add to stage it, if thats what youre doing~~~~). then change your commit history with:
 
 d. $   git commit -a --amend
+      AFTER git add FILE THAT WANTED TO BE MODIFIED...
+      d. $   git commit -a --amend   # ? not sure if behaviour of "-a" has changed in newer versions of git ? gives empty commit prompt.
+      or
+      d. $   git commit --amend      # gives expect prepopulated commit prompt.
 
 e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
 
