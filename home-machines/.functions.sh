@@ -10,6 +10,30 @@
 #get that echoandexec method I wrote
 
 
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# local pgrepprogram="$1"
+# ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+# while true ; do kill -SIGSTOP  $( pgrep "$pgrepprogram" ); sleep 5s; kill -SIGCONT  $( pgrep "$pgrepprogram" ); sleep 2s; done
+
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# round-robin the given process 20% of the real(human) time
+function rr20percent(){
+   # TODO  : ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+   local pgrepprogram="$1"
+   pgrep "$pgrepprogram" >/dev/null
+   if [[ $? = 0 ]] ; then
+      while true ; do
+         kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         sleep 5s
+         kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         sleep 1s
+      done
+   else
+      return 44
+   fi
+}
+
+
 function gy-in-quotes {
     [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
         strips the google prefix (up to url=) and suffix (from &usg=) from the argument,
@@ -2911,8 +2935,13 @@ b. change leading text to  edit  for each commit you want to modify, or
    change leading text to reword for each commit MESSAGE you want to modify.
 
 c. make desired changes. (do a git add to stage it, if thats what youre doing). then change your commit history with:
+      c. make desired changes. (~~~~do a git add to stage it, if thats what youre doing~~~~). then change your commit history with:
 
 d. $   git commit -a --amend
+      AFTER git add FILE THAT WANTED TO BE MODIFIED...
+      d. $   git commit -a --amend   # ? not sure if behaviour of "-a" has changed in newer versions of git ? gives empty commit prompt.
+      or
+      d. $   git commit --amend      # gives expect prepopulated commit prompt.
 
 e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
 
@@ -9523,6 +9552,12 @@ FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort 
 # This PDF version thing must be the reason for some if not all of these failure print-outs.
 # Can determine PDF version with the 'file' cmdln:
 file some-pdf-file.pdf
+__envHEREDOC__
+}
+helpmanjaro(){
+cat <<'__envHEREDOC__'
+= See also =
+helppacman
 __envHEREDOC__
 }
 helppacman(){
