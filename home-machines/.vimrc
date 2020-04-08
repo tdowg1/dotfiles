@@ -73,9 +73,9 @@ Bundle 'Valloric/YouCompleteMe'
 "       cd ~/.vim/bundle/YouCompleteMe
 "       python3 install.py --clang-completer
 
-" The first line ensures that the auto-complete window goes away when you’re
-" done with it, and the second defines a shortcut for goto definition.
+" ensure auto-complete window goes away when youre done with it:
 let g:ycm_autoclose_preview_window_after_completion=1
+" defines a shortcut for goto definition:
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
@@ -191,11 +191,10 @@ Plugin 'xolox/vim-easytags'
 
 Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
-" F8 will toggle the tagbar:
-"nmap <F8> :TagbarToggle<CR>
 " KDE's Dolphin LHS single-level places shortcuts links to show/hide is F9;
 " make it so...
 nmap <F9> :TagbarToggle<CR>
+
 
 
 
