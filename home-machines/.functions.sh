@@ -10,6 +10,30 @@
 #get that echoandexec method I wrote
 
 
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# local pgrepprogram="$1"
+# ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+# while true ; do kill -SIGSTOP  $( pgrep "$pgrepprogram" ); sleep 5s; kill -SIGCONT  $( pgrep "$pgrepprogram" ); sleep 2s; done
+
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# round-robin the given process 20% of the real(human) time
+function rr20percent(){
+   # TODO  : ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+   local pgrepprogram="$1"
+   pgrep "$pgrepprogram" >/dev/null
+   if [[ $? = 0 ]] ; then
+      while true ; do
+         kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         sleep 5s
+         kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         sleep 1s
+      done
+   else
+      return 44
+   fi
+}
+
+
 function gy-in-quotes {
     [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
         strips the google prefix (up to url=) and suffix (from &usg=) from the argument,
@@ -42,6 +66,19 @@ cdzfs(){
 lba2IECandSI(){
    local lba=$1
    local bytes=$( lba2bytes $lba )
+   # print out in MiB
+   echo $( bytes2MiB $bytes )MiB
+
+   # print out in GiB / GB
+   echo $( bytes2GiB $bytes )GiB/$( bytes2GB $bytes )GB
+
+   # print out in TiB / TB
+   echo $( bytes2TiB $bytes )TiB/$( bytes2TB $bytes )TB
+}
+# likewise, except lba sector size is 4096 bytes instead of 512
+4klba2IECandSI(){
+   local lba=$1
+   local bytes=$(( 13107200 * 4096 ))
    # print out in MiB
    echo $( bytes2MiB $bytes )MiB
 
@@ -100,9 +137,27 @@ GB2lba(){
 }
 GiB2lba(){
    local gib=$1
+   local bytes=$( GiB2bytes $gib )
    echo "scale = 2
-   $gib * 1024 * 1024 * 1024 / 512" | bc
+   $bytes / 512" | bc
 }
+# likewise, except lba sector size is 4096 bytes instead of 512
+GiB24klba(){
+   local gib=$1
+   local lba512=$( GiB2lba $gib )
+   echo "scale = 2
+   $lba512 / 8" | bc
+   # trim trailing zeros, if there's a decimal point:
+   # | sed '/\./ s/\.\{0,1\}0\{1,\}$//'
+}
+GiB2bytes(){
+   local gib=$1
+   echo "$gib * 1024 * 1024 * 1024" | bc
+}
+
+
+
+
 
 
 
@@ -1112,19 +1167,21 @@ smartctl --all -d sat,12 /dev/rdsk/c4t0d0
 
 d=${DEVICE}
 DEVICE=${d}
+OPTS=""
+OPTS="-d sat,12"
 
-sudo smartctl --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
-sudo smartctl --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
-sudo smartctl --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
-sudo smartctl --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl ${OPTS} --all ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl ${OPTS} --xall ${d} > ${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
+sudo smartctl ${OPTS} --all ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_all.log
+sudo smartctl ${OPTS} --xall ${d} > /media/smb-phisata-mnt/a14-h/h/root/LIFE/hdd/${dname}_$( date +"%Y%m%d%H%M%S" )_smartctl_xall.log
 
    # LOOPS
 devicelist="a b c"
-for i in $devicelist ; do   sudo smartctl --all  /dev/sd${i} | less ; done
-for i in $devicelist ; do   sudo smartctl --test=short /dev/sd${i};  done; sleep 15m;
-for i in $devicelist ; do   sudo smartctl --test=conveyance /dev/sd${i};  done; sleep 30m;
-for i in $devicelist ; do   sudo smartctl --test=long /dev/sd${i};  done; sleep 300m;
-for i in $devicelist ; do   sudo smartctl --test=offline /dev/sd${i};  done; sleep 300m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --all  /dev/sd${i} | less ; done
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=short /dev/sd${i};  done; sleep 15m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=conveyance /dev/sd${i};  done; sleep 30m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=long /dev/sd${i};  done; sleep 300m;
+for i in $devicelist ; do   sudo smartctl ${OPTS} --test=offline /dev/sd${i};  done; sleep 300m;
 
    # REALLY STUPID SNIPPET
 	# dd overwrite self with self, all smart tests x2, dd again, all smart tests (x1)
@@ -1134,8 +1191,8 @@ sudo dd if=${DEVICE} of=${DEVICE} bs=4096 conv=notrunc,noerror  ;  date ; sleep 
    # REALLY STUPID SNIPPET2
 sudo smartctl --test conveyance ${DEVICE}  && echo 'conveyance OKkKKKKKKKKKK' ; sleep 10m  ;  sudo smartctl --test short ${DEVICE}  && echo 'short OKkKKKKKKKKKK' ; sleep 10m   ;  sudo smartctl --test long ${DEVICE}  && echo 'long OKkkkkkkkkkkkKK'   ;   sleep 255m ; sleep 9m ;    sudo smartctl --test offline ${DEVICE}   ;  sleep 10000s
 
-sudo smartctl  $DEVICE --attributes > attributes ; sudo smartctl  $DEVICE --log selftest > selftest ; git diff
-sudo smartctl  $DEVICE --attributes > $( date +"%F_%T")_a143-smartctl-attrs.txt; diff -d $( ls -tr *.txt | tail -2 )
+sudo smartctl $OPTS $DEVICE --attributes > attributes ; sudo smartctl $OPTS $DEVICE --log selftest > selftest ; git diff
+sudo smartctl $OPTS $DEVICE --attributes > $( date +"%F_%T")_a143-smartctl-attrs.txt; diff -d $( ls -tr *.txt | tail -2 )
 
 == SEE ALSO ==
 smart-notifierdbus - service and graphical disk health notifier
@@ -1291,8 +1348,11 @@ See also
 * fddBadLbaAndSurrounding1000Sectors
 
 
-$ dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
-$ dd </dev/zero >/dev/sdXX
+dd if=/dev/zero of=/dev/X count=1 seek=<LBA of err> conv=notrunc,noerror oflag=direct
+dd < /dev/zero >/dev/sdXX
+pv -pterb < /dev/zero | dd of=zerofile.dd count=1                  # 512-byte file with zeros (in bin)
+tr '\0' '\377' < /dev/zero | pv -pterb | dd of=onefile.dd count=1  # likewise, but with ones; 377(8) == 255(10) == 0xFF == 1111 1111
+tr '\0' '\377' < /dev/zero | pv -pterb | dd of=/some/device count=1 iflag=fullblock oflag=sync conv=notrunc  # likewise, but for sector remapping
 
 
 MISC ----
@@ -1324,6 +1384,8 @@ Combine >1 incomplete torrent files where they have different parts of the data:
    # out is the new "union"'ed(if you will) combined file.
    dd conv=sparse,notrunc if="$foo" of="$out" bs=$torrent_peices_size
    dd conv=sparse,notrunc if="$bar" of="$out" bs=$torrent_peices_size
+      # something else im thinking of... generate cksums for each peice of the two torrent files... out
+      # to txt file, and compare... could line up the files like that if having trouble with the above two dd cmdlns.
 
 __envHEREDOC__
 }
@@ -1893,6 +1955,8 @@ SHTUFF
 * delete from cursor to end of line: D
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
+
+:se completefunc=     # disable autocompletion
 __envHEREDOC__
 ) | less --no-init
 #) |& less -F;
@@ -2871,8 +2935,13 @@ b. change leading text to  edit  for each commit you want to modify, or
    change leading text to reword for each commit MESSAGE you want to modify.
 
 c. make desired changes. (do a git add to stage it, if thats what youre doing). then change your commit history with:
+      c. make desired changes. (~~~~do a git add to stage it, if thats what youre doing~~~~). then change your commit history with:
 
 d. $   git commit -a --amend
+      AFTER git add FILE THAT WANTED TO BE MODIFIED...
+      d. $   git commit -a --amend   # ? not sure if behaviour of "-a" has changed in newer versions of git ? gives empty commit prompt.
+      or
+      d. $   git commit --amend      # gives expect prepopulated commit prompt.
 
 e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
 
@@ -4756,8 +4825,10 @@ __envHEREDOC__
 }
 helpshred(){
 cat <<'__envHEREDOC__'
+# securely wipe/delete/zero out files
 shred [--interations=N] --remove --verbose --zero  file
 shred [-n N]            -u       -v        -z      f
+time find . -type f -exec  echo shred -n1 -v -u -z '{}' \;
 __envHEREDOC__
 }
 helpjava(){
@@ -6726,7 +6797,7 @@ cfgadm -la sata                    # if necessary, to find an empty slot / to de
 sudo cfgadm -c configure <Ap_Id>   # (e.g. sata5/1)
 
 # Only if physical 512-byte size for physical sectors.
-#sudo zpool create              -m /mnt/${dname} $dname ${d}
+sudo zpool create                 -m /mnt/${dname} $dname ${d}
 # Only if using AF/4096-byte size for physical sector disks: http://wiki.illumos.org/display/illumos/ZFS+and+Advanced+Format+disks
 sudo zpool create -f -o ashift=12 -m /mnt/${dname} $dname ${d}
 
@@ -6744,6 +6815,28 @@ sudo chmod ugo+rwx /mnt/${dname}/fs1
 
 # If this is to be a single disk-backed zpool?  Increase copies property which could possibly protect from bad blocks:
 sudo zfs set copies=2  ${dname}/fs1
+
+# SMB / SAMBA / CIFS sharing
+sudo zfs set "sharesmb=name=${dname},description=${dname}" ${dname}/fs1
+
+# NFS sharing
+sudo zfs set sharenfs=on export/home
+sudo zfs share export/home
+
+# Set desired zfs-auto-snapshot behaviour:
+sudo zfs set com.sun:auto-snapshot=false ${dname}
+sudo zfs set com.sun:auto-snapshot=false ${dname}/fs1
+sudo zfs set com.sun:auto-snapshot=false ${dname}/iam--${dnamefull}--$( basename ${d} )
+sudo zfs set com.sun:auto-snapshot=true ${dname}
+sudo zfs set com.sun:auto-snapshot=true ${dname}/fs1
+sudo zfs set com.sun:auto-snapshot=true ${dname}/iam--${dnamefull}--$( basename ${d} )
+
+
+== create a raidz1 device ==
+sudo zpool create -n  -m /mnt/$poolname  $poolname  raidz  c7t1d0  c7t5d0  c4t6d0
+
+
+
 
 == ADD DEVICE TO EXISTING ZPOOL TO CREATE MIRROR ==
 # assuming a128 is the pooled device you want to add to another pool (and delete a128):
@@ -6892,6 +6985,7 @@ time sudo zfs send -vP ${snapshotname} | sudo zfs receive -Fv $destinname/fs1
 
 # COMPLETE; this works correctly!::
 #  `-> methinks the big thing was... the export followed by the import *without* any kind of mounting.
+# NOTE: this does not include any snapshots other than the one that is sent.
 destinname=a134
 sourcename=a114
 snapshotname="${sourcename}/fs1@$( date +'%Y-%m-%d_%H.%M.%S' )"
@@ -6900,6 +6994,7 @@ sudo zpool import -N ${destinname}
 time sudo zfs send -vP $snapshotname | sudo zfs receive -vF ${destinname}/fs1
 # receiving full stream of a123/fs1@2017-06-10_22.49.35 into ${destinname}/fs1@2017-06-10_22.49.35
 #   receive full stream of a114/fs1@2017-06-10_01.42.19 into          a134/fs1@2017-06-10_01.42.19
+# to receive /ALL/ snapshots, use -R in the send
 
 
 # Doesnt actually receive a stream but ALLOWS TO VERIFY THE NAME the receive operation WOULD use:
@@ -7066,6 +7161,10 @@ __envHEREDOC__
 # TODO STUB: Determine better function names... or remove these entirely.
 # Solaris-like operating system help texts would be more precise, methinks.
 # or better yet: Illumos.
+
+#### add this somewhere too:
+#### - https://wiki-bsse.ethz.ch/display/ITDOC/Solaris+tips+and+tricks
+
 helpomnios1_ipmitool(){
 cat <<'__envHEREDOC__'
 ipmitool sdr     # Print Sensor Data Repository entries and readings. temperature, fan speed, power info, hdd slot state
@@ -7163,8 +7262,10 @@ swap -s [-h]   # like swapon -s; list amt of swap space available [in human-read
 /var/adm/messages  # like /var/log/syslog or /var/log/messages
 
 == See also ==
-http://bhami.com/rosetta.html  # Sysadmin's Unixersal Translator.
 helpafs
+https://wiki-bsse.ethz.ch/display/ITDOC/Major+difference+between+Linux+and+Solaris
+Sysadmin's Unixersal Translator:
+   http://bhami.com/rosetta.html
 Comparison Map: ifconfig and ipadm Commands::
    https://docs.oracle.com/cd/E26502_01/html/E28987/gmait.html#scrolltoc
 __envHEREDOC__
@@ -7264,6 +7365,8 @@ un 1: ffffff0d0c58cd40
 == See also ==
 helpsmartctl
 helpafs
+hd      -x (Generate hd_map.html)
+hdadm
 __envHEREDOC__
 }
 helpomnios5_cfgadm(){
@@ -7306,9 +7409,19 @@ __envHEREDOC__
 }
 helpomnios7_adm_cmdlns(){
 cat <<'__envHEREDOC__'
+fmadm   # see also : helpomnios6_fault_manager
+logadm
+cfgadm  # see also : helpomnios5_cfgadm
+svcadm
+flowadm
+dladm
+ipadm
+smbadm  # see also : helpomnios8_sambasmbcifs
+hdadm   # pkgin search hdadm  # if dont have
+
+
 == Network-related ==
-flowstat is in bytes for some reason
-but maxbw is bits
+# flowstat is in bytes for some reason-but maxbw is bits.
 # Once a "flow" is defined, can do nifty things like:
 flowstat -i 1    # Show current network i/o.  Like iostat -m 1 but for network.
 flowadm set-flowprop -t -p maxbw=1200K  afs3-volser-udp    # Throttle network i/o.
@@ -7327,6 +7440,10 @@ ipadm show-if e1000g0
 
 # restart networking:  see also http://wiki.openindiana.org/oi/Static+IP
 sudo svcadm restart svc:/network/physical:default   # Restart the network.
+
+==== configuration ====
+/kernel/drv/e1000g.conf       # To configure jumbo frames, edit and change MaxFramesize to 3 :: MaxFrameSize=3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3;
+
 __envHEREDOC__
 }
 helpomnios8_sambasmbcifs(){
@@ -7363,14 +7480,13 @@ __envHEREDOC__
 }
 helpomnioslogging(){
 cat <<'__envHEREDOC__'
-/var/log/   - nothing happens here or below
-/etc/syslog.conf  - configuration file for syslogd system log daemo
+/var/log/          - nothing happens here or within descendants...
+/etc/syslog.conf   - configuration file for syslogd system log daemon
 /var/adm/messages  - kernel logging
+/etc/logadm.conf   - configuration file for logadm command; see also : https://wiki-bsse.ethz.ch/display/ITDOC/Solaris+log+rotation
 
 svcs -xv svc:/some/svc - display explanations for service state
 svcs -L svc:/some/svc - display path of this services logfile
-
-fmadm
 __envHEREDOC__
 }
 
@@ -7820,6 +7936,8 @@ for i in $threatIntelSets ; do echo $i ; aws --profile $p guardduty get-threat-i
 aws --profile $p guardduty update-threat-intel-set --threat-intel-set <threat intel set id> --activate|--no-activate \
    $detector
 
+# Cleanup instances in Standby mode (cant do it via web interface for some reason)
+aws autoscaling terminate-instance-in-auto-scaling-group  --no-should-decrement-desired-capacity  --instance-id
 
 == See also ==
 helppythonaws
@@ -9093,21 +9211,25 @@ ffmpeg -f concat -safe 0 -i mylist.txt -c copy out.mov   #  mylist.txt : file '.
 ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[video_out][audio_out]" \
    -map "[video_out]" -map "[audio_out]"  out.mov
 
-# Video stabilization0
-  for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
+     # Video stabilization0
+       for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
 
-# Video stabilization1
-  i've not actually had good results with the following; havent exactly put in any time to investigate either.
-  https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
-ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
+     # Video stabilization1
+       i've not actually had good results with the following; havent exactly put in any time to investigate either.
+       https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
+     ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
 
-# Video stabilization2
-http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
+     # Video stabilization2
+     http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
 
-# Demux out just the _V_ideo portion from a media file:
-ffmpeg -i f1 -c:v copy -map 0:0 video.mov
+# To DEMUX out just the _V_ideo portion from a media file:
+ffmpeg -i f1 -codec:v copy -map 0:0 video.mov  # or video.mkv
+
+# To DEMUX out just the _A_udio portion from a media file:
+ffmpeg -i f1 -codec:a copy -map 0:1 out.eac3   # or out.wav  out.m4a  out.aac
+
 
 # Strip any potentially insane metadata from media files:
 ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
@@ -9436,6 +9558,12 @@ FILE=$( find . -maxdepth 1 -type f -exec stat --format '%Y :%y %n' {} \; | sort 
 file some-pdf-file.pdf
 __envHEREDOC__
 }
+helpmanjaro(){
+cat <<'__envHEREDOC__'
+= See also =
+helppacman
+__envHEREDOC__
+}
 helppacman(){
 cat <<'__envHEREDOC__'
 Arch Linux Package Management
@@ -9751,6 +9879,19 @@ cat <<'__envHEREDOC__'
 __envHEREDOC__
 	helpdd
 }
+helphex(){
+cat <<'__envHEREDOC__'
+== tools and snippets pertaining to hexadecimal data / file manipulation ==
+
+# reverse a binary file (but not text files?)
+< infile  xxd -p -c1 | tac | xxd -p -r  >  outfile
+
+==== See also ====
+hexdump
+xxd
+__envHEREDOC__
+}
+
 
 
 

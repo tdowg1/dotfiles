@@ -73,9 +73,9 @@ Plugin 'tmhedberg/SimpylFold'
 "       cd ~/.vim/bundle/YouCompleteMe
 "       python3 install.py --clang-completer
 
-" The first line ensures that the auto-complete window goes away when you’re
-" done with it, and the second defines a shortcut for goto definition.
+" ensure auto-complete window goes away when youre done with it:
 let g:ycm_autoclose_preview_window_after_completion=1
+" defines a shortcut for goto definition:
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
@@ -132,10 +132,10 @@ call togglebg#map("<F5>")   " them very easy with F5
 " If you want a proper file tree, then NERDTree is the way to go:
 Plugin 'scrooloose/nerdtree'  " :NERDTree [startdirectory | bookmark]
 " https://www.pkimber.net/howto/vim/plugin/nerd-tree.html
-"map <F2> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
 " KDE's Dolphin LHS filesystem browser shortcut to show/hide is F7; make it
 " so...
-map <F7> :NERDTreeToggle<CR>
+"map <F7> :NERDTreeToggle<CR>
 
 
 " If you want to use tabs, utilize vim-nerdtree-tabs:
@@ -146,8 +146,9 @@ let NERDTreeIgnore=['\.pyc$', '\~$']   " ignore files in NERDTree
 
 
 
-" Want to search for basically anything from VIM? Check out ctrlP:  (initiate
-" with c-p, duh)::
+" Want to search for basically anything from VIM?
+" Want to save time hunting for files in Vim?
+" Check out ctrlP:  (initiate with c-p, duh)::
 Plugin 'kien/ctrlp.vim'
 " ^^^See it in action: http://www.youtube.com/watch?v=9XrHk3xjYsw
 
@@ -186,13 +187,15 @@ Plugin 'majutsushi/tagbar'
 " isn't installed! Please download & install Exuberant Ctags from
 " http://ctags.sf.net"  except this website seems up to date with 2009 :(
 "Plugin 'xolox/vim-easytags'
+
+
+
 Plugin 'xolox/vim-misc'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
-" F8 will toggle the tagbar:
-"nmap <F8> :TagbarToggle<CR>
 " KDE's Dolphin LHS single-level places shortcuts links to show/hide is F9;
 " make it so...
 nmap <F9> :TagbarToggle<CR>
+
 
 
 
@@ -201,13 +204,13 @@ nmap <F9> :TagbarToggle<CR>
 
 
 
-" :help pymode
-" https://github.com/python-mode/python-mode
-" https://github.com/python-mode/python-mode/wiki
+"" :help pymode
+"" https://github.com/python-mode/python-mode
+"" https://github.com/python-mode/python-mode/wiki
 Plugin 'klen/python-mode'
-" howtodo Code refactoring: specifically just a variable rename??
-"    pymode-rope-refactoring
-" Keymap for rename method/function/class/variables under cursor:
+"" howtodo Code refactoring: specifically just a variable rename??
+""    pymode-rope-refactoring
+"" Keymap for rename method/function/class/variables under cursor:
 let g:pymode_rope = 1
 ":PymodeRopeNewProject
 ":PymodeRopeRegenerate
@@ -217,6 +220,7 @@ let g:pymode_rope_ropefolder='.ropeproject'
 let g:pymode_rope_show_doc_bind = '<C-c>d'
 let g:pymode_rope_regenerate_on_write = 1
 
+" heres what i want:
 let g:pymode_rope_rename_bind = '<C-c>rr'
 
 set completeopt=menuone,noinsert
@@ -227,6 +231,11 @@ let g:pymode_rope_autoimport = 0
 let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime']
 let g:pymode_rope_autoimport_import_after_complete = 0
 
+" was getting funny business from syntax checking (upon saving) happening
+" whereby it would say a:   print "xyz"   :is an *error*.  but also not
+" realizing that the script being maintained executes in Python2.  Running
+" this seems to make it sort of better:
+"     :let g:pymode_lint_checkers = ['pep8']
 
 
 
@@ -325,6 +334,13 @@ set wcm=<C-Z>
 map <F4> :emenu <C-Z>
 
 
+" switch between paste and nopaste mode (lines 1 and 3 just concern showing of the current status)
+nnoremap <F3> :set invpaste paste?<CR>
+set pastetoggle=<F3>
+set showmode
+
+
+
 " (me!) add from gVim
 set gfn=Terminus\ 9
 
@@ -338,12 +354,14 @@ set bg=light
 se scrolloff=5
 
 
-se colorcolumn=0
+se colorcolumn=1
 se cc=
 
 
 " 2012-04-04 phisata comment this out, it was preventing autoindent and such
 "set paste
+"^^would be nice to turn this on for *.txt files... but do not set for any programming language files...
+"^^^^also, def set a keyboard shortcut to enable quicker oon/offeddness of this jazz
 
 
 " 2012-03-02 from /etc/vim/vimrc
@@ -440,5 +458,13 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 "autocmd FileType sh,perl,python  :call <SID>StripTrailingWhitespaces()
 " etc.
 
+
+
+" this'll be a red column, in certain circumstances:
+"textwidth=79  " default
+se textwidth=95
+se textwidth=955
+"^^this wont get applied... must be geting set to textwidth=79 somewhere else (at least when
+"doing python srcish)
 
 
