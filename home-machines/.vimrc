@@ -333,6 +333,13 @@ set wcm=<C-Z>
 map <F4> :emenu <C-Z>
 
 
+" switch between paste and nopaste mode (lines 1 and 3 just concern showing of the current status)
+nnoremap <F3> :set invpaste paste?<CR>
+set pastetoggle=<F3>
+set showmode
+
+
+
 " (me!) add from gVim
 set gfn=Terminus\ 9
 
