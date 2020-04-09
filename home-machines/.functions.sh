@@ -1669,6 +1669,8 @@ cat <<'__envHEREDOC__'
 --checksum : have used this to detect file differences (especially in xls / Excel
     Spreadsheet files) that werent detected, otherwise.
 
+--bwlimit : maximum transfer rate for the data sent over the socket, specified in units per second.
+    default - 1024 bytes (as if "K" or "KiB" had been appended).
 == Dont Forget... ==
 AFAIK, when --stats, --human-readable are reported, it is done so using SI-notation (base-10) (uses powers of 1000).
 as opposed to (e.g.)
