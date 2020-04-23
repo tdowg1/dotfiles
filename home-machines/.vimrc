@@ -299,6 +299,10 @@ syntax on
 set relativenumber
 set nu   " regular numbering after relative numbering sets curr line to actual file line number.
 
+" Toggle line numbers from none at all
+" to relative numbering with current line number
+noremap <F6> :set invnumber invrelativenumber<CR>
+
 
 " Prevents vim from replacing spaces with tabs whenever autoindent is on:
 set expandtab
