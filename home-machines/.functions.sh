@@ -15,6 +15,24 @@
 # ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
 # while true ; do kill -SIGSTOP  $( pgrep "$pgrepprogram" ); sleep 5s; kill -SIGCONT  $( pgrep "$pgrepprogram" ); sleep 2s; done
 
+# TODO function to slow down a (decidedly non-interactive) program by continually suspending and unsuspending it  ...
+# round-robin the given process 20% of the real(human) time
+function rr20percent(){
+   # TODO  : ...itll need to gracefully handle a c-c... by ensuring program is left in the unsuspended state.  e.g.:
+   local pgrepprogram="$1"
+   pgrep "$pgrepprogram" >/dev/null
+   if [[ $? = 0 ]] ; then
+      while true ; do
+         kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         sleep 5s
+         kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         sleep 1s
+      done
+   else
+      return 44
+   fi
+}
+
 
 function gy-in-quotes {
     [ -z "$1" ] && printf '%s\n' "Usage:        $FUNCNAME 'URL' (must be in single quotes!)
@@ -1651,6 +1669,8 @@ cat <<'__envHEREDOC__'
 --checksum : have used this to detect file differences (especially in xls / Excel
     Spreadsheet files) that werent detected, otherwise.
 
+--bwlimit : maximum transfer rate for the data sent over the socket, specified in units per second.
+    default - 1024 bytes (as if "K" or "KiB" had been appended).
 == Dont Forget... ==
 AFAIK, when --stats, --human-readable are reported, it is done so using SI-notation (base-10) (uses powers of 1000).
 as opposed to (e.g.)
@@ -1937,6 +1957,8 @@ SHTUFF
 * delete from cursor to end of line: D
 * delete from cursor to end of file: dG
 * insert timestamp: !!date                  bit.ly/I0xzvq
+
+:se completefunc=     # disable autocompletion
 __envHEREDOC__
 ) | less --no-init
 #) |& less -F;
@@ -2915,8 +2937,13 @@ b. change leading text to  edit  for each commit you want to modify, or
    change leading text to reword for each commit MESSAGE you want to modify.
 
 c. make desired changes. (do a git add to stage it, if thats what youre doing). then change your commit history with:
+      c. make desired changes. (~~~~do a git add to stage it, if thats what youre doing~~~~). then change your commit history with:
 
 d. $   git commit -a --amend
+      AFTER git add FILE THAT WANTED TO BE MODIFIED...
+      d. $   git commit -a --amend   # ? not sure if behaviour of "-a" has changed in newer versions of git ? gives empty commit prompt.
+      or
+      d. $   git commit --amend      # gives expect prepopulated commit prompt.
 
 e. once committed, you want git to re-apply the history that's in front of the commit you just over wrote, so run:
 
@@ -9186,21 +9213,25 @@ ffmpeg -f concat -safe 0 -i mylist.txt -c copy out.mov   #  mylist.txt : file '.
 ffmpeg -i f1 -i f2 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[video_out][audio_out]" \
    -map "[video_out]" -map "[audio_out]"  out.mov
 
-# Video stabilization0
-  for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
+     # Video stabilization0
+       for big time, serious, manual stabilization where you center on something in the video, ffmpeg isn't going to help with that; check out a program like Natron.
 
-# Video stabilization1
-  i've not actually had good results with the following; havent exactly put in any time to investigate either.
-  https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
-ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
-ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
+     # Video stabilization1
+       i've not actually had good results with the following; havent exactly put in any time to investigate either.
+       https://video.stackexchange.com/questions/19089/youtube-like-video-stabilization-on-linux
+     ffmpeg -i shaky-input.mp4 -vf deshake stabilized-output.mp4   # one pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabdetect=shakiness=5:show=1 dummy.mp4  # 1/2 two pass approach.
+     ffmpeg -i shaky-input.mp4 -vf vidstabtransform,unsharp=5:5:0.8:3:3:0.4 stabilized-output.mp4 # 2/2
 
-# Video stabilization2
-http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
+     # Video stabilization2
+     http://bernaerts.dyndns.org/linux/74-ubuntu/350-ubuntu-xenial-rotate-stabilize-video-melt-vidstab
 
-# Demux out just the _V_ideo portion from a media file:
-ffmpeg -i f1 -c:v copy -map 0:0 video.mov
+# To DEMUX out just the _V_ideo portion from a media file:
+ffmpeg -i f1 -codec:v copy -map 0:0 video.mov  # or video.mkv
+
+# To DEMUX out just the _A_udio portion from a media file:
+ffmpeg -i f1 -codec:a copy -map 0:1 out.eac3   # or out.wav  out.m4a  out.aac
+
 
 # Strip any potentially insane metadata from media files:
 ffmpeg -i in.mov -map_metadata -1 -c:v copy -c:a copy out.mov
