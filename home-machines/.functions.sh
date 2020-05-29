@@ -1039,11 +1039,17 @@ pssynergy(){
    #echo '  PID TTY          TIME  NI COMMAND'
    #ps -eo "%p %y %x %n %c" | grep synergy
 
-   ps -o "%p %y %x %n %c" -p $( pgrep synergy )
+   ps -o "%p %y %x %n %c" -p $( pgrep synergy ) 2>/dev/null
+   ps -o "%p %y %x %n %c" -p $( pgrep barrier ) 2>/dev/null
 }
 pswsynergy(){
    # and remove only the first line
-   ps www -o "%a" $( pgrep synergy ) | sed -e '1,1d'
+   if [[ ! -z `pgrep synergy` ]] ; then
+      ps www -o "%a" $( pgrep synergy ) | sed -e '1,1d'
+   fi
+   if [[ ! -z `pgrep barrier` ]] ; then
+      ps www -o "%a" $( pgrep barrier ) | sed -e '1,1d'
+   fi
 }
 synergycmdln(){
    pswsynergy
@@ -1058,6 +1064,9 @@ restartsynergy(){
    prevcmdln="$( pswsynergy )"
    pkill synergy
    eval "$( echo $prevcmdln )"
+
+   echo "done... you may need to _reset_ your shell now..."
+   echo "(dunno why (barriers, at least) mucks up the shell env...)"
 }
 
 
