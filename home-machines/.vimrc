@@ -186,7 +186,8 @@ set clipboard=unnamed
 " systems... :"easytags.vim 3.11: Plug-in not loaded because Exuberant Ctags
 " isn't installed! Please download & install Exuberant Ctags from
 " http://ctags.sf.net"  except this website seems up to date with 2009 :(
-Plugin 'xolox/vim-easytags'
+" on mswin : E492: Not an editor command: Plugin 'xolox/vim-easytags'
+"Plugin 'xolox/vim-easytags'
 
 
 "Plugin 'xolox/vim-misc'
