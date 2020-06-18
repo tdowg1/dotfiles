@@ -173,6 +173,7 @@ alias dbpub='cd "$dbpub"'
 alias dbpubpics='cd "$dbpubpics"'
 alias dbs='cd "$dbs"'
 alias dbsedu='cd "$dbsedu"'
+alias dbsynergy='cd $db/synergy-active-configs'
 
 # misc places
 alias x11='cd "$x11"'
