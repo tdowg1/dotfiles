@@ -9755,6 +9755,13 @@ sudo chmod ugo+rwx /mnt/$dname
 
 # optionally, update fstab:
 sudo su -c "echo \"LABEL=${dname}             /mnt/${dname}              btrfs     defaults        0 0\" >> /etc/fstab"
+
+
+
+# check and scrub mounted fs:
+sudo btrfs check --readonly --force /dev/sda2
+sudo btrfs scrub start -d /dev/sda2
+sudo btrfs scrub status -d /dev/sda2
 __envHEREDOC__
 }
 helpmediainfo(){
