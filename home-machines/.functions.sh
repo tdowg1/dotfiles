@@ -24,8 +24,10 @@ function rr20percent(){
    if [[ $? = 0 ]] ; then
       while true ; do
          kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         echo STOPPED...
          sleep 5s
          kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         echo CONTTED
          sleep 1s
       done
    else
