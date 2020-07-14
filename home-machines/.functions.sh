@@ -7083,6 +7083,17 @@ FILES
 upower
 __envHEREDOC__
 }
+helppip(){
+cat <<'__envHEREDOC__'
+# check version/update status of installed python packages:
+pip list --outdated --format=columns
+
+= See also =
+pip-check - quick overview of installed pkgs and version status.
+pip-date - Show the installation or modification times of all your pip packages.
+pip-chill - Lists only the dependencies (or not) of installed packages.
+__envHEREDOC__
+}
 helppython(){
 cat <<'__envHEREDOC__'
 python -c 'print 2**100**100'   # Hog RAM and peg 1 CPU.
