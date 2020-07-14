@@ -7144,6 +7144,22 @@ filter(lambda x: x.get('name') == 'pluto',a) # => [{'age': '7', 'name': 'pluto'}
 
 existing_snaps = ec2.describe_snapshots(OwnerIds=account_ids)["Snapshots"]
 found_snaps = [ d for d in existing_snaps if d['SnapshotId'] == snapshotid ]
+
+# you know you can do
+if "key" in map:
+   do_stuff()
+# rather then getting it, checking for a value, etc.
+# can also compare to None.
+
+x = map.get("key")
+if x:
+  do_stuff()
+
+KEYDNE = "KEYDNE"
+x = map.get("key", KEYDNE)
+if x == KEYDNE:
+  do_stuff()
+
 __envHEREDOC__
 }
 helpalternatives(){
