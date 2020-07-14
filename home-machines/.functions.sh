@@ -24,8 +24,10 @@ function rr20percent(){
    if [[ $? = 0 ]] ; then
       while true ; do
          kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         echo STOPPED...
          sleep 5s
          kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         echo CONTTED
          sleep 1s
       done
    else
@@ -7142,6 +7144,22 @@ filter(lambda x: x.get('name') == 'pluto',a) # => [{'age': '7', 'name': 'pluto'}
 
 existing_snaps = ec2.describe_snapshots(OwnerIds=account_ids)["Snapshots"]
 found_snaps = [ d for d in existing_snaps if d['SnapshotId'] == snapshotid ]
+
+# you know you can do
+if "key" in map:
+   do_stuff()
+# rather then getting it, checking for a value, etc.
+# can also compare to None.
+
+x = map.get("key")
+if x:
+  do_stuff()
+
+KEYDNE = "KEYDNE"
+x = map.get("key", KEYDNE)
+if x == KEYDNE:
+  do_stuff()
+
 __envHEREDOC__
 }
 helpalternatives(){
@@ -9755,6 +9773,13 @@ sudo chmod ugo+rwx /mnt/$dname
 
 # optionally, update fstab:
 sudo su -c "echo \"LABEL=${dname}             /mnt/${dname}              btrfs     defaults        0 0\" >> /etc/fstab"
+
+
+
+# check and scrub mounted fs:
+sudo btrfs check --readonly --force /dev/sda2
+sudo btrfs scrub start -d /dev/sda2
+sudo btrfs scrub status -d /dev/sda2
 __envHEREDOC__
 }
 helpmediainfo(){
