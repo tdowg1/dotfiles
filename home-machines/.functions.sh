@@ -7467,10 +7467,10 @@ flowstat -i 1    # Show current network i/o.  Like iostat -m 1 but for network.
 flowadm set-flowprop -t -p maxbw=1200K  afs3-volser-udp    # Throttle network i/o.
                  # maxbw is in kilobits/s; 1200K = 1200 kilobits ~= 146.48 kibibytes
 
-# Example of setting up a flow:
+# Example of setting up a flow (monitoring network traffic bandwidth):
 sudo flowadm add-flow -t -l e1000g0 -a transport=tcp,local_port=7005 afs3-volser-tcp
 sudo flowadm add-flow -t -l e1000g0 -a transport=udp,local_port=7005 afs3-volser-udp
-
+sudo flowadm add-flow    -l e1000g0 -a transport=tcp,local_port=22   sshflow
 
 # network information on network devices:
 dladm show-link
