@@ -1,0 +1,6 @@
+
+* [https://www.google.com/search?hl=en&q=%2Fbin%2Fbash%3A%2520__rvm_ruby_string_find%3A%2520line%25208%3A%2520syntax%2520error%2520near%2520unexpected%2520token%2520%2560(%27 /bin/bash:%20__rvm_ruby_string_find:%20line%208:%20syntax%20error%20near%20unexpected%20token%20%60(' - Google Search]
+** [https://stackoverflow.com/questions/25606430/syntax-error-in-rvm-bash-scripts/36141683 Syntax error in rvm bash scripts - Stack Overflow]
+** [https://superuser.com/questions/451949/rvm-problems-syntax-error-near-unexpected-token-fi macos - rvm problems syntax error near unexpected token `fi' - Super User]
+** [https://askubuntu.com/questions/1001653/why-am-i-getting-parse-usage-error-on-function-invocation-in-bash command line - Why am I getting _parse_usage error on function invocation in bash? - Ask Ubuntu]
+
