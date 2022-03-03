@@ -3119,6 +3119,26 @@ If don't use git super often, sometimes forget what some of the basic terms mean
 * cached vs staged or unstaged (what is cached an alias for?)
 __envHEREDOC__
 }
+helpgitguis(){
+cat <<'__envHEREDOC__'
+=== IN MS WIN / MSYS / MINTTY / CYGWIN / ETC ===
+- as of just now, am getting errors trying to start git-gui via gitk (it was working on the same file 30 minutes ago, I cannot figure out why all of a sudden its failing now)
+
+-- first error(wont even start): error in startup script git-gui.ico not defined
+       try starting git-gui like this instead:
+       https://github.com/msys2/MSYS2-packages/issues/801
+
+   GIT_GUI_LIB_DIR=/c/msys64/usr/share/git-gui/lib MSYSTEM=MSYS git gui
+
+-- second error(starts but now cannot stage lines): git gui error failed to revert/stage selected line patch failed:
+      This seemed to resolve it for me... for now:
+      https://github.com/gitextensions/gitextensions/issues/684
+
+   In the Options diaglo, changed the diff context for the _local_ repo (from like ~75) to 2.
+
+NOTE ; can also try to start gitk and git-gui via the windows command prompt as well as the mintty shell.
+__envHEREDOC__
+}
 
 
 helptree(){
