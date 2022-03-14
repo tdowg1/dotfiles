@@ -9978,6 +9978,13 @@ c-shift+P  - open command runner searchy dialog guy
 
 __envHEREDOC__
 }
+helpPyCharm(){
+cat <<'__envHEREDOC__'
+== keyboard shortcuts ==
+c-shift+A  - open command runner searchy dialog guy
+
+__envHEREDOC__
+}
 
 
 
