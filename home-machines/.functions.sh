@@ -7160,6 +7160,12 @@ pprint.pprint( var )
 for i in range(0, len( filesArray )):
    print( filesArray[i] )
 
+== Strings == / Printing ?
+logger.error("Unable to take it back down: " + repr(f))
+logger.error(f"Unable to raise it back up: {repr(f)}")
+
+print(f"{var1} is already spelled with humanoid ideas for {var2}")
+
 == See also ==
 helpvirtualenv
 configparser - a library for modifying ini-based files as a dictionary
