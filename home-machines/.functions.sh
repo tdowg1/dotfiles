@@ -2927,6 +2927,11 @@ $ git diff [-W, --function-context]
 $ git diff --inter-hunk-context=<lines>
 ... overall:
 $ git diff --unified=33
+
+= See also =
+https://github.com/dandavison/delta - syntax-highlighting pager for git, diff, and grep output
+https://github.com/so-fancy/diff-so-fancy - strives to make your diffs human readable instead of machine readable
+https://github.com/jeffkaufman/icdiff - Improved Colored Diff
 __envHEREDOC__
 }
 helpgit3(){
