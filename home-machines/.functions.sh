@@ -9971,6 +9971,14 @@ hexdump
 xxd
 __envHEREDOC__
 }
+helpAtomTextEditor(){
+cat <<'__envHEREDOC__'
+== keyboard shortcuts ==
+c-shift+P  - open command runner searchy dialog guy
+
+__envHEREDOC__
+}
+
 
 
 
