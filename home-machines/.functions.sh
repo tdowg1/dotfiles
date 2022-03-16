@@ -9430,8 +9430,20 @@ echo '{
 }' | jq '.AccessKeyMetadata[].AccessKeyId'
 # -> "AKIAJ5ZDNO7BR4FIKPOQ"
 
-# on windows, JSON parsing seems to be a big problem; always like "
-# this helps though:  call a custom defined function:: pretty*.jq :::
+
+# on windows, JSON parsing seems to be a big problem; always likes
+#     DOUBLE QUOTES    on the inner structure
+# with a pair of
+#     SINGLE QUOTES    on the outside, surrounding the entire thing.
+# Por ejemplo,
+#                 BAD:
+   "{ 'errorCode': 1014, 'language': 'en-us', 'message': {'code': 1014}}"
+
+#                 GOOD:
+   '{ "errorCode": 1014, "language": "en-us", "message": {"code": 1014}}'
+
+
+# This helps though:  call a custom defined function:: pretty*.jq :::
 #  ( the pretty1.jq and pretty2.jq text files be in dotfiles, currently)
 jq -Rr 'include "pretty2"; pretty' some.js >some.js.pretty2
 __envHEREDOC__
