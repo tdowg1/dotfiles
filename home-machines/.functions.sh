@@ -3106,6 +3106,9 @@ for i in $( find . -type f | grep -v .git) ; do
 done
 IFS=$SAVEIFS
 
+# Create a zip file of (almost like an svn export) the repo at a sha :
+git archive -o latest.zip HEAD
+git archive -o clouda-archive-8b2c36-latest.zip 8b2c36
 __envHEREDOC__
 }
 helpgitterminology(){
