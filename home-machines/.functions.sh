@@ -3145,6 +3145,7 @@ cat <<'__envHEREDOC__'
    In the Options diaglo, changed the diff context for the _local_ repo (from like ~75) to 2.
 
 NOTE ; can also try to start gitk and git-gui via the windows command prompt as well as the mintty shell.
+   - when trying to start via mintty and failing IT SEEMED TO WORK EXTREMELY MUCH BETTER when git-gui invoked via cmd prompt
 __envHEREDOC__
 }
 
