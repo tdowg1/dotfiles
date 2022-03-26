@@ -24,8 +24,10 @@ function rr20percent(){
    if [[ $? = 0 ]] ; then
       while true ; do
          kill -SIGSTOP  $( pgrep "$pgrepprogram" )
+         echo STOPPED...
          sleep 5s
          kill -SIGCONT  $( pgrep "$pgrepprogram" )
+         echo CONTTED
          sleep 1s
       done
    else
@@ -5548,6 +5550,7 @@ __envHEREDOC__
 helpmuzik(){
 cat <<'__envHEREDOC__'
 == Random muzik-related packages and programs ==
+quodlibet: a really AWESOME audio player with a really AWESOME set of plugins... seriously, my new fave desktop muzikingers!
 abcde: Command Line Music CD Ripping for Linux
 icedax: stands for InCrEdible Digital Audio eXtractor
  * It can retrieve audio tracks (CDDA) from CDROM drives that are capable of reading audio data.
@@ -5584,7 +5587,6 @@ madplay: MPEG audio player in fixed point. MAD is an MPEG audio decoder. There i
 mpg123:  MPEG layer 1/2/3 audio player.
 taggrepper - search and match tags of audio files against regular expressions
 mpv - fork of mplayer2/MPlayer; shares features with the former and introduces more, supports wide variety video file formats, audio, video codecs, subtitle types. https://mpv.io
-
 
 === id3-related ==
 $ aptitude search id3 --disable-columns | grep -v 386
@@ -7081,6 +7083,17 @@ FILES
 upower
 __envHEREDOC__
 }
+helppip(){
+cat <<'__envHEREDOC__'
+# check version/update status of installed python packages:
+pip list --outdated --format=columns
+
+= See also =
+pip-check - quick overview of installed pkgs and version status.
+pip-date - Show the installation or modification times of all your pip packages.
+pip-chill - Lists only the dependencies (or not) of installed packages.
+__envHEREDOC__
+}
 helppython(){
 cat <<'__envHEREDOC__'
 python -c 'print 2**100**100'   # Hog RAM and peg 1 CPU.
@@ -7142,6 +7155,22 @@ filter(lambda x: x.get('name') == 'pluto',a) # => [{'age': '7', 'name': 'pluto'}
 
 existing_snaps = ec2.describe_snapshots(OwnerIds=account_ids)["Snapshots"]
 found_snaps = [ d for d in existing_snaps if d['SnapshotId'] == snapshotid ]
+
+# you know you can do
+if "key" in map:
+   do_stuff()
+# rather then getting it, checking for a value, etc.
+# can also compare to None.
+
+x = map.get("key")
+if x:
+  do_stuff()
+
+KEYDNE = "KEYDNE"
+x = map.get("key", KEYDNE)
+if x == KEYDNE:
+  do_stuff()
+
 __envHEREDOC__
 }
 helpalternatives(){
@@ -7438,10 +7467,10 @@ flowstat -i 1    # Show current network i/o.  Like iostat -m 1 but for network.
 flowadm set-flowprop -t -p maxbw=1200K  afs3-volser-udp    # Throttle network i/o.
                  # maxbw is in kilobits/s; 1200K = 1200 kilobits ~= 146.48 kibibytes
 
-# Example of setting up a flow:
+# Example of setting up a flow (monitoring network traffic bandwidth):
 sudo flowadm add-flow -t -l e1000g0 -a transport=tcp,local_port=7005 afs3-volser-tcp
 sudo flowadm add-flow -t -l e1000g0 -a transport=udp,local_port=7005 afs3-volser-udp
-
+sudo flowadm add-flow    -l e1000g0 -a transport=tcp,local_port=22   sshflow
 
 # network information on network devices:
 dladm show-link
@@ -9755,6 +9784,13 @@ sudo chmod ugo+rwx /mnt/$dname
 
 # optionally, update fstab:
 sudo su -c "echo \"LABEL=${dname}             /mnt/${dname}              btrfs     defaults        0 0\" >> /etc/fstab"
+
+
+
+# check and scrub mounted fs:
+sudo btrfs check --readonly --force /dev/sda2
+sudo btrfs scrub start -d /dev/sda2
+sudo btrfs scrub status -d /dev/sda2
 __envHEREDOC__
 }
 helpmediainfo(){
@@ -9905,6 +9941,16 @@ __envHEREDOC__
 
 
 
+
+helpmpv(){
+cat <<'__envHEREDOC__'
+# Options used when mpv is called (by default setttings) by SMplayer:
+/usr/bin/mpv --no-config --no-quiet --terminal --no-msg-color --input-file=/dev/stdin --msg-level=ffmpeg/demuxer=error --no-fs --vd-lavc-threads=2 --hwdec=no --sub-auto=fuzzy --framedrop=vo --no-input-default-bindings --input-vo-keyboard=no --no-input-cursor --cursor-autohide=no --no-keepaspect --wid=81788948 --monitorpixelaspect=1 --osd-level=1 --osd-scale=1 --osd-bar-align-y=0.6 --sub-ass --embeddedfonts --sub-ass-line-spacing=0 --sub-scale=0.6 --sub-font=Arial --sub-color=#ffffffff --sub-shadow-color=#ff000000 --sub-border-color=#ff000000 --sub-border-size=0.75 --sub-shadow-offset=2.5 --sub-font-size=50 --sub-bold=no --sub-italic=no --sub-margin-y=8 --sub-margin-x=20 --sub-codepage=ISO-8859-1 --sub-pos=100 --volume=48 --cache=auto --index=default --screenshot-template=cap_%F_%p_%02n --screenshot-format=jpg --screenshot-directory=/home/teelah/Pictures/smplayer_screenshots --audio-pitch-correction=yes --volume-max=110
+--term-playing-msg=MPV_VERSION=${=mpv-version:} INFO_VIDEO_WIDTH=${=width} INFO_VIDEO_HEIGHT=${=height} INFO_VIDEO_ASPECT=${=video-params/aspect} INFO_VIDEO_FPS=${=container-fps:${=fps}} INFO_VIDEO_FORMAT=${=video-format} INFO_VIDEO_CODEC=${=video-codec} INFO_AUDIO_FORMAT=${=audio-codec-name} INFO_AUDIO_CODEC=${=audio-codec} INFO_AUDIO_RATE=${=audio-params/samplerate} INFO_AUDIO_NCH=${=audio-params/channel-count} INFO_LENGTH=${=duration:${=length}} INFO_DEMUXER=${=current-demuxer:${=demuxer}} INFO_SEEKABLE=${=seekable} INFO_TITLES=${=disc-titles} INFO_CHAPTERS=${=chapters} INFO_TRACKS_COUNT=${=track-list/count} METADATA_TITLE=${metadata/by-key/title:} METADATA_ARTIST=${metadata/by-key/artist:} METADATA_ALBUM=${metadata/by-key/album:} METADATA_GENRE=${metadata/by-key/genre:} METADATA_DATE=${metadata/by-key/date:} METADATA_TRACK=${metadata/by-key/track:} METADATA_COPYRIGHT=${metadata/by-key/copyright:} INFO_MEDIA_TITLE=${=media-title:}
+INFO_STREAM_PATH=${stream-path}  --audio-client-name=SMPlayer --term-status-msg=STATUS: ${=time-pos} / ${=duration:${=length:0}} P: ${=pause} B: ${=paused-for-cache} I: ${=core-idle} VB: ${=video-bitrate:0} AB: ${=audio-bitrate:0} /media/smb-bump-video/tv2020/BBC/ayyy/BBC.Charlie.Brookers.Antiviral.Wipe.1080p.HDTV.x265.AAC.MVGroup.org.mkv
+
+__envHEREDOC__
+}
 
 _help5(){
 cat <<'__envHEREDOC__'
